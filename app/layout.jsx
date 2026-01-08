@@ -75,6 +75,12 @@ export default function RootLayout({ children }) {
                     >
                       🕸️ Graphs
                     </Link>
+                    <Link
+                      href="/hashing"
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all"
+                    >
+                      🔐 Hashing
+                    </Link>
                   </nav>
 
                   {/* THEME TOGGLE */}
@@ -116,6 +122,9 @@ export default function RootLayout({ children }) {
                     </Link>
                     <Link href="/graph" className="block text-slate-400 hover:text-cyan-400 transition-colors text-sm">
                       Graphs
+                    </Link>
+                    <Link href="/hashing" className="block text-slate-400 hover:text-indigo-400 transition-colors text-sm">
+                      Hashing
                     </Link>
                   </div>
                 </div>

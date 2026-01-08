@@ -105,7 +105,7 @@ const dataStructures = [
     description: "Hash maps, collision handling, and pattern matching",
     stats: { techniques: "5+", problems: "100+", patterns: "8+" },
     features: ["Hash Function Demo", "Collision Methods", "Use Cases"],
-    available: false,
+    available: true,
   },
   {
     id: "dynamic-programming",
