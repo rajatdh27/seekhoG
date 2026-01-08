@@ -79,12 +79,12 @@ const dataStructures = [
   {
     id: "heap",
     name: "Heaps",
-    icon: "⛰️",
-    gradient: "from-yellow-600 to-orange-600",
-    description: "Priority queues, heap operations, and top-K problems",
-    stats: { types: "2+", problems: "80+", patterns: "6+" },
-    features: ["Heap Visualizer", "Priority Queue", "Heapify Demo"],
-    available: false,
+    icon: "🌳",
+    gradient: "from-rose-600 to-pink-600",
+    description: "Complete binary trees, heap property, priority queues, and heap sort",
+    stats: { types: "2+", sections: "6+", patterns: "8+" },
+    features: ["Interactive Heap Viz", "Min/Max Heap", "All 6 Languages"],
+    available: true,
   },
   {
     id: "graph",
