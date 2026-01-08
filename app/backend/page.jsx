@@ -25,12 +25,7 @@ const backendSections = [
   {
     category: "🚀 Performance & Scalability",
     topics: [
-      { name: "Caching Strategies", icon: "💨", href: "/backend/caching", description: "Redis, Memcached, CDN, Cache invalidation" },
-      { name: "Load Balancing", icon: "⚖️", href: "/backend/load-balancing", description: "Round-robin, Sticky sessions, Health checks" },
-      { name: "Horizontal Scaling", icon: "📈", href: "/backend/horizontal-scaling", description: "Stateless services, Session management" },
-      { name: "Database Scaling", icon: "🔀", href: "/backend/database-scaling", description: "Replication, Sharding, Read replicas" },
-      { name: "CDN & Edge Computing", icon: "🌐", href: "/backend/cdn", description: "CloudFront, Cloudflare, Edge functions" },
-      { name: "Performance Monitoring", icon: "📊", href: "/backend/monitoring", description: "APM, Logging, Metrics, Tracing" },
+      { name: "Performance & Scalability", icon: "🚀", href: "/backend/performance-scalability", description: "Caching, Load Balancing, Scaling, CDN, Monitoring", status: "live" },
     ],
   },
   {
