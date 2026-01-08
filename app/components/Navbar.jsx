@@ -56,12 +56,23 @@ export default function Navbar() {
             <Link
               href="/backend"
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                isActive("/backend")
+                pathname.startsWith("/backend")
                   ? "bg-slate-100 text-slate-900"
                   : "text-slate-300 hover:bg-slate-800"
               }`}
             >
               Backend
+            </Link>
+
+            <Link
+              href="/languages"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                pathname.startsWith("/languages")
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-300 hover:bg-slate-800"
+              }`}
+            >
+              Languages
             </Link>
           </nav>
 
@@ -101,13 +112,24 @@ export default function Navbar() {
 
             <Link
               href="/backend"
-              className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                isActive("/backend")
+              className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all mb-2 ${
+                pathname.startsWith("/backend")
                   ? "bg-slate-100 text-slate-900"
                   : "text-slate-300 hover:bg-slate-800"
               }`}
             >
               Backend
+            </Link>
+
+            <Link
+              href="/languages"
+              className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                pathname.startsWith("/languages")
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-300 hover:bg-slate-800"
+              }`}
+            >
+              Languages
             </Link>
           </div>
         </div>
