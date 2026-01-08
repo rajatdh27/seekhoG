@@ -7,11 +7,7 @@ const backendSections = [
   {
     category: "🎯 Fundamentals",
     topics: [
-      { name: "HTTP & HTTPS", icon: "🌐", href: "/backend/http-basics", description: "Request/Response, Status Codes, Methods" },
-      { name: "REST APIs", icon: "🔌", href: "/backend/rest-apis", description: "RESTful principles, API design, Best practices" },
-      { name: "JSON & Data Formats", icon: "📄", href: "/backend/data-formats", description: "JSON, XML, Protocol Buffers" },
-      { name: "Web Servers", icon: "🖥️", href: "/backend/web-servers", description: "Nginx, Apache, Server configuration" },
-      { name: "DNS & Networking", icon: "🌍", href: "/backend/networking", description: "DNS, TCP/IP, Load Balancers" },
+      { name: "Backend Fundamentals", icon: "🌐", href: "/backend/fundamentals", description: "HTTP/HTTPS, REST APIs, JSON, Web Servers, DNS & Networking", status: "live" },
     ],
   },
   {
@@ -190,7 +186,12 @@ export default function BackendPage() {
                     transition={{ delay: topicIdx * 0.05 }}
                   >
                     <Link href={topic.href}>
-                      <div className="group h-full bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-violet-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1">
+                      <div className="group h-full bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-violet-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 relative">
+                        {topic.status === 'live' && (
+                          <div className="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse">
+                            LIVE
+                          </div>
+                        )}
                         <div className="flex items-start gap-4">
                           <div className="text-4xl group-hover:scale-110 transition-transform">
                             {topic.icon}
@@ -202,11 +203,22 @@ export default function BackendPage() {
                             <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
                               {topic.description}
                             </p>
-                            <div className="mt-3 text-xs font-semibold text-violet-400 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                              Coming Soon
-                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
+                            <div className={`mt-3 text-xs font-semibold ${topic.status === 'live' ? 'text-green-400' : 'text-violet-400'} opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1`}>
+                              {topic.status === 'live' ? (
+                                <>
+                                  Learn Now ✨
+                                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                  </svg>
+                                </>
+                              ) : (
+                                <>
+                                  Coming Soon
+                                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                  </svg>
+                                </>
+                              )}
                             </div>
                           </div>
                         </div>
