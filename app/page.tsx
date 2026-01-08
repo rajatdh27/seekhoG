@@ -56,16 +56,15 @@ const dataStructures = [
     features: ["Push/Pop Demo", "Real-world Uses", "Interview Patterns"],
     available: true,
   },
-  // Coming Soon
   {
     id: "queue",
     name: "Queues",
-    icon: "🎫",
-    gradient: "from-orange-600 to-red-600",
-    description: "FIFO operations, circular queue, and BFS applications",
-    stats: { types: "3+", problems: "100+", patterns: "5+" },
-    features: ["FIFO Demo", "BFS Patterns", "Circular Queue"],
-    available: false,
+    icon: "📋",
+    gradient: "from-orange-600 to-amber-600",
+    description: "FIFO operations, circular queue, priority queue, and deque patterns",
+    stats: { types: "4+", sections: "7+", patterns: "6+" },
+    features: ["Queue Visualizer", "Priority Queue", "Circular & Deque"],
+    available: true,
   },
   {
     id: "tree",
