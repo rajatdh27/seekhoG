@@ -3,19 +3,131 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const languageSections = [
-  { name: "C Programming", icon: "🔷", href: "/languages/c", description: "Low-level programming, pointers, memory management, system programming", gradient: "from-blue-500 to-cyan-500", status: "coming-soon" },
-  { name: "C++ Programming", icon: "⚡", href: "/languages/cpp", description: "OOP, STL, templates, modern C++11/14/17/20 features", gradient: "from-indigo-500 to-blue-500", status: "coming-soon" },
-  { name: "Java", icon: "☕", href: "/languages/java", description: "OOP, Collections, Streams, Multithreading, Spring Framework", gradient: "from-orange-500 to-red-500", status: "coming-soon" },
-  { name: "JavaScript", icon: "🟨", href: "/languages/javascript", description: "ES6+, Async/Await, Promises, DOM, Node.js, React", gradient: "from-yellow-500 to-amber-500", status: "live" },
-  { name: "TypeScript", icon: "🔵", href: "/languages/typescript", description: "Type system, Interfaces, Generics, Advanced Types", gradient: "from-blue-500 to-indigo-500", status: "coming-soon" },
-  { name: "Python", icon: "🐍", href: "/languages/python", description: "Core concepts, Data structures, Decorators, Generators, Django/Flask", gradient: "from-green-500 to-emerald-500", status: "coming-soon" },
-  { name: "Go (Golang)", icon: "🔵", href: "/languages/go", description: "Goroutines, Channels, Concurrency patterns, Web services", gradient: "from-cyan-500 to-blue-500", status: "coming-soon" },
-  { name: "Rust", icon: "🦀", href: "/languages/rust", description: "Ownership, Borrowing, Lifetimes, Memory safety without GC", gradient: "from-orange-500 to-amber-500", status: "coming-soon" },
-  { name: "Kotlin", icon: "💜", href: "/languages/kotlin", description: "Modern JVM language, Coroutines, Null safety, Android development", gradient: "from-purple-500 to-pink-500", status: "coming-soon" },
-  { name: "Swift", icon: "🍎", href: "/languages/swift", description: "iOS/macOS development, Optionals, Protocols, SwiftUI", gradient: "from-orange-500 to-red-500", status: "coming-soon" },
-  { name: "SQL", icon: "💾", href: "/languages/sql", description: "Queries, Joins, Subqueries, Window functions, Query optimization", gradient: "from-blue-500 to-purple-500", status: "coming-soon" },
-  { name: "Bash/Shell Scripting", icon: "💻", href: "/languages/bash", description: "Shell commands, Scripting, Automation, Linux/Unix utilities", gradient: "from-gray-500 to-slate-500", status: "coming-soon" },
+// All supported languages
+const allLanguages = ["C", "C++", "Java", "JavaScript", "TypeScript", "Python", "Go", "Rust", "Kotlin", "Swift"];
+
+// Universal programming concepts across all languages
+const programmingConcepts = [
+  {
+    id: "variables",
+    name: "Variables & Data Types",
+    icon: "📦",
+    description: "Learn how to store and work with different types of data",
+    gradient: "from-blue-500 to-cyan-500",
+    languages: allLanguages,
+    href: "/languages/variables",
+    status: "live"
+  },
+  {
+    id: "operators",
+    name: "Operators",
+    icon: "➕",
+    description: "Master arithmetic, logical, and comparison operations",
+    gradient: "from-purple-500 to-pink-500",
+    languages: allLanguages,
+    href: "/languages/operators",
+    status: "coming-soon"
+  },
+  {
+    id: "control-flow",
+    name: "Control Flow",
+    icon: "🔀",
+    description: "Conditionals, loops, and program flow control",
+    gradient: "from-orange-500 to-red-500",
+    languages: allLanguages,
+    href: "/languages/control-flow",
+    status: "coming-soon"
+  },
+  {
+    id: "functions",
+    name: "Functions",
+    icon: "⚡",
+    description: "Reusable code blocks, parameters, and return values",
+    gradient: "from-yellow-500 to-amber-500",
+    languages: allLanguages,
+    href: "/languages/functions",
+    status: "coming-soon"
+  },
+  {
+    id: "arrays-lists",
+    name: "Arrays & Lists",
+    icon: "📚",
+    description: "Working with ordered collections of data",
+    gradient: "from-green-500 to-emerald-500",
+    languages: allLanguages,
+    href: "/languages/arrays-lists",
+    status: "coming-soon"
+  },
+  {
+    id: "objects-classes",
+    name: "Objects & Classes",
+    icon: "🎯",
+    description: "Object-oriented programming and data structures",
+    gradient: "from-indigo-500 to-purple-500",
+    languages: allLanguages,
+    href: "/languages/objects-classes",
+    status: "coming-soon"
+  },
+  {
+    id: "strings",
+    name: "Strings",
+    icon: "💬",
+    description: "Text manipulation and string operations",
+    gradient: "from-pink-500 to-rose-500",
+    languages: allLanguages,
+    href: "/languages/strings",
+    status: "coming-soon"
+  },
+  {
+    id: "error-handling",
+    name: "Error Handling",
+    icon: "⚠️",
+    description: "Exception handling and error management",
+    gradient: "from-red-500 to-orange-500",
+    languages: allLanguages,
+    href: "/languages/error-handling",
+    status: "coming-soon"
+  },
+  {
+    id: "async-programming",
+    name: "Async Programming",
+    icon: "⏱️",
+    description: "Asynchronous operations and concurrency",
+    gradient: "from-cyan-500 to-blue-500",
+    languages: allLanguages,
+    href: "/languages/async-programming",
+    status: "coming-soon"
+  },
+  {
+    id: "file-io",
+    name: "File I/O",
+    icon: "📁",
+    description: "Reading and writing files",
+    gradient: "from-teal-500 to-cyan-500",
+    languages: allLanguages,
+    href: "/languages/file-io",
+    status: "coming-soon"
+  },
+  {
+    id: "modules-packages",
+    name: "Modules & Packages",
+    icon: "📦",
+    description: "Code organization and reusability",
+    gradient: "from-violet-500 to-purple-500",
+    languages: allLanguages,
+    href: "/languages/modules-packages",
+    status: "coming-soon"
+  },
+  {
+    id: "memory-management",
+    name: "Memory Management",
+    icon: "🧠",
+    description: "Understanding memory allocation and garbage collection",
+    gradient: "from-amber-500 to-orange-500",
+    languages: allLanguages,
+    href: "/languages/memory-management",
+    status: "coming-soon"
+  },
 ];
 
 export default function LanguagesPage() {
@@ -55,10 +167,10 @@ export default function LanguagesPage() {
               💻
             </motion.div>
             <h1 className="text-6xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-200 to-white">
-              Programming Languages
+              Programming Concepts
             </h1>
             <p className="text-xl md:text-2xl text-emerald-100 max-w-4xl mx-auto mb-10">
-              Master multiple programming languages from syntax to advanced concepts
+              Learn core programming concepts across multiple languages - one topic at a time
             </p>
             <div className="flex gap-6 justify-center flex-wrap mb-8">
               <motion.div
@@ -67,23 +179,23 @@ export default function LanguagesPage() {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">12</div>
-                <div className="text-sm text-emerald-200 font-medium">Popular Languages</div>
+                <div className="text-sm text-emerald-200 font-medium">Core Concepts</div>
               </motion.div>
               <motion.div
                 className="px-8 py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl"
                 whileHover={{ scale: 1.05, y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-emerald-300">∞</div>
+                <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-emerald-300">4+</div>
+                <div className="text-sm text-emerald-200 font-medium">Languages Each</div>
+              </motion.div>
+              <motion.div
+                className="px-8 py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl"
+                whileHover={{ scale: 1.05, y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-cyan-300">∞</div>
                 <div className="text-sm text-emerald-200 font-medium">Code Examples</div>
-              </motion.div>
-              <motion.div
-                className="px-8 py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl"
-                whileHover={{ scale: 1.05, y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-cyan-300">0→∞</div>
-                <div className="text-sm text-emerald-200 font-medium">Beginner to Expert</div>
               </motion.div>
             </div>
             <motion.a
@@ -110,15 +222,15 @@ export default function LanguagesPage() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Choose Your Language
+            Choose a Concept to Master
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-            Deep dive into any programming language and master it from basics to advanced
+            Learn each programming concept and compare syntax across C, C++, Java, JavaScript, TypeScript, Python, Go, Rust, Kotlin, and Swift
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {languageSections.map((lang, idx) => (
+          {programmingConcepts.map((concept, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
@@ -126,15 +238,15 @@ export default function LanguagesPage() {
               viewport={{ once: true }}
               transition={{ delay: idx * 0.05 }}
             >
-              {lang.status === "live" ? (
-                <Link href={lang.href}>
+              {concept.status === "live" ? (
+                <Link href={concept.href}>
                   <motion.div
                     className="group h-full bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl relative overflow-hidden"
                     whileHover={{ y: -8, scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     {/* Gradient overlay on hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${lang.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                    <div className={`absolute inset-0 bg-gradient-to-br ${concept.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
 
                     {/* Live badge */}
                     <div className="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
@@ -143,22 +255,34 @@ export default function LanguagesPage() {
                     </div>
 
                     {/* Icon with gradient background */}
-                    <div className={`w-16 h-16 bg-gradient-to-br ${lang.gradient} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                      <span className="text-3xl">{lang.icon}</span>
+                    <div className={`w-16 h-16 bg-gradient-to-br ${concept.gradient} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <span className="text-3xl">{concept.icon}</span>
                     </div>
 
                     {/* Content */}
                     <div className="relative z-10">
                       <h3 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-cyan-400 transition-all">
-                        {lang.name}
+                        {concept.name}
                       </h3>
                       <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors leading-relaxed mb-4">
-                        {lang.description}
+                        {concept.description}
                       </p>
+
+                      {/* Language badges */}
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {concept.languages.map((lang) => (
+                          <span
+                            key={lang}
+                            className="text-xs px-2 py-1 bg-slate-700/50 text-slate-300 rounded-md border border-slate-600/50"
+                          >
+                            {lang}
+                          </span>
+                        ))}
+                      </div>
 
                       {/* Arrow indicator */}
                       <div className="flex items-center gap-2 text-sm font-semibold text-emerald-400 group-hover:text-emerald-300 group-hover:gap-3 transition-all">
-                        <span>Explore Language</span>
+                        <span>Learn Concept</span>
                         <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
@@ -166,7 +290,7 @@ export default function LanguagesPage() {
                     </div>
 
                     {/* Decorative corner element */}
-                    <div className={`absolute -bottom-10 -right-10 w-32 h-32 bg-gradient-to-br ${lang.gradient} rounded-full opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-300`}></div>
+                    <div className={`absolute -bottom-10 -right-10 w-32 h-32 bg-gradient-to-br ${concept.gradient} rounded-full opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-300`}></div>
                   </motion.div>
                 </Link>
               ) : (
@@ -176,7 +300,7 @@ export default function LanguagesPage() {
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   {/* Gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${lang.gradient} opacity-5`}></div>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${concept.gradient} opacity-5`}></div>
 
                   {/* Coming Soon badge */}
                   <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
@@ -184,18 +308,30 @@ export default function LanguagesPage() {
                   </div>
 
                   {/* Icon with gradient background */}
-                  <div className={`w-16 h-16 bg-gradient-to-br ${lang.gradient} rounded-2xl flex items-center justify-center mb-4 opacity-60 shadow-lg`}>
-                    <span className="text-3xl">{lang.icon}</span>
+                  <div className={`w-16 h-16 bg-gradient-to-br ${concept.gradient} rounded-2xl flex items-center justify-center mb-4 opacity-60 shadow-lg`}>
+                    <span className="text-3xl">{concept.icon}</span>
                   </div>
 
                   {/* Content */}
                   <div className="relative z-10">
                     <h3 className="text-xl font-bold text-slate-400 mb-3">
-                      {lang.name}
+                      {concept.name}
                     </h3>
                     <p className="text-sm text-slate-500 leading-relaxed mb-4">
-                      {lang.description}
+                      {concept.description}
                     </p>
+
+                    {/* Language badges */}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {concept.languages.map((lang) => (
+                        <span
+                          key={lang}
+                          className="text-xs px-2 py-1 bg-slate-700/30 text-slate-500 rounded-md border border-slate-600/30"
+                        >
+                          {lang}
+                        </span>
+                      ))}
+                    </div>
 
                     {/* Coming soon indicator */}
                     <div className="flex items-center gap-2 text-sm font-semibold text-slate-500">
@@ -218,24 +354,24 @@ export default function LanguagesPage() {
           <div className="inline-block bg-gradient-to-r from-emerald-600/20 to-cyan-600/20 backdrop-blur-sm border border-emerald-500/30 rounded-3xl px-12 py-8">
             <div className="text-5xl mb-4">🚀</div>
             <h3 className="text-2xl font-bold text-white mb-3">
-              Master Multiple Programming Languages
+              Compare & Learn Across Languages
             </h3>
             <p className="text-slate-300 mb-6 max-w-xl mx-auto">
-              Each language section will include comprehensive tutorials, best practices, common patterns, and real-world examples to help you become proficient.
+              Each concept includes side-by-side comparisons, best practices, and real-world examples across JavaScript, Python, Java, and C++.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <motion.a
-                href="/languages/javascript"
-                className="px-6 py-3 bg-gradient-to-r from-yellow-600 to-orange-600 text-white rounded-full font-semibold hover:from-yellow-500 hover:to-orange-500 transition-all shadow-lg hover:shadow-yellow-500/50"
+                href="/languages/variables"
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-full font-semibold hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg hover:shadow-blue-500/50"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                🟨 Start with JavaScript
+                📦 Start with Variables
               </motion.a>
               <motion.div
                 className="px-6 py-3 bg-slate-700/50 text-slate-300 rounded-full font-semibold border border-slate-600"
               >
-                📚 More Languages Coming Soon
+                📚 More Concepts Coming Soon
               </motion.div>
             </div>
           </div>
