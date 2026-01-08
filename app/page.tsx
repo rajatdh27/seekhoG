@@ -75,7 +75,7 @@ const dataStructures = [
     description: "Binary trees, BST, AVL, and tree traversal patterns",
     stats: { types: "8+", problems: "150+", patterns: "12+" },
     features: ["Tree Visualization", "Traversal Demos", "BST Operations"],
-    available: false,
+    available: true,
   },
   {
     id: "heap",

@@ -63,6 +63,12 @@ export default function RootLayout({ children }) {
                     >
                       📚 Stack
                     </Link>
+                    <Link
+                      href="/tree"
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
+                    >
+                      🌳 Trees
+                    </Link>
                   </nav>
 
                   {/* THEME TOGGLE */}
@@ -98,6 +104,9 @@ export default function RootLayout({ children }) {
                     </Link>
                     <Link href="/stack" className="block text-slate-400 hover:text-purple-400 transition-colors text-sm">
                       Stacks
+                    </Link>
+                    <Link href="/tree" className="block text-slate-400 hover:text-emerald-400 transition-colors text-sm">
+                      Trees
                     </Link>
                   </div>
                 </div>
