@@ -61,12 +61,7 @@ const backendSections = [
   {
     category: "🔧 Advanced Topics",
     topics: [
-      { name: "GraphQL", icon: "📊", href: "/backend/graphql", description: "Schema, Resolvers, Apollo, Federation" },
-      { name: "gRPC", icon: "⚡", href: "/backend/grpc", description: "Protocol Buffers, Streaming, Service mesh" },
-      { name: "Search Engines", icon: "🔍", href: "/backend/search-engines", description: "Elasticsearch, Full-text search, Relevance" },
-      { name: "Rate Limiting", icon: "🚦", href: "/backend/rate-limiting", description: "Token bucket, Leaky bucket, Algorithms" },
-      { name: "Webhook Systems", icon: "🪝", href: "/backend/webhooks", description: "Event delivery, Retry logic, Security" },
-      { name: "File Storage", icon: "📁", href: "/backend/file-storage", description: "S3, Object storage, File uploads" },
+      { name: "Advanced Topics", icon: "🔧", href: "/backend/advanced-topics", description: "GraphQL, gRPC, Search Engines, Rate Limiting, Webhooks, File Storage", status: "live" },
     ],
   },
   {
