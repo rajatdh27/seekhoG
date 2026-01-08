@@ -55,11 +55,7 @@ const backendSections = [
   {
     category: "📊 Observability",
     topics: [
-      { name: "Logging", icon: "📝", href: "/backend/logging", description: "Structured logging, Log aggregation, ELK stack" },
-      { name: "Metrics & Monitoring", icon: "📈", href: "/backend/metrics", description: "Prometheus, Grafana, Application metrics" },
-      { name: "Distributed Tracing", icon: "🔍", href: "/backend/tracing", description: "Jaeger, Zipkin, OpenTelemetry" },
-      { name: "Error Tracking", icon: "🐛", href: "/backend/error-tracking", description: "Sentry, Rollbar, Error monitoring" },
-      { name: "Alerting", icon: "🚨", href: "/backend/alerting", description: "Alert rules, On-call, Incident response" },
+      { name: "Observability", icon: "📊", href: "/backend/observability", description: "Logging, Metrics & Monitoring, Distributed Tracing, Error Tracking, Alerting", status: "live" },
     ],
   },
   {
