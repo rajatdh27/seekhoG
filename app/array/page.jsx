@@ -88,7 +88,7 @@ export default function ArrayPage() {
           </aside>
 
           {/* Content Sections */}
-          <main className="flex-1 space-y-16">
+          <main className="flex-1 space-y-16 min-w-0 overflow-hidden">
             {sections.map((section) => {
               const Component = section.component;
               return (

@@ -2,21 +2,30 @@
 import { useState, useRef } from "react";
 
 /*
-  Minimal animation engine: generates step logs and updates state.
-  For simplicity we rely on state updates and framer-motion layout to animate.
+  Animation engine with step-by-step visualization.
+  Each operation shows the process with delays and visual feedback.
 */
 
-export default function useArrayEngine(initial = []) {
+// Animation speed (ms) - Slower for better understanding
+const ANIMATION_DELAY = 1000;  // Main animation delay (was 600)
+const QUICK_DELAY = 500;       // Quick delay (was 300)
+const SCROLL_DELAY = 400;      // Time to wait for scroll to complete
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+export default function useArrayEngine(initial = [], scrollToArray = null, scrollToElement = null) {
   const [arr, setArr] = useState(initial);
   const [prefix, setPrefix] = useState([]);
   const [log, setLog] = useState([]);
   const [ptrHighlight, setPtrHighlight] = useState(null);
   const [pairHighlight, setPairHighlight] = useState(null);
   const [windowHighlight, setWindowHighlight] = useState(null);
+  const [isRunning, setIsRunning] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
   const runningRef = useRef(false);
 
   function pushLog(msg) {
-    setLog(l => [msg, ...l].slice(0, 100));
+    setLog(l => [...l, msg].slice(-100)); // Keep last 100, newest at end
   }
 
   function reset() {
@@ -25,7 +34,9 @@ export default function useArrayEngine(initial = []) {
     setPtrHighlight(null);
     setPairHighlight(null);
     setWindowHighlight(null);
-    pushLog("Reset to initial");
+    setIsRunning(false);
+    runningRef.current = false;
+    pushLog("✨ Reset to initial state");
   }
 
   function randomize() {
@@ -33,100 +44,261 @@ export default function useArrayEngine(initial = []) {
     setArr(newArr);
     setPrefix([]);
     setPtrHighlight(null);
-    pushLog(`Randomized -> [${newArr.join(", ")}]`);
+    setPairHighlight(null);
+    setWindowHighlight(null);
+    setIsRunning(false);
+    runningRef.current = false;
+    pushLog(`🎲 Randomized array`);
   }
 
   function clearLog() {
     setLog([]);
   }
 
-  // simple immediate-run steps (could be extended to true stepper)
-  function runInsert(index, value) {
+  function clearHighlights() {
+    setPtrHighlight(null);
+    setPairHighlight(null);
+    setWindowHighlight(null);
+  }
+
+  // Basic operations with animations
+  async function runInsert(index, value) {
+    if (isRunning) return;
+    setIsRunning(true);
+
+    // Scroll to array visualizer
+    scrollToArray?.();
+    await sleep(SCROLL_DELAY);
+
     const idx = Math.max(0, Math.min(index, arr.length));
-    pushLog(`Insert ${value} at ${idx}`);
+    setStatusMessage(`Inserting value ${value} at position [${idx}]...`);
+    pushLog(`➕ Inserting ${value} at index ${idx}`);
+
     setPtrHighlight(idx);
+    await sleep(ANIMATION_DELAY);
+
+    setStatusMessage(`Shifting elements to make space...`);
     const newArr = [...arr.slice(0, idx), value, ...arr.slice(idx)];
     setArr(newArr);
+    await sleep(QUICK_DELAY);
+
     setPtrHighlight(null);
-    pushLog(`Array -> [${newArr.join(", ")}]`);
+    setStatusMessage(`✓ Successfully inserted ${value} at index ${idx}!`);
+    pushLog(`✓ Inserted successfully`);
+    await sleep(QUICK_DELAY);
+    setStatusMessage('');
+    setIsRunning(false);
   }
 
-  function runDelete(index) {
+  async function runDelete(index) {
+    if (isRunning) return;
     if (index < 0 || index >= arr.length) {
-      pushLog("Delete: index out of range");
+      pushLog("❌ Index out of range");
+      setStatusMessage("❌ Cannot delete - index out of range");
+      await sleep(1000);
+      setStatusMessage('');
       return;
     }
-    pushLog(`Delete at ${index}`);
+
+    setIsRunning(true);
+
+    // Scroll to array visualizer
+    scrollToArray?.();
+    await sleep(SCROLL_DELAY);
+
+    setStatusMessage(`Deleting element at index [${index}] (value: ${arr[index]})...`);
+    pushLog(`🗑️ Deleting element at index ${index}`);
+
     setPtrHighlight(index);
+    await sleep(ANIMATION_DELAY);
+
+    setStatusMessage(`Removing element and shifting array...`);
     const newArr = [...arr.slice(0, index), ...arr.slice(index + 1)];
     setArr(newArr);
+    await sleep(QUICK_DELAY);
+
     setPtrHighlight(null);
-    pushLog(`Array -> [${newArr.join(", ")}]`);
+    setStatusMessage(`✓ Successfully deleted element at index ${index}!`);
+    pushLog(`✓ Deleted successfully`);
+    await sleep(QUICK_DELAY);
+    setStatusMessage('');
+    setIsRunning(false);
   }
 
-  function runRotate(k = 1) {
-    if (arr.length === 0) return;
+  async function runRotate(k = 1) {
+    if (isRunning || arr.length === 0) return;
+    setIsRunning(true);
+
+    // Scroll to array visualizer
+    scrollToArray?.();
+    await sleep(SCROLL_DELAY);
+
     const n = arr.length;
     const kk = ((k % n) + n) % n;
-    pushLog(`Rotate left by ${kk}`);
+    setStatusMessage(`Rotating array left by ${kk} positions...`);
+    pushLog(`🔄 Rotating array left by ${kk} positions`);
+
+    await sleep(QUICK_DELAY);
+    setStatusMessage(`Moving first ${kk} elements to the end...`);
     const newArr = [...arr.slice(kk), ...arr.slice(0, kk)];
     setArr(newArr);
-    pushLog(`Array -> [${newArr.join(", ")}]`);
+    await sleep(ANIMATION_DELAY);
+
+    setStatusMessage(`✓ Rotation complete!`);
+    pushLog(`✓ Rotation complete`);
+    await sleep(QUICK_DELAY);
+    setStatusMessage('');
+    setIsRunning(false);
   }
 
-  function runReverse() {
-    pushLog("Reverse");
-    const newArr = [...arr].reverse();
-    setArr(newArr);
-    pushLog(`Array -> [${newArr.join(", ")}]`);
-  }
+  async function runReverse() {
+    if (isRunning || arr.length === 0) return;
+    setIsRunning(true);
 
-  function runTwoPointers() {
-    pushLog("Two pointers demo");
+    // Scroll to array visualizer
+    scrollToArray?.();
+    await sleep(SCROLL_DELAY);
+
+    setStatusMessage(`Starting reverse operation using two-pointer technique...`);
+    pushLog(`↔️ Reversing array using two pointers`);
     let a = [...arr];
     let l = 0, r = a.length - 1;
+
     while (l < r) {
-      setPtrHighlight(null);
+      // Highlight the pair we're about to swap
       setPairHighlight({ l, r });
-      pushLog(`Compare indices ${l} and ${r} -> ${a[l]}, ${a[r]}`);
-      // swap for demo
-      const tmp = a[l]; a[l] = a[r]; a[r] = tmp;
+      setStatusMessage(`Swapping elements at positions [${l}] ↔ [${r}] (values: ${a[l]} ↔ ${a[r]})`);
+      pushLog(`Step ${l + 1}: Swapping indices ${l} ↔ ${r} (values: ${a[l]} ↔ ${a[r]})`);
+      await sleep(ANIMATION_DELAY);
+
+      // Perform swap
+      const tmp = a[l];
+      a[l] = a[r];
+      a[r] = tmp;
       setArr([...a]);
-      pushLog(`Swapped -> [${a.join(", ")}]`);
-      l++; r--;
+      await sleep(QUICK_DELAY);
+
+      l++;
+      r--;
     }
+
     setPairHighlight(null);
-    pushLog("Two pointers finished");
+    setStatusMessage(`✓ Array reversed successfully!`);
+    pushLog(`✓ Reverse complete`);
+    await sleep(QUICK_DELAY);
+    setStatusMessage('');
+    setIsRunning(false);
   }
 
-  function runSlidingWindow(k = 1) {
-    pushLog(`Sliding window (k=${k})`);
+  async function runTwoPointers() {
+    if (isRunning || arr.length === 0) return;
+    setIsRunning(true);
+
+    // Scroll to array visualizer
+    scrollToArray?.();
+    await sleep(SCROLL_DELAY);
+
+    setStatusMessage("Starting Two Pointers algorithm - placing pointers at both ends...");
+    pushLog("👉👈 Two Pointers Algorithm - Finding pairs");
+    let a = [...arr];
+    let l = 0, r = a.length - 1;
+    let step = 1;
+
+    while (l < r) {
+      setPairHighlight({ l, r });
+      setStatusMessage(`Step ${step}: Pointers at [${l}] & [${r}], values: ${a[l]} and ${a[r]}`);
+      pushLog(`Step ${step}: Pointers at ${l} & ${r} (values: ${a[l]}, ${a[r]})`);
+      await sleep(ANIMATION_DELAY);
+
+      // Swap for demonstration
+      const tmp = a[l];
+      a[l] = a[r];
+      a[r] = tmp;
+      setStatusMessage(`Swapping values ${tmp} ↔ ${a[l]}, moving pointers inward...`);
+      setArr([...a]);
+      pushLog(`  → Swapped ${tmp} ↔ ${a[l]}`);
+      await sleep(QUICK_DELAY);
+
+      l++;
+      r--;
+      step++;
+    }
+
+    setPairHighlight(null);
+    setStatusMessage(`✓ Two Pointers complete! Made ${step - 1} swaps`);
+    pushLog(`✓ Two pointers complete (${step - 1} swaps)`);
+    await sleep(QUICK_DELAY);
+    setStatusMessage('');
+    setIsRunning(false);
+  }
+
+  async function runSlidingWindow(k = 1) {
+    if (isRunning || arr.length === 0) return;
+    setIsRunning(true);
+
+    // Scroll to array visualizer
+    scrollToArray?.();
+    await sleep(SCROLL_DELAY);
+
     const n = arr.length;
     k = Math.max(1, Math.min(k, n));
+    setStatusMessage(`Starting Sliding Window with window size ${k}...`);
+    pushLog(`🪟 Sliding Window - Finding max in windows of size ${k}`);
+    await sleep(QUICK_DELAY);
+
     for (let i = 0; i + k <= n; i++) {
       setWindowHighlight({ start: i, end: i + k - 1 });
-      pushLog(`Window [${i}, ${i + k - 1}] -> max = ${Math.max(...arr.slice(i, i+k))}`);
+      const windowValues = arr.slice(i, i + k);
+      const maxVal = Math.max(...windowValues);
+      setStatusMessage(`Window ${i + 1}: Elements [${i}..${i + k - 1}] = [${windowValues.join(', ')}] → Maximum = ${maxVal}`);
+      pushLog(`Window ${i}: [${i}..${i + k - 1}] = [${windowValues.join(',')}] → max = ${maxVal}`);
+      await sleep(ANIMATION_DELAY);
     }
+
     setWindowHighlight(null);
-    pushLog("Sliding window done");
+    setStatusMessage(`✓ Sliding Window complete! Processed ${n - k + 1} windows`);
+    pushLog(`✓ Sliding window complete`);
+    await sleep(QUICK_DELAY);
+    setStatusMessage('');
+    setIsRunning(false);
   }
 
-  function runPrefixSum() {
-    pushLog("Prefix sum");
+  async function runPrefixSum() {
+    if (isRunning || arr.length === 0) return;
+    setIsRunning(true);
+
+    // Scroll to array visualizer
+    scrollToArray?.();
+    await sleep(SCROLL_DELAY);
+
+    setStatusMessage("Computing Prefix Sum - building cumulative sum array...");
+    pushLog("➕ Computing Prefix Sum Array");
     const p = [];
     let s = 0;
+    await sleep(QUICK_DELAY);
+
     for (let i = 0; i < arr.length; i++) {
       s += arr[i];
       p.push(s);
+      setPtrHighlight(i);
       setPrefix([...p]);
-      pushLog(`prefix[0..${i}] = ${p.join(",")}`);
+      setStatusMessage(`Step ${i + 1}/${arr.length}: Adding arr[${i}] = ${arr[i]}, running sum = ${s}`);
+      pushLog(`Step ${i + 1}: prefix[${i}] = ${s} (sum of first ${i + 1} elements)`);
+      await sleep(ANIMATION_DELAY);
     }
-    pushLog("Prefix computed");
+
+    setPtrHighlight(null);
+    setStatusMessage(`✓ Prefix Sum complete! Result: [${p.join(', ')}]`);
+    pushLog(`✓ Prefix sum computed: [${p.join(', ')}]`);
+    await sleep(QUICK_DELAY);
+    setStatusMessage('');
+    setIsRunning(false);
   }
 
   return {
     arr, setArr, prefix, log,
     ptrHighlight, pairHighlight, windowHighlight,
+    isRunning, statusMessage,
     reset, randomize, clearLog,
     runInsert, runDelete, runRotate, runReverse,
     runTwoPointers, runSlidingWindow, runPrefixSum

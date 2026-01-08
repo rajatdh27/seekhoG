@@ -193,12 +193,74 @@ export default function ArrayIntro() {
           </ul>
         </motion.div>
 
+        {/* Array Types */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-6"
+        >
+          <h3 className="text-xl font-semibold mb-4 text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
+            <span>📦</span> Types of Arrays
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <ArrayTypeCard
+              title="1D Array (Linear)"
+              description="Single row of elements"
+              example="[1, 2, 3, 4, 5]"
+              uses="Lists, sequences, basic collections"
+            />
+            <ArrayTypeCard
+              title="2D Array (Matrix)"
+              description="Grid/table structure with rows and columns"
+              example="[[1,2,3], [4,5,6], [7,8,9]]"
+              uses="Images, matrices, grids, boards"
+            />
+            <ArrayTypeCard
+              title="Multidimensional Array"
+              description="3D, 4D or higher dimensional arrays"
+              example="[[[1,2],[3,4]], [[5,6],[7,8]]]"
+              uses="3D graphics, video data, scientific computing"
+            />
+            <ArrayTypeCard
+              title="Jagged Array"
+              description="Array of arrays with different lengths"
+              example="[[1,2], [3,4,5,6], [7]]"
+              uses="Irregular data, variable-length rows"
+            />
+            <ArrayTypeCard
+              title="Static Array"
+              description="Fixed size determined at compile/creation time"
+              example="int arr[10]; // C/C++"
+              uses="Embedded systems, when size is known"
+            />
+            <ArrayTypeCard
+              title="Dynamic Array"
+              description="Resizable array (Vector, ArrayList, List)"
+              example="vector<int> arr; // C++"
+              uses="When size changes at runtime"
+            />
+            <ArrayTypeCard
+              title="Circular Array"
+              description="Last element connects back to first"
+              example="Use modulo: (i+1) % length"
+              uses="Ring buffers, round-robin scheduling"
+            />
+            <ArrayTypeCard
+              title="Sorted Array"
+              description="Elements in ascending/descending order"
+              example="[1, 3, 5, 7, 9]"
+              uses="Binary search, range queries"
+            />
+          </div>
+        </motion.div>
+
         {/* When to Use / Avoid */}
         <div className="grid md:grid-cols-2 gap-6">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.7 }}
             className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6"
           >
             <h3 className="text-lg font-semibold mb-4 text-green-900 dark:text-green-200 flex items-center gap-2">
@@ -216,18 +278,18 @@ export default function ArrayIntro() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.8 }}
             className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6"
           >
             <h3 className="text-lg font-semibold mb-4 text-red-900 dark:text-red-200 flex items-center gap-2">
-              <span>❌</span> Avoid Arrays When:
+              <span>❌</span> Challenges with Arrays:
             </h3>
             <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li>• Frequent insertions/deletions needed</li>
-              <li>• Size changes dynamically</li>
-              <li>• You need fast search (use hash table)</li>
-              <li>• You need sorted order with updates</li>
-              <li>• Memory is very limited and sparse</li>
+              <li>• Frequent insertions/deletions are expensive (O(n))</li>
+              <li>• Fixed size in most languages (need dynamic arrays)</li>
+              <li>• Unsorted search is slow (O(n))</li>
+              <li>• Memory waste if size is overestimated</li>
+              <li>• Cannot easily grow beyond initial capacity</li>
             </ul>
           </motion.div>
         </div>
@@ -254,6 +316,24 @@ function FeatureCard({ icon, title, description, color }) {
       <div className="text-3xl mb-2">{icon}</div>
       <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">{title}</h4>
       <p className="text-sm text-slate-600 dark:text-slate-400">{description}</p>
+    </motion.div>
+  );
+}
+
+function ArrayTypeCard({ title, description, example, uses }) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.03, y: -3 }}
+      className="bg-white dark:bg-slate-800 border border-indigo-200 dark:border-indigo-700 rounded-lg p-4"
+    >
+      <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">{title}</h4>
+      <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{description}</p>
+      <div className="bg-slate-50 dark:bg-slate-700 rounded p-2 mb-2">
+        <code className="text-xs font-mono text-blue-600 dark:text-blue-400">{example}</code>
+      </div>
+      <p className="text-xs text-slate-500 dark:text-slate-500">
+        <strong>Uses:</strong> {uses}
+      </p>
     </motion.div>
   );
 }

@@ -8,16 +8,54 @@ import TutorialModal from "./TutorialModal";
 import useArrayEngine from "./useArrayEngine";
 
 export default function ArrayVisualizer() {
+  const arrayScrollRef = useRef(null);
+
+  const scrollToArray = () => {
+    // Find and click the Table of Contents link that works!
+    const tocLink = document.querySelector('a[href="#visualizer"]');
+    if (tocLink) {
+      tocLink.click();
+    } else {
+      // Fallback: use hash
+      window.location.hash = 'visualizer';
+      setTimeout(() => {
+        window.scrollBy(0, -100); // Adjust by 100px
+      }, 100);
+    }
+  };
+
+  const scrollToElement = (index) => {
+    // Scroll horizontally to show the element at index
+    if (arrayScrollRef.current && index !== null && index !== undefined) {
+      const container = arrayScrollRef.current;
+      const elementWidth = 100; // Approximate width of each box (96px + gap)
+      const scrollPosition = index * elementWidth - (container.clientWidth / 2) + 50;
+
+      container.scrollTo({
+        left: Math.max(0, scrollPosition),
+        behavior: 'smooth'
+      });
+    }
+  };
+
   const {
-    arr, prefix, log, ptrHighlight, pairHighlight, windowHighlight,
+    arr, prefix, log, ptrHighlight, pairHighlight, windowHighlight, isRunning, statusMessage,
     setArr, reset, randomize, runInsert, runDelete, runRotate, runReverse,
     runTwoPointers, runSlidingWindow, runPrefixSum, clearLog
-  } = useArrayEngine([3, 1, 4, 1, 5, 9]);
+  } = useArrayEngine([3, 1, 4, 1, 5, 9], scrollToArray, scrollToElement);
+
+  // Auto-scroll to highlighted element
+  useEffect(() => {
+    if (ptrHighlight !== null) {
+      scrollToElement(ptrHighlight);
+    } else if (pairHighlight) {
+      scrollToElement(pairHighlight.l);
+    } else if (windowHighlight) {
+      scrollToElement(windowHighlight.start);
+    }
+  }, [ptrHighlight, pairHighlight, windowHighlight]);
 
   const [showTutorial, setShowTutorial] = useState(false);
-  const scrollContainerRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
 
   useEffect(() => {
     const seen = localStorage.getItem("seen-array-tutorial");
@@ -27,38 +65,9 @@ export default function ArrayVisualizer() {
     }
   }, []);
 
-  // Check scroll position
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const checkScroll = () => {
-      const { scrollLeft, scrollWidth, clientWidth } = container;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
-    };
-
-    checkScroll();
-    container.addEventListener('scroll', checkScroll);
-    window.addEventListener('resize', checkScroll);
-
-    return () => {
-      container.removeEventListener('scroll', checkScroll);
-      window.removeEventListener('resize', checkScroll);
-    };
-  }, [arr]);
-
   function closeTutorial() {
     localStorage.setItem("seen-array-tutorial", "yes");
     setShowTutorial(false);
-  }
-
-  function scrollLeft() {
-    scrollContainerRef.current?.scrollBy({ left: -300, behavior: 'smooth' });
-  }
-
-  function scrollRight() {
-    scrollContainerRef.current?.scrollBy({ left: 300, behavior: 'smooth' });
   }
 
   return (
@@ -66,10 +75,10 @@ export default function ArrayVisualizer() {
       {showTutorial && <TutorialModal onClose={closeTutorial} />}
 
       {/* Main Container */}
-      <div className="space-y-6 w-full overflow-hidden">
+      <div className="space-y-6 w-full max-w-full overflow-hidden">
 
         {/* Array Display Section - Full Width */}
-        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 w-full overflow-hidden">
+        <div id="array-visualizer" className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 w-full overflow-hidden">
 
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
@@ -77,6 +86,11 @@ export default function ArrayVisualizer() {
               <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
                 <span className="text-3xl">📊</span>
                 Array Visualizer
+                {isRunning && (
+                  <span className="ml-2 px-3 py-1 bg-green-500 text-white text-xs font-semibold rounded-full animate-pulse">
+                    Running...
+                  </span>
+                )}
               </h2>
               <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
                 Watch array operations come to life
@@ -87,46 +101,37 @@ export default function ArrayVisualizer() {
             <div className="flex gap-2">
               <button
                 onClick={randomize}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all shadow-md hover:shadow-lg"
+                disabled={isRunning}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-all shadow-md hover:shadow-lg disabled:shadow-none"
               >
                 🎲 Randomize
               </button>
               <button
                 onClick={reset}
-                className="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-medium transition-all shadow-md hover:shadow-lg"
+                disabled={isRunning}
+                className="px-4 py-2 bg-slate-600 hover:bg-slate-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-all shadow-md hover:shadow-lg disabled:shadow-none"
               >
                 🔄 Reset
               </button>
             </div>
           </div>
 
-          {/* Array Display - Carousel Container */}
-          <div className="relative bg-white dark:bg-slate-800 rounded-xl p-6 shadow-inner border border-slate-200 dark:border-slate-700 w-full overflow-hidden">
+          {/* Status Message */}
+          {statusMessage && (
+            <div className="mb-4 p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg shadow-lg border-2 border-blue-400 animate-pulse">
+              <div className="flex items-center gap-3">
+                <div className="text-2xl">⚡</div>
+                <div className="text-lg font-semibold">{statusMessage}</div>
+              </div>
+            </div>
+          )}
 
-            {/* Left Scroll Button */}
-            {canScrollLeft && (
-              <button
-                onClick={scrollLeft}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center hover:scale-110"
-                aria-label="Scroll left"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-            )}
+          {/* Array Display - Scrollable Container */}
+          <div id="array-display-target" className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-inner border border-slate-200 dark:border-slate-700 w-full">
 
-            {/* Scrollable Array Container */}
-            <div
-              ref={scrollContainerRef}
-              className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-600 scrollbar-track-transparent"
-              style={{
-                scrollbarWidth: 'thin',
-                scrollbarColor: '#cbd5e1 transparent',
-                maxWidth: '100%'
-              }}
-            >
-              <div className="flex gap-3 items-center py-4 px-2 w-max">
+            {/* Scrollable Array Container with visible scrollbar */}
+            <div ref={arrayScrollRef} className="overflow-x-auto overflow-y-hidden w-full pb-2">
+              <div className="flex gap-3 items-center py-4 px-2 min-w-min">
                 {arr.map((v, i) => (
                   <ArrayBox
                     key={`${v}-${i}-${arr.length}`}
@@ -144,29 +149,6 @@ export default function ArrayVisualizer() {
                 )}
               </div>
             </div>
-
-            {/* Right Scroll Button */}
-            {canScrollRight && (
-              <button
-                onClick={scrollRight}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center hover:scale-110"
-                aria-label="Scroll right"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            )}
-
-            {/* Scroll Indicator */}
-            {(canScrollLeft || canScrollRight) && (
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-                <span>Scroll to see all</span>
-              </div>
-            )}
           </div>
 
           {/* Prefix Sum Display */}
@@ -187,21 +169,26 @@ export default function ArrayVisualizer() {
         </div>
 
         {/* Controls and Log - Side by Side */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ControlsPanel
-            onInsert={runInsert}
-            onDelete={runDelete}
-            onRotate={runRotate}
-            onReverse={runReverse}
-            onTwoPointers={runTwoPointers}
-            onSlidingWindow={runSlidingWindow}
-            onPrefixSum={runPrefixSum}
-            onRandomize={randomize}
-            onReset={reset}
-            clearLog={clearLog}
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-full overflow-hidden">
+          <div className="min-w-0 overflow-hidden">
+            <ControlsPanel
+              onInsert={runInsert}
+              onDelete={runDelete}
+              onRotate={runRotate}
+              onReverse={runReverse}
+              onTwoPointers={runTwoPointers}
+              onSlidingWindow={runSlidingWindow}
+              onPrefixSum={runPrefixSum}
+              onRandomize={randomize}
+              onReset={reset}
+              clearLog={clearLog}
+              isRunning={isRunning}
+            />
+          </div>
 
-          <ActionLog log={log} />
+          <div className="min-w-0 overflow-hidden">
+            <ActionLog log={log} />
+          </div>
         </div>
       </div>
     </>

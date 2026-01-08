@@ -48,9 +48,8 @@ export default function ArrayBox({ index, value, highlight, pairHighlight, windo
         initial={{ opacity: 0, scale: 0.8, y: -20 }}
         animate={{
           opacity: 1,
-          scale: 1,
-          y: 0,
-          rotate: highlight ? [0, -5, 5, 0] : 0
+          scale: highlight ? 1.05 : 1,
+          y: 0
         }}
         exit={{ opacity: 0, scale: 0.8, y: 20 }}
         transition={{

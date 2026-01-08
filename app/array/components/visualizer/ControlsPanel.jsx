@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function ControlsPanel({
   onInsert, onDelete, onRotate, onReverse, onTwoPointers, onSlidingWindow, onPrefixSum,
-  onRandomize, onReset, clearLog
+  onRandomize, onReset, clearLog, isRunning
 }) {
   const [val, setVal] = useState(0);
   const [idx, setIdx] = useState(0);
@@ -69,7 +69,7 @@ export default function ControlsPanel({
   ];
 
   return (
-    <div className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6">
+    <div className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 w-full max-w-full overflow-hidden">
 
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
@@ -88,8 +88,9 @@ export default function ControlsPanel({
               type="number"
               value={val}
               onChange={(e) => setVal(e.target.value)}
+              disabled={isRunning}
               placeholder="0"
-              className="w-full px-3 py-2 bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-slate-100"
+              className="w-full px-3 py-2 bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div>
@@ -100,8 +101,9 @@ export default function ControlsPanel({
               type="number"
               value={idx}
               onChange={(e) => setIdx(e.target.value)}
+              disabled={isRunning}
               placeholder="0"
-              className="w-full px-3 py-2 bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-slate-100"
+              className="w-full px-3 py-2 bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -113,8 +115,9 @@ export default function ControlsPanel({
             type="number"
             value={k}
             onChange={(e) => setK(e.target.value)}
+            disabled={isRunning}
             placeholder="1"
-            className="w-full px-3 py-2 bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-slate-100"
+            className="w-full px-3 py-2 bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
       </div>
@@ -134,10 +137,12 @@ export default function ControlsPanel({
                 <button
                   key={itemIdx}
                   onClick={item.onClick}
+                  disabled={isRunning}
                   className={`
                     px-4 py-2.5 rounded-lg font-medium text-white
                     bg-gradient-to-r ${item.color}
                     shadow-md hover:shadow-lg
+                    disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none
                     transition-all duration-200
                     flex items-center justify-center gap-2
                     ${category.items.length === itemIdx + 1 && category.items.length % 2 !== 0 ? 'col-span-2' : ''}
@@ -156,7 +161,8 @@ export default function ControlsPanel({
       <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
         <button
           onClick={clearLog}
-          className="w-full px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-900 dark:text-slate-100 rounded-lg font-medium transition-all shadow-sm hover:shadow-md"
+          disabled={isRunning}
+          className="w-full px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 dark:text-slate-100 rounded-lg font-medium transition-all shadow-sm hover:shadow-md"
         >
           🧹 Clear Log
         </button>

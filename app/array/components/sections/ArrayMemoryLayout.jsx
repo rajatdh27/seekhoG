@@ -216,10 +216,154 @@ export default function ArrayMemoryLayout() {
               <li className="flex items-start gap-2">
                 <span className="text-emerald-600 dark:text-emerald-400 mt-1">✓</span>
                 <span>
-                  Much faster than linked lists for iteration (10-100x speedup)
+                  Sequential iteration benefits massively from cache prefetching
                 </span>
               </li>
             </ul>
+          </div>
+        </motion.div>
+
+        {/* 2D Arrays Memory Layout */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2 }}
+          className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6"
+        >
+          <h3 className="text-xl font-semibold mb-4 text-blue-900 dark:text-blue-200 flex items-center gap-2">
+            <span>📐</span> 2D Arrays & Memory Layout
+          </h3>
+
+          <div className="space-y-4">
+            <p className="text-slate-700 dark:text-slate-300">
+              2D arrays are stored in memory as a <strong>continuous block</strong>, but there are two common layouts:
+            </p>
+
+            {/* Row-Major Order */}
+            <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="font-bold text-sm text-blue-900 dark:text-blue-200 mb-2">
+                📊 Row-Major Order (C, C++, Java, JavaScript, Python)
+              </h4>
+              <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+                Rows are stored contiguously. Elements in the same row are adjacent in memory.
+              </p>
+              <div className="font-mono text-xs space-y-1 text-slate-600 dark:text-slate-400">
+                <div className="mb-2">Array: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">int arr[2][3] = [[1,2,3], [4,5,6]]</code></div>
+                <div>Memory: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">[1][2][3][4][5][6]</code></div>
+                <div className="text-green-600 dark:text-green-400 mt-2">
+                  ✓ Iterate rows faster: <code>for i, for j → arr[i][j]</code>
+                </div>
+                <div className="text-xs mt-2">
+                  Formula: <code className="bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded">address = base + (i × cols + j) × size</code>
+                </div>
+              </div>
+            </div>
+
+            {/* Column-Major Order */}
+            <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-purple-200 dark:border-purple-700">
+              <h4 className="font-bold text-sm text-purple-900 dark:text-purple-200 mb-2">
+                📊 Column-Major Order (Fortran, MATLAB, R)
+              </h4>
+              <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+                Columns are stored contiguously. Elements in the same column are adjacent in memory.
+              </p>
+              <div className="font-mono text-xs space-y-1 text-slate-600 dark:text-slate-400">
+                <div className="mb-2">Array: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">int arr[2][3] = [[1,2,3], [4,5,6]]</code></div>
+                <div>Memory: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">[1][4][2][5][3][6]</code></div>
+                <div className="text-green-600 dark:text-green-400 mt-2">
+                  ✓ Iterate columns faster: <code>for j, for i → arr[i][j]</code>
+                </div>
+                <div className="text-xs mt-2">
+                  Formula: <code className="bg-purple-100 dark:bg-purple-900 px-2 py-1 rounded">address = base + (j × rows + i) × size</code>
+                </div>
+              </div>
+            </div>
+
+            {/* Performance Impact */}
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+              <h4 className="font-bold text-sm text-amber-900 dark:text-amber-200 mb-2">
+                ⚡ Performance Impact
+              </h4>
+              <ul className="text-sm space-y-1 text-slate-700 dark:text-slate-300">
+                <li>• <strong>Row-major:</strong> Access arr[i][j] by iterating i then j (cache-friendly)</li>
+                <li>• <strong>Column-major:</strong> Access arr[i][j] by iterating j then i (cache-friendly)</li>
+                <li>• <strong>Wrong order:</strong> Can be 10-100x slower due to cache misses!</li>
+              </ul>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Dynamic Array Growth */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3 }}
+          className="bg-gradient-to-br from-violet-50 to-fuchsia-50 dark:from-violet-900/20 dark:to-fuchsia-900/20 border border-violet-200 dark:border-violet-800 rounded-xl p-6"
+        >
+          <h3 className="text-xl font-semibold mb-4 text-violet-900 dark:text-violet-200 flex items-center gap-2">
+            <span>📈</span> Dynamic Array Growth & Amortization
+          </h3>
+
+          <div className="space-y-4">
+            <p className="text-slate-700 dark:text-slate-300">
+              Dynamic arrays (vector, ArrayList) automatically resize when capacity is exceeded:
+            </p>
+
+            <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-violet-200 dark:border-violet-700">
+              <h4 className="font-bold text-sm mb-2 text-slate-900 dark:text-slate-100">
+                How Resizing Works:
+              </h4>
+              <ol className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+                <li className="flex items-start gap-2">
+                  <span className="bg-violet-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                  <span>When array is full, allocate a new array (typically 2x the size)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="bg-violet-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                  <span>Copy all existing elements to the new array - O(n)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="bg-violet-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                  <span>Free the old array memory</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="bg-violet-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
+                  <span>Insert the new element</span>
+                </li>
+              </ol>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-green-200 dark:border-green-700">
+                <h4 className="font-bold text-sm text-green-900 dark:text-green-200 mb-2">
+                  Amortized O(1) Append
+                </h4>
+                <div className="text-xs space-y-1 text-slate-700 dark:text-slate-300">
+                  <div>• Most appends: O(1) - just add to end</div>
+                  <div>• Occasional resize: O(n) - copy all</div>
+                  <div>• Average over n ops: O(1) amortized</div>
+                  <div className="mt-2 font-mono text-xs">
+                    Cost = 1+1+...+n+1+1+...+2n = O(n) total
+                    <br />
+                    → O(n)/n = O(1) per operation
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+                <h4 className="font-bold text-sm text-blue-900 dark:text-blue-200 mb-2">
+                  Growth Factors
+                </h4>
+                <div className="text-xs space-y-1 text-slate-700 dark:text-slate-300">
+                  <div>• <strong>2x growth:</strong> C++, Java (wastes 50% memory max)</div>
+                  <div>• <strong>1.5x growth:</strong> Python (more memory efficient)</div>
+                  <div>• <strong>φ growth:</strong> Some implementations (golden ratio)</div>
+                  <div className="mt-2 text-amber-600 dark:text-amber-400">
+                    Trade-off: Larger factor = fewer reallocations but more wasted space
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
