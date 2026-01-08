@@ -13,12 +13,7 @@ const backendSections = [
   {
     category: "💾 Databases",
     topics: [
-      { name: "SQL Databases", icon: "🗄️", href: "/backend/sql-databases", description: "PostgreSQL, MySQL, Design & Optimization" },
-      { name: "NoSQL Databases", icon: "📦", href: "/backend/nosql-databases", description: "MongoDB, Cassandra, DynamoDB" },
-      { name: "Database Design", icon: "🏗️", href: "/backend/database-design", description: "Normalization, Indexing, Relationships" },
-      { name: "ORMs & Query Builders", icon: "🔧", href: "/backend/orm", description: "Prisma, TypeORM, Sequelize, Drizzle" },
-      { name: "Database Optimization", icon: "⚡", href: "/backend/db-optimization", description: "Indexes, Query optimization, N+1 problems" },
-      { name: "Transactions & ACID", icon: "🔄", href: "/backend/transactions", description: "ACID properties, Isolation levels" },
+      { name: "Databases", icon: "💾", href: "/backend/databases", description: "SQL, NoSQL, Design, Optimization, Transactions & ACID", status: "live" },
     ],
   },
   {
