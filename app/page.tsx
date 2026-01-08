@@ -145,7 +145,7 @@ const dataStructures = [
     description: "Prefix trees, autocomplete, and word search",
     stats: { operations: "5+", problems: "60+", patterns: "5+" },
     features: ["Trie Visualizer", "Auto-complete", "Word Dictionary"],
-    available: false,
+    available: true,
   },
 ];
 
