@@ -4,7 +4,7 @@ import ThemeToggle from "./components/ThemeToggle";
 import Link from "next/link";
 
 export const metadata = {
-  title: "seekhoDSA - सीखो Data Structures & Algorithms",
+  title: "sheekoDSA - Complete DSA Master Document",
   description: "Master data structures with interactive visualizations, detailed explanations, and 250+ interview problems",
 };
 
@@ -19,9 +19,8 @@ export default function RootLayout({ children }) {
               <div className="flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-1 group">
-                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform">
-                    <span className="font-extrabold">सीखो</span>
-                    <span className="font-mono">DSA</span>
+                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform font-mono">
+                    sheekoDSA
                   </div>
                 </Link>
 
@@ -33,6 +32,18 @@ export default function RootLayout({ children }) {
                       className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 transition-all"
                     >
                       Home
+                    </Link>
+                    <Link
+                      href="/foundations"
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 transition-all"
+                    >
+                      🟩 Foundations
+                    </Link>
+                    <Link
+                      href="/searching-sorting"
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:text-orange-600 dark:hover:text-orange-400 transition-all"
+                    >
+                      🔍 Search & Sort
                     </Link>
                     <Link
                       href="/array"
@@ -69,9 +80,8 @@ export default function RootLayout({ children }) {
             <div className="max-w-7xl mx-auto px-4">
               <div className="grid md:grid-cols-3 gap-8">
                 <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-                    <span className="font-extrabold">सीखो</span>
-                    <span className="font-mono">DSA</span>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 font-mono">
+                    sheekoDSA
                   </div>
                   <p className="text-slate-400 text-sm leading-relaxed">
                     Master data structures & algorithms with interactive visualizations and comprehensive explanations.

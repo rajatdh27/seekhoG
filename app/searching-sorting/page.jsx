@@ -2,34 +2,33 @@
 
 import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import TableOfContents from "./components/sections/TableOfContents";
+import TableOfContents from "../array/components/sections/TableOfContents";
 
-// Eager load only the first section for instant display
-import StackIntro from "./components/sections/StackIntro";
+// Eager load the first section
+import SearchingSortingIntro from "./components/sections/SearchingSortingIntro";
 
-// Lazy load all other sections for blazing fast initial load
-const StackMemoryLayout = lazy(() => import("./components/sections/StackMemoryLayout"));
-const StackVisualizerSection = lazy(() => import("./components/sections/StackVisualizerSection"));
-const StackSyntax = lazy(() => import("./components/sections/StackSyntax"));
-const StackComplexity = lazy(() => import("./components/sections/StackComplexity"));
-const StackPatterns = lazy(() => import("./components/sections/StackPatterns"));
-const StackProblems = lazy(() => import("./components/sections/StackProblems"));
-const StackApplications = lazy(() => import("./components/sections/StackApplications"));
-const StackCheatsheet = lazy(() => import("./components/sections/StackCheatsheet"));
+// Lazy load other sections
+const LinearSearchSection = lazy(() => import("./components/sections/LinearSearchSection"));
+const BinarySearchSection = lazy(() => import("./components/sections/BinarySearchSection"));
+const BubbleSortSection = lazy(() => import("./components/sections/BubbleSortSection"));
+const SelectionSortSection = lazy(() => import("./components/sections/SelectionSortSection"));
+const InsertionSortSection = lazy(() => import("./components/sections/InsertionSortSection"));
+const MergeSortSection = lazy(() => import("./components/sections/MergeSortSection"));
+const QuickSortSection = lazy(() => import("./components/sections/QuickSortSection"));
+const SearchingSortingCheatsheet = lazy(() => import("./components/sections/SearchingSortingCheatsheet"));
 
 const sections = [
-  { id: "intro", title: "What is a Stack?", component: StackIntro },
-  { id: "memory", title: "Memory Layout & Implementation", component: StackMemoryLayout },
-  { id: "visualizer", title: "Interactive Visualizer", component: StackVisualizerSection },
-  { id: "syntax", title: "Syntax Across Languages", component: StackSyntax },
-  { id: "complexity", title: "Time & Space Complexity", component: StackComplexity },
-  { id: "patterns", title: "Interview Patterns", component: StackPatterns },
-  { id: "problems", title: "Must-Know Problems", component: StackProblems },
-  { id: "applications", title: "Real-World Applications", component: StackApplications },
-  { id: "cheatsheet", title: "Quick Reference Cheatsheet", component: StackCheatsheet },
+  { id: "intro", title: "Introduction", component: SearchingSortingIntro },
+  { id: "linear-search", title: "Linear Search", component: LinearSearchSection },
+  { id: "binary-search", title: "Binary Search", component: BinarySearchSection },
+  { id: "bubble-sort", title: "Bubble Sort", component: BubbleSortSection },
+  { id: "selection-sort", title: "Selection Sort", component: SelectionSortSection },
+  { id: "insertion-sort", title: "Insertion Sort", component: InsertionSortSection },
+  { id: "merge-sort", title: "Merge Sort", component: MergeSortSection },
+  { id: "quick-sort", title: "Quick Sort", component: QuickSortSection },
+  { id: "cheatsheet", title: "Cheatsheet", component: SearchingSortingCheatsheet },
 ];
 
-// Loading skeleton component
 function SectionSkeleton() {
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700 animate-pulse">
@@ -43,33 +42,34 @@ function SectionSkeleton() {
   );
 }
 
-export default function StackPage() {
+export default function SearchingSortingPage() {
   const [activeSection, setActiveSection] = useState("intro");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-700 dark:to-pink-800 text-white py-16 px-6"
+        className="bg-gradient-to-r from-orange-600 to-yellow-600 dark:from-orange-700 dark:to-yellow-800 text-white py-16 px-6"
       >
         <div className="max-w-7xl mx-auto">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-5xl md:text-6xl font-bold mb-4"
+            className="flex items-center gap-4 mb-4"
           >
-            Master Stacks
-          </motion.h1>
+            <div className="text-6xl">🔍</div>
+            <h1 className="text-5xl md:text-6xl font-bold">Searching & Sorting</h1>
+          </motion.div>
           <motion.p
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-xl md:text-2xl text-purple-100 max-w-3xl"
+            className="text-xl md:text-2xl text-orange-100 max-w-3xl"
           >
-            From LIFO fundamentals to advanced interview patterns. Everything you need to master stack-based problems.
+            Master the fundamental algorithms with visual animations and code in 6 languages. See how each algorithm works step-by-step!
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
@@ -78,16 +78,16 @@ export default function StackPage() {
             className="flex gap-4 mt-8"
           >
             <a
-              href="#intro"
-              className="px-6 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-colors"
+              href="#linear-search"
+              className="px-6 py-3 bg-white text-orange-600 rounded-lg font-semibold hover:bg-orange-50 transition-colors"
             >
               Start Learning
             </a>
             <a
-              href="#visualizer"
-              className="px-6 py-3 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-800 transition-colors border border-purple-500"
+              href="#cheatsheet"
+              className="px-6 py-3 bg-orange-700 text-white rounded-lg font-semibold hover:bg-orange-800 transition-colors border border-orange-500"
             >
-              Try Interactive Visualizer
+              View Cheatsheet
             </a>
           </motion.div>
         </div>
@@ -96,7 +96,7 @@ export default function StackPage() {
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Table of Contents - Sticky Sidebar */}
+          {/* Table of Contents */}
           <aside className="lg:w-64 lg:sticky lg:top-4 lg:self-start">
             <TableOfContents
               sections={sections}
@@ -121,10 +121,8 @@ export default function StackPage() {
                   className="scroll-mt-20"
                 >
                   {index === 0 ? (
-                    // First section loads immediately
                     <Component />
                   ) : (
-                    // Other sections lazy load with skeleton
                     <Suspense fallback={<SectionSkeleton />}>
                       <Component />
                     </Suspense>
@@ -163,7 +161,7 @@ export default function StackPage() {
               fill="none"
               strokeDasharray={`${2 * Math.PI * 28}`}
               strokeDashoffset={`${2 * Math.PI * 28 * (1 - (sections.findIndex((s) => s.id === activeSection) + 1) / sections.length)}`}
-              className="text-purple-600 dark:text-purple-500 transition-all duration-300"
+              className="text-orange-600 dark:text-orange-500 transition-all duration-300"
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-slate-700 dark:text-slate-300">

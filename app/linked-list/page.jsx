@@ -114,8 +114,9 @@ export default function LinkedListPage() {
                   key={section.id}
                   id={section.id}
                   initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
+                  animate={index === 0 ? { opacity: 1, y: 0 } : undefined}
+                  whileInView={index === 0 ? undefined : { opacity: 1, y: 0 }}
+                  viewport={index === 0 ? undefined : { once: true, margin: "0px" }}
                   transition={{ duration: 0.5 }}
                   className="scroll-mt-20"
                 >
