@@ -3,8 +3,8 @@ import Navbar from "./components/Navbar";
 import Link from "next/link";
 
 export const metadata = {
-  title: "sheekoDSA - Complete DSA Master Document",
-  description: "Master data structures with interactive visualizations, detailed explanations, and 250+ interview problems",
+  title: "sheekoG - Complete DSA & Backend Master Document",
+  description: "Master data structures, algorithms, and backend development with interactive visualizations, detailed explanations, and 350+ interview problems",
 };
 
 export default function RootLayout({ children }) {
@@ -22,10 +22,10 @@ export default function RootLayout({ children }) {
               <div className="grid md:grid-cols-3 gap-8">
                 <div>
                   <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 font-mono">
-                    sheekoDSA
+                    sheekoG
                   </div>
                   <p className="text-slate-400 text-sm leading-relaxed">
-                    Master data structures & algorithms with interactive visualizations and comprehensive explanations.
+                    Master DSA & backend development with interactive visualizations and comprehensive explanations.
                   </p>
                 </div>
                 <div>
