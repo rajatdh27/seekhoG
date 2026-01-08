@@ -19,12 +19,7 @@ const backendSections = [
   {
     category: "🔐 Authentication & Security",
     topics: [
-      { name: "Authentication Basics", icon: "🔑", href: "/backend/authentication", description: "Sessions, Cookies, JWT, OAuth" },
-      { name: "Authorization & RBAC", icon: "👮", href: "/backend/authorization", description: "Role-Based Access Control, Permissions" },
-      { name: "Password Security", icon: "🔒", href: "/backend/password-security", description: "Hashing, Salting, bcrypt, argon2" },
-      { name: "Web Security", icon: "🛡️", href: "/backend/web-security", description: "XSS, CSRF, SQL Injection, CORS" },
-      { name: "API Security", icon: "🔐", href: "/backend/api-security", description: "Rate limiting, API keys, Token management" },
-      { name: "Encryption", icon: "🔏", href: "/backend/encryption", description: "SSL/TLS, Data encryption at rest & transit" },
+      { name: "Authentication & Security", icon: "🔐", href: "/backend/auth-security", description: "Auth methods, Password security, RBAC, XSS, CSRF, API security", status: "live" },
     ],
   },
   {
