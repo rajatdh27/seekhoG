@@ -5,22 +5,22 @@ import { motion } from "framer-motion";
 import TableOfContents from "../array/components/sections/TableOfContents";
 
 // Eager load the first section
-import HashingIntro from "./components/sections/HashingIntro";
+import DPIntro from "./components/sections/DPIntro";
 
 // Lazy load other sections
-const HashFunctionsSection = lazy(() => import("./components/sections/HashFunctionsSection"));
-const CollisionHandlingSection = lazy(() => import("./components/sections/CollisionHandlingSection"));
-const HashMapSetSection = lazy(() => import("./components/sections/HashMapSetSection"));
-const HashingPatternsSection = lazy(() => import("./components/sections/HashingPatternsSection"));
-const HashingCheatsheet = lazy(() => import("./components/sections/HashingCheatsheet"));
+const DPApproachesSection = lazy(() => import("./components/sections/DPApproachesSection"));
+const DP1DSection = lazy(() => import("./components/sections/DP1DSection"));
+const DP2DSection = lazy(() => import("./components/sections/DP2DSection"));
+const DPPatternsSection = lazy(() => import("./components/sections/DPPatternsSection"));
+const DPCheatsheet = lazy(() => import("./components/sections/DPCheatsheet"));
 
 const sections = [
-  { id: "intro", title: "Introduction", component: HashingIntro },
-  { id: "hash-functions", title: "Hash Functions", component: HashFunctionsSection },
-  { id: "collision-handling", title: "Collision Handling", component: CollisionHandlingSection },
-  { id: "hashmap-hashset", title: "HashMap & HashSet", component: HashMapSetSection },
-  { id: "patterns", title: "Common Patterns", component: HashingPatternsSection },
-  { id: "cheatsheet", title: "Cheatsheet", component: HashingCheatsheet },
+  { id: "intro", title: "Introduction", component: DPIntro },
+  { id: "approaches", title: "Memoization vs Tabulation", component: DPApproachesSection },
+  { id: "1d-dp", title: "1D DP Problems", component: DP1DSection },
+  { id: "2d-dp", title: "2D DP Problems", component: DP2DSection },
+  { id: "patterns", title: "Common Patterns", component: DPPatternsSection },
+  { id: "cheatsheet", title: "Cheatsheet", component: DPCheatsheet },
 ];
 
 function SectionSkeleton() {
@@ -36,16 +36,16 @@ function SectionSkeleton() {
   );
 }
 
-export default function HashingPage() {
+export default function DynamicProgrammingPage() {
   const [activeSection, setActiveSection] = useState("intro");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-700 dark:via-purple-800 dark:to-pink-700 text-white py-16 px-6"
+        className="bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 dark:from-pink-700 dark:via-rose-800 dark:to-red-700 text-white py-16 px-6"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -54,16 +54,16 @@ export default function HashingPage() {
             transition={{ delay: 0.2 }}
             className="flex items-center gap-4 mb-4"
           >
-            <div className="text-6xl">🔐</div>
-            <h1 className="text-5xl md:text-6xl font-bold">Hashing</h1>
+            <div className="text-6xl">🧩</div>
+            <h1 className="text-5xl md:text-6xl font-bold">Dynamic Programming</h1>
           </motion.div>
           <motion.p
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-xl md:text-2xl text-indigo-100 max-w-3xl"
+            className="text-xl md:text-2xl text-pink-100 max-w-3xl"
           >
-            Master hash functions, collision handling, and O(1) lookups with interactive visualizations!
+            Master memoization, tabulation, and optimization problems with interactive visualizations!
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
@@ -72,14 +72,14 @@ export default function HashingPage() {
             className="flex gap-4 mt-8"
           >
             <a
-              href="#hash-functions"
-              className="px-6 py-3 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 transition-colors"
+              href="#approaches"
+              className="px-6 py-3 bg-white text-pink-600 rounded-lg font-semibold hover:bg-pink-50 transition-colors"
             >
               Start Learning
             </a>
             <a
               href="#cheatsheet"
-              className="px-6 py-3 bg-indigo-700 text-white rounded-lg font-semibold hover:bg-indigo-800 transition-colors border border-indigo-500"
+              className="px-6 py-3 bg-pink-700 text-white rounded-lg font-semibold hover:bg-pink-800 transition-colors border border-pink-500"
             >
               View Cheatsheet
             </a>
@@ -155,7 +155,7 @@ export default function HashingPage() {
               fill="none"
               strokeDasharray={`${2 * Math.PI * 28}`}
               strokeDashoffset={`${2 * Math.PI * 28 * (1 - (sections.findIndex((s) => s.id === activeSection) + 1) / sections.length)}`}
-              className="text-indigo-600 dark:text-indigo-500 transition-all duration-300"
+              className="text-pink-600 dark:text-pink-500 transition-all duration-300"
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-slate-700 dark:text-slate-300">

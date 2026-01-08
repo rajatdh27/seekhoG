@@ -115,7 +115,7 @@ const dataStructures = [
     description: "Memoization, tabulation, and classic DP patterns",
     stats: { patterns: "15+", problems: "150+", types: "8+" },
     features: ["DP Visualizer", "State Transition", "Optimization"],
-    available: false,
+    available: true,
   },
   {
     id: "greedy",
