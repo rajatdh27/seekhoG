@@ -1,17 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import StackIntro from "./components/sections/StackIntro";
-import StackMemoryLayout from "./components/sections/StackMemoryLayout";
-import StackVisualizerSection from "./components/sections/StackVisualizerSection";
-import StackSyntax from "./components/sections/StackSyntax";
-import StackComplexity from "./components/sections/StackComplexity";
-import StackPatterns from "./components/sections/StackPatterns";
-import StackProblems from "./components/sections/StackProblems";
-import StackApplications from "./components/sections/StackApplications";
-import StackCheatsheet from "./components/sections/StackCheatsheet";
 import TableOfContents from "./components/sections/TableOfContents";
+
+// Eager load only the first section for instant display
+import StackIntro from "./components/sections/StackIntro";
+
+// Lazy load all other sections for blazing fast initial load
+const StackMemoryLayout = lazy(() => import("./components/sections/StackMemoryLayout"));
+const StackVisualizerSection = lazy(() => import("./components/sections/StackVisualizerSection"));
+const StackSyntax = lazy(() => import("./components/sections/StackSyntax"));
+const StackComplexity = lazy(() => import("./components/sections/StackComplexity"));
+const StackPatterns = lazy(() => import("./components/sections/StackPatterns"));
+const StackProblems = lazy(() => import("./components/sections/StackProblems"));
+const StackApplications = lazy(() => import("./components/sections/StackApplications"));
+const StackCheatsheet = lazy(() => import("./components/sections/StackCheatsheet"));
 
 const sections = [
   { id: "intro", title: "What is a Stack?", component: StackIntro },
@@ -24,6 +28,20 @@ const sections = [
   { id: "applications", title: "Real-World Applications", component: StackApplications },
   { id: "cheatsheet", title: "Quick Reference Cheatsheet", component: StackCheatsheet },
 ];
+
+// Loading skeleton component
+function SectionSkeleton() {
+  return (
+    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700 animate-pulse">
+      <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-6"></div>
+      <div className="space-y-3">
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full"></div>
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-5/6"></div>
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-4/6"></div>
+      </div>
+    </div>
+  );
+}
 
 export default function StackPage() {
   const [activeSection, setActiveSection] = useState("intro");
@@ -89,7 +107,7 @@ export default function StackPage() {
 
           {/* Content Sections */}
           <main className="flex-1 space-y-16 min-w-0 overflow-hidden">
-            {sections.map((section) => {
+            {sections.map((section, index) => {
               const Component = section.component;
               return (
                 <motion.section
@@ -101,7 +119,15 @@ export default function StackPage() {
                   transition={{ duration: 0.5 }}
                   className="scroll-mt-20"
                 >
-                  <Component />
+                  {index === 0 ? (
+                    // First section loads immediately
+                    <Component />
+                  ) : (
+                    // Other sections lazy load with skeleton
+                    <Suspense fallback={<SectionSkeleton />}>
+                      <Component />
+                    </Suspense>
+                  )}
                 </motion.section>
               );
             })}
@@ -135,12 +161,12 @@ export default function StackPage() {
               strokeWidth="4"
               fill="none"
               strokeDasharray={`${2 * Math.PI * 28}`}
-              strokeDashoffset={`${2 * Math.PI * 28 * 0.7}`}
-              className="text-purple-600 dark:text-purple-500"
+              strokeDashoffset={`${2 * Math.PI * 28 * (1 - (sections.findIndex((s) => s.id === activeSection) + 1) / sections.length)}`}
+              className="text-purple-600 dark:text-purple-500 transition-all duration-300"
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-slate-700 dark:text-slate-300">
-            30%
+            {Math.round((sections.findIndex((s) => s.id === activeSection) + 1) / sections.length * 100)}%
           </div>
         </div>
       </motion.div>

@@ -1,59 +1,93 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function TableOfContents({ sections, activeSection, onSectionClick }) {
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsSticky(scrollPosition > 100);
+
+      // Update active section based on scroll position
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i].id);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150) {
+            onSectionClick(sections[i].id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sections, onSectionClick]);
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-200 dark:border-slate-700"
+      className={`bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden transition-all ${
+        isSticky ? "lg:shadow-2xl" : ""
+      }`}
     >
-      <h3 className="font-bold text-lg mb-4 text-slate-900 dark:text-slate-100">
-        Table of Contents
-      </h3>
-      <nav className="space-y-2">
-        {sections.map((section, index) => (
-          <motion.a
-            key={section.id}
-            href={`#${section.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              onSectionClick(section.id);
-              document.getElementById(section.id)?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.05 }}
-            className={`block px-4 py-2 rounded-lg transition-all duration-200 ${
-              activeSection === section.id
-                ? "bg-blue-600 text-white shadow-md"
-                : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
-            }`}
-          >
-            <span className="text-sm font-medium">{section.title}</span>
-          </motion.a>
-        ))}
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-700 dark:to-indigo-800 p-4">
+        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+          <span>📚</span> Table of Contents
+        </h3>
+      </div>
+
+      <nav className="p-4">
+        <ul className="space-y-1">
+          {sections.map((section, idx) => (
+            <motion.li
+              key={section.id}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: idx * 0.05 }}
+            >
+              <a
+                href={`#${section.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSectionClick(section.id);
+                  document.getElementById(section.id)?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }}
+                className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeSection === section.id
+                    ? "bg-blue-100 dark:bg-blue-900/30 text-blue-900 dark:text-blue-200 border-l-4 border-blue-600"
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-200"
+                }`}
+              >
+                {section.title}
+              </a>
+            </motion.li>
+          ))}
+        </ul>
       </nav>
 
-      {/* Quick Stats */}
-      <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
-        <div className="space-y-3">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-600 dark:text-slate-400">Patterns</span>
-            <span className="font-semibold text-blue-600 dark:text-blue-400">9+</span>
-          </div>
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-600 dark:text-slate-400">Problems</span>
-            <span className="font-semibold text-blue-600 dark:text-blue-400">100+</span>
-          </div>
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-600 dark:text-slate-400">Companies</span>
-            <span className="font-semibold text-blue-600 dark:text-blue-400">50+</span>
-          </div>
+      {/* Progress */}
+      <div className="p-4 border-t border-slate-200 dark:border-slate-700">
+        <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 mb-2">
+          <span>Progress</span>
+          <span>{Math.round((sections.findIndex((s) => s.id === activeSection) + 1) / sections.length * 100)}%</span>
+        </div>
+        <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{
+              width: `${((sections.findIndex((s) => s.id === activeSection) + 1) / sections.length) * 100}%`,
+            }}
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 h-2 rounded-full transition-all duration-300"
+          />
         </div>
       </div>
     </motion.div>
