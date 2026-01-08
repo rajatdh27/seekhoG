@@ -7,7 +7,6 @@ const dataStructures = [
   {
     id: "array",
     name: "Arrays",
-    nameHindi: "ऐरे",
     icon: "📊",
     gradient: "from-blue-600 to-indigo-600",
     description: "Master array fundamentals, patterns, and 130+ problems",
@@ -15,9 +14,17 @@ const dataStructures = [
     features: ["Interactive Visualizer", "6 Languages", "Company Problems"],
   },
   {
+    id: "linked-list",
+    name: "Linked Lists",
+    icon: "🔗",
+    gradient: "from-green-600 to-teal-600",
+    description: "Master pointers, nodes, and 100+ linked list problems",
+    stats: { types: "4+", problems: "100+", companies: "8" },
+    features: ["Node Visualization", "Pointer Logic", "Reversal Patterns"],
+  },
+  {
     id: "stack",
     name: "Stacks",
-    nameHindi: "स्टैक",
     icon: "📚",
     gradient: "from-purple-600 to-pink-600",
     description: "Learn LIFO operations, patterns, and 120+ problems",
@@ -125,7 +132,7 @@ export default function Home() {
           Deep dive into each data structure with interactive learning
         </motion.p>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {dataStructures.map((ds, idx) => (
             <motion.div
               key={ds.id}
@@ -243,8 +250,8 @@ export default function Home() {
           </motion.h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { value: "250+", label: "Practice Problems" },
-              { value: "15+", label: "Patterns Covered" },
+              { value: "350+", label: "Practice Problems" },
+              { value: "20+", label: "Patterns Covered" },
               { value: "6", label: "Programming Languages" },
               { value: "8+", label: "Top Tech Companies" },
             ].map((stat, idx) => (

@@ -41,6 +41,12 @@ export default function RootLayout({ children }) {
                       📊 Arrays
                     </Link>
                     <Link
+                      href="/linked-list"
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 transition-all"
+                    >
+                      🔗 Linked List
+                    </Link>
+                    <Link
                       href="/stack"
                       className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-600 dark:hover:text-purple-400 transition-all"
                     >
@@ -76,6 +82,9 @@ export default function RootLayout({ children }) {
                   <div className="space-y-2">
                     <Link href="/array" className="block text-slate-400 hover:text-blue-400 transition-colors text-sm">
                       Arrays
+                    </Link>
+                    <Link href="/linked-list" className="block text-slate-400 hover:text-green-400 transition-colors text-sm">
+                      Linked Lists
                     </Link>
                     <Link href="/stack" className="block text-slate-400 hover:text-purple-400 transition-colors text-sm">
                       Stacks
