@@ -31,11 +31,7 @@ const backendSections = [
   {
     category: "🔄 Async & Real-time",
     topics: [
-      { name: "Message Queues", icon: "📬", href: "/backend/message-queues", description: "RabbitMQ, Kafka, SQS, Pub/Sub" },
-      { name: "Background Jobs", icon: "⏰", href: "/backend/background-jobs", description: "Bull, Celery, Job scheduling, Workers" },
-      { name: "WebSockets", icon: "🔌", href: "/backend/websockets", description: "Real-time communication, Socket.io" },
-      { name: "Server-Sent Events", icon: "📡", href: "/backend/sse", description: "SSE, Long polling, Push notifications" },
-      { name: "Event-Driven Architecture", icon: "🎯", href: "/backend/event-driven", description: "Event sourcing, CQRS, Event bus" },
+      { name: "Async & Real-time", icon: "🔄", href: "/backend/async-realtime", description: "Message Queues, Background Jobs, WebSockets, Event-Driven Architecture", status: "live" },
     ],
   },
   {
