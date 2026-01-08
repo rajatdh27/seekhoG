@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
                 <nav className="text-sm text-slate-600 dark:text-slate-300 flex gap-4">
                   <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</Link>
                   <Link href="/array" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Arrays</Link>
+                  <Link href="/stack" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Stack</Link>
                 </nav>
 
                 {/* THEME TOGGLE */}
