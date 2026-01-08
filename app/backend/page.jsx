@@ -67,11 +67,7 @@ const backendSections = [
   {
     category: "🎓 System Design",
     topics: [
-      { name: "System Design Basics", icon: "🏗️", href: "/backend/system-design-basics", description: "Requirements, Capacity estimation" },
-      { name: "Scalability Patterns", icon: "📈", href: "/backend/scalability-patterns", description: "Vertical vs Horizontal, Patterns" },
-      { name: "Availability & Reliability", icon: "💪", href: "/backend/availability", description: "SLA, Fault tolerance, Redundancy" },
-      { name: "Consistency Models", icon: "🔄", href: "/backend/consistency", description: "CAP theorem, Eventual consistency" },
-      { name: "Design Case Studies", icon: "📚", href: "/backend/case-studies", description: "URL shortener, Twitter, Instagram" },
+      { name: "System Design", icon: "🎓", href: "/backend/system-design", description: "Distributed systems design - scalability, availability, consistency, and architecture patterns", status: "live" },
     ],
   },
 ];
