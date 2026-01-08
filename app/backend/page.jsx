@@ -43,12 +43,7 @@ const backendSections = [
   {
     category: "☁️ Cloud & DevOps",
     topics: [
-      { name: "Cloud Platforms", icon: "☁️", href: "/backend/cloud-platforms", description: "AWS, Azure, GCP services overview" },
-      { name: "Docker & Containers", icon: "🐳", href: "/backend/docker", description: "Containerization, Images, Docker Compose" },
-      { name: "Kubernetes", icon: "⎈", href: "/backend/kubernetes", description: "Orchestration, Pods, Services, Deployments" },
-      { name: "CI/CD Pipelines", icon: "🔄", href: "/backend/cicd", description: "GitHub Actions, Jenkins, GitLab CI" },
-      { name: "Infrastructure as Code", icon: "📜", href: "/backend/iac", description: "Terraform, CloudFormation, Pulumi" },
-      { name: "Serverless", icon: "⚡", href: "/backend/serverless", description: "Lambda, Functions, Edge computing" },
+      { name: "Cloud & DevOps", icon: "☁️", href: "/backend/cloud-devops", description: "Docker, Kubernetes, CI/CD Pipelines, Cloud Platforms (AWS, Azure, GCP)", status: "live" },
     ],
   },
   {
