@@ -95,7 +95,7 @@ const dataStructures = [
     description: "DFS, BFS, shortest path, MST, and graph algorithms",
     stats: { algorithms: "15+", problems: "120+", patterns: "10+" },
     features: ["Graph Visualizer", "Path Finding", "Topological Sort"],
-    available: false,
+    available: true,
   },
   {
     id: "hashing",

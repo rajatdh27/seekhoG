@@ -69,6 +69,12 @@ export default function RootLayout({ children }) {
                     >
                       🌳 Trees
                     </Link>
+                    <Link
+                      href="/graph"
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all"
+                    >
+                      🕸️ Graphs
+                    </Link>
                   </nav>
 
                   {/* THEME TOGGLE */}
@@ -107,6 +113,9 @@ export default function RootLayout({ children }) {
                     </Link>
                     <Link href="/tree" className="block text-slate-400 hover:text-emerald-400 transition-colors text-sm">
                       Trees
+                    </Link>
+                    <Link href="/graph" className="block text-slate-400 hover:text-cyan-400 transition-colors text-sm">
+                      Graphs
                     </Link>
                   </div>
                 </div>
