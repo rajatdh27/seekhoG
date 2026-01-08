@@ -86,7 +86,18 @@ export default function Navbar() {
                   : "text-slate-300 hover:bg-slate-800"
               }`}
             >
-              Home
+              DSA
+            </Link>
+
+            <Link
+              href="/backend"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                isActive("/backend")
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-300 hover:bg-slate-800"
+              }`}
+            >
+              Backend
             </Link>
 
             {/* Topics Dropdown */}
@@ -185,7 +196,18 @@ export default function Navbar() {
                     : "text-slate-300 hover:bg-slate-800"
                 }`}
               >
-                Home
+                DSA
+              </Link>
+
+              <Link
+                href="/backend"
+                className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all mb-4 ${
+                  isActive("/backend")
+                    ? "bg-slate-100 text-slate-900"
+                    : "text-slate-300 hover:bg-slate-800"
+                }`}
+              >
+                Backend
               </Link>
 
               {Object.entries(navigationSections).map(([key, section]) => (
