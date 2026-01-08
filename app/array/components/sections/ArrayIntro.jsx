@@ -46,7 +46,7 @@ export default function ArrayIntro() {
           transition={{ delay: 0.2 }}
           className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl"
         >
-          <h3 className="text-xl font-semibold mb-6 text-slate-900 dark:text-slate-100">
+          <h3 className="text-xl font-semibold mb-16 text-slate-900 dark:text-slate-100">
             Interactive Array Visualization
           </h3>
 
@@ -82,11 +82,10 @@ export default function ArrayIntro() {
                         ? "0 10px 30px rgba(59, 130, 246, 0.4)"
                         : "0 4px 6px rgba(0, 0, 0, 0.1)",
                   }}
-                  className={`w-20 h-20 flex items-center justify-center rounded-lg border-2 font-mono text-xl font-bold cursor-pointer transition-colors ${
-                    hoveredBox === index
+                  className={`w-20 h-20 flex items-center justify-center rounded-lg border-2 font-mono text-xl font-bold cursor-pointer transition-colors ${hoveredBox === index
                       ? "bg-blue-600 border-blue-700 text-white"
                       : "bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100"
-                  }`}
+                    }`}
                 >
                   {value}
                 </motion.div>
