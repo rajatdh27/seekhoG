@@ -7,7 +7,7 @@ const languageSections = [
   { name: "C Programming", icon: "🔷", href: "/languages/c", description: "Low-level programming, pointers, memory management, system programming", gradient: "from-blue-500 to-cyan-500", status: "coming-soon" },
   { name: "C++ Programming", icon: "⚡", href: "/languages/cpp", description: "OOP, STL, templates, modern C++11/14/17/20 features", gradient: "from-indigo-500 to-blue-500", status: "coming-soon" },
   { name: "Java", icon: "☕", href: "/languages/java", description: "OOP, Collections, Streams, Multithreading, Spring Framework", gradient: "from-orange-500 to-red-500", status: "coming-soon" },
-  { name: "JavaScript", icon: "🟨", href: "/languages/javascript", description: "ES6+, Async/Await, Promises, DOM, Node.js, React", gradient: "from-yellow-500 to-amber-500", status: "coming-soon" },
+  { name: "JavaScript", icon: "🟨", href: "/languages/javascript", description: "ES6+, Async/Await, Promises, DOM, Node.js, React", gradient: "from-yellow-500 to-amber-500", status: "live" },
   { name: "TypeScript", icon: "🔵", href: "/languages/typescript", description: "Type system, Interfaces, Generics, Advanced Types", gradient: "from-blue-500 to-indigo-500", status: "coming-soon" },
   { name: "Python", icon: "🐍", href: "/languages/python", description: "Core concepts, Data structures, Decorators, Generators, Django/Flask", gradient: "from-green-500 to-emerald-500", status: "coming-soon" },
   { name: "Go (Golang)", icon: "🔵", href: "/languages/go", description: "Goroutines, Channels, Concurrency patterns, Web services", gradient: "from-cyan-500 to-blue-500", status: "coming-soon" },
@@ -224,10 +224,18 @@ export default function LanguagesPage() {
               Each language section will include comprehensive tutorials, best practices, common patterns, and real-world examples to help you become proficient.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
+              <motion.a
+                href="/languages/javascript"
+                className="px-6 py-3 bg-gradient-to-r from-yellow-600 to-orange-600 text-white rounded-full font-semibold hover:from-yellow-500 hover:to-orange-500 transition-all shadow-lg hover:shadow-yellow-500/50"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                🟨 Start with JavaScript
+              </motion.a>
               <motion.div
                 className="px-6 py-3 bg-slate-700/50 text-slate-300 rounded-full font-semibold border border-slate-600"
               >
-                📚 Content Coming Soon
+                📚 More Languages Coming Soon
               </motion.div>
             </div>
           </div>
