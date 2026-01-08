@@ -37,12 +37,7 @@ const backendSections = [
   {
     category: "🏗️ Architecture & Design",
     topics: [
-      { name: "Microservices", icon: "🧩", href: "/backend/microservices", description: "Service decomposition, Communication patterns" },
-      { name: "API Gateway", icon: "🚪", href: "/backend/api-gateway", description: "Routing, Authentication, Rate limiting" },
-      { name: "Service Mesh", icon: "🕸️", href: "/backend/service-mesh", description: "Istio, Linkerd, Traffic management" },
-      { name: "Design Patterns", icon: "🎨", href: "/backend/design-patterns", description: "Singleton, Factory, Repository, MVC" },
-      { name: "Clean Architecture", icon: "🏛️", href: "/backend/clean-architecture", description: "Layers, Dependency inversion, SOLID" },
-      { name: "Domain-Driven Design", icon: "📐", href: "/backend/ddd", description: "Entities, Value objects, Aggregates" },
+      { name: "Architecture & Design", icon: "🏗️", href: "/backend/architecture-design", description: "Microservices, Design Patterns, Clean Architecture, Domain-Driven Design", status: "live" },
     ],
   },
   {
