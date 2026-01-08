@@ -49,12 +49,7 @@ const backendSections = [
   {
     category: "🧪 Testing & Quality",
     topics: [
-      { name: "Unit Testing", icon: "🧪", href: "/backend/unit-testing", description: "Jest, Mocha, Pytest, Testing strategies" },
-      { name: "Integration Testing", icon: "🔗", href: "/backend/integration-testing", description: "API tests, Database tests, E2E" },
-      { name: "Test-Driven Development", icon: "📝", href: "/backend/tdd", description: "TDD principles, Red-Green-Refactor" },
-      { name: "Mocking & Stubbing", icon: "🎭", href: "/backend/mocking", description: "Test doubles, Fixtures, Factories" },
-      { name: "Performance Testing", icon: "⚡", href: "/backend/performance-testing", description: "Load testing, Stress testing, k6, JMeter" },
-      { name: "Code Quality", icon: "✨", href: "/backend/code-quality", description: "Linting, Code coverage, Static analysis" },
+      { name: "Testing & Quality", icon: "🧪", href: "/backend/testing-quality", description: "Unit Testing, Integration Testing, TDD, Mocking, Performance Testing, Code Quality", status: "live" },
     ],
   },
   {
