@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Link from "next/link";
+import AuthGuard from "./components/AuthGuard";
 
 export const metadata = {
   title: "sheekoG - Complete DSA & Backend Master Document",
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
         <Navbar />
 
         {/* PAGE CONTENT */}
-        <main>{children}</main>
+        <AuthGuard>
+          <main>{children}</main>
+        </AuthGuard>
 
         {/* FOOTER */}
         <footer className="bg-black text-white py-12 mt-16">
