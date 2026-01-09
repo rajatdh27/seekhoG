@@ -44,6 +44,12 @@ export const journeyAPI = {
   
   deleteLog: (id) => 
     handleRequest(() => api.delete(`/api/journey/${id}`)),
+
+  exportExcel: (payload) => 
+    api.post('/api/journey/export/excel', payload, { responseType: 'blob' }),
+
+  exportPdf: (payload) => 
+    api.post('/api/journey/export/pdf', payload, { responseType: 'blob' }),
 };
 
 export default api;
