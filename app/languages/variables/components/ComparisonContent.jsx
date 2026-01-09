@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import Section from "./Section";
-import CodeBlock from "./CodeBlock";
-import InfoBox from "./InfoBox";
+import Section from "@/app/components/common/Section";
+import CodeBlock from "@/app/components/common/CodeBlock";
+import InfoBox from "@/app/components/common/InfoBox";
 
 export default function ComparisonContent() {
   return (

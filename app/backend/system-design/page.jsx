@@ -1,7 +1,7 @@
 "use client";
 import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import TableOfContents from "../../array/components/sections/TableOfContents";
+import TableOfContents from "@/app/components/common/TableOfContents";
 
 // Eager load the first section
 import SystemDesignBasicsSection from "./components/sections/SystemDesignBasicsSection";

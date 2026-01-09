@@ -3,7 +3,15 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function TableOfContents({ sections, activeSection, onSectionClick }) {
+export default function TableOfContents({
+  sections,
+  activeSection,
+  onSectionClick,
+  gradientFrom = "blue-600",
+  gradientTo = "indigo-600",
+  gradientFromDark = "blue-700",
+  gradientToDark = "indigo-800"
+}) {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
@@ -36,7 +44,7 @@ export default function TableOfContents({ sections, activeSection, onSectionClic
         isSticky ? "lg:shadow-2xl" : ""
       }`}
     >
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-700 dark:to-indigo-800 p-4">
+      <div className={`bg-gradient-to-r from-${gradientFrom} to-${gradientTo} dark:from-${gradientFromDark} dark:to-${gradientToDark} p-4`}>
         <h3 className="text-lg font-bold text-white flex items-center gap-2">
           <span>📚</span> Table of Contents
         </h3>
@@ -63,7 +71,7 @@ export default function TableOfContents({ sections, activeSection, onSectionClic
                 }}
                 className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   activeSection === section.id
-                    ? "bg-blue-100 dark:bg-blue-900/30 text-blue-900 dark:text-blue-200 border-l-4 border-blue-600"
+                    ? `bg-${gradientFrom.split('-')[0]}-100 dark:bg-${gradientFrom.split('-')[0]}-900/30 text-${gradientFrom.split('-')[0]}-900 dark:text-${gradientFrom.split('-')[0]}-200 border-l-4 border-${gradientFrom}`
                     : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-200"
                 }`}
               >
@@ -86,7 +94,7 @@ export default function TableOfContents({ sections, activeSection, onSectionClic
             animate={{
               width: `${((sections.findIndex((s) => s.id === activeSection) + 1) / sections.length) * 100}%`,
             }}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 h-2 rounded-full transition-all duration-300"
+            className={`bg-gradient-to-r from-${gradientFrom} to-${gradientTo} h-2 rounded-full transition-all duration-300`}
           />
         </div>
       </div>

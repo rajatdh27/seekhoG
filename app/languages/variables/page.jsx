@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import TableOfContents from "./components/TableOfContents";
+import TableOfContents from "@/app/components/common/TableOfContents";
 import JavaScriptContent from "./components/JavaScriptContent";
 import PythonContent from "./components/PythonContent";
 import JavaContent from "./components/JavaContent";
@@ -129,12 +129,17 @@ export default function VariablesPage() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
-          <TableOfContents
-            sections={sections}
-            activeSection={activeSection}
-            onSectionClick={setActiveSection}
-            language={languages.find(l => l.id === activeLanguage)}
-          />
+          <aside className="lg:w-64 lg:sticky lg:top-4 lg:self-start">
+            <TableOfContents
+              sections={sections}
+              activeSection={activeSection}
+              onSectionClick={setActiveSection}
+              gradientFrom="cyan-600"
+              gradientTo="teal-600"
+              gradientFromDark="cyan-700"
+              gradientToDark="teal-800"
+            />
+          </aside>
 
           {/* Content */}
           <main className="flex-1">

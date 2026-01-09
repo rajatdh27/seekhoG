@@ -2,7 +2,7 @@
 
 import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import TableOfContents from "./components/sections/TableOfContents";
+import TableOfContents from "@/app/components/common/TableOfContents";
 
 // Eager load only the first section for instant display
 import StackIntro from "./components/sections/StackIntro";
