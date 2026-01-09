@@ -3,6 +3,8 @@
 import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import TableOfContents from "@/app/components/common/TableOfContents";
+import SectionSkeleton from "@/app/components/common/SectionSkeleton";
+import ProgressIndicator from "@/app/components/common/ProgressIndicator";
 
 // Eager load the first section
 import DatabaseIntro from "./components/sections/DatabaseIntro";
@@ -22,19 +24,6 @@ const sections = [
   { id: "query-optimization", title: "Query Optimization & Indexing", component: QueryOptimizationSection },
   { id: "transactions-acid", title: "Transactions & ACID", component: TransactionsACIDSection },
 ];
-
-function SectionSkeleton() {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700 animate-pulse">
-      <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-6"></div>
-      <div className="space-y-3">
-        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full"></div>
-        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-5/6"></div>
-        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-4/6"></div>
-      </div>
-    </div>
-  );
-}
 
 export default function DatabasesPage() {
   const [activeSection, setActiveSection] = useState("intro");
@@ -129,40 +118,12 @@ export default function DatabasesPage() {
       </div>
 
       {/* Circular Progress Indicator */}
-      <motion.div
-        className="fixed bottom-8 right-8 bg-white dark:bg-slate-800 rounded-full shadow-lg p-4 z-50"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <div className="w-16 h-16 relative">
-          <svg className="transform -rotate-90 w-16 h-16">
-            <circle
-              cx="32"
-              cy="32"
-              r="28"
-              stroke="currentColor"
-              strokeWidth="4"
-              fill="none"
-              className="text-slate-200 dark:text-slate-700"
-            />
-            <circle
-              cx="32"
-              cy="32"
-              r="28"
-              stroke="currentColor"
-              strokeWidth="4"
-              fill="none"
-              strokeDasharray={`${2 * Math.PI * 28}`}
-              strokeDashoffset={`${2 * Math.PI * 28 * (1 - (sections.findIndex((s) => s.id === activeSection) + 1) / sections.length)}`}
-              className="text-violet-600 dark:text-violet-500 transition-all duration-300"
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-slate-700 dark:text-slate-300">
-            {Math.round((sections.findIndex((s) => s.id === activeSection) + 1) / sections.length * 100)}%
-          </div>
-        </div>
-      </motion.div>
+      <ProgressIndicator
+        sections={sections}
+        activeSection={activeSection}
+        colorClass="violet-600"
+        colorClassDark="violet-500"
+      />
     </div>
   );
 }
