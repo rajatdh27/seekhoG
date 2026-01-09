@@ -207,6 +207,23 @@ code {
   background: linear-gradient(180deg, rgb(29 78 216), rgb(30 64 175));
 }
 
+/* react-calendar-heatmap styles */
+.react-calendar-heatmap .color-empty { fill: #1e293b; } /* slate-800 */
+.react-calendar-heatmap .color-scale-1 { fill: #064e3b; } /* emerald-900 */
+.react-calendar-heatmap .color-scale-2 { fill: #065f46; } /* emerald-800 */
+.react-calendar-heatmap .color-scale-3 { fill: #059669; } /* emerald-600 */
+.react-calendar-heatmap .color-scale-4 { fill: #10b981; } /* emerald-500 */
+
+.react-calendar-heatmap rect {
+  rx: 2; /* Rounded corners for heatmap squares */
+  ry: 2;
+}
+
+.react-calendar-heatmap text {
+  font-size: 10px;
+  fill: #94a3b8; /* slate-400 */
+}
+
 /* Firefox scrollbar styling */
 * {
   scrollbar-width: auto;

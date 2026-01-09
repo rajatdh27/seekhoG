@@ -98,6 +98,17 @@ export default function Navbar() {
                 >
                   Languages
                 </Link>
+
+                <Link
+                  href="/journey"
+                  className={`ml-2 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+                    pathname.startsWith("/journey")
+                      ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                      : "text-slate-300 hover:bg-slate-800 hover:text-purple-400"
+                  }`}
+                >
+                  <span>📅</span> My Journey
+                </Link>
               </>
             )}
 
@@ -179,6 +190,17 @@ export default function Navbar() {
                   }`}
                 >
                   Languages
+                </Link>
+
+                <Link
+                  href="/journey"
+                  className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all mb-2 flex items-center gap-2 ${
+                    pathname.startsWith("/journey")
+                      ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                      : "text-slate-300 hover:bg-slate-800"
+                  }`}
+                >
+                  <span>📅</span> My Journey
                 </Link>
               </>
             )}

@@ -35,4 +35,15 @@ export const authAPI = {
     handleRequest(() => api.post('/api/auth/anonymous')),
 };
 
+export const journeyAPI = {
+  getLogs: (userId) => 
+    handleRequest(() => api.get(`/api/journey/${userId}`)),
+  
+  saveLog: (payload) => 
+    handleRequest(() => api.post('/api/journey', payload)),
+  
+  deleteLog: (id) => 
+    handleRequest(() => api.delete(`/api/journey/${id}`)),
+};
+
 export default api;
