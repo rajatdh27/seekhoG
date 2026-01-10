@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
+    "@stomp/stompjs": "^7.2.1",
     "axios": "^1.13.2",
+    "emoji-picker-react": "^4.16.1",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.562.0",
     "next": "^16.1.1",
@@ -18,7 +20,8 @@
     "react": "19.2.0",
     "react-calendar-heatmap": "^1.10.0",
     "react-dom": "19.2.0",
-    "react-tooltip": "^5.30.0"
+    "react-tooltip": "^5.30.0",
+    "sockjs-client": "^1.6.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

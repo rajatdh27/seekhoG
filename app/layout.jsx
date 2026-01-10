@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Link from "next/link";
 import AuthGuard from "./components/AuthGuard";
+import ChatWidget from "./components/ChatWidget";
 
 export const metadata = {
   title: "sheekoG - Complete DSA & Backend Master Document",
@@ -80,6 +81,7 @@ export default function RootLayout({ children }) {
               </div>
             </div>
           </footer>
+          <ChatWidget />
       </body>
     </html>
   );
