@@ -22,32 +22,31 @@ export default function AuthPage() {
     setLoading(true);
     setError('');
 
-    const action = isLogin ? authAPI.login : authAPI.signup;
-    const { data, error } = await action(formData.username, formData.password);
+    try {
+      const action = isLogin ? authAPI.login : authAPI.signup;
+      const { data, error } = await action(formData.username, formData.password);
 
-    setLoading(false);
-
-    if (error) {
-      setError(error);
-    } else {
-      console.log('Auth Success:', data);
-      localStorage.setItem('user', JSON.stringify(data));
-      router.push('/'); // Redirect to home on success
+      if (error) {
+        // Ensure error is a string for rendering
+        setError(typeof error === 'string' ? error : 'Network error. Please try again.');
+      } else if (data) {
+        console.log('Auth Success:', data);
+        localStorage.setItem('user', JSON.stringify(data));
+        router.push('/'); 
+      }
+    } catch (e) {
+      console.error("Unexpected error:", e);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleAnonymousLogin = async () => {
-    setLoading(true);
-    setError('');
-    
-    const { data, error } = await authAPI.anonymous();
-    
-    setLoading(false);
-
-    if (error) {
-      setError(error);
-    } else {
-      console.log('Anonymous Login Success:', data);
+    // Instant local transition for guest mode
+    const { data } = await authAPI.anonymous();
+    if (data) {
+      console.log('Anonymous Login Success (Local Mode):', data);
       localStorage.setItem('user', JSON.stringify(data));
       router.push('/');
     }

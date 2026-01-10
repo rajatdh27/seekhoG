@@ -101,6 +101,12 @@ export default function JourneyPage() {
   };
 
   const fetchLogs = async (userId) => {
+    // If guest, maybe don't fetch or just return empty
+    if (userId === 'guest') {
+        setLoading(false);
+        return;
+    }
+
     try {
       const { data, error } = await journeyAPI.getLogs(userId);
       if (data) setLogs(data);
@@ -114,6 +120,20 @@ export default function JourneyPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) return;
+
+    // Guest Mode: Simulate save locally
+    if (user.id === 'guest' || user.username === 'Guest') {
+        const fakeLog = {
+            ...formData,
+            id: Date.now(), // Fake ID
+            userId: 'guest',
+            learningDate: formData.learningDate || new Date().toISOString().split('T')[0]
+        };
+        setLogs([fakeLog, ...logs]);
+        setShowForm(false);
+        setFormData({ ...formData, content: '', subTopic: '', referenceLink: '', referenceTitle: '' });
+        return;
+    }
 
     try {
       const payload = {
@@ -135,11 +155,17 @@ export default function JourneyPage() {
 
   const handleDelete = async (id) => {
     if(!confirm("Are you sure you want to delete this entry?")) return;
+
+    // Guest Mode: Delete locally only
+    if (user?.id === 'guest' || user?.username === 'Guest') {
+        setLogs(logs.filter(log => log.id !== id));
+        return;
+    }
+
     try {
       const { error } = await journeyAPI.deleteLog(id);
       if (!error) {
         setLogs(logs.filter(log => log.id !== id));
-        setSelectedLogs(selectedLogs.filter(sid => sid !== id));
       }
     } catch (error) {
       console.error("Failed to delete", error);

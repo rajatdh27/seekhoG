@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
 
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 60000, // 60s timeout for Render cold starts
 });
 
 // Helper function to handle errors consistently and keep code DRY
@@ -16,10 +17,30 @@ const handleRequest = async (request) => {
     return { data: response.data, error: null };
   } catch (err) {
     console.error("API Call Failed:", err);
+    
+    // Handle Timeout specifically
+    if (err.code === 'ECONNABORTED') {
+      return { data: null, error: "Server is waking up from sleep (Free Tier). Please try again in 30 seconds." };
+    }
+
     // Return a structured error object
+    let errorMessage = "Something went wrong";
+    
+    if (err.response?.data) {
+        if (typeof err.response.data === 'string') {
+            errorMessage = err.response.data;
+        } else if (err.response.data.message) {
+            errorMessage = err.response.data.message;
+        } else if (err.response.data.error) {
+            errorMessage = err.response.data.error;
+        }
+    } else if (err.message) {
+        errorMessage = err.message;
+    }
+
     return { 
       data: null, 
-      error: err.response?.data?.message || err.message || "Something went wrong" 
+      error: errorMessage
     };
   }
 };
@@ -31,8 +52,13 @@ export const authAPI = {
   signup: (username, password) => 
     handleRequest(() => api.post('/api/auth/signup', { username, password })),
   
-  anonymous: () => 
-    handleRequest(() => api.post('/api/auth/anonymous')),
+  anonymous: async () => {
+    // Return guest object immediately without calling backend
+    return { 
+      data: { id: 'guest', username: 'Guest', role: 'GUEST' }, 
+      error: null 
+    };
+  },
 };
 
 export const journeyAPI = {
