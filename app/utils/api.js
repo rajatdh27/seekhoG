@@ -78,4 +78,9 @@ export const journeyAPI = {
     api.post('/api/journey/export/pdf', payload, { responseType: 'blob' }),
 };
 
+export const leaderboardAPI = {
+  getTopUsers: () => 
+    handleRequest(() => api.get('/api/leaderboard')),
+};
+
 export default api;

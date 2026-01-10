@@ -14,7 +14,8 @@ import {
   Globe, 
   Terminal,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Trophy
 } from "lucide-react";
 
 export default function Navbar() {
@@ -120,6 +121,17 @@ export default function Navbar() {
               </div>
             )}
 
+            <Link
+              href="/leaderboard"
+              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
+                pathname.startsWith("/leaderboard")
+                  ? "bg-white/10 text-yellow-400 shadow-inner"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Trophy className="w-4 h-4" /> Leaderboard
+            </Link>
+
             {user ? (
               <Menu as="div" className="relative ml-2">
                 <MenuButton className="flex items-center gap-3 p-1 pr-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-all group">
@@ -155,14 +167,30 @@ export default function Navbar() {
                     </div>
                     
                     <MenuItem>
-                      {({ active }) => (
+                      {({ focus }) => (
+                        <Link
+                          href="/leaderboard"
+                          className={`${
+                            focus ? "bg-white/10 text-white" : "text-slate-400"
+                          } group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition-all`}
+                        >
+                          <div className={`p-2 rounded-lg ${focus ? 'bg-yellow-500 text-white' : 'bg-yellow-500/10 text-yellow-400'} transition-all`}>
+                            <Trophy className="w-4 h-4" />
+                          </div>
+                          Leaderboard
+                        </Link>
+                      )}
+                    </MenuItem>
+
+                    <MenuItem>
+                      {({ focus }) => (
                         <Link
                           href="/journey"
                           className={`${
-                            active ? "bg-white/10 text-white" : "text-slate-400"
-                          } group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition-all`}
+                            focus ? "bg-white/10 text-white" : "text-slate-400"
+                          } group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition-all mt-1`}
                         >
-                          <div className={`p-2 rounded-lg ${active ? 'bg-blue-500 text-white' : 'bg-blue-500/10 text-blue-400'} transition-all`}>
+                          <div className={`p-2 rounded-lg ${focus ? 'bg-blue-500 text-white' : 'bg-blue-500/10 text-blue-400'} transition-all`}>
                             <LayoutDashboard className="w-4 h-4" />
                           </div>
                           My Journey
@@ -283,7 +311,22 @@ export default function Navbar() {
                     >
                     <Terminal className="w-5 h-5" /> Programming Languages
                     </Link>
+                </div>
+                )}
 
+                <Link
+                href="/leaderboard"
+                className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-base font-bold transition-all ${
+                    pathname.startsWith("/leaderboard")
+                    ? "bg-yellow-600/10 text-yellow-400 border border-yellow-500/20 shadow-inner"
+                    : "text-slate-400 hover:text-white"
+                }`}
+                >
+                <Trophy className="w-5 h-5" /> Global Leaderboard
+                </Link>
+
+                {user && (
+                <div className="space-y-2">
                     <Link
                     href="/journey"
                     className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-base font-bold transition-all ${
