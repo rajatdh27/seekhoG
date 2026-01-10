@@ -258,7 +258,7 @@ export default function SocialPage() {
                     <div className="w-16 h-16 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin" />
                     <div className="absolute inset-0 flex items-center justify-center"><Zap size={20} className="text-blue-500 animate-pulse" /></div>
                 </div>
-                <p className="text-slate-200 font-bold text-lg">Syncing with Grid...</p>
+                <p className="text-slate-200 font-bold text-lg text-center">Syncing with Grid...</p>
             </div>
           ) : (
             <AnimatePresence mode="wait">
@@ -272,20 +272,15 @@ export default function SocialPage() {
                     </div>
                   ) : (
                     friends.map((friend) => {
-                      // Determine the correct Friend User ID
                       const isMeRequester = friend.requesterId === user.id;
                       const friendUserId = isMeRequester ? friend.addresseeId : friend.requesterId;
                       const isOnline = onlineUsers.has(friendUserId);
-                      
                       const rawName = friend.username || (isMeRequester ? friend.addresseeName : friend.requesterName) || "User";
                       const displayName = formatName(rawName);
                       const displayEmail = rawName.includes('@') ? rawName : (friend.email || "");
-                      
-                      // Backend now provides totalLogs directly in the friend object
                       const commits = friend.totalLogs || 0;
-                      
                       return (
-                        <motion.div layout key={friend.id || rawName} className="bg-slate-900/60 backdrop-blur-md border border-white/10 p-6 rounded-[2.5rem] hover:border-blue-500/30 transition-all group relative overflow-hidden flex flex-col justify-between h-full shadow-xl">
+                        <motion.div layout key={friend.id || rawName} className="bg-slate-900/40 backdrop-blur-sm border border-white/10 p-6 rounded-[2.5rem] hover:border-blue-500/30 transition-all group relative overflow-hidden flex flex-col justify-between h-full shadow-lg">
                           <div className={`absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[60px] pointer-events-none transition-opacity duration-500 ${isOnline ? 'bg-emerald-500/10 opacity-100' : 'bg-blue-600/5 opacity-0 group-hover:opacity-100'}`} />
                           <div className="flex items-start justify-between mb-6 relative z-10">
                             <div className="flex items-center gap-4">
@@ -299,25 +294,13 @@ export default function SocialPage() {
                               <div className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-emerald-500 animate-pulse' : 'bg-slate-600'}`} /> {isOnline ? 'Online' : 'Offline'}
                             </div>
                           </div>
-                          
                           <div className="bg-black/20 p-4 rounded-2xl border border-white/5 mb-6 relative z-10">
                               <div className="text-[10px] font-bold text-slate-500 uppercase mb-1 tracking-widest">Total Contributions</div>
                               <div className="text-2xl font-black text-white">{commits}</div>
                           </div>
-
                           <div className="flex gap-3 mt-auto relative z-10">
-                            <button 
-                                onClick={() => {
-                                    console.log("Clicked Message for:", friendUserId);
-                                    openChat({id: friendUserId, username: rawName});
-                                }} 
-                                className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"
-                            >
-                              <MessageCircle size={16} /> Message
-                            </button>
-                            <button className="p-3 bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 rounded-xl transition-all border border-white/5 active:scale-95">
-                              <UserMinus size={16} />
-                            </button>
+                            <button onClick={() => openChat({id: friendUserId, username: rawName})} className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"><MessageCircle size={16} /> Message</button>
+                            <button className="p-3 bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 rounded-xl transition-all border border-white/5 active:scale-95"><UserMinus size={16} /></button>
                           </div>
                         </motion.div>
                       );
@@ -343,7 +326,7 @@ export default function SocialPage() {
                         const rawName = getRequestName(req, 'incoming');
                         return (
                           <motion.div layout key={req.id} className="bg-slate-900/60 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] flex flex-col sm:flex-row items-center justify-between gap-6 hover:border-blue-500/40 transition-all shadow-xl">
-                              <div className="flex items-center gap-6">
+                              <div className="flex items-center gap-6 text-center sm:text-left">
                                   <div className="w-16 h-16 rounded-2xl bg-slate-800 border border-white/10 flex items-center justify-center text-white text-2xl font-black">{formatName(rawName).charAt(0).toUpperCase()}</div>
                                   <div>
                                       <h3 className="font-black text-white text-xl tracking-tight capitalize">{formatName(rawName)}</h3>
@@ -380,7 +363,7 @@ export default function SocialPage() {
                         const rawName = getRequestName(req, 'outgoing');
                         return (
                           <motion.div layout key={req.id} className="bg-slate-900/60 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] flex flex-col sm:flex-row items-center justify-between gap-6 transition-all shadow-xl">
-                              <div className="flex items-center gap-6">
+                              <div className="flex items-center gap-6 text-center sm:text-left">
                                   <div className="w-16 h-16 rounded-2xl bg-slate-800 border border-white/10 flex items-center justify-center text-slate-400 text-2xl font-black">{formatName(rawName).charAt(0).toUpperCase()}</div>
                                   <div>
                                       <h3 className="font-black text-white text-xl tracking-tight capitalize">{formatName(rawName)}</h3>

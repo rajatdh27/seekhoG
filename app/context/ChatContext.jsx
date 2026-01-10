@@ -8,7 +8,6 @@ export function ChatProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeConversation, setActiveConversation] = useState(null); // null = global, object = private friend/convo
   const [onlineUsers, setOnlineUsers] = useState(new Set()); // Set of user IDs or usernames
-  const [notifications, setNotifications] = useState([]);
 
   const openChat = (friend = null) => {
     setActiveConversation(friend);
@@ -37,10 +36,6 @@ export function ChatProvider({ children }) {
     });
   }, []);
 
-  const addNotification = (notif) => {
-    setNotifications(prev => [notif, ...prev].slice(0, 20));
-  };
-
   return (
     <ChatContext.Provider value={{ 
       isOpen, 
@@ -50,8 +45,6 @@ export function ChatProvider({ children }) {
       onlineUsers,
       setOnline,
       setOffline,
-      notifications,
-      addNotification,
       openChat, 
       closeChat,
       resetToGlobal 

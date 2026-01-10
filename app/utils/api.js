@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
+const BASE_URL = 'http://localhost:8080';
 
 export const SOCKET_URL = `${BASE_URL}/ws`;
 
@@ -126,13 +126,23 @@ export const chatAPI = {
   getPrivateHistory: (conversationId) => 
     handleRequest(() => api.get(`/api/chat/history/${conversationId}`)),
     
-  createPrivateChat: (requesterId, targetUserId) => 
-    handleRequest(() => api.post(`/api/chat/create/private/${targetUserId}`, null, {
-        params: { myUserId: requesterId }
-    })),
+  createPrivateChat: (requesterId, targetUserId) => {
+    console.log("API: Creating Private Chat", { requesterId, targetUserId });
+    // Send all likely parameter names to ensure backend finds one
+    return handleRequest(() => api.post(`/api/chat/create/private/${targetUserId}`, {}, {
+        params: { myUserId: requesterId, requesterId, userId: requesterId }
+    }));
+  },
     
-  getUserConversations: () => 
-    handleRequest(() => api.get('/api/chat/conversations')),
+  getUserConversations: (userId) => 
+    handleRequest(() => api.get('/api/chat/conversations', {
+        params: { userId, myUserId: userId }
+    })),
+
+  markAsRead: (conversationId, userId) => 
+    handleRequest(() => api.post(`/api/chat/read/${conversationId}`, null, {
+        params: { userId }
+    })),
 };
 
 export default api;
