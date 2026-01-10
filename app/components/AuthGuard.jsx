@@ -3,17 +3,26 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
+const publicPaths = ['/auth', '/leaderboard'];
+
 export default function AuthGuard({ children }) {
   const router = useRouter();
   const pathname = usePathname();
-  
-  const publicPaths = ['/auth', '/leaderboard'];
+  const [lastPathname, setLastPathname] = useState(pathname);
 
   // Initialize authorized state based on whether the path is public
-  // This avoids a cascading render for public pages
   const [authorized, setAuthorized] = useState(() => {
     return publicPaths.includes(pathname);
   });
+
+  // Derived state pattern: Reset state on path change
+  // This runs during render if pathname changes, preventing "flash of content"
+  // and ensuring 'authorized' is false for private routes before the effect runs.
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    const isPublic = publicPaths.includes(pathname);
+    setAuthorized(isPublic);
+  }
 
   useEffect(() => {
     // 1. Check if user is logged in
@@ -24,16 +33,17 @@ export default function AuthGuard({ children }) {
 
     if (!storedUser && !isPublicPath) {
       // Not logged in and trying to access a private page -> Redirect to Auth
-      setAuthorized(false);
       router.push('/auth');
     } else {
       // Authorized (either public path or user is logged in)
-      // Only update state if it's currently false to avoid unnecessary re-renders
-      if (!authorized) {
-        setAuthorized(true);
-      }
+      setTimeout(() => {
+        setAuthorized((prev) => {
+          if (!prev) return true;
+          return prev;
+        });
+      }, 0);
     }
-  }, [pathname, router, authorized]);
+  }, [pathname, router]);
 
   // While checking, we can show a blank screen or a loader to prevent flicker
   if (!authorized) {
