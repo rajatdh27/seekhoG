@@ -92,9 +92,47 @@ export const leaderboardAPI = {
     handleRequest(() => api.get('/api/leaderboard')),
 };
 
+export const friendsAPI = {
+  sendRequest: (requesterId, targetUsername) => 
+    handleRequest(() => api.post('/api/friends/request', null, { 
+      params: { requesterId, targetUsername } 
+    })),
+  
+  acceptRequest: (requestId) => 
+    handleRequest(() => api.post(`/api/friends/accept/${requestId}`)),
+
+  rejectRequest: (requestId) => 
+    handleRequest(() => api.post(`/api/friends/reject/${requestId}`)),
+  
+  getFriends: (userId) => 
+    handleRequest(() => api.get(`/api/friends/${userId}`)),
+    
+  getPendingRequests: (userId) => 
+    handleRequest(() => api.get(`/api/friends/pending/${userId}`)),
+
+  getSentRequests: (userId) => 
+    handleRequest(() => api.get(`/api/friends/sent/${userId}`)),
+};
+
+export const userAPI = {
+  search: (query) => 
+    handleRequest(() => api.get(`/api/users/search?query=${query}`)),
+};
+
 export const chatAPI = {
   getHistory: () => 
     handleRequest(() => api.get('/api/chat/history')),
+
+  getPrivateHistory: (conversationId) => 
+    handleRequest(() => api.get(`/api/chat/history/${conversationId}`)),
+    
+  createPrivateChat: (requesterId, targetUserId) => 
+    handleRequest(() => api.post(`/api/chat/create/private/${targetUserId}`, null, {
+        params: { myUserId: requesterId }
+    })),
+    
+  getUserConversations: () => 
+    handleRequest(() => api.get('/api/chat/conversations')),
 };
 
 export default api;

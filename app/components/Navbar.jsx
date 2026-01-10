@@ -15,7 +15,8 @@ import {
   Terminal,
   Sparkles,
   ArrowRight,
-  Trophy
+  Trophy,
+  Users
 } from "lucide-react";
 
 export default function Navbar() {
@@ -130,6 +131,17 @@ export default function Navbar() {
               }`}
             >
               <Trophy className="w-4 h-4" /> Leaderboard
+            </Link>
+
+            <Link
+              href="/social"
+              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
+                pathname.startsWith("/social")
+                  ? "bg-white/10 text-pink-400 shadow-inner"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Users className="w-4 h-4" /> Social
             </Link>
 
             {user ? (
@@ -323,6 +335,17 @@ export default function Navbar() {
                 }`}
                 >
                 <Trophy className="w-5 h-5" /> Global Leaderboard
+                </Link>
+
+                <Link
+                href="/social"
+                className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-base font-bold transition-all ${
+                    pathname.startsWith("/social")
+                    ? "bg-pink-600/10 text-pink-400 border border-pink-500/20 shadow-inner"
+                    : "text-slate-400 hover:text-white"
+                }`}
+                >
+                <Users className="w-5 h-5" /> Social Hub
                 </Link>
 
                 {user && (
