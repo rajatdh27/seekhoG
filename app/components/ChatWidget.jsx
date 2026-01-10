@@ -193,7 +193,7 @@ export default function ChatWidget() {
         setConversationId(null);
         chatAPI.getHistory().then(({ data }) => {
             if (Array.isArray(data)) {
-                setMessages([...data].reverse());
+                setMessages(data);
             }
             setLoadingHistory(false);
         });
