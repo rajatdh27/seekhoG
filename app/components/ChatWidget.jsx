@@ -23,6 +23,7 @@ export default function ChatWidget() {
   const [inputValue, setInputValue] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [username, setUsername] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [userId, setUserId] = useState(null);
   const [connectionError, setConnectionError] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -138,6 +139,7 @@ export default function ChatWidget() {
       try {
         const parsed = JSON.parse(storedUser);
         setUsername(parsed.username || parsed.email || 'User');
+        setDisplayName(parsed.name || parsed.username || parsed.email || 'User');
         setUserId(parsed.id);
       } catch (e) {
         console.error("Failed to parse user", e);
@@ -237,6 +239,7 @@ export default function ChatWidget() {
       const chatMessage = {
         sender: username,
         senderId: userId,
+        senderName: displayName,
         content: inputValue,
         type: 'TEXT',
         status: 'SENT',
@@ -280,7 +283,7 @@ export default function ChatWidget() {
                   <>
                     <div className={`w-2.5 h-2.5 rounded-full ${isConnected ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-amber-500 animate-pulse'}`} />
                     <div>
-                      <h3 className="font-bold text-slate-100 text-sm tracking-tight flex items-center gap-2">{activeConversation ? <><Lock size={12} className="text-purple-400" /> {activeConversation.username}</> : <><Users size={14} className="text-blue-400" /> Community Chat</>}</h3>
+                      <h3 className="font-bold text-slate-100 text-sm tracking-tight flex items-center gap-2">{activeConversation ? <><Lock size={12} className="text-purple-400" /> {activeConversation.name || activeConversation.username}</> : <><Users size={14} className="text-blue-400" /> Community Chat</>}</h3>
                       <p className="text-[10px] font-medium text-slate-400">{isConnected ? (activeConversation ? `Private (Room: ${conversationId || '...'})` : `${messages.length} messages`) : 'Connecting...'}</p>
                     </div>
                   </>
@@ -297,28 +300,34 @@ export default function ChatWidget() {
                 </div>
               ) : (
                 messages.map((msg, idx) => {
-                  const isMe = (msg.sender && msg.sender === username) || (msg.senderId && msg.senderId === userId);
-                  let displayName = msg.sender;
-                  if (!displayName) {
-                      if (isMe) displayName = username;
-                      else if (activeConversation) displayName = activeConversation.username;
-                      else displayName = "User";
+                  const isMe = (msg.senderId && msg.senderId === userId) || (msg.sender && msg.sender === username);
+                  
+                  let displayMsgName = msg.senderName || msg.sender;
+                  
+                  if (!displayMsgName) {
+                      if (isMe) displayMsgName = displayName;
+                      else if (activeConversation) displayMsgName = activeConversation.name || activeConversation.username;
+                      else displayMsgName = "User";
                   }
-                  if (displayName && displayName.includes('@')) displayName = displayName.split('@')[0];
-                  if (msg.type === 'JOIN') return <div key={idx} className="flex justify-center my-4"><span className="text-[10px] font-bold text-slate-500 bg-slate-800/40 border border-slate-700/30 px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">{displayName} joined</span></div>;
+
+                  if (displayMsgName && displayMsgName.includes('@') && !msg.senderName) {
+                    displayMsgName = displayMsgName.split('@')[0];
+                  }
+
+                  if (msg.type === 'JOIN') return <div key={idx} className="flex justify-center my-4"><span className="text-[10px] font-bold text-slate-500 bg-slate-800/40 border border-slate-700/30 px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">{displayMsgName} joined</span></div>;
                   if (!msg.content) return null;
                   return (
                     <div key={idx} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} group`}>
                       <div className="flex items-end gap-2 max-w-[85%]">
-                        {!isMe && <div className="w-6 h-6 rounded-full bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-300 shadow-lg shrink-0">{displayName[0]?.toUpperCase() || '?'}</div>}
+                        {!isMe && <div className="w-6 h-6 rounded-full bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-300 shadow-lg shrink-0">{displayMsgName[0]?.toUpperCase() || '?'}</div>}
                         <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-                          <span className={`text-[10px] font-medium text-slate-400 mb-1 px-1 ${isMe ? 'text-blue-400' : ''}`}>{displayName}</span>
+                          <span className={`text-[10px] font-medium text-slate-400 mb-1 px-1 ${isMe ? 'text-blue-400' : ''}`}>{displayMsgName}</span>
                           <div className={`px-4 py-2.5 text-sm leading-relaxed shadow-md backdrop-blur-sm ${isMe ? (activeConversation ? 'bg-gradient-to-br from-purple-600 to-indigo-600' : 'bg-gradient-to-br from-blue-600 to-indigo-600') + ' text-white rounded-2xl rounded-tr-none' : 'bg-slate-800/80 text-slate-200 border border-slate-700/50 rounded-2xl rounded-tl-none'}`}>
                             {msg.content}
                             {isMe && activeConversation && renderStatus(msg)}
                           </div>
                         </div>
-                        {isMe && <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-lg shrink-0 ${activeConversation ? 'bg-purple-600' : 'bg-blue-600'}`}>{displayName[0]?.toUpperCase() || '?'}</div>}
+                        {isMe && <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-lg shrink-0 ${activeConversation ? 'bg-purple-600' : 'bg-blue-600'}`}>{displayMsgName[0]?.toUpperCase() || '?'}</div>}
                       </div>
                     </div>
                   );

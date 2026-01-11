@@ -9,7 +9,7 @@ export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', password: '', name: '' });
   const router = useRouter();
 
   const handleInputChange = (e) => {
@@ -23,8 +23,10 @@ export default function AuthPage() {
     setError('');
 
     try {
-      const action = isLogin ? authAPI.login : authAPI.signup;
-      const { data, error } = await action(formData.username, formData.password);
+      const { username, password, name } = formData;
+      const { data, error } = isLogin 
+        ? await authAPI.login(username, password)
+        : await authAPI.signup(username, password, name);
 
       if (error) {
         // Ensure error is a string for rendering
@@ -97,6 +99,27 @@ export default function AuthPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
+            <AnimatePresence mode="wait">
+              {!isLogin && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                >
+                  <label className="block text-slate-400 text-xs font-bold mb-2 uppercase tracking-wider">Full Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                    placeholder="e.g. Rajat Thakur"
+                    required={!isLogin}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div>
               <label className="block text-slate-400 text-xs font-bold mb-2 uppercase tracking-wider">Username</label>
               <input

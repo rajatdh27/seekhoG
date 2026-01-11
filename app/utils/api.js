@@ -58,8 +58,8 @@ export const authAPI = {
   login: (username, password) => 
     handleRequest(() => api.post('/api/auth/login', { username, password })),
   
-  signup: (username, password) => 
-    handleRequest(() => api.post('/api/auth/signup', { username, password })),
+  signup: (username, password, name) => 
+    handleRequest(() => api.post('/api/auth/signup', { username, password, name })),
   
   anonymous: async () => {
     // Return guest object immediately without calling backend
