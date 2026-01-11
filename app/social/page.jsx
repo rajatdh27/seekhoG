@@ -280,8 +280,17 @@ export default function SocialPage() {
                       const isMeRequester = friend.requesterId === user.id;
                       const friendUserId = isMeRequester ? friend.addresseeId : friend.requesterId;
                       const isOnline = onlineUsers.has(friendUserId);
-                      const rawName = friend.username || (isMeRequester ? friend.addresseeName : friend.requesterName) || "User";
-                      const displayName = formatName(friend);
+                      
+                      // Explicitly extract the friend's info from the friendship record
+                      const friendInfo = {
+                        id: friendUserId,
+                        name: isMeRequester ? friend.addresseeName : friend.requesterName,
+                        username: isMeRequester ? (friend.addresseeUsername || friend.addresseeName) : (friend.requesterUsername || friend.requesterName),
+                        email: friend.email // Fallback if available
+                      };
+
+                      const displayName = formatName(friendInfo);
+                      const rawName = friendInfo.username || "User";
                       const displayEmail = rawName.includes('@') ? rawName : (friend.email || "");
                       const commits = friend.totalLogs || 0;
                       return (
@@ -304,7 +313,7 @@ export default function SocialPage() {
                               <div className="text-2xl font-black text-white">{commits}</div>
                           </div>
                           <div className="flex gap-3 mt-auto relative z-10">
-                            <button onClick={() => openChat({id: friendUserId, username: rawName, name: friend.name || friend.requesterName || friend.addresseeName})} className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"><MessageCircle size={16} /> Message</button>
+                            <button onClick={() => openChat({id: friendUserId, username: rawName, name: displayName})} className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"><MessageCircle size={16} /> Message</button>
                             <button className="p-3 bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 rounded-xl transition-all border border-white/5 active:scale-95"><UserMinus size={16} /></button>
                           </div>
                         </motion.div>
