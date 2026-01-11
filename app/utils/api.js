@@ -2,7 +2,11 @@ import axios from 'axios';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
 
-export const SOCKET_URL = `${BASE_URL}/ws`;
+// For WebSocket, we need to ensure it uses 'ws' or 'wss' correctly.
+// If BASE_URL is https, we should use wss.
+export const SOCKET_URL = BASE_URL.startsWith('https') 
+  ? BASE_URL.replace('https', 'wss') + '/ws'
+  : BASE_URL.replace('http', 'ws') + '/ws';
 
 export const SEND_SOUND_URL = 'https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3';
 
