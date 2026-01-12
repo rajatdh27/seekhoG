@@ -1,149 +1,97 @@
+"use client";
+
 import { motion } from "framer-motion";
+import FoundationCard from "./FoundationCard";
+import { Sparkles, CheckCircle2, Layout, Zap, Target, BookOpen } from "lucide-react";
 
 export default function FoundationsIntro() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100">
-          🟩 1. What is DSA?
-        </h2>
+    <FoundationCard>
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+          <Sparkles size={28} />
+        </div>
+        <h2 className="text-4xl font-black text-white tracking-tight">What is DSA?</h2>
+      </div>
 
-        <div className="prose dark:prose-invert max-w-none">
-          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
-            <strong>Data Structures and Algorithms (DSA)</strong> is the study of efficient data storage and algorithmic problem-solving. It's the core foundation of software engineering and competitive coding.
-          </p>
+      <div className="space-y-10">
+        <p className="text-xl text-slate-400 font-medium leading-relaxed">
+          <strong className="text-white">Data Structures and Algorithms (DSA)</strong> is the study of efficient data storage and algorithmic problem-solving. It is the core foundation upon which all modern software is built.
+        </p>
 
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-600 mb-6">
-            <h3 className="text-xl font-bold text-green-900 dark:text-green-100 mb-3">
-              Why Learn DSA?
-            </h3>
-            <ul className="space-y-2 text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400 mt-1">✓</span>
-                <span><strong>Ace Coding Interviews:</strong> Top tech companies (FAANG) heavily test DSA knowledge</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400 mt-1">✓</span>
-                <span><strong>Write Efficient Code:</strong> Optimize performance and reduce resource consumption</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400 mt-1">✓</span>
-                <span><strong>Problem-Solving Skills:</strong> Develop logical thinking and algorithmic reasoning</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400 mt-1">✓</span>
-                <span><strong>Build Scalable Systems:</strong> Design software that handles millions of users</span>
-              </li>
-            </ul>
+        {/* Why Learn DSA - High Impact Card */}
+        <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-[2rem] p-8 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity">
+            <Target size={120} />
           </div>
-
-          <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-slate-100">
-            The DSA Learning Journey
+          <h3 className="text-2xl font-black text-emerald-400 mb-6 flex items-center gap-3">
+            <Target size={24} /> Why Learn DSA?
           </h3>
-
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
-            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-              <div className="text-3xl mb-2">📊</div>
-              <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-2">Data Structures</h4>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                Ways to organize and store data: Arrays, Linked Lists, Trees, Graphs, Hash Tables
-              </p>
-            </div>
-
-            <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-              <div className="text-3xl mb-2">⚡</div>
-              <h4 className="font-bold text-purple-900 dark:text-purple-100 mb-2">Algorithms</h4>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                Step-by-step procedures: Searching, Sorting, Dynamic Programming, Graph Algorithms
-              </p>
-            </div>
-
-            <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-              <div className="text-3xl mb-2">🎯</div>
-              <h4 className="font-bold text-orange-900 dark:text-orange-100 mb-2">Complexity Analysis</h4>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                Understanding performance: Time complexity, Space complexity, Big-O notation
-              </p>
-            </div>
-
-            <div className="bg-pink-50 dark:bg-pink-900/20 p-4 rounded-lg border border-pink-200 dark:border-pink-800">
-              <div className="text-3xl mb-2">🧩</div>
-              <h4 className="font-bold text-pink-900 dark:text-pink-100 mb-2">Problem-Solving</h4>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                Mastering patterns: Two pointers, Sliding window, Recursion, Backtracking
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 p-6 rounded-xl border-l-4 border-yellow-600 mb-6">
-            <h3 className="text-xl font-bold text-yellow-900 dark:text-yellow-100 mb-3">
-              📚 What You'll Learn in This Section
-            </h3>
-            <ul className="space-y-2 text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <span className="text-yellow-600 dark:text-yellow-400 mt-1">•</span>
-                <span><strong>Mathematics fundamentals:</strong> Logarithms, Exponents, and why they matter in algorithms</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-yellow-600 dark:text-yellow-400 mt-1">•</span>
-                <span><strong>Time & Space Complexity:</strong> Big-O, Big-Theta, Big-Omega notation explained simply</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-yellow-600 dark:text-yellow-400 mt-1">•</span>
-                <span><strong>Common complexities:</strong> O(1), O(log n), O(n), O(n log n), O(n²) with real-world examples</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-yellow-600 dark:text-yellow-400 mt-1">•</span>
-                <span><strong>Why complexity matters:</strong> How choosing the right algorithm saves hours of execution time</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-yellow-600 dark:text-yellow-400 mt-1">•</span>
-                <span><strong>Code examples in 6 languages:</strong> C, C++, Java, JavaScript, Python, Go</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-6 rounded-xl">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">
-              🎓 Learning Path
-            </h3>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">1</div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              { title: "Interview Ready", text: "Ace top tech company (FAANG) interviews" },
+              { title: "Efficient Code", text: "Optimize performance and reduce resource use" },
+              { title: "Problem Solving", text: "Develop structured logical thinking" },
+              { title: "Scalability", text: "Design systems for millions of users" }
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <CheckCircle2 size={18} className="text-emerald-500 shrink-0 mt-1" />
                 <div>
-                  <div className="font-semibold text-slate-900 dark:text-slate-100">Master Foundations</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Complexity analysis, recursion, mathematics</div>
+                  <div className="font-black text-white text-sm uppercase tracking-tighter">{item.title}</div>
+                  <p className="text-slate-400 text-xs font-medium">{item.text}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">2</div>
-                <div>
-                  <div className="font-semibold text-slate-900 dark:text-slate-100">Learn Data Structures</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Arrays, linked lists, stacks, queues, trees, graphs</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold">3</div>
-                <div>
-                  <div className="font-semibold text-slate-900 dark:text-slate-100">Study Algorithms</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Sorting, searching, dynamic programming, greedy</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-pink-600 text-white flex items-center justify-center font-bold">4</div>
-                <div>
-                  <div className="font-semibold text-slate-900 dark:text-slate-100">Practice Problems</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Solve 300-500 problems across all patterns</div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-      </motion.div>
-    </div>
+
+        {/* The DSA Learning Journey - Split Cards */}
+        <div>
+          <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <Layout size={24} className="text-blue-400" /> The Learning Journey
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              { title: "Data Structures", text: "Ways to organize data: Lists, Trees, Graphs, Hash Tables", icon: "📊", color: "blue" },
+              { title: "Algorithms", text: "Procedures: Searching, Sorting, DP, Greedy", icon: "⚡", color: "purple" },
+              { title: "Complexity", text: "Understanding performance: Big-O, Time & Space", icon: "🎯", color: "amber" },
+              { title: "Patterns", text: "Mastering logic: Two pointers, Sliding window, Recursion", icon: "🧩", color: "pink" }
+            ].map((item, i) => (
+              <div key={i} className={`p-6 bg-slate-900 border border-white/5 rounded-2xl flex items-center gap-5 hover:border-${item.color}-500/30 transition-all group`}>
+                <div className="text-3xl group-hover:scale-110 transition-transform">{item.icon}</div>
+                <div>
+                  <div className={`font-black text-${item.color}-400 text-sm uppercase tracking-widest mb-1`}>{item.title}</div>
+                  <p className="text-slate-400 text-xs font-medium leading-relaxed">{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Learning Path - Timeline Style */}
+        <div className="bg-slate-950 rounded-[2.5rem] p-10 border border-white/5">
+          <h3 className="text-2xl font-black text-white mb-10 text-center">Your Learning Path</h3>
+          <div className="space-y-12 relative">
+            <div className="absolute top-0 bottom-0 left-4 w-0.5 bg-slate-800" />
+            {[
+              { id: 1, title: "Master Foundations", text: "Complexity analysis, recursion, mathematics", color: "emerald" },
+              { id: 2, title: "Learn Data Structures", text: "Arrays, lists, stacks, queues, trees, graphs", color: "blue" },
+              { id: 3, title: "Study Algorithms", text: "Sorting, searching, DP, greedy paradigms", color: "purple" },
+              { id: 4, title: "Practice Problems", text: "Solve 300-500 problems across all patterns", color: "pink" }
+            ].map((step, i) => (
+              <div key={i} className="flex gap-10 items-center relative">
+                <div className={`w-8 h-8 rounded-full bg-${step.color}-500 text-slate-950 flex items-center justify-center font-black text-xs z-10 shadow-[0_0_15px_rgba(var(--${step.color}-rgb),0.5)]`}>
+                  {step.id}
+                </div>
+                <div>
+                  <div className="font-black text-white text-lg tracking-tight mb-1">{step.title}</div>
+                  <div className="text-slate-500 text-sm font-bold uppercase tracking-widest">{step.text}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </FoundationCard>
   );
 }

@@ -1,68 +1,141 @@
+"use client";
+
 import { motion } from "framer-motion";
+import FoundationCard from "./FoundationCard";
+import { ListChecks, ArrowRight, BookOpen, Calculator, Clock, Zap } from "lucide-react";
+import Link from "next/link";
 
 export default function FoundationsCheatsheet() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <h2 className="text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100">
-        📋 Foundations Cheatsheet
-      </h2>
+    <FoundationCard>
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
+          <ListChecks size={28} />
+        </div>
+        <h2 className="text-4xl font-black text-white tracking-tight">Foundations Cheatsheet</h2>
+      </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
-          <h3 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-4">Time Complexities</h3>
-          <div className="space-y-2 font-mono text-sm text-slate-700 dark:text-slate-300">
-            <div className="flex justify-between"><span>O(1)</span><span>Constant</span></div>
-            <div className="flex justify-between"><span>O(log n)</span><span>Logarithmic</span></div>
-            <div className="flex justify-between"><span>O(n)</span><span>Linear</span></div>
-            <div className="flex justify-between"><span>O(n log n)</span><span>Linearithmic</span></div>
-            <div className="flex justify-between"><span>O(n²)</span><span>Quadratic</span></div>
-            <div className="flex justify-between"><span>O(2ⁿ)</span><span>Exponential</span></div>
+      <div className="grid md:grid-cols-2 gap-6 mb-12">
+        {/* Time Complexities Card */}
+        <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <Clock size={60} />
+          </div>
+          <h3 className="text-xl font-black text-blue-400 mb-6 flex items-center gap-3">
+            <Clock size={20} /> Time Scales
+          </h3>
+          <div className="space-y-3">
+            {[
+              { val: "O(1)", label: "Constant" },
+              { val: "O(log n)", label: "Logarithmic" },
+              { val: "O(n)", label: "Linear" },
+              { val: "O(n log n)", label: "Linearithmic" },
+              { val: "O(n²)", label: "Quadratic" },
+              { val: "O(2ⁿ)", label: "Exponential" }
+            ].map((item, i) => (
+              <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5">
+                <span className="text-xs font-mono font-black text-white">{item.val}</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{item.label}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
-          <h3 className="text-xl font-bold text-green-900 dark:text-green-100 mb-4">Mathematics</h3>
-          <div className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-            <div>log₂(1024) = 10</div>
-            <div>2¹⁰ = 1024</div>
-            <div>P(n,r) = n!/(n-r)!</div>
-            <div>C(n,r) = n!/[r!(n-r)!]</div>
-            <div>log(ab) = log(a) + log(b)</div>
+        {/* Mathematics Card */}
+        <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <Calculator size={60} />
+          </div>
+          <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-3">
+            <Calculator size={20} /> Math Logic
+          </h3>
+          <div className="space-y-3">
+            {[
+              "log₂(1024) = 10",
+              "2¹⁰ = 1024",
+              "P(n,r) = n! / (n-r)!",
+              "C(n,r) = n! / [r!(n-r)!]",
+              "log(ab) = log(a) + log(b)",
+              "aᵐ * aⁿ = aᵐ⁺ⁿ"
+            ].map((item, i) => (
+              <div key={i} className="p-3 bg-white/5 rounded-xl border border-white/5 text-[11px] font-mono font-bold text-slate-300 text-center">
+                {item}
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
-          <h3 className="text-xl font-bold text-purple-900 dark:text-purple-100 mb-4">Real-World Impact</h3>
-          <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-            <li>✓ Small data: All algorithms fast</li>
-            <li>✓ Big data: Complexity matters!</li>
-            <li>✓ O(n²) → Hours on 1M items</li>
-            <li>✓ O(n log n) → Seconds on 1M items</li>
+        {/* Rules Card */}
+        <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <Zap size={60} />
+          </div>
+          <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-3">
+            <Zap size={20} /> Big-O Rules
+          </h3>
+          <ul className="space-y-4">
+            {[
+              { title: "Drop Constants", text: "O(2n) simplifies to O(n)" },
+              { title: "Dominant Term", text: "O(n² + n) simplifies to O(n²)" },
+              { title: "Worst Case", text: "Always optimize for the max boundary" },
+              { title: "Input Types", text: "Different inputs = different variables" }
+            ].map((item, i) => (
+              <li key={i} className="flex gap-4 items-start">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5" />
+                <div>
+                  <div className="text-[10px] font-black text-white uppercase tracking-widest">{item.title}</div>
+                  <p className="text-[10px] font-bold text-slate-500 leading-relaxed">{item.text}</p>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <div className="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-xl">
-          <h3 className="text-xl font-bold text-orange-900 dark:text-orange-100 mb-4">Big-O Rules</h3>
-          <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-            <li>✓ Drop constants: O(2n) → O(n)</li>
-            <li>✓ Drop lower terms: O(n² + n) → O(n²)</li>
-            <li>✓ Focus on worst case</li>
-            <li>✓ Different inputs = different variables</li>
+        {/* Impact Card */}
+        <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <Zap size={60} />
+          </div>
+          <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-3">
+            <Zap size={20} /> Real-World Impact
+          </h3>
+          <ul className="space-y-4">
+            {[
+              { title: "Small Data", text: "Hardware hides bad algorithm choices" },
+              { title: "Big Data", text: "Software choices define feasibility" },
+              { title: "O(n²) Scale", text: "Hours of execution on 1M items" },
+              { title: "O(n log n)", text: "Seconds of execution on 1M items" }
+            ].map((item, i) => (
+              <li key={i} className="flex gap-4 items-start">
+                <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
+                <div>
+                  <div className="text-[10px] font-black text-white uppercase tracking-widest">{item.title}</div>
+                  <p className="text-[10px] font-bold text-slate-500 leading-relaxed">{item.text}</p>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
-      <div className="mt-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-600">
-        <h3 className="text-xl font-bold text-green-900 dark:text-green-100 mb-3">🎓 Next Steps</h3>
-        <p className="text-slate-700 dark:text-slate-300 mb-3">
-          Now that you've mastered the foundations, you're ready to dive into data structures!
-        </p>
-        <div className="flex gap-4">
-          <a href="/array" className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">
-            Start with Arrays →
-          </a>
+      <div className="relative group/cta">
+        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-[2.5rem] blur opacity-20 group-hover/cta:opacity-40 transition-opacity" />
+        <div className="relative bg-slate-900 border border-white/10 rounded-[2.5rem] p-10 text-center">
+          <div className="text-5xl mb-6 group-hover:scale-110 transition-transform inline-block">🎓</div>
+          <h3 className="text-2xl font-black text-white mb-4">Phase 1 Complete</h3>
+          <p className="text-slate-400 text-base font-medium mb-10 max-w-xl mx-auto">
+            You have mastered the theoretical foundations of engineering. You are now ready to implement efficient structures in code.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/array" 
+              className="px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-black text-lg transition-all shadow-2xl shadow-blue-600/20 active:scale-95 flex items-center justify-center gap-3"
+            >
+              Start Arrays Module <ArrowRight size={20} />
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </FoundationCard>
   );
 }
