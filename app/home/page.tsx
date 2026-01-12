@@ -208,7 +208,7 @@ export default function HomeHub() {
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            style={{ "--glow-rgb": "59, 130, 246" }}
+            style={{ "--glow-rgb": "59, 130, 246" } as any}
           >
             <FeatureCard 
               title="Data Structures"
@@ -230,7 +230,7 @@ export default function HomeHub() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            style={{ "--glow-rgb": "168, 85, 247" }}
+            style={{ "--glow-rgb": "168, 85, 247" } as any}
           >
             <FeatureCard 
               title="Backend Dev"
@@ -252,7 +252,7 @@ export default function HomeHub() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            style={{ "--glow-rgb": "245, 158, 11" }}
+            style={{ "--glow-rgb": "245, 158, 11" } as any}
           >
             <FeatureCard 
               title="Core Concepts"
