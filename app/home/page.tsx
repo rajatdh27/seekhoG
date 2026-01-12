@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -55,7 +56,7 @@ const FeatureCard = ({ title, subtitle, icon: Icon, stats, href, color, gradient
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -143,9 +144,10 @@ const FeatureCard = ({ title, subtitle, icon: Icon, stats, href, color, gradient
 
 export default function HomeHub() {
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       const cards = document.getElementsByClassName("group");
-      for (const card of cards) {
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i] as HTMLElement;
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
