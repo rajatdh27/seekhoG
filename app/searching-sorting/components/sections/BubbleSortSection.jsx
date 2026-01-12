@@ -1,6 +1,9 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { useState } from "react";
+import SearchingSortingCard from "./SearchingSortingCard";
+import { Circle, Play, RefreshCw, Zap, CheckCircle2, AlertCircle, Code2, Gauge, Timer, Layers, ArrowUp } from "lucide-react";
 
 export default function BubbleSortSection() {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
@@ -136,269 +139,278 @@ func bubbleSort(arr []int) {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <SearchingSortingCard>
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-pink-600 to-rose-600 rounded-xl">
-          <span className="text-4xl">🫧</span>
+        <div className="w-14 h-14 bg-pink-500/10 rounded-2xl flex items-center justify-center text-pink-500 border border-pink-500/20">
+          <Circle size={28} />
         </div>
         <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Bubble Sort
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Bubbles largest elements to the end, one by one
-          </p>
+          <h2 className="text-4xl font-black text-white tracking-tight">Bubble Sort</h2>
+          <p className="text-slate-400 font-medium">Bubbles largest elements to the end, one by one.</p>
         </div>
       </div>
 
-      {/* Visual Animation */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          🎬 See It In Action
-        </h3>
-
-        <div className="bg-gradient-to-br from-pink-50 to-rose-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl">
-          <div className="mb-6 text-center">
-            <p className="text-lg text-slate-700 dark:text-slate-300 mb-2">
-              Watch how larger values "bubble" to the right
-            </p>
-            <div className="flex justify-center gap-4 text-sm">
+      <div className="space-y-8">
+        {/* Visual Animation */}
+        <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-2xl font-black text-white flex items-center gap-3">
+              <Play className="text-pink-500" /> Watch It Work
+            </h3>
+            <div className="flex gap-4 text-xs font-bold uppercase tracking-widest">
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                <span className="text-slate-700 dark:text-slate-300">Comparing</span>
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span className="text-blue-400">Comparing</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-green-500 rounded"></div>
-                <span className="text-slate-700 dark:text-slate-300">Sorted</span>
+                <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                <span className="text-emerald-400">Sorted</span>
               </div>
             </div>
           </div>
 
-          {/* Array Visualization */}
-          <div className="flex justify-center items-end gap-2 mb-6 h-64">
+          <div className="flex justify-center items-end gap-3 mb-10 h-64 px-4">
             {array.map((num, idx) => {
               const isComparing = comparing[0] === idx || comparing[1] === idx;
               const isSorted = sorted.includes(idx);
 
-              let bgColor = "#e2e8f0"; // default gray
-              if (isSorted) bgColor = "#22c55e"; // green when sorted
-              else if (isComparing) bgColor = "#3b82f6"; // blue when comparing
+              let bgColor = "#1e293b"; // slate-800
+              let borderColor = "#334155"; // slate-700
+              
+              if (isSorted) {
+                bgColor = "#10b981"; // emerald-500
+                borderColor = "#059669";
+              } else if (isComparing) {
+                bgColor = "#3b82f6"; // blue-500
+                borderColor = "#2563eb";
+              }
 
               return (
-                <div key={idx} className="flex flex-col items-center gap-2">
+                <div key={idx} className="flex flex-col items-center gap-2 w-full max-w-[60px]">
                   {/* Bar */}
                   <motion.div
                     animate={{
                       height: `${(num / 90) * 200}px`,
                       backgroundColor: bgColor,
-                      scale: isComparing ? 1.1 : 1,
+                      borderColor: borderColor,
+                      scale: isComparing ? 1.05 : 1,
                     }}
                     transition={{ duration: 0.3 }}
-                    className="w-12 rounded-t-lg shadow-lg flex items-end justify-center pb-2"
+                    className="w-full rounded-t-xl border-2 border-b-0 shadow-lg flex items-end justify-center pb-2 relative overflow-hidden"
                   >
-                    <span className="text-xs font-bold text-slate-900">
+                    <span className={`text-xs font-black ${isSorted || isComparing ? 'text-white' : 'text-slate-400'}`}>
                       {num}
                     </span>
+                    {/* Gloss effect */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
                   </motion.div>
 
                   {/* Index */}
-                  <div className="text-xs text-slate-500 dark:text-slate-400">
-                    [{idx}]
-                  </div>
+                  <div className="text-[10px] font-bold text-slate-600">[{idx}]</div>
                 </div>
               );
             })}
           </div>
 
-          {/* Control Buttons */}
           <div className="flex justify-center gap-4">
             <button
               onClick={startAnimation}
               disabled={isAnimating}
-              className="px-8 py-3 bg-gradient-to-r from-pink-600 to-rose-600 text-white rounded-lg font-semibold hover:from-pink-700 hover:to-rose-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
+              className="px-8 py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
             >
+              {isAnimating ? <RefreshCw className="animate-spin" /> : <Play fill="currentColor" />}
               {isAnimating ? "Sorting..." : "Start Bubble Sort"}
             </button>
             <button
               onClick={resetArray}
               disabled={isAnimating}
-              className="px-8 py-3 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-semibold hover:bg-slate-300 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl font-black text-sm uppercase tracking-widest transition-all border border-white/5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Reset
             </button>
           </div>
         </div>
-      </div>
 
-      {/* How It Works */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          📋 How It Works
-        </h3>
-        <div className="space-y-3">
-          {[
-            "Start from the beginning of the array",
-            "Compare each pair of adjacent elements (arr[j] and arr[j+1])",
-            "If left element > right element → Swap them",
-            "Continue until end of unsorted portion",
-            "After each pass, the largest unsorted element 'bubbles' to its correct position",
-            "Repeat for n-1 passes (where n is array length)",
-            "Each pass reduces unsorted portion by 1",
-          ].map((step, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="flex items-start gap-3 bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg"
-            >
-              <span className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-pink-600 to-rose-600 text-white rounded-full flex items-center justify-center font-bold">
-                {idx + 1}
-              </span>
-              <p className="text-slate-700 dark:text-slate-300 pt-1">{step}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Why "Bubble"? */}
-      <div className="mb-8">
-        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-6 rounded-xl border-l-4 border-blue-600">
-          <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-4">
-            🫧 Why Is It Called "Bubble" Sort?
-          </h3>
-          <p className="text-blue-900 dark:text-blue-100 text-lg mb-3">
-            Just like air bubbles rise to the surface of water, larger values "bubble up" to the end of the array with each pass!
-          </p>
-          <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-            <p className="text-blue-800 dark:text-blue-200">
-              <strong>Example Pass:</strong> [5, 2, 8, 1] → [2, 5, 1, <span className="text-green-600 font-bold">8</span>]
-              <br />
-              The largest value (8) "bubbled" to the end!
-            </p>
+        {/* How It Works */}
+        <div className="bg-slate-950/50 border border-blue-500/20 rounded-[2rem] p-8">
+          <h3 className="text-2xl font-black text-blue-400 mb-6">📖 How It Works</h3>
+          <div className="space-y-4">
+            {[
+              "Start from the beginning of the array.",
+              "Compare adjacent elements (current and next).",
+              "If current > next, swap them.",
+              "Move to the next pair and repeat.",
+              "After one full pass, the largest element 'bubbles' to the end.",
+              "Repeat for remaining unsorted elements until done."
+            ].map((step, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-black text-sm shrink-0">
+                  {i + 1}
+                </div>
+                <p className="text-slate-300 font-medium pt-1">{step}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* Code Implementation */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          💻 Code Implementation
-        </h3>
-
-        {/* Language Selector */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {Object.keys(languages).map((lang) => (
-            <button
-              key={lang}
-              onClick={() => setCurrentLanguage(lang)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                currentLanguage === lang
-                  ? "bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-lg"
-                  : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
-              }`}
-            >
-              {lang.toUpperCase()}
-            </button>
-          ))}
+        {/* Why "Bubble"? */}
+        <div className="bg-blue-500/10 border border-blue-500/20 p-6 rounded-[2rem] relative overflow-hidden group">
+          <div className="absolute -right-10 -top-10 text-blue-500/10 group-hover:text-blue-500/20 transition-colors">
+            <Circle size={150} />
+          </div>
+          <h3 className="text-xl font-black text-blue-400 mb-3 flex items-center gap-2">
+            <ArrowUp size={24} /> Why Is It Called "Bubble" Sort?
+          </h3>
+          <p className="text-slate-300 text-sm font-medium leading-relaxed relative z-10">
+            Just like air bubbles rise to the surface of water, larger values <strong className="text-white">"bubble up"</strong> to the end of the array with each pass!
+          </p>
+          <div className="mt-4 bg-slate-900/50 p-4 rounded-xl border border-white/5 relative z-10">
+            <code className="text-xs font-mono text-blue-300">
+              [5, 2, 8, 1] → [2, 5, 1, <span className="text-emerald-400 font-bold">8</span>]
+            </code>
+          </div>
         </div>
 
-        {/* Code Display */}
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{languages[currentLanguage]}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Time & Space Complexity */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          ⚡ Complexity Analysis
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-6 rounded-xl border border-orange-200 dark:border-orange-800">
-            <h4 className="text-xl font-bold text-orange-900 dark:text-orange-100 mb-3">
-              ⏱️ Time Complexity
+        {/* Complexity Analysis */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
+            <h4 className="flex items-center gap-2 text-orange-400 font-black mb-4">
+              <Gauge size={20} /> Time Complexity
             </h4>
-            <div className="space-y-2 text-orange-800 dark:text-orange-200">
-              <p><strong>Best Case:</strong> O(n) - Already sorted (with optimization)</p>
-              <p><strong>Average Case:</strong> O(n²) - Two nested loops</p>
-              <p><strong>Worst Case:</strong> O(n²) - Reverse sorted array</p>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Best Case</span>
+                <span className="text-emerald-400 font-black">O(n)</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Average</span>
+                <span className="text-rose-400 font-black">O(n²)</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Worst Case</span>
+                <span className="text-rose-400 font-black">O(n²)</span>
+              </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="text-xl font-bold text-green-900 dark:text-green-100 mb-3">
-              💾 Space Complexity
+          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
+            <h4 className="flex items-center gap-2 text-emerald-400 font-black mb-4">
+              <Layers size={20} /> Space Complexity
             </h4>
-            <div className="space-y-2 text-green-800 dark:text-green-200">
-              <p><strong>Space:</strong> O(1) - In-place sorting</p>
-              <p>Only uses a single temporary variable for swapping - very memory efficient!</p>
+            <div className="flex items-center justify-center h-32">
+              <div className="text-center">
+                <div className="text-4xl font-black text-white mb-2">O(1)</div>
+                <div className="text-emerald-400 text-sm font-bold uppercase tracking-widest">In-Place</div>
+              </div>
             </div>
+            <p className="text-center text-slate-500 text-xs mt-2">Only uses a single temporary variable for swapping.</p>
           </div>
         </div>
-      </div>
 
-      {/* Optimization Tip */}
-      <div className="mb-8">
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border-l-4 border-purple-600">
-          <h3 className="text-2xl font-bold text-purple-900 dark:text-purple-100 mb-4">
-            ⚡ Optimization: Early Exit
+              {/* Code Implementation */}
+              <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner mb-8">
+                <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+                  <h3 className="text-2xl font-black text-white flex items-center gap-3">
+                    <Code2 className="text-blue-400" /> Implementation
+                  </h3>
+                </div>
+        
+                <div className="space-y-6">
+                  <div className="flex flex-wrap gap-2">
+                    {Object.keys(languages).map((lang) => (
+                      <button
+                        key={lang}
+                        onClick={() => setCurrentLanguage(lang)}
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                          currentLanguage === lang
+                            ? "bg-pink-500 text-white"
+                            : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
+                        }`}
+                      >
+                        {lang.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+        
+                  <div className="relative group/terminal">
+                    <div className="absolute -inset-1 bg-pink-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
+                    <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
+                      <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
+                        <div className="flex gap-1.5">
+                          <div className="w-3 h-3 rounded-full bg-rose-500/50" />
+                          <div className="w-3 h-3 rounded-full bg-amber-500/50" />
+                          <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
+                        </div>
+                        <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
+                          bubble_sort.{currentLanguage === 'javascript' ? 'js' : currentLanguage === 'python' ? 'py' : currentLanguage}
+                        </div>
+                      </div>
+                      <div className="p-6 overflow-x-auto">
+                        <pre className="text-sm leading-relaxed text-pink-300 font-mono">
+                          <code>{languages[currentLanguage]}</code>
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        {/* Optimization Tip */}
+        <div className="bg-purple-500/10 border border-purple-500/20 p-6 rounded-[2rem]">
+          <h3 className="text-lg font-black text-purple-400 mb-3 flex items-center gap-2">
+            <Zap size={20} /> Optimization: Early Exit
           </h3>
-          <p className="text-purple-900 dark:text-purple-100 mb-3">
-            You can optimize bubble sort by tracking if any swaps occurred in a pass. If no swaps happen, the array is already sorted!
+          <p className="text-slate-300 text-sm font-medium mb-4">
+            Track if any swaps occurred in a pass. If no swaps happen, the array is already sorted!
           </p>
-          <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-            <pre className="text-sm text-purple-800 dark:text-purple-200">
-{`for (let i = 0; i < n - 1; i++) {
-    let swapped = false;
-    for (let j = 0; j < n - i - 1; j++) {
-        if (arr[j] > arr[j + 1]) {
-            swap(arr[j], arr[j + 1]);
-            swapped = true;
-        }
-    }
-    if (!swapped) break;  // Array is sorted!
-}`}
+          <div className="bg-slate-900/50 p-4 rounded-xl border border-white/5">
+            <pre className="text-xs font-mono text-purple-300">
+{`if (!swapped) break; // Array is sorted!`}
             </pre>
           </div>
         </div>
-      </div>
 
-      {/* When to Use */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          🎯 When to Use Bubble Sort
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="font-bold text-green-900 dark:text-green-100 mb-3 text-lg">
-              ✅ Use Bubble Sort When:
-            </h4>
-            <ul className="space-y-2 text-green-800 dark:text-green-200">
-              <li>• Learning sorting algorithms (great for understanding!)</li>
-              <li>• Very small datasets (n &lt; 10)</li>
-              <li>• Array is nearly sorted</li>
-              <li>• You need a simple, easy-to-understand algorithm</li>
-              <li>• Memory is extremely limited (O(1) space)</li>
-            </ul>
+        {/* When to Use */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem] p-8">
+             <h3 className="text-lg font-black text-emerald-400 mb-4 flex items-center gap-2">
+               <CheckCircle2 size={20} /> When to Use
+             </h3>
+             <ul className="space-y-3">
+               {[
+                 "Learning sorting concepts",
+                 "Tiny datasets (n < 10)",
+                 "Array is nearly sorted",
+                 "Memory is extremely limited"
+               ].map((item, i) => (
+                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
+                   {item}
+                 </li>
+               ))}
+             </ul>
           </div>
-
-          <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border border-red-200 dark:border-red-800">
-            <h4 className="font-bold text-red-900 dark:text-red-100 mb-3 text-lg">
-              ❌ Don't Use Bubble Sort When:
-            </h4>
-            <ul className="space-y-2 text-red-800 dark:text-red-200">
-              <li>• Working with large datasets (O(n²) is too slow)</li>
-              <li>• Performance is critical</li>
-              <li>• In production code (use Quick/Merge Sort instead)</li>
-              <li>• Array is randomly ordered or reverse sorted</li>
-            </ul>
+          <div className="bg-rose-500/5 border border-rose-500/10 rounded-[2rem] p-8">
+             <h3 className="text-lg font-black text-rose-400 mb-4 flex items-center gap-2">
+               <AlertCircle size={20} /> Avoid When
+             </h3>
+             <ul className="space-y-3">
+               {[
+                 "Large datasets (O(n²) is slow)",
+                 "Performance is critical",
+                 "Production environments",
+                 "Reverse sorted data"
+               ].map((item, i) => (
+                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                   <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
+                   {item}
+                 </li>
+               ))}
+             </ul>
           </div>
         </div>
+
       </div>
-    </div>
+    </SearchingSortingCard>
   );
 }

@@ -1,8 +1,20 @@
 "use client";
 
-import { useState, lazy, Suspense } from "react";
-import { motion } from "framer-motion";
-import TableOfContents from "@/app/components/common/TableOfContents";
+import { useState, lazy, Suspense, useEffect } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
+import TableOfContents from "./components/sections/TableOfContents";
+import { 
+  Search, 
+  ArrowRight, 
+  MousePointerClick, 
+  ArrowRightLeft, 
+  GitMerge, 
+  Zap, 
+  FileText, 
+  BookOpen, 
+  Circle,
+  ChevronDown
+} from "lucide-react";
 
 // Eager load the first section
 import SearchingSortingIntro from "./components/sections/SearchingSortingIntro";
@@ -18,25 +30,25 @@ const QuickSortSection = lazy(() => import("./components/sections/QuickSortSecti
 const SearchingSortingCheatsheet = lazy(() => import("./components/sections/SearchingSortingCheatsheet"));
 
 const sections = [
-  { id: "intro", title: "Introduction", component: SearchingSortingIntro },
-  { id: "linear-search", title: "Linear Search", component: LinearSearchSection },
-  { id: "binary-search", title: "Binary Search", component: BinarySearchSection },
-  { id: "bubble-sort", title: "Bubble Sort", component: BubbleSortSection },
-  { id: "selection-sort", title: "Selection Sort", component: SelectionSortSection },
-  { id: "insertion-sort", title: "Insertion Sort", component: InsertionSortSection },
-  { id: "merge-sort", title: "Merge Sort", component: MergeSortSection },
-  { id: "quick-sort", title: "Quick Sort", component: QuickSortSection },
-  { id: "cheatsheet", title: "Cheatsheet", component: SearchingSortingCheatsheet },
+  { id: "intro", title: "Introduction", component: SearchingSortingIntro, icon: BookOpen },
+  { id: "linear-search", title: "Linear Search", component: LinearSearchSection, icon: ArrowRight },
+  { id: "binary-search", title: "Binary Search", component: BinarySearchSection, icon: Search },
+  { id: "bubble-sort", title: "Bubble Sort", component: BubbleSortSection, icon: Circle },
+  { id: "selection-sort", title: "Selection Sort", component: SelectionSortSection, icon: MousePointerClick },
+  { id: "insertion-sort", title: "Insertion Sort", component: InsertionSortSection, icon: ArrowRightLeft },
+  { id: "merge-sort", title: "Merge Sort", component: MergeSortSection, icon: GitMerge },
+  { id: "quick-sort", title: "Quick Sort", component: QuickSortSection, icon: Zap },
+  { id: "cheatsheet", title: "Cheatsheet", component: SearchingSortingCheatsheet, icon: FileText },
 ];
 
 function SectionSkeleton() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700 animate-pulse">
-      <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-6"></div>
+    <div className="bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] shadow-2xl p-8 border border-slate-700/50 animate-pulse">
+      <div className="h-8 bg-slate-800 rounded w-1/3 mb-6"></div>
       <div className="space-y-3">
-        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full"></div>
-        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-5/6"></div>
-        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-4/6"></div>
+        <div className="h-4 bg-slate-800 rounded w-full"></div>
+        <div className="h-4 bg-slate-800 rounded w-5/6"></div>
+        <div className="h-4 bg-slate-800 rounded w-4/6"></div>
       </div>
     </div>
   );
@@ -44,82 +56,147 @@ function SectionSkeleton() {
 
 export default function SearchingSortingPage() {
   const [activeSection, setActiveSection] = useState("intro");
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const cards = document.getElementsByClassName("perspective-card");
+      for (const card of cards) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty("--mouse-x", `${x}px`);
+        card.style.setProperty("--mouse-y", `${y}px`);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-[#020617] text-slate-100 selection:bg-orange-500/30">
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-amber-500 z-[100] origin-left"
+        style={{ scaleX }}
+      />
+
+      {/* Futuristic Background Mesh */}
+      <div className="fixed inset-0 z-0 opacity-20 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-orange-600/20 to-transparent blur-[120px]" />
+      </div>
+
       {/* Hero Section */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-orange-600 to-yellow-600 dark:from-orange-700 dark:to-yellow-800 text-white py-16 px-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="relative z-10 pt-24 pb-20 px-6 overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center gap-4 mb-4"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-black uppercase tracking-widest mb-8"
           >
-            <div className="text-6xl">🔍</div>
-            <h1 className="text-5xl md:text-6xl font-bold">Searching & Sorting</h1>
+            <Search size={14} className="fill-orange-400" /> Algorithm Mastery
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="flex flex-col items-center gap-6 mb-8"
+          >
+            <div className="text-8xl filter drop-shadow-[0_0_15px_rgba(249,115,22,0.3)] animate-bounce">🔍</div>
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter bg-gradient-to-b from-white via-white to-slate-500 bg-clip-text text-transparent">
+              Searching & Sorting
+            </h1>
+          </motion.div>
+
           <motion.p
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-xl md:text-2xl text-orange-100 max-w-3xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed mb-12"
           >
             Master the fundamental algorithms with visual animations and code in 6 languages. See how each algorithm works step-by-step!
           </motion.p>
+
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="flex gap-4 mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-wrap justify-center gap-6"
           >
             <a
               href="#linear-search"
-              className="px-6 py-3 bg-white text-orange-600 rounded-lg font-semibold hover:bg-orange-50 transition-colors"
+              className="px-10 py-5 bg-orange-600 hover:bg-orange-500 text-white rounded-2xl font-black text-lg transition-all shadow-2xl shadow-orange-600/20 active:scale-95"
             >
               Start Learning
             </a>
             <a
               href="#cheatsheet"
-              className="px-6 py-3 bg-orange-700 text-white rounded-lg font-semibold hover:bg-orange-800 transition-colors border border-orange-500"
+              className="px-10 py-5 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl font-black text-lg transition-all border border-white/10 active:scale-95"
             >
               View Cheatsheet
             </a>
+          </motion.div>
+          
+          <motion.div 
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="mt-16 text-slate-500 flex flex-col items-center gap-2"
+          >
+            <span className="text-[10px] font-black uppercase tracking-[0.3em]">Scroll to Explore</span>
+            <ChevronDown size={20} />
           </motion.div>
         </div>
       </motion.div>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Table of Contents */}
-          <aside className="lg:w-64 lg:sticky lg:top-4 lg:self-start">
-            <TableOfContents
-              sections={sections}
-              activeSection={activeSection}
-              onSectionClick={setActiveSection}
-            />
+      <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Table of Contents - Hidden on mobile, visible on desktop */}
+          <aside className="hidden lg:block lg:w-72 lg:sticky lg:top-24 lg:self-start">
+            <div className="bg-slate-900/40 backdrop-blur-xl border border-white/5 rounded-[2rem] p-6 shadow-2xl">
+              <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-6 px-4">Curriculum</h3>
+              <TableOfContents
+                sections={sections}
+                activeSection={activeSection}
+                onSectionClick={setActiveSection}
+              />
+            </div>
           </aside>
 
           {/* Content Sections */}
-          <main className="flex-1 space-y-16 min-w-0 overflow-hidden">
+          <main className="flex-1 space-y-24 min-w-0">
             {sections.map((section, index) => {
               const Component = section.component;
+              const Icon = section.icon;
               return (
                 <motion.section
                   key={section.id}
                   id={section.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={index === 0 ? { opacity: 1, y: 0 } : undefined}
-                  whileInView={index === 0 ? undefined : { opacity: 1, y: 0 }}
-                  viewport={index === 0 ? undefined : { once: true, margin: "0px" }}
-                  transition={{ duration: 0.5 }}
-                  className="scroll-mt-20"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.7, type: "spring", damping: 25 }}
+                  className="scroll-mt-32"
                 >
+                  <div className="flex items-center gap-4 mb-8 group">
+                    <div className="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-400 border border-orange-500/20 group-hover:scale-110 transition-transform">
+                      <Icon size={24} />
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">{section.title}</h2>
+                  </div>
+
                   {index === 0 ? (
                     <Component />
                   ) : (
@@ -134,41 +211,15 @@ export default function SearchingSortingPage() {
         </div>
       </div>
 
-      {/* Progress Indicator */}
-      <motion.div
-        className="fixed bottom-8 right-8 bg-white dark:bg-slate-800 rounded-full shadow-lg p-4 z-50"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <div className="w-16 h-16 relative">
-          <svg className="transform -rotate-90 w-16 h-16">
-            <circle
-              cx="32"
-              cy="32"
-              r="28"
-              stroke="currentColor"
-              strokeWidth="4"
-              fill="none"
-              className="text-slate-200 dark:text-slate-700"
-            />
-            <circle
-              cx="32"
-              cy="32"
-              r="28"
-              stroke="currentColor"
-              strokeWidth="4"
-              fill="none"
-              strokeDasharray={`${2 * Math.PI * 28}`}
-              strokeDashoffset={`${2 * Math.PI * 28 * (1 - (sections.findIndex((s) => s.id === activeSection) + 1) / sections.length)}`}
-              className="text-orange-600 dark:text-orange-500 transition-all duration-300"
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-slate-700 dark:text-slate-300">
-            {Math.round((sections.findIndex((s) => s.id === activeSection) + 1) / sections.length * 100)}%
-          </div>
-        </div>
-      </motion.div>
+      <style jsx global>{`
+        :root {
+          --mouse-x: 0px;
+          --mouse-y: 0px;
+        }
+        .perspective-card {
+          --glow-rgb: 249, 115, 22;
+        }
+      `}</style>
     </div>
   );
 }

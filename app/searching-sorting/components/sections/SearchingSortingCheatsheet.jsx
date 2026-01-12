@@ -1,109 +1,66 @@
 "use client";
+
 import { motion } from "framer-motion";
+import SearchingSortingCard from "./SearchingSortingCard";
+import { FileText, Search, BarChart3, HelpCircle, Zap, BookOpen } from "lucide-react";
 
 export default function SearchingSortingCheatsheet() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <h2 className="text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100">
-        📋 Algorithm Cheatsheet
-      </h2>
-
-      <p className="text-lg text-slate-700 dark:text-slate-300 mb-8">
-        Quick reference for all searching and sorting algorithms - time complexity, space complexity, and when to use each one.
-      </p>
+    <SearchingSortingCard>
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
+          <FileText size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Algorithm Cheatsheet</h2>
+          <p className="text-slate-400 font-medium">Quick reference for complexity and use cases.</p>
+        </div>
+      </div>
 
       {/* Searching Algorithms */}
       <div className="mb-12">
-        <motion.h3
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          className="text-3xl font-bold text-blue-900 dark:text-blue-100 mb-6 flex items-center gap-3"
-        >
-          <span className="text-4xl">🔍</span>
-          Searching Algorithms
-        </motion.h3>
+        <h3 className="text-2xl font-black text-blue-400 mb-6 flex items-center gap-3">
+          <Search size={24} /> Searching Algorithms
+        </h3>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+        <div className="overflow-x-auto rounded-[2rem] border border-white/10 shadow-2xl">
+          <table className="w-full text-left border-collapse bg-slate-950/50">
             <thead>
-              <tr className="bg-blue-100 dark:bg-blue-900/30">
-                <th className="border border-blue-300 dark:border-blue-700 p-4 text-left text-slate-900 dark:text-slate-100">
-                  Algorithm
-                </th>
-                <th className="border border-blue-300 dark:border-blue-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Best Case
-                </th>
-                <th className="border border-blue-300 dark:border-blue-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Average Case
-                </th>
-                <th className="border border-blue-300 dark:border-blue-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Worst Case
-                </th>
-                <th className="border border-blue-300 dark:border-blue-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Space
-                </th>
-                <th className="border border-blue-300 dark:border-blue-700 p-4 text-left text-slate-900 dark:text-slate-100">
-                  Best For
-                </th>
+              <tr className="border-b border-white/10 text-slate-500 text-xs uppercase tracking-widest font-black bg-slate-900/80">
+                <th className="p-5">Algorithm</th>
+                <th className="p-5 text-center">Best Case</th>
+                <th className="p-5 text-center">Average</th>
+                <th className="p-5 text-center">Worst Case</th>
+                <th className="p-5 text-center">Space</th>
+                <th className="p-5">Best For</th>
               </tr>
             </thead>
-            <tbody>
-              <tr className="hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors">
-                <td className="border border-blue-300 dark:border-blue-700 p-4">
-                  <strong className="text-blue-700 dark:text-blue-300">Linear Search</strong>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Sequential scan</p>
+            <tbody className="text-sm font-medium text-slate-300">
+              <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td className="p-5">
+                  <strong className="text-blue-400 text-base">Linear Search</strong>
+                  <div className="text-xs text-slate-500 mt-1 font-bold uppercase tracking-wider">Sequential Scan</div>
                 </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(1)
-                  </span>
-                </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-semibold">
-                    O(n)
-                  </span>
-                </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-semibold">
-                    O(n)
-                  </span>
-                </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(1)
-                  </span>
-                </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-sm text-slate-700 dark:text-slate-300">
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(1)</span></td>
+                <td className="p-5 text-center"><span className="text-yellow-400 font-bold">O(n)</span></td>
+                <td className="p-5 text-center"><span className="text-yellow-400 font-bold">O(n)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(1)</span></td>
+                <td className="p-5 text-xs font-bold leading-relaxed text-slate-400">
                   Small or unsorted arrays
                 </td>
               </tr>
-              <tr className="hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors">
-                <td className="border border-blue-300 dark:border-blue-700 p-4">
-                  <strong className="text-blue-700 dark:text-blue-300">Binary Search</strong>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Divide & conquer</p>
+              <tr className="hover:bg-white/5 transition-colors">
+                <td className="p-5">
+                  <strong className="text-blue-400 text-base">Binary Search</strong>
+                  <div className="text-xs text-slate-500 mt-1 font-bold uppercase tracking-wider">Divide & Conquer</div>
                 </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(1)
-                  </span>
-                </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(log n)
-                  </span>
-                </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(log n)
-                  </span>
-                </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(1)
-                  </span>
-                </td>
-                <td className="border border-blue-300 dark:border-blue-700 p-4 text-sm text-slate-700 dark:text-slate-300">
-                  <strong>Sorted arrays</strong>, large datasets
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(1)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(log n)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(log n)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(1)</span></td>
+                <td className="p-5 text-xs font-bold leading-relaxed text-slate-400">
+                  <span className="text-white">Sorted arrays</span>, large datasets
                 </td>
               </tr>
             </tbody>
@@ -113,202 +70,83 @@ export default function SearchingSortingCheatsheet() {
 
       {/* Sorting Algorithms */}
       <div className="mb-12">
-        <motion.h3
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          className="text-3xl font-bold text-orange-900 dark:text-orange-100 mb-6 flex items-center gap-3"
-        >
-          <span className="text-4xl">📊</span>
-          Sorting Algorithms
-        </motion.h3>
+        <h3 className="text-2xl font-black text-orange-400 mb-6 flex items-center gap-3">
+          <BarChart3 size={24} /> Sorting Algorithms
+        </h3>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+        <div className="overflow-x-auto rounded-[2rem] border border-white/10 shadow-2xl">
+          <table className="w-full text-left border-collapse bg-slate-950/50">
             <thead>
-              <tr className="bg-orange-100 dark:bg-orange-900/30">
-                <th className="border border-orange-300 dark:border-orange-700 p-4 text-left text-slate-900 dark:text-slate-100">
-                  Algorithm
-                </th>
-                <th className="border border-orange-300 dark:border-orange-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Best Case
-                </th>
-                <th className="border border-orange-300 dark:border-orange-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Average Case
-                </th>
-                <th className="border border-orange-300 dark:border-orange-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Worst Case
-                </th>
-                <th className="border border-orange-300 dark:border-orange-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Space
-                </th>
-                <th className="border border-orange-300 dark:border-orange-700 p-4 text-center text-slate-900 dark:text-slate-100">
-                  Stable?
-                </th>
-                <th className="border border-orange-300 dark:border-orange-700 p-4 text-left text-slate-900 dark:text-slate-100">
-                  Best For
-                </th>
+              <tr className="border-b border-white/10 text-slate-500 text-xs uppercase tracking-widest font-black bg-slate-900/80">
+                <th className="p-5">Algorithm</th>
+                <th className="p-5 text-center">Best</th>
+                <th className="p-5 text-center">Average</th>
+                <th className="p-5 text-center">Worst</th>
+                <th className="p-5 text-center">Space</th>
+                <th className="p-5 text-center">Stable?</th>
+                <th className="p-5">Best For</th>
               </tr>
             </thead>
-            <tbody>
-              <tr className="hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors">
-                <td className="border border-orange-300 dark:border-orange-700 p-4">
-                  <strong className="text-orange-700 dark:text-orange-300">Bubble Sort</strong>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Bubble up largest</p>
+            <tbody className="text-sm font-medium text-slate-300">
+              {/* Bubble Sort */}
+              <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td className="p-5">
+                  <strong className="text-orange-400 text-base">Bubble Sort</strong>
                 </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-semibold">
-                    O(n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full text-sm font-semibold">
-                    O(n²)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full text-sm font-semibold">
-                    O(n²)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(1)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-sm text-slate-700 dark:text-slate-300">
-                  Learning, nearly sorted data
-                </td>
+                <td className="p-5 text-center"><span className="text-yellow-400 font-bold">O(n)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-bold">O(n²)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-bold">O(n²)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(1)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-black">✓</span></td>
+                <td className="p-5 text-xs font-bold text-slate-400">Learning, tiny datasets</td>
               </tr>
-              <tr className="hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors">
-                <td className="border border-orange-300 dark:border-orange-700 p-4">
-                  <strong className="text-orange-700 dark:text-orange-300">Selection Sort</strong>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Select minimum</p>
+              {/* Selection Sort */}
+              <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td className="p-5">
+                  <strong className="text-orange-400 text-base">Selection Sort</strong>
                 </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full text-sm font-semibold">
-                    O(n²)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full text-sm font-semibold">
-                    O(n²)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full text-sm font-semibold">
-                    O(n²)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(1)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="text-red-600 dark:text-red-400 font-bold">✗</span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-sm text-slate-700 dark:text-slate-300">
-                  Minimizing swaps
-                </td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-bold">O(n²)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-bold">O(n²)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-bold">O(n²)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(1)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-black">✗</span></td>
+                <td className="p-5 text-xs font-bold text-slate-400">Minimizing memory writes</td>
               </tr>
-              <tr className="hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors">
-                <td className="border border-orange-300 dark:border-orange-700 p-4">
-                  <strong className="text-orange-700 dark:text-orange-300">Insertion Sort</strong>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Insert in place</p>
+              {/* Insertion Sort */}
+              <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td className="p-5">
+                  <strong className="text-orange-400 text-base">Insertion Sort</strong>
                 </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-semibold">
-                    O(n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full text-sm font-semibold">
-                    O(n²)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full text-sm font-semibold">
-                    O(n²)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(1)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-sm text-slate-700 dark:text-slate-300">
-                  <strong>Nearly sorted</strong>, online sorting
-                </td>
+                <td className="p-5 text-center"><span className="text-yellow-400 font-bold">O(n)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-bold">O(n²)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-bold">O(n²)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(1)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-black">✓</span></td>
+                <td className="p-5 text-xs font-bold text-slate-400"><span className="text-white">Nearly sorted</span>, small data</td>
               </tr>
-              <tr className="hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors">
-                <td className="border border-orange-300 dark:border-orange-700 p-4">
-                  <strong className="text-orange-700 dark:text-orange-300">Merge Sort</strong>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Divide & merge</p>
+              {/* Merge Sort */}
+              <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td className="p-5">
+                  <strong className="text-orange-400 text-base">Merge Sort</strong>
                 </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(n log n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(n log n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(n log n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-semibold">
-                    O(n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-sm text-slate-700 dark:text-slate-300">
-                  <strong>Guaranteed O(n log n)</strong>, stable sort
-                </td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(n log n)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(n log n)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(n log n)</span></td>
+                <td className="p-5 text-center"><span className="text-yellow-400 font-bold">O(n)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-black">✓</span></td>
+                <td className="p-5 text-xs font-bold text-slate-400"><span className="text-white">Guaranteed speed</span>, stable</td>
               </tr>
-              <tr className="hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors">
-                <td className="border border-orange-300 dark:border-orange-700 p-4">
-                  <strong className="text-orange-700 dark:text-orange-300">Quick Sort</strong>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Partition & conquer</p>
+              {/* Quick Sort */}
+              <tr className="hover:bg-white/5 transition-colors">
+                <td className="p-5">
+                  <strong className="text-orange-400 text-base">Quick Sort</strong>
                 </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(n log n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(n log n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full text-sm font-semibold">
-                    O(n²)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    O(log n)
-                  </span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-center">
-                  <span className="text-red-600 dark:text-red-400 font-bold">✗</span>
-                </td>
-                <td className="border border-orange-300 dark:border-orange-700 p-4 text-sm text-slate-700 dark:text-slate-300">
-                  <strong>Fastest in practice</strong>, in-place
-                </td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(n log n)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(n log n)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-bold">O(n²)</span></td>
+                <td className="p-5 text-center"><span className="text-emerald-400 font-bold">O(log n)</span></td>
+                <td className="p-5 text-center"><span className="text-rose-400 font-black">✗</span></td>
+                <td className="p-5 text-xs font-bold text-slate-400"><span className="text-white">Fastest</span> average case</td>
               </tr>
             </tbody>
           </table>
@@ -317,176 +155,84 @@ export default function SearchingSortingCheatsheet() {
 
       {/* Quick Decision Guide */}
       <div className="mb-12">
-        <motion.h3
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          className="text-3xl font-bold text-purple-900 dark:text-purple-100 mb-6 flex items-center gap-3"
-        >
-          <span className="text-4xl">🤔</span>
-          Quick Decision Guide
-        </motion.h3>
+        <h3 className="text-2xl font-black text-purple-400 mb-6 flex items-center gap-3">
+          <HelpCircle size={24} /> Quick Decision Guide
+        </h3>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-600">
-            <h4 className="text-xl font-bold text-green-900 dark:text-green-100 mb-4">
-              🔍 Searching: Which to Use?
+          <div className="bg-blue-500/10 border border-blue-500/20 p-6 rounded-[2rem]">
+            <h4 className="text-lg font-black text-blue-400 mb-4 flex items-center gap-2">
+              <Search size={18} /> Searching
             </h4>
-            <div className="space-y-3 text-slate-700 dark:text-slate-300">
-              <div className="bg-white/50 dark:bg-slate-800/50 p-3 rounded-lg">
-                <p className="font-bold text-green-700 dark:text-green-300 mb-1">Sorted Array?</p>
-                <p className="text-sm">→ Use <strong>Binary Search</strong> - O(log n)</p>
-              </div>
-              <div className="bg-white/50 dark:bg-slate-800/50 p-3 rounded-lg">
-                <p className="font-bold text-green-700 dark:text-green-300 mb-1">Unsorted Array?</p>
-                <p className="text-sm">→ Use <strong>Linear Search</strong> - O(n)</p>
-              </div>
-              <div className="bg-white/50 dark:bg-slate-800/50 p-3 rounded-lg">
-                <p className="font-bold text-green-700 dark:text-green-300 mb-1">Search Many Times?</p>
-                <p className="text-sm">→ Sort once, then <strong>Binary Search</strong></p>
-              </div>
-            </div>
+            <ul className="space-y-3">
+              {[
+                { label: "Sorted Array?", action: "Binary Search", complex: "O(log n)" },
+                { label: "Unsorted Array?", action: "Linear Search", complex: "O(n)" },
+                { label: "Search Many Times?", action: "Sort + Binary", complex: "O(n log n)" }
+              ].map((item, i) => (
+                <li key={i} className="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-white/5">
+                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wide">{item.label}</span>
+                  <div className="text-right">
+                    <div className="text-blue-400 font-black text-sm">{item.action}</div>
+                    <div className="text-slate-500 text-[10px] font-bold">{item.complex}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-6 rounded-xl border-l-4 border-orange-600">
-            <h4 className="text-xl font-bold text-orange-900 dark:text-orange-100 mb-4">
-              📊 Sorting: Which to Use?
+          <div className="bg-orange-500/10 border border-orange-500/20 p-6 rounded-[2rem]">
+            <h4 className="text-lg font-black text-orange-400 mb-4 flex items-center gap-2">
+              <BarChart3 size={18} /> Sorting
             </h4>
-            <div className="space-y-3 text-slate-700 dark:text-slate-300">
-              <div className="bg-white/50 dark:bg-slate-800/50 p-3 rounded-lg">
-                <p className="font-bold text-orange-700 dark:text-orange-300 mb-1">Best Performance?</p>
-                <p className="text-sm">→ Use <strong>Quick Sort</strong> (usually fastest)</p>
-              </div>
-              <div className="bg-white/50 dark:bg-slate-800/50 p-3 rounded-lg">
-                <p className="font-bold text-orange-700 dark:text-orange-300 mb-1">Guaranteed O(n log n)?</p>
-                <p className="text-sm">→ Use <strong>Merge Sort</strong> (consistent)</p>
-              </div>
-              <div className="bg-white/50 dark:bg-slate-800/50 p-3 rounded-lg">
-                <p className="font-bold text-orange-700 dark:text-orange-300 mb-1">Nearly Sorted?</p>
-                <p className="text-sm">→ Use <strong>Insertion Sort</strong> (adaptive)</p>
-              </div>
-              <div className="bg-white/50 dark:bg-slate-800/50 p-3 rounded-lg">
-                <p className="font-bold text-orange-700 dark:text-orange-300 mb-1">Learning?</p>
-                <p className="text-sm">→ Start with <strong>Bubble Sort</strong> (simple)</p>
-              </div>
-            </div>
+            <ul className="space-y-3">
+              {[
+                { label: "Fastest Generally?", action: "Quick Sort", complex: "Avg O(n log n)" },
+                { label: "Guaranteed Speed?", action: "Merge Sort", complex: "Always O(n log n)" },
+                { label: "Nearly Sorted?", action: "Insertion Sort", complex: "Best O(n)" },
+                { label: "Tiny Dataset?", action: "Bubble Sort", complex: "Simple Code" }
+              ].map((item, i) => (
+                <li key={i} className="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-white/5">
+                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wide">{item.label}</span>
+                  <div className="text-right">
+                    <div className="text-orange-400 font-black text-sm">{item.action}</div>
+                    <div className="text-slate-500 text-[10px] font-bold">{item.complex}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
 
-      {/* Key Terms */}
-      <div className="mb-12">
-        <motion.h3
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          className="text-3xl font-bold text-cyan-900 dark:text-cyan-100 mb-6 flex items-center gap-3"
-        >
-          <span className="text-4xl">📖</span>
-          Key Terms
-        </motion.h3>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-cyan-50 dark:bg-cyan-900/20 p-6 rounded-xl border border-cyan-200 dark:border-cyan-800">
-            <h4 className="font-bold text-cyan-900 dark:text-cyan-100 mb-2 text-lg">
-              ✓ Stable Sort
-            </h4>
-            <p className="text-slate-700 dark:text-slate-300 text-sm">
-              Maintains the relative order of equal elements. If two elements are equal, their original order is preserved.
-            </p>
-            <p className="text-xs text-cyan-700 dark:text-cyan-300 mt-2">
-              Example: Bubble, Insertion, Merge
-            </p>
-          </div>
-
-          <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
-            <h4 className="font-bold text-purple-900 dark:text-purple-100 mb-2 text-lg">
-              🏠 In-Place Sort
-            </h4>
-            <p className="text-slate-700 dark:text-slate-300 text-sm">
-              Uses O(1) or O(log n) extra space. Sorts the array within itself without requiring significant additional memory.
-            </p>
-            <p className="text-xs text-purple-700 dark:text-purple-300 mt-2">
-              Example: Bubble, Selection, Insertion, Quick
-            </p>
-          </div>
-
-          <div className="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border border-amber-200 dark:border-amber-800">
-            <h4 className="font-bold text-amber-900 dark:text-amber-100 mb-2 text-lg">
-              🎯 Adaptive Algorithm
-            </h4>
-            <p className="text-slate-700 dark:text-slate-300 text-sm">
-              Performance improves when data is already partially sorted. Takes advantage of existing order in the input.
-            </p>
-            <p className="text-xs text-amber-700 dark:text-amber-300 mt-2">
-              Example: Insertion Sort, Bubble Sort (optimized)
-            </p>
-          </div>
-
-          <div className="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-xl border border-pink-200 dark:border-pink-800">
-            <h4 className="font-bold text-pink-900 dark:text-pink-100 mb-2 text-lg">
-              🔀 Divide & Conquer
-            </h4>
-            <p className="text-slate-700 dark:text-slate-300 text-sm">
-              Breaks problem into smaller subproblems, solves them recursively, then combines results. Often leads to O(n log n) complexity.
-            </p>
-            <p className="text-xs text-pink-700 dark:text-pink-300 mt-2">
-              Example: Binary Search, Merge Sort, Quick Sort
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Big O Complexity Quick Reference */}
+      {/* Complexity Reference */}
       <div>
-        <motion.h3
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-6 flex items-center gap-3"
-        >
-          <span className="text-4xl">⚡</span>
-          Big O Complexity Rankings
-        </motion.h3>
-
-        <div className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-6 rounded-xl border border-slate-200 dark:border-slate-600">
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">From fastest to slowest:</p>
-          <div className="space-y-2">
-            <div className="flex items-center gap-3 p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
-              <span className="text-2xl">🚀</span>
-              <div>
-                <p className="font-bold text-green-900 dark:text-green-100">O(1) - Constant</p>
-                <p className="text-sm text-green-800 dark:text-green-200">Best case for any algorithm - instant!</p>
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <Zap size={24} className="text-yellow-400" /> Complexity Reference
+        </h3>
+        
+        <div className="bg-slate-950 p-6 rounded-[2rem] border border-white/10">
+          <div className="grid gap-3">
+            {[
+              { val: "O(1)", name: "Constant", desc: "Instant access (Hash Map, Array Index)", color: "emerald" },
+              { val: "O(log n)", name: "Logarithmic", desc: "Divide & Conquer (Binary Search)", color: "teal" },
+              { val: "O(n)", name: "Linear", desc: "Looping through elements (Linear Search)", color: "yellow" },
+              { val: "O(n log n)", name: "Linearithmic", desc: "Efficient Sorting (Merge/Quick Sort)", color: "orange" },
+              { val: "O(n²)", name: "Quadratic", desc: "Nested Loops (Bubble/Insertion Sort)", color: "rose" }
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-slate-900/50 border border-white/5">
+                <div className={`w-20 text-center font-black text-${item.color}-400 text-lg`}>{item.val}</div>
+                <div className="h-8 w-px bg-white/10" />
+                <div>
+                  <div className={`font-bold text-${item.color}-400 text-sm uppercase tracking-wider`}>{item.name}</div>
+                  <div className="text-slate-500 text-xs font-medium">{item.desc}</div>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
-              <span className="text-2xl">⚡</span>
-              <div>
-                <p className="font-bold text-emerald-900 dark:text-emerald-100">O(log n) - Logarithmic</p>
-                <p className="text-sm text-emerald-800 dark:text-emerald-200">Very efficient - halves problem each step (Binary Search)</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
-              <span className="text-2xl">✓</span>
-              <div>
-                <p className="font-bold text-yellow-900 dark:text-yellow-100">O(n) - Linear</p>
-                <p className="text-sm text-yellow-800 dark:text-yellow-200">Proportional to input size (Linear Search)</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-lime-100 dark:bg-lime-900/30 rounded-lg">
-              <span className="text-2xl">📊</span>
-              <div>
-                <p className="font-bold text-lime-900 dark:text-lime-100">O(n log n) - Linearithmic</p>
-                <p className="text-sm text-lime-800 dark:text-lime-200">Best achievable for comparison sorts (Merge, Quick)</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-red-100 dark:bg-red-900/30 rounded-lg">
-              <span className="text-2xl">🐌</span>
-              <div>
-                <p className="font-bold text-red-900 dark:text-red-100">O(n²) - Quadratic</p>
-                <p className="text-sm text-red-800 dark:text-red-200">Avoid for large datasets (Bubble, Selection, Insertion)</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
-    </div>
+
+    </SearchingSortingCard>
   );
 }

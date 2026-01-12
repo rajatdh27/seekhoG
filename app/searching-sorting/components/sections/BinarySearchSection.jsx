@@ -1,6 +1,9 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { useState } from "react";
+import SearchingSortingCard from "./SearchingSortingCard";
+import { Search, Play, RefreshCw, AlertTriangle, Zap, CheckCircle2, AlertCircle, Code2, Gauge } from "lucide-react";
 
 export default function BinarySearchSection() {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
@@ -183,292 +186,311 @@ func binarySearch(arr []int, target int) int {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <SearchingSortingCard>
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-orange-600 to-yellow-600 rounded-xl">
-          <span className="text-4xl">🔍</span>
+        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20">
+          <Search size={28} />
         </div>
         <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Binary Search
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Divide and conquer! Cut search space in half each time
-          </p>
+          <h2 className="text-4xl font-black text-white tracking-tight">Binary Search</h2>
+          <p className="text-slate-400 font-medium">Divide and conquer! Cut search space in half.</p>
         </div>
       </div>
 
-      {/* IMPORTANT: Array Must Be Sorted */}
-      <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 p-6 rounded-xl mb-8 border-l-4 border-red-600">
-        <h3 className="text-2xl font-bold text-red-900 dark:text-red-100 mb-2 flex items-center gap-2">
-          ⚠️ Critical Requirement
-        </h3>
-        <p className="text-red-800 dark:text-red-200 text-lg">
-          Binary Search ONLY works on <strong>SORTED arrays</strong>! The array must be in ascending or descending order.
-        </p>
-      </div>
-
-      {/* Visual Animation */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          🎬 See It In Action
-        </h3>
-
-        <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl">
-          <div className="mb-6 text-center">
-            <p className="text-lg text-slate-700 dark:text-slate-300">
-              Searching for: <span className="font-bold text-orange-600 dark:text-orange-400 text-2xl">{target}</span>
-            </p>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-              Array is sorted: [2, 5, 8, 12, 16, 23, 38, 45]
+      <div className="space-y-8">
+        {/* Critical Requirement */}
+        <div className="bg-rose-500/10 border border-rose-500/20 p-6 rounded-[2rem] flex items-center gap-5">
+          <div className="w-12 h-12 rounded-xl bg-rose-500/20 flex items-center justify-center text-rose-500 shrink-0">
+            <AlertTriangle size={24} />
+          </div>
+          <div>
+            <h3 className="text-lg font-black text-rose-400 mb-1">Critical Requirement</h3>
+            <p className="text-slate-300 text-sm font-medium leading-relaxed">
+              Binary Search ONLY works on <strong className="text-white">SORTED arrays</strong>! The array must be in ascending or descending order.
             </p>
           </div>
+        </div>
 
-          {/* Pointers Legend */}
-          <div className="flex justify-center gap-6 mb-4 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-blue-500 rounded"></div>
-              <span className="text-slate-700 dark:text-slate-300">Left Pointer</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-purple-500 rounded"></div>
-              <span className="text-slate-700 dark:text-slate-300">Right Pointer</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-yellow-500 rounded"></div>
-              <span className="text-slate-700 dark:text-slate-300">Middle (Checking)</span>
+        {/* Visual Animation */}
+        <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-2xl font-black text-white flex items-center gap-3">
+              <Play className="text-emerald-500" /> Watch It Work
+            </h3>
+            <div className="text-right">
+              <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">Target</div>
+              <div className="text-2xl font-black text-white">{target}</div>
             </div>
           </div>
 
-          {/* Array Visualization */}
-          <div className="flex justify-center gap-2 mb-6 flex-wrap">
+          <div className="flex justify-center gap-6 mb-6 text-xs font-bold uppercase tracking-widest">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+              <span className="text-blue-400">Left</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <span className="text-yellow-400">Mid</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+              <span className="text-purple-400">Right</span>
+            </div>
+          </div>
+
+          <div className="flex justify-center gap-3 flex-wrap mb-10 min-h-[100px]">
             {array.map((num, idx) => {
               const isLeft = idx === left && isAnimating;
               const isRight = idx === right && isAnimating;
               const isMid = idx === mid;
               const isInRange = idx >= left && idx <= right && isAnimating;
 
-              let bgColor = "#e2e8f0"; // default gray
-              if (found && isMid) bgColor = "#22c55e"; // green when found
-              else if (isMid) bgColor = "#eab308"; // yellow for middle
-              else if (isLeft) bgColor = "#3b82f6"; // blue for left
-              else if (isRight) bgColor = "#a855f7"; // purple for right
-              else if (!isInRange && isAnimating) bgColor = "#94a3b8"; // dimmed if out of range
+              let bgColor = "#1e293b"; // slate-800
+              let borderColor = "#334155"; // slate-700
+              let textColor = "#94a3b8"; // slate-400
+              let scale = 1;
+
+              if (found && isMid) {
+                bgColor = "#10b981"; // emerald-500
+                borderColor = "#059669";
+                textColor = "#ffffff";
+                scale = 1.15;
+              } else if (isMid) {
+                bgColor = "#eab308"; // yellow-500
+                borderColor = "#ca8a04";
+                textColor = "#ffffff";
+                scale = 1.15;
+              } else if (isLeft) {
+                borderColor = "#3b82f6"; // blue-500
+                textColor = "#60a5fa";
+              } else if (isRight) {
+                borderColor = "#a855f7"; // purple-500
+                textColor = "#c084fc";
+              } 
+              
+              if (isInRange || !isAnimating) {
+                 if (!isMid && !found) textColor = "#e2e8f0"; // slate-200
+              } else {
+                 bgColor = "#0f172a"; // slate-900 (dimmed)
+                 borderColor = "#1e293b";
+                 textColor = "#334155"; // slate-700
+              }
 
               return (
-                <div key={idx} className="flex flex-col items-center gap-2">
-                  {/* Pointer Labels */}
-                  <div className="h-6 text-xs font-bold">
-                    {isLeft && isAnimating && <span className="text-blue-600">L</span>}
-                    {isRight && isAnimating && <span className="text-purple-600">R</span>}
-                    {isMid && <span className="text-yellow-600">M</span>}
+                <div key={idx} className="flex flex-col items-center gap-2 relative">
+                  {/* Pointers */}
+                  <div className="h-4 absolute -top-6 w-full flex justify-center">
+                    {isLeft && isAnimating && <div className="text-blue-500 font-black text-xs">L</div>}
+                    {isRight && isAnimating && <div className="text-purple-500 font-black text-xs">R</div>}
+                    {isMid && <div className="text-yellow-500 font-black text-xs">M</div>}
                   </div>
 
-                  {/* Array Element */}
                   <motion.div
                     animate={{
-                      scale: isMid ? 1.2 : 1,
+                      scale,
                       backgroundColor: bgColor,
-                      opacity: !isInRange && isAnimating ? 0.3 : 1,
+                      borderColor: borderColor,
+                      color: textColor
                     }}
-                    transition={{ duration: 0.3 }}
-                    className="w-16 h-16 flex items-center justify-center text-2xl font-bold rounded-lg shadow-lg text-slate-900"
+                    className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-xl md:text-2xl font-black rounded-2xl border-2 transition-all shadow-lg z-10"
                   >
                     {num}
                   </motion.div>
-
-                  {/* Index */}
-                  <div className="text-xs text-slate-500 dark:text-slate-400">
-                    [{idx}]
-                  </div>
+                  <div className="text-[10px] font-bold text-slate-600">[{idx}]</div>
                 </div>
               );
             })}
           </div>
 
-          {/* Status Message */}
-          {isAnimating && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-4"
-            >
+          <div className="flex flex-col items-center gap-6">
+            <div className="h-8 text-center">
               {found ? (
-                <p className="text-xl font-bold text-green-600 dark:text-green-400">
-                  ✅ Found {target} at index {mid}!
-                </p>
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-2 text-emerald-400 font-black text-lg">
+                  <CheckCircle2 size={24} /> Found {target} at index {mid}!
+                </motion.div>
               ) : searchComplete ? (
-                <p className="text-xl font-bold text-red-600 dark:text-red-400">
-                  ❌ {target} not found in array
-                </p>
+                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-2 text-rose-400 font-black text-lg">
+                  <AlertCircle size={24} /> {target} not found
+                </motion.div>
               ) : mid >= 0 ? (
-                <p className="text-lg text-slate-700 dark:text-slate-300">
-                  Checking middle [{mid}] = {array[mid]}
-                  {array[mid] < target ? " → Too small, search right half" : " → Too large, search left half"}
-                </p>
-              ) : null}
-            </motion.div>
-          )}
+                <div className="text-slate-300 font-medium">
+                  Checking middle <span className="text-yellow-400 font-bold">[{mid}]</span> = {array[mid]}
+                  {array[mid] < target ? <span className="text-blue-400 ml-2">→ Too small, search right</span> : <span className="text-purple-400 ml-2">→ Too large, search left</span>}
+                </div>
+              ) : (
+                <div className="text-slate-500 font-medium">Range: [{left}, {right}]</div>
+              )}
+            </div>
 
-          {/* Control Button */}
-          <div className="text-center">
             <button
               onClick={startAnimation}
               disabled={isAnimating}
-              className="px-8 py-3 bg-gradient-to-r from-orange-600 to-yellow-600 text-white rounded-lg font-semibold hover:from-orange-700 hover:to-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
+              className="px-8 py-4 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
             >
+              {isAnimating ? <RefreshCw className="animate-spin" /> : <Play fill="currentColor" />}
               {isAnimating ? "Searching..." : "Start Binary Search"}
             </button>
           </div>
         </div>
-      </div>
 
-      {/* How It Works */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          📋 How It Works
-        </h3>
-        <div className="space-y-3">
-          {[
-            "Start with left pointer at beginning, right pointer at end",
-            "Calculate middle index: mid = (left + right) / 2",
-            "Compare target with middle element",
-            "If target = middle → Found! Return index",
-            "If target < middle → Search left half (right = mid - 1)",
-            "If target > middle → Search right half (left = mid + 1)",
-            "Repeat until found or left > right",
-          ].map((step, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="flex items-start gap-3 bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg"
-            >
-              <span className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-orange-600 to-yellow-600 text-white rounded-full flex items-center justify-center font-bold">
-                {idx + 1}
-              </span>
-              <p className="text-slate-700 dark:text-slate-300 pt-1">{step}</p>
-            </motion.div>
-          ))}
+        {/* How It Works */}
+        <div className="bg-slate-950/50 border border-blue-500/20 rounded-[2rem] p-8">
+          <h3 className="text-2xl font-black text-blue-400 mb-6">📖 How It Works</h3>
+          <div className="space-y-4">
+            {[
+              "Start with pointers at beginning (L) and end (R).",
+              "Calculate middle index: mid = (L + R) / 2.",
+              "If target == middle: Found! Return index.",
+              "If target < middle: Search left half (R = mid - 1).",
+              "If target > middle: Search right half (L = mid + 1).",
+              "Repeat until found or L > R."
+            ].map((step, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-black text-sm shrink-0">
+                  {i + 1}
+                </div>
+                <p className="text-slate-300 font-medium pt-1">{step}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+
+        {/* Complexity Analysis */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
+            <h4 className="flex items-center gap-2 text-emerald-400 font-black mb-4">
+              <Gauge size={20} /> Time Complexity
+            </h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Best Case</span>
+                <span className="text-emerald-400 font-black">O(1)</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Average</span>
+                <span className="text-blue-400 font-black">O(log n)</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Worst Case</span>
+                <span className="text-blue-400 font-black">O(log n)</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
+            <h4 className="flex items-center gap-2 text-purple-400 font-black mb-4">
+              <Zap size={20} /> Why So Fast?
+            </h4>
+            <p className="text-slate-300 text-sm leading-relaxed mb-4">
+              Logarithmic growth means <strong className="text-white">exponential speed</strong>. We discard half the remaining elements in every step.
+            </p>
+            <div className="space-y-2 text-xs font-bold text-slate-500 uppercase tracking-wide">
+              <div className="flex justify-between">
+                <span>100 items</span>
+                <span className="text-white">~7 steps</span>
+              </div>
+              <div className="flex justify-between">
+                <span>1,000 items</span>
+                <span className="text-white">~10 steps</span>
+              </div>
+              <div className="flex justify-between">
+                <span>1,000,000 items</span>
+                <span className="text-white">~20 steps</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
       {/* Code Implementation */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          💻 Code Implementation
-        </h3>
-
-        {/* Language Selector */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {Object.keys(languages).map((lang) => (
-            <button
-              key={lang}
-              onClick={() => setCurrentLanguage(lang)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                currentLanguage === lang
-                  ? "bg-gradient-to-r from-orange-600 to-yellow-600 text-white shadow-lg"
-                  : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
-              }`}
-            >
-              {lang.toUpperCase()}
-            </button>
-          ))}
-        </div>
-
-        {/* Code Display */}
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{languages[currentLanguage]}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Time & Space Complexity */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          ⚡ Complexity Analysis
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="text-xl font-bold text-green-900 dark:text-green-100 mb-3">
-              ⏱️ Time Complexity
-            </h4>
-            <div className="space-y-2 text-green-800 dark:text-green-200">
-              <p><strong>Best Case:</strong> O(1) - Target is middle element</p>
-              <p><strong>Average Case:</strong> O(log n) - Halves search space each step</p>
-              <p><strong>Worst Case:</strong> O(log n) - Target not found or at edge</p>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-            <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-3">
-              💾 Space Complexity
-            </h4>
-            <div className="space-y-2 text-blue-800 dark:text-blue-200">
-              <p><strong>Iterative:</strong> O(1) - Only a few variables</p>
-              <p><strong>Recursive:</strong> O(log n) - Call stack depth</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Why So Fast? */}
-      <div className="mb-8">
-        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 p-6 rounded-xl border-l-4 border-yellow-600">
-          <h3 className="text-2xl font-bold text-yellow-900 dark:text-yellow-100 mb-4">
-            🚀 Why Is Binary Search So Fast?
+      <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner mb-8">
+        <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+          <h3 className="text-2xl font-black text-white flex items-center gap-3">
+            <Code2 className="text-blue-400" /> Implementation
           </h3>
-          <div className="space-y-3 text-yellow-900 dark:text-yellow-100">
-            <p>
-              <strong>Logarithmic growth means exponential speed!</strong>
-            </p>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg space-y-2 text-sm">
-              <p>• 100 elements → Max 7 comparisons (log₂ 100 ≈ 6.64)</p>
-              <p>• 1,000 elements → Max 10 comparisons (log₂ 1000 ≈ 9.97)</p>
-              <p>• 1,000,000 elements → Max 20 comparisons (log₂ 1M ≈ 19.93)</p>
-              <p className="font-bold text-orange-700 dark:text-orange-300 pt-2">
-                Compare with Linear Search: 1M elements = 1M comparisons! 🐌
-              </p>
+        </div>
+
+        <div className="space-y-6">
+          <div className="flex flex-wrap gap-2">
+            {Object.keys(languages).map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setCurrentLanguage(lang)}
+                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                  currentLanguage === lang
+                    ? "bg-orange-500 text-white"
+                    : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
+                }`}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
+          <div className="relative group/terminal">
+            <div className="absolute -inset-1 bg-orange-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
+            <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-rose-500/50" />
+                  <div className="w-3 h-3 rounded-full bg-amber-500/50" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
+                </div>
+                <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
+                  binary_search.{currentLanguage === 'javascript' ? 'js' : currentLanguage === 'python' ? 'py' : currentLanguage}
+                </div>
+              </div>
+              <div className="p-6 overflow-x-auto">
+                <pre className="text-sm leading-relaxed text-orange-300 font-mono">
+                  <code>{languages[currentLanguage]}</code>
+                </pre>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* When to Use */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          🎯 When to Use Binary Search
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="font-bold text-green-900 dark:text-green-100 mb-3 text-lg">
-              ✅ Use Binary Search When:
-            </h4>
-            <ul className="space-y-2 text-green-800 dark:text-green-200">
-              <li>• Array is already sorted</li>
-              <li>• Need to search many times</li>
-              <li>• Working with large datasets</li>
-              <li>• O(log n) speed is critical</li>
-              <li>• Memory is limited (O(1) space)</li>
-            </ul>
+        {/* When to Use */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem] p-8">
+             <h3 className="text-lg font-black text-emerald-400 mb-4 flex items-center gap-2">
+               <CheckCircle2 size={20} /> When to Use
+             </h3>
+             <ul className="space-y-3">
+               {[
+                 "Array is already sorted",
+                 "Need frequent searches",
+                 "Large datasets (> 100 items)",
+                 "Performance is critical"
+               ].map((item, i) => (
+                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
+                   {item}
+                 </li>
+               ))}
+             </ul>
           </div>
-
-          <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border border-red-200 dark:border-red-800">
-            <h4 className="font-bold text-red-900 dark:text-red-100 mb-3 text-lg">
-              ❌ Don't Use Binary Search When:
-            </h4>
-            <ul className="space-y-2 text-red-800 dark:text-red-200">
-              <li>• Array is unsorted (use linear or sort first)</li>
-              <li>• Only searching once (sorting overhead not worth it)</li>
-              <li>• Small array (linear search is simple and fast enough)</li>
-              <li>• Data changes frequently (maintaining sort is costly)</li>
-            </ul>
+          <div className="bg-rose-500/5 border border-rose-500/10 rounded-[2rem] p-8">
+             <h3 className="text-lg font-black text-rose-400 mb-4 flex items-center gap-2">
+               <AlertCircle size={20} /> Avoid When
+             </h3>
+             <ul className="space-y-3">
+               {[
+                 "Array is unsorted (Sorting takes O(n log n))",
+                 "Small datasets (Linear search is fine)",
+                 "Data changes frequently (Maintenance cost)",
+                 "Linked Lists (No random access)"
+               ].map((item, i) => (
+                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                   <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
+                   {item}
+                 </li>
+               ))}
+             </ul>
           </div>
         </div>
+
       </div>
-    </div>
+    </SearchingSortingCard>
   );
 }

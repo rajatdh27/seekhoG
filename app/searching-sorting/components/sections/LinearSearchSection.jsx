@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import SearchingSortingCard from "./SearchingSortingCard";
+import { Search, Play, RefreshCw, CheckCircle2, AlertCircle, Code2 } from "lucide-react";
 
 export default function LinearSearchSection() {
   const [activeLang, setActiveLang] = useState("python");
@@ -58,9 +60,9 @@ int main() {
 
     int result = linearSearch(arr, n, target);
     if (result != -1)
-        printf("Found at index %d\\n", result);
+        printf("Found at index %d\n", result);
     else
-        printf("Not found\\n");
+        printf("Not found\n");
 
     return 0;
 }`,
@@ -131,7 +133,7 @@ const target = 5;
 
 const result = linearSearch(arr, target);
 if (result !== -1)
-    console.log(\`Found at index \${result}\`);
+    console.log('Found at index ' + result);
 else
     console.log("Not found");`,
     python: `# Linear Search in Python
@@ -174,7 +176,7 @@ func main() {
 
     result := linearSearch(arr, target)
     if result != -1 {
-        fmt.Printf("Found at index %d\\n", result)
+        fmt.Printf("Found at index %d\n", result)
     } else {
         fmt.Println("Not found")
     }
@@ -185,189 +187,198 @@ func main() {
     { id: "c", name: "C" },
     { id: "cpp", name: "C++" },
     { id: "java", name: "Java" },
-    { id: "javascript", name: "JavaScript" },
+    { id: "javascript", name: "JS" },
     { id: "python", name: "Python" },
     { id: "go", name: "Go" },
   ];
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <h2 className="text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100">
-        🔍 Linear Search
-      </h2>
-
-      <p className="text-lg text-slate-700 dark:text-slate-300 mb-6">
-        The simplest search algorithm - check every element one by one until you find what you're looking for.
-      </p>
-
-      {/* How It Works */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl mb-6 border border-blue-200 dark:border-blue-800">
-        <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-4">
-          📖 How It Works
-        </h3>
-        <div className="space-y-3 text-slate-700 dark:text-slate-300">
-          <div className="flex items-start gap-3">
-            <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
-            <div>
-              <strong>Start from the beginning:</strong> Begin at index 0
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
-            <div>
-              <strong>Check current element:</strong> Is this the target?
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">3</div>
-            <div>
-              <strong>If found:</strong> Return the index
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">4</div>
-            <div>
-              <strong>If not found:</strong> Move to next element and repeat
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">5</div>
-            <div>
-              <strong>End of array:</strong> Return -1 (not found)
-            </div>
-          </div>
+    <SearchingSortingCard>
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20">
+          <Search size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Linear Search</h2>
+          <p className="text-slate-400 font-medium">The simplest searching algorithm.</p>
         </div>
       </div>
 
-      {/* Visual Animation */}
-      <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl mb-6">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          🎬 Watch It Work
-        </h3>
-        <p className="text-slate-600 dark:text-slate-400 mb-4">
-          Searching for <strong>{target}</strong> in the array
-        </p>
-
-        <div className="flex gap-2 mb-6 justify-center flex-wrap">
-          {array.map((num, idx) => (
-            <motion.div
-              key={idx}
-              animate={{
-                scale: currentIndex === idx ? 1.2 : 1,
-                backgroundColor: found && currentIndex === idx
-                  ? "#22c55e"
-                  : currentIndex === idx
-                  ? "#3b82f6"
-                  : "#e2e8f0",
-                color: currentIndex === idx || (found && currentIndex === idx) ? "#ffffff" : "#1e293b"
-              }}
-              className="w-16 h-16 flex items-center justify-center text-2xl font-bold rounded-lg border-2 border-slate-300 dark:border-slate-600"
-            >
-              {num}
-            </motion.div>
-          ))}
+      <div className="space-y-8">
+        {/* Logic Steps */}
+        <div className="bg-slate-950/50 border border-blue-500/20 rounded-[2rem] p-8">
+          <h3 className="text-2xl font-black text-blue-400 mb-6">📖 How It Works</h3>
+          <div className="space-y-4">
+            {[ 
+              "Start from the beginning (index 0).",
+              "Check each element one by one: Is this the target?",
+              "If found: Return the index.",
+              "If not found: Move to the next element.",
+              "End of list: Return -1 (Not found)."
+            ].map((step, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-black text-sm shrink-0">
+                  {i + 1}
+                </div>
+                <p className="text-slate-300 font-medium pt-1">{step}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="text-center mb-4">
-          {found && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="text-green-600 dark:text-green-400 font-bold text-xl"
-            >
-              ✓ Found at index {currentIndex}!
-            </motion.div>
-          )}
-          {!found && currentIndex >= 0 && (
-            <div className="text-blue-600 dark:text-blue-400 font-semibold">
-              Checking index {currentIndex}...
+        {/* Visualization */}
+        <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-2xl font-black text-white flex items-center gap-3">
+              <Play className="text-emerald-500" /> Watch It Work
+            </h3>
+            <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+              Target: <span className="text-white">{target}</span>
             </div>
-          )}
-        </div>
+          </div>
 
-        <button
-          onClick={startAnimation}
-          disabled={isAnimating}
-          className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-        >
-          {isAnimating ? "Searching..." : "Start Animation"}
-        </button>
-      </div>
+          <div className="flex justify-center gap-3 flex-wrap mb-10 min-h-[80px]">
+            {array.map((num, idx) => (
+              <motion.div
+                key={idx}
+                animate={{
+                  scale: currentIndex === idx ? 1.15 : 1,
+                  backgroundColor: found && currentIndex === idx
+                    ? "#10b981" // Emerald-500
+                    : currentIndex === idx
+                    ? "#3b82f6" // Blue-500
+                    : "#1e293b", // Slate-800
+                  borderColor:
+                    found && currentIndex === idx
+                      ? "#059669"
+                      : currentIndex === idx
+                      ? "#2563eb"
+                      : "#334155"
+                }}
+                className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-xl md:text-2xl font-black rounded-2xl border-2 text-white shadow-lg transition-colors"
+              >
+                {num}
+              </motion.div>
+            ))}
+          </div>
 
-      {/* Complexity */}
-      <div className="grid md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
-          <div className="text-sm text-green-700 dark:text-green-300 font-semibold mb-1">Best Case</div>
-          <div className="text-2xl font-bold text-green-900 dark:text-green-100">O(1)</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">Element at first position</div>
-        </div>
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800">
-          <div className="text-sm text-yellow-700 dark:text-yellow-300 font-semibold mb-1">Average Case</div>
-          <div className="text-2xl font-bold text-yellow-900 dark:text-yellow-100">O(n)</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">Element in middle</div>
-        </div>
-        <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-          <div className="text-sm text-red-700 dark:text-red-300 font-semibold mb-1">Worst Case</div>
-          <div className="text-2xl font-bold text-red-900 dark:text-red-100">O(n)</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">Element at last or not found</div>
-        </div>
-      </div>
+          <div className="flex flex-col items-center gap-6">
+            <div className="h-8">
+              {found ? (
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-2 text-emerald-400 font-black text-lg">
+                  <CheckCircle2 size={24} /> Found at index {currentIndex}!
+                </motion.div>
+              ) : currentIndex >= 0 ? (
+                <div className="text-blue-400 font-bold animate-pulse">Checking index {currentIndex}...</div>
+              ) : (
+                <div className="text-slate-500 font-medium">Ready to search...</div>
+              )}
+            </div>
 
-      {/* Code Examples */}
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          💻 Code in All Languages
-        </h3>
-
-        {/* Language Tabs */}
-        <div className="flex gap-2 mb-4 flex-wrap">
-          {languages.map((lang) => (
             <button
-              key={lang.id}
-              onClick={() => setActiveLang(lang.id)}
-              className={`px-4 py-2 rounded-lg font-semibold transition-all ${
-                activeLang === lang.id
-                  ? "bg-orange-600 text-white"
-                  : "bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-slate-600"
-              }`}
+              onClick={startAnimation}
+              disabled={isAnimating}
+              className="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
             >
-              {lang.name}
+              {isAnimating ? <RefreshCw className="animate-spin" /> : <Play fill="currentColor" />}
+              {isAnimating ? "Searching..." : "Start Animation"}
             </button>
-          ))}
+          </div>
         </div>
 
-        {/* Code Display */}
-        <div className="bg-slate-900 rounded-lg p-4 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{code[activeLang]}</code>
-          </pre>
+        {/* Complexity Cards */}
+        <div className="grid md:grid-cols-3 gap-4">
+          <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-2xl">
+            <div className="text-emerald-500 font-black text-sm uppercase tracking-widest mb-1">Best Case</div>
+            <div className="text-3xl font-black text-white mb-1">O(1)</div>
+            <div className="text-emerald-400/60 text-xs font-bold">First element</div>
+          </div>
+          <div className="bg-yellow-500/10 border border-yellow-500/20 p-6 rounded-2xl">
+            <div className="text-yellow-500 font-black text-sm uppercase tracking-widest mb-1">Average</div>
+            <div className="text-3xl font-black text-white mb-1">O(n)</div>
+            <div className="text-yellow-400/60 text-xs font-bold">Middle element</div>
+          </div>
+          <div className="bg-rose-500/10 border border-rose-500/20 p-6 rounded-2xl">
+            <div className="text-rose-500 font-black text-sm uppercase tracking-widest mb-1">Worst Case</div>
+            <div className="text-3xl font-black text-white mb-1">O(n)</div>
+            <div className="text-rose-400/60 text-xs font-bold">Last or not found</div>
+          </div>
         </div>
-      </div>
 
-      {/* When to Use */}
-      <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-600">
-        <h3 className="text-xl font-bold text-green-900 dark:text-green-100 mb-3">
-          ✅ When to Use Linear Search
-        </h3>
-        <ul className="space-y-2 text-slate-700 dark:text-slate-300">
-          <li className="flex items-start gap-2">
-            <span className="text-green-600 dark:text-green-400">✓</span>
-            <span>Small arrays (less than 100 elements)</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-green-600 dark:text-green-400">✓</span>
-            <span>Unsorted data (can't use binary search)</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-green-600 dark:text-green-400">✓</span>
-            <span>Simple implementation needed</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-red-600 dark:text-red-400">✗</span>
-            <span>Large sorted arrays (use binary search instead!)</span>
-          </li>
-        </ul>
+                {/* Code Implementation */}
+                <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner">
+                  <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+                    <h3 className="text-2xl font-black text-white flex items-center gap-3">
+                      <Code2 className="text-blue-400" /> Implementation
+                    </h3>
+                  </div>
+        
+                  <div className="space-y-6">
+                    <div className="flex flex-wrap gap-2">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.id}
+                          onClick={() => setActiveLang(lang.id)}
+                          className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                            activeLang === lang.id
+                              ? "bg-blue-500 text-white"
+                              : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
+                          }`}
+                        >
+                          {lang.name}
+                        </button>
+                      ))}
+                    </div>
+        
+                    <div className="relative group/terminal">
+                      <div className="absolute -inset-1 bg-blue-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
+                      <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
+                        <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
+                          <div className="flex gap-1.5">
+                            <div className="w-3 h-3 rounded-full bg-rose-500/50" />
+                            <div className="w-3 h-3 rounded-full bg-amber-500/50" />
+                            <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
+                          </div>
+                          <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
+                            linear_search.{activeLang === 'javascript' ? 'js' : activeLang === 'python' ? 'py' : activeLang}
+                          </div>
+                        </div>
+                        <div className="p-6 overflow-x-auto">
+                          <pre className="text-sm leading-relaxed text-blue-400 font-mono">
+                            <code>{code[activeLang]}</code>
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        {/* When to Use */}
+        <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem] p-8">
+           <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-3">
+             <CheckCircle2 /> When to Use
+           </h3>
+           <div className="grid md:grid-cols-2 gap-4">
+             {[ 
+               { text: "Small arrays (< 100 elements)", type: "good" },
+               { text: "Unsorted data", type: "good" },
+               { text: "Simple implementation needed", type: "good" },
+               { text: "Large sorted arrays (Use Binary Search instead)", type: "bad" }
+             ].map((item, i) => (
+               <div key={i} className="flex items-center gap-3">
+                  {item.type === "good" ? (
+                    <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+                  ) : (
+                    <AlertCircle size={18} className="text-rose-500 shrink-0" />
+                  )}
+                  <span className={`text-sm font-bold ${item.type === "good" ? "text-slate-300" : "text-rose-300/80"}`}>
+                    {item.text}
+                  </span>
+               </div>
+             ))}
+           </div>
+        </div>
+
       </div>
-    </div>
+    </SearchingSortingCard>
   );
 }

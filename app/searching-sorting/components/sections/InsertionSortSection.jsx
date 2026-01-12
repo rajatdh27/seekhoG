@@ -1,6 +1,9 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { useState } from "react";
+import SearchingSortingCard from "./SearchingSortingCard";
+import { ArrowRightLeft, Play, RefreshCw, Zap, CheckCircle2, AlertCircle, Code2, Gauge, Layers, Database } from "lucide-react";
 
 export default function InsertionSortSection() {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
@@ -182,296 +185,315 @@ func insertionSort(arr []int) {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <SearchingSortingCard>
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-teal-600 to-cyan-600 rounded-xl">
-          <span className="text-4xl">📌</span>
+        <div className="w-14 h-14 bg-teal-500/10 rounded-2xl flex items-center justify-center text-teal-500 border border-teal-500/20">
+          <ArrowRightLeft size={28} />
         </div>
         <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Insertion Sort
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Insert each element into its correct position in sorted portion
-          </p>
+          <h2 className="text-4xl font-black text-white tracking-tight">Insertion Sort</h2>
+          <p className="text-slate-400 font-medium">Insert each element into its correct position in sorted portion.</p>
         </div>
       </div>
 
-      {/* Key Concept */}
-      <div className="mb-8">
-        <div className="bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 p-6 rounded-xl border-l-4 border-cyan-600">
-          <h3 className="text-2xl font-bold text-cyan-900 dark:text-cyan-100 mb-4">
-            🎴 Like Sorting Playing Cards!
+      <div className="space-y-8">
+        {/* Key Concept */}
+        <div className="bg-cyan-500/10 border border-cyan-500/20 p-6 rounded-[2rem] relative overflow-hidden group">
+          <h3 className="text-xl font-black text-cyan-400 mb-3 flex items-center gap-2">
+            <Layers size={24} /> Like Sorting Playing Cards!
           </h3>
-          <p className="text-cyan-900 dark:text-cyan-100 text-lg mb-3">
-            Imagine sorting a hand of cards: you pick up one card at a time and insert it into its correct position among the cards you've already sorted.
+          <p className="text-slate-300 text-sm font-medium leading-relaxed relative z-10 mb-4">
+            Imagine sorting a hand of cards: you pick up one card at a time and <strong className="text-white">insert</strong> it into its correct position among the cards you've already sorted.
           </p>
-          <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-            <p className="text-cyan-800 dark:text-cyan-200">
-              <strong>Left side:</strong> Always sorted<br />
-              <strong>Right side:</strong> Unsorted cards to pick from<br />
-              <strong>Process:</strong> Pick one, find position, insert!
-            </p>
+          <div className="grid md:grid-cols-3 gap-4 relative z-10">
+            <div className="bg-slate-900/60 p-4 rounded-xl border border-emerald-500/20">
+              <p className="text-emerald-400 font-bold text-sm">Left Side</p>
+              <p className="text-slate-400 text-xs mt-1">Always sorted</p>
+            </div>
+            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
+              <p className="text-slate-200 font-bold text-sm">Right Side</p>
+              <p className="text-slate-400 text-xs mt-1">Unsorted pile</p>
+            </div>
+            <div className="bg-slate-900/60 p-4 rounded-xl border border-orange-500/20">
+              <p className="text-orange-400 font-bold text-sm">Process</p>
+              <p className="text-slate-400 text-xs mt-1">Pick → Find → Insert</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Visual Animation */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          🎬 See It In Action
-        </h3>
-
-        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl">
-          <div className="mb-6 text-center">
-            <p className="text-lg text-slate-700 dark:text-slate-300 mb-2">
-              Watch how each element is inserted into the sorted portion
-            </p>
-            <div className="flex justify-center gap-4 text-sm flex-wrap">
+        {/* Visual Animation */}
+        <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-2xl font-black text-white flex items-center gap-3">
+              <Play className="text-teal-500" /> Watch It Work
+            </h3>
+            <div className="flex gap-4 text-xs font-bold uppercase tracking-widest flex-wrap justify-end">
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-orange-500 rounded"></div>
-                <span className="text-slate-700 dark:text-slate-300">Current Element</span>
+                <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                <span className="text-orange-400">Current</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                <span className="text-slate-700 dark:text-slate-300">Comparing</span>
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span className="text-blue-400">Comparing</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-green-500 rounded"></div>
-                <span className="text-slate-700 dark:text-slate-300">Sorted</span>
+                <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                <span className="text-emerald-400">Sorted</span>
               </div>
             </div>
           </div>
 
-          {/* Array Visualization */}
-          <div className="flex justify-center items-end gap-2 mb-6 h-64">
+          <div className="flex justify-center items-end gap-3 mb-10 h-64 px-4">
             {array.map((num, idx) => {
               const isCurrent = currentElement === idx;
               const isComparing = comparing === idx;
               const isSorted = sorted.includes(idx);
 
-              let bgColor = "#e2e8f0"; // default gray
-              if (isSorted && !isCurrent) bgColor = "#22c55e"; // green when sorted
-              else if (isCurrent) bgColor = "#f97316"; // orange for current element
-              else if (isComparing) bgColor = "#3b82f6"; // blue when comparing
+              let bgColor = "#1e293b"; // slate-800
+              let borderColor = "#334155"; // slate-700
+              
+              if (isSorted && !isCurrent) {
+                bgColor = "#10b981"; // emerald-500
+                borderColor = "#059669";
+              } else if (isCurrent) {
+                bgColor = "#f97316"; // orange-500
+                borderColor = "#ea580c";
+              } else if (isComparing) {
+                bgColor = "#3b82f6"; // blue-500
+                borderColor = "#2563eb";
+              }
 
               return (
-                <div key={idx} className="flex flex-col items-center gap-2">
+                <div key={idx} className="flex flex-col items-center gap-2 w-full max-w-[60px]">
                   {/* Bar */}
                   <motion.div
                     animate={{
                       height: `${(num / 13) * 200}px`,
                       backgroundColor: bgColor,
-                      scale: isCurrent ? 1.2 : isComparing ? 1.1 : 1,
+                      borderColor: borderColor,
+                      scale: isCurrent ? 1.15 : isComparing ? 1.05 : 1,
                       y: isCurrent && inserting ? -20 : 0,
                     }}
                     transition={{ duration: 0.3 }}
-                    className="w-16 rounded-t-lg shadow-lg flex items-end justify-center pb-2"
+                    className="w-full rounded-t-xl border-2 border-b-0 shadow-lg flex items-end justify-center pb-2 relative overflow-hidden"
                   >
-                    <span className="text-xs font-bold text-slate-900">
+                    <span className={`text-xs font-black ${isSorted || isCurrent || isComparing ? 'text-white' : 'text-slate-400'}`}>
                       {num}
                     </span>
+                    {/* Gloss effect */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
                   </motion.div>
 
                   {/* Label */}
-                  <div className="text-xs font-bold h-4">
-                    {isCurrent && <span className="text-orange-600">KEY</span>}
-                    {isComparing && <span className="text-blue-600">?</span>}
+                  <div className="text-[10px] font-bold h-4 flex items-center justify-center">
+                    {isCurrent && <span className="text-orange-500 animate-pulse">KEY</span>}
+                    {isComparing && <span className="text-blue-500">?</span>}
                   </div>
 
                   {/* Index */}
-                  <div className="text-xs text-slate-500 dark:text-slate-400">
-                    [{idx}]
-                  </div>
+                  <div className="text-[10px] font-bold text-slate-600">[{idx}]</div>
                 </div>
               );
             })}
           </div>
 
-          {/* Sorted Boundary Indicator */}
-          <div className="text-center mb-4">
+          <div className="text-center mb-6">
             {isAnimating && sorted.length < array.length && (
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Sorted: {sorted.length} elements | Unsorted: {array.length - sorted.length} elements
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                Sorted: <span className="text-emerald-400">{sorted.length}</span> • Unsorted: <span className="text-slate-300">{array.length - sorted.length}</span>
               </p>
             )}
           </div>
 
-          {/* Control Buttons */}
           <div className="flex justify-center gap-4">
             <button
               onClick={startAnimation}
               disabled={isAnimating}
-              className="px-8 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-lg font-semibold hover:from-teal-700 hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
+              className="px-8 py-4 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
             >
+              {isAnimating ? <RefreshCw className="animate-spin" /> : <Play fill="currentColor" />}
               {isAnimating ? "Sorting..." : "Start Insertion Sort"}
             </button>
             <button
               onClick={resetArray}
               disabled={isAnimating}
-              className="px-8 py-3 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-semibold hover:bg-slate-300 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl font-black text-sm uppercase tracking-widest transition-all border border-white/5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Reset
             </button>
           </div>
         </div>
-      </div>
 
-      {/* How It Works */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          📋 How It Works
-        </h3>
-        <div className="space-y-3">
-          {[
-            "Start from second element (index 1) - first element is already sorted",
-            "Pick current element as 'key' to be inserted",
-            "Compare key with elements in sorted portion (from right to left)",
-            "Shift all elements greater than key one position to the right",
-            "Insert key at the correct position where all left elements are smaller",
-            "Sorted portion grows by 1, unsorted portion shrinks by 1",
-            "Repeat until all elements are in sorted portion",
-          ].map((step, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="flex items-start gap-3 bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg"
-            >
-              <span className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-full flex items-center justify-center font-bold">
-                {idx + 1}
-              </span>
-              <p className="text-slate-700 dark:text-slate-300 pt-1">{step}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Code Implementation */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          💻 Code Implementation
-        </h3>
-
-        {/* Language Selector */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {Object.keys(languages).map((lang) => (
-            <button
-              key={lang}
-              onClick={() => setCurrentLanguage(lang)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                currentLanguage === lang
-                  ? "bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg"
-                  : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
-              }`}
-            >
-              {lang.toUpperCase()}
-            </button>
-          ))}
-        </div>
-
-        {/* Code Display */}
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{languages[currentLanguage]}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Time & Space Complexity */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          ⚡ Complexity Analysis
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="text-xl font-bold text-green-900 dark:text-green-100 mb-3">
-              ⏱️ Time Complexity
-            </h4>
-            <div className="space-y-2 text-green-800 dark:text-green-200">
-              <p><strong>Best Case:</strong> O(n) - Already sorted! 🎉</p>
-              <p><strong>Average Case:</strong> O(n²) - Random order</p>
-              <p><strong>Worst Case:</strong> O(n²) - Reverse sorted</p>
-              <p className="text-sm pt-2 italic">Great for nearly sorted data!</p>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-            <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-3">
-              💾 Space Complexity
-            </h4>
-            <div className="space-y-2 text-blue-800 dark:text-blue-200">
-              <p><strong>Space:</strong> O(1) - In-place sorting</p>
-              <p>Only uses one variable (key) for temporary storage!</p>
-            </div>
+        {/* How It Works */}
+        <div className="bg-slate-950/50 border border-blue-500/20 rounded-[2rem] p-8">
+          <h3 className="text-2xl font-black text-blue-400 mb-6">📖 How It Works</h3>
+          <div className="space-y-4">
+            {[
+              "Start from second element (index 1) - first element is already sorted.",
+              "Pick current element as 'key' to be inserted.",
+              "Compare key with elements in sorted portion (from right to left).",
+              "Shift all elements greater than key one position to the right.",
+              "Insert key at the correct position where all left elements are smaller.",
+              "Sorted portion grows by 1, unsorted portion shrinks by 1.",
+              "Repeat until all elements are in sorted portion."
+            ].map((step, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-black text-sm shrink-0">
+                  {i + 1}
+                </div>
+                <p className="text-slate-300 font-medium pt-1">{step}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* Why Insertion Sort is Special */}
-      <div className="mb-8">
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border-l-4 border-purple-600">
-          <h3 className="text-2xl font-bold text-purple-900 dark:text-purple-100 mb-4">
-            ⭐ Why Insertion Sort is Special
+        {/* Complexity Analysis */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
+            <h4 className="flex items-center gap-2 text-emerald-400 font-black mb-4">
+              <Gauge size={20} /> Time Complexity
+            </h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Best Case</span>
+                <span className="text-emerald-400 font-black">O(n)</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Average</span>
+                <span className="text-rose-400 font-black">O(n²)</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
+                <span className="text-slate-400 font-medium text-sm">Worst Case</span>
+                <span className="text-rose-400 font-black">O(n²)</span>
+              </div>
+            </div>
+            <p className="text-center text-emerald-400 text-[10px] mt-3 font-bold uppercase tracking-widest">Great for nearly sorted data!</p>
+          </div>
+
+          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
+            <h4 className="flex items-center gap-2 text-cyan-400 font-black mb-4">
+              <Layers size={20} /> Space Complexity
+            </h4>
+            <div className="flex items-center justify-center h-32">
+              <div className="text-center">
+                <div className="text-4xl font-black text-white mb-2">O(1)</div>
+                <div className="text-cyan-400 text-sm font-bold uppercase tracking-widest">In-Place</div>
+              </div>
+            </div>
+            <p className="text-center text-slate-500 text-xs mt-2">Only uses one variable (key) for temporary storage!</p>
+          </div>
+        </div>
+
+        {/* Why Insertion Sort is Special */}
+        <div className="bg-purple-500/10 border border-purple-500/20 p-6 rounded-[2rem]">
+          <h3 className="text-lg font-black text-purple-400 mb-4 flex items-center gap-2">
+            <Zap size={20} /> Why Insertion Sort is Special
           </h3>
-          <div className="space-y-3 text-purple-900 dark:text-purple-100">
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold mb-2">✅ Adaptive Algorithm</p>
-              <p className="text-sm text-purple-800 dark:text-purple-200">
-                Runs faster on nearly sorted data - best case O(n)!
-              </p>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
+              <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm mb-1"><Zap size={14} /> Adaptive</div>
+              <p className="text-slate-400 text-xs">Runs faster on nearly sorted data - best case O(n)!</p>
             </div>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold mb-2">✅ Stable Sort</p>
-              <p className="text-sm text-purple-800 dark:text-purple-200">
-                Maintains relative order of equal elements
-              </p>
+            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
+              <div className="flex items-center gap-2 text-blue-400 font-bold text-sm mb-1"><Layers size={14} /> Stable</div>
+              <p className="text-slate-400 text-xs">Maintains relative order of equal elements.</p>
             </div>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold mb-2">✅ Online Algorithm</p>
-              <p className="text-sm text-purple-800 dark:text-purple-200">
-                Can sort data as it arrives - great for streaming!
-              </p>
+            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
+              <div className="flex items-center gap-2 text-orange-400 font-bold text-sm mb-1"><Database size={14} /> Online</div>
+              <p className="text-slate-400 text-xs">Can sort data as it arrives - great for streaming!</p>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* When to Use */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          🎯 When to Use Insertion Sort
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="font-bold text-green-900 dark:text-green-100 mb-3 text-lg">
-              ✅ Use Insertion Sort When:
-            </h4>
-            <ul className="space-y-2 text-green-800 dark:text-green-200">
-              <li>• Small datasets (n &lt; 50)</li>
-              <li>• Array is nearly sorted or partially sorted</li>
-              <li>• Need stable sorting</li>
-              <li>• Data arrives in real-time (online sorting)</li>
-              <li>• Simple implementation needed</li>
-              <li>• Used in hybrid algorithms (Timsort, Introsort)</li>
-            </ul>
+              {/* Code Implementation */}
+              <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner mb-8">
+                <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+                  <h3 className="text-2xl font-black text-white flex items-center gap-3">
+                    <Code2 className="text-blue-400" /> Implementation
+                  </h3>
+                </div>
+        
+                <div className="space-y-6">
+                  <div className="flex flex-wrap gap-2">
+                    {Object.keys(languages).map((lang) => (
+                      <button
+                        key={lang}
+                        onClick={() => setCurrentLanguage(lang)}
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                          currentLanguage === lang
+                            ? "bg-teal-500 text-white"
+                            : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
+                        }`}
+                      >
+                        {lang.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+        
+                  <div className="relative group/terminal">
+                    <div className="absolute -inset-1 bg-teal-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
+                    <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
+                      <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
+                        <div className="flex gap-1.5">
+                          <div className="w-3 h-3 rounded-full bg-rose-500/50" />
+                          <div className="w-3 h-3 rounded-full bg-amber-500/50" />
+                          <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
+                        </div>
+                        <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
+                          insertion_sort.{currentLanguage === 'javascript' ? 'js' : currentLanguage === 'python' ? 'py' : currentLanguage}
+                        </div>
+                      </div>
+                      <div className="p-6 overflow-x-auto">
+                        <pre className="text-sm leading-relaxed text-teal-300 font-mono">
+                          <code>{languages[currentLanguage]}</code>
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        {/* When to Use */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem] p-8">
+             <h3 className="text-lg font-black text-emerald-400 mb-4 flex items-center gap-2">
+               <CheckCircle2 size={20} /> When to Use
+             </h3>
+             <ul className="space-y-3">
+               {[
+                 "Small datasets (n < 50)",
+                 "Array is nearly sorted",
+                 "Need stable sorting",
+                 "Data arrives in real-time (online)"
+               ].map((item, i) => (
+                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
+                   {item}
+                 </li>
+               ))}
+             </ul>
           </div>
-
-          <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border border-red-200 dark:border-red-800">
-            <h4 className="font-bold text-red-900 dark:text-red-100 mb-3 text-lg">
-              ❌ Don't Use Insertion Sort When:
-            </h4>
-            <ul className="space-y-2 text-red-800 dark:text-red-200">
-              <li>• Large datasets with random order</li>
-              <li>• Array is reverse sorted</li>
-              <li>• Performance is critical for large n</li>
-              <li>• Better alternatives available (merge/quick sort)</li>
-            </ul>
+          <div className="bg-rose-500/5 border border-rose-500/10 rounded-[2rem] p-8">
+             <h3 className="text-lg font-black text-rose-400 mb-4 flex items-center gap-2">
+               <AlertCircle size={20} /> Avoid When
+             </h3>
+             <ul className="space-y-3">
+               {[
+                 "Large datasets with random order",
+                 "Array is reverse sorted",
+                 "Performance is critical",
+                 "Better alternatives available"
+               ].map((item, i) => (
+                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
+                   <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
+                   {item}
+                 </li>
+               ))}
+             </ul>
           </div>
         </div>
+
       </div>
-    </div>
+    </SearchingSortingCard>
   );
 }
