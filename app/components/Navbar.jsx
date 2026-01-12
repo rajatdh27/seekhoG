@@ -85,6 +85,17 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
+            <Link
+              href="/home"
+              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
+                isActive("/home")
+                  ? "bg-white/10 text-blue-400 shadow-inner"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Sparkles className="w-4 h-4" /> Home
+            </Link>
+
             {user && (
               <div className="flex items-center gap-1 mr-4 pr-4 border-r border-white/10">
                 <Link
@@ -275,6 +286,17 @@ export default function Navbar() {
                 className="lg:hidden border-t border-white/5 bg-slate-950/95 backdrop-blur-2xl overflow-hidden"
             >
             <div className="max-w-7xl mx-auto px-6 py-8 space-y-6">
+                <Link
+                  href="/home"
+                  className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-base font-bold transition-all ${
+                    isActive("/home")
+                      ? "bg-blue-600/10 text-blue-400 border border-blue-500/20 shadow-inner"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <Sparkles className="w-5 h-5" /> Home Hub
+                </Link>
+
                 {user && (
                 <div className="space-y-2">
                     <div className="px-4 mb-4 flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10">
