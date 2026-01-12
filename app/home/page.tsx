@@ -13,7 +13,7 @@ import {
 
 // --- Components ---
 
-const CountUp = ({ to, suffix = "" }) => {
+const CountUp = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -37,7 +37,15 @@ const CountUp = ({ to, suffix = "" }) => {
   return <span>{count}{suffix}</span>;
 };
 
-const FeatureCard = ({ title, subtitle, icon: Icon, stats, href, color, gradient }) => {
+const FeatureCard = ({ title, subtitle, icon: Icon, stats, href, color, gradient }: {
+  title: string;
+  subtitle: string;
+  icon: any;
+  stats: { value: number; label: string; suffix?: string }[];
+  href: string;
+  color: string;
+  gradient: string;
+}) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
