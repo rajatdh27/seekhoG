@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import SearchingSortingCard from "./SearchingSortingCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { SectionHeader, AlgorithmSteps, ComplexityAnalysis, WhenToUse } from "@/app/components/common/algorithm";
 import { ArrowRightLeft, Play, RefreshCw, Zap, CheckCircle2, AlertCircle, Code2, Gauge, Layers, Database } from "lucide-react";
 
 export default function InsertionSortSection() {
@@ -185,17 +187,13 @@ func insertionSort(arr []int) {
   };
 
   return (
-    <SearchingSortingCard>
-      {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-teal-500/10 rounded-2xl flex items-center justify-center text-teal-500 border border-teal-500/20">
-          <ArrowRightLeft size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Insertion Sort</h2>
-          <p className="text-slate-400 font-medium">Insert each element into its correct position in sorted portion.</p>
-        </div>
-      </div>
+    <PerspectiveCard color="teal">
+      <SectionHeader 
+        title="Insertion Sort" 
+        description="Insert each element into its correct position in sorted portion."
+        icon={ArrowRightLeft}
+        color="teal"
+      />
 
       <div className="space-y-8">
         {/* Key Concept */}
@@ -326,27 +324,18 @@ func insertionSort(arr []int) {
         </div>
 
         {/* How It Works */}
-        <div className="bg-slate-950/50 border border-blue-500/20 rounded-[2rem] p-8">
-          <h3 className="text-2xl font-black text-blue-400 mb-6">📖 How It Works</h3>
-          <div className="space-y-4">
-            {[
-              "Start from second element (index 1) - first element is already sorted.",
-              "Pick current element as 'key' to be inserted.",
-              "Compare key with elements in sorted portion (from right to left).",
-              "Shift all elements greater than key one position to the right.",
-              "Insert key at the correct position where all left elements are smaller.",
-              "Sorted portion grows by 1, unsorted portion shrinks by 1.",
-              "Repeat until all elements are in sorted portion."
-            ].map((step, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-black text-sm shrink-0">
-                  {i + 1}
-                </div>
-                <p className="text-slate-300 font-medium pt-1">{step}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <AlgorithmSteps 
+          steps={[
+            "Start from second element (index 1) - first element is already sorted.",
+            "Pick current element as 'key' to be inserted.",
+            "Compare key with elements in sorted portion (from right to left).",
+            "Shift all elements greater than key one position to the right.",
+            "Insert key at the correct position where all left elements are smaller.",
+            "Sorted portion grows by 1, unsorted portion shrinks by 1.",
+            "Repeat until all elements are in sorted portion."
+          ]}
+          color="teal"
+        />
 
         {/* Complexity Analysis */}
         <div className="grid md:grid-cols-2 gap-6">
@@ -494,6 +483,6 @@ func insertionSort(arr []int) {
         </div>
 
       </div>
-    </SearchingSortingCard>
+    </PerspectiveCard>
   );
 }

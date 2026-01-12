@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import FoundationCard from "./FoundationCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import { Clock, Zap, Cpu, Code2, AlertTriangle, CheckCircle2, TrendingUp } from "lucide-react";
 
 export default function ComplexitySection() {
@@ -344,7 +344,7 @@ func bubbleSort(arr []int) {
   ];
 
   return (
-    <FoundationCard className="overflow-hidden">
+    <PerspectiveCard color="amber" className="overflow-hidden">
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center text-yellow-500 border border-yellow-500/20">
           <TrendingUp size={28} />
@@ -595,6 +595,6 @@ func bubbleSort(arr []int) {
           </div>
         ))}
       </div>
-    </FoundationCard>
+    </PerspectiveCard>
   );
 }

@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import SearchingSortingCard from "./SearchingSortingCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { SectionHeader, AlgorithmSteps, ComplexityAnalysis, WhenToUse } from "@/app/components/common/algorithm";
 import { Search, Play, RefreshCw, AlertTriangle, Zap, CheckCircle2, AlertCircle, Code2, Gauge } from "lucide-react";
 
 export default function BinarySearchSection() {
@@ -186,17 +188,13 @@ func binarySearch(arr []int, target int) int {
   };
 
   return (
-    <SearchingSortingCard>
-      {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20">
-          <Search size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Binary Search</h2>
-          <p className="text-slate-400 font-medium">Divide and conquer! Cut search space in half.</p>
-        </div>
-      </div>
+    <PerspectiveCard color="orange">
+      <SectionHeader 
+        title="Binary Search" 
+        description="Divide and conquer! Cut search space in half."
+        icon={Search}
+        color="orange"
+      />
 
       <div className="space-y-8">
         {/* Critical Requirement */}
@@ -335,162 +333,48 @@ func binarySearch(arr []int, target int) int {
         </div>
 
         {/* How It Works */}
-        <div className="bg-slate-950/50 border border-blue-500/20 rounded-[2rem] p-8">
-          <h3 className="text-2xl font-black text-blue-400 mb-6">📖 How It Works</h3>
-          <div className="space-y-4">
-            {[
-              "Start with pointers at beginning (L) and end (R).",
-              "Calculate middle index: mid = (L + R) / 2.",
-              "If target == middle: Found! Return index.",
-              "If target < middle: Search left half (R = mid - 1).",
-              "If target > middle: Search right half (L = mid + 1).",
-              "Repeat until found or L > R."
-            ].map((step, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-black text-sm shrink-0">
-                  {i + 1}
-                </div>
-                <p className="text-slate-300 font-medium pt-1">{step}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <AlgorithmSteps 
+          steps={[
+            "Start with pointers at beginning (L) and end (R).",
+            "Calculate middle index: mid = (L + R) / 2.",
+            "If target == middle: Found! Return index.",
+            "If target < middle: Search left half (R = mid - 1).",
+            "If target > middle: Search right half (L = mid + 1).",
+            "Repeat until found or L > R."
+          ]}
+          color="orange"
+        />
 
         {/* Complexity Analysis */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
-            <h4 className="flex items-center gap-2 text-emerald-400 font-black mb-4">
-              <Gauge size={20} /> Time Complexity
-            </h4>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Best Case</span>
-                <span className="text-emerald-400 font-black">O(1)</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Average</span>
-                <span className="text-blue-400 font-black">O(log n)</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Worst Case</span>
-                <span className="text-blue-400 font-black">O(log n)</span>
-              </div>
-            </div>
-          </div>
+        <ComplexityAnalysis 
+          timeBest="O(1)"
+          timeAverage="O(log n)"
+          timeWorst="O(log n)"
+          space="O(1)"
+          spaceNote="Iterative"
+          color="orange"
+        />
 
-          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
-            <h4 className="flex items-center gap-2 text-purple-400 font-black mb-4">
-              <Zap size={20} /> Why So Fast?
-            </h4>
-            <p className="text-slate-300 text-sm leading-relaxed mb-4">
-              Logarithmic growth means <strong className="text-white">exponential speed</strong>. We discard half the remaining elements in every step.
-            </p>
-            <div className="space-y-2 text-xs font-bold text-slate-500 uppercase tracking-wide">
-              <div className="flex justify-between">
-                <span>100 items</span>
-                <span className="text-white">~7 steps</span>
-              </div>
-              <div className="flex justify-between">
-                <span>1,000 items</span>
-                <span className="text-white">~10 steps</span>
-              </div>
-              <div className="flex justify-between">
-                <span>1,000,000 items</span>
-                <span className="text-white">~20 steps</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      {/* Code Implementation */}
-      <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner mb-8">
-        <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-          <h3 className="text-2xl font-black text-white flex items-center gap-3">
-            <Code2 className="text-blue-400" /> Implementation
-          </h3>
-        </div>
-
-        <div className="space-y-6">
-          <div className="flex flex-wrap gap-2">
-            {Object.keys(languages).map((lang) => (
-              <button
-                key={lang}
-                onClick={() => setCurrentLanguage(lang)}
-                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                  currentLanguage === lang
-                    ? "bg-orange-500 text-white"
-                    : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
-                }`}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
-          </div>
-
-          <div className="relative group/terminal">
-            <div className="absolute -inset-1 bg-orange-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
-            <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-rose-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-amber-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
-                </div>
-                <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
-                  binary_search.{currentLanguage === 'javascript' ? 'js' : currentLanguage === 'python' ? 'py' : currentLanguage}
-                </div>
-              </div>
-              <div className="p-6 overflow-x-auto">
-                <pre className="text-sm leading-relaxed text-orange-300 font-mono">
-                  <code>{languages[currentLanguage]}</code>
-                </pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        {/* Code Implementation */}
+        <CodeImplementation languages={languages} color="orange" initialLanguage={currentLanguage} />
 
         {/* When to Use */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem] p-8">
-             <h3 className="text-lg font-black text-emerald-400 mb-4 flex items-center gap-2">
-               <CheckCircle2 size={20} /> When to Use
-             </h3>
-             <ul className="space-y-3">
-               {[
-                 "Array is already sorted",
-                 "Need frequent searches",
-                 "Large datasets (> 100 items)",
-                 "Performance is critical"
-               ].map((item, i) => (
-                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
-                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
-                   {item}
-                 </li>
-               ))}
-             </ul>
-          </div>
-          <div className="bg-rose-500/5 border border-rose-500/10 rounded-[2rem] p-8">
-             <h3 className="text-lg font-black text-rose-400 mb-4 flex items-center gap-2">
-               <AlertCircle size={20} /> Avoid When
-             </h3>
-             <ul className="space-y-3">
-               {[
-                 "Array is unsorted (Sorting takes O(n log n))",
-                 "Small datasets (Linear search is fine)",
-                 "Data changes frequently (Maintenance cost)",
-                 "Linked Lists (No random access)"
-               ].map((item, i) => (
-                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
-                   <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
-                   {item}
-                 </li>
-               ))}
-             </ul>
-          </div>
-        </div>
+        <WhenToUse 
+          useCases={[
+            "Array is already sorted",
+            "Need frequent searches",
+            "Large datasets (> 100 items)",
+            "Performance is critical"
+          ]}
+          avoidCases={[
+            "Array is unsorted (Sorting takes O(n log n))",
+            "Small datasets (Linear search is fine)",
+            "Data changes frequently (Maintenance cost)",
+            "Linked Lists (No random access)"
+          ]}
+        />
 
       </div>
-    </SearchingSortingCard>
+    </PerspectiveCard>
   );
 }

@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import FoundationCard from "./FoundationCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { Calculator, BarChart3, Zap, Hash, Sigma, CheckCircle2, Code2 } from "lucide-react";
 
 export default function MathematicsSection() {
   const [activeTab, setActiveTab] = useState("logarithms");
-  const [activeLang, setActiveLang] = useState("python");
 
   const codeExamples = {
     logarithms: {
@@ -372,17 +372,8 @@ func main() {
     { id: "exponents", name: "Exponents", icon: <Zap size={18} /> },
   ];
 
-  const languages = [
-    { id: "c", name: "C" },
-    { id: "cpp", name: "C++" },
-    { id: "java", name: "Java" },
-    { id: "javascript", name: "JS" },
-    { id: "python", name: "Python" },
-    { id: "go", name: "Go" },
-  ];
-
   return (
-    <FoundationCard>
+    <PerspectiveCard color="blue">
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20">
           <Calculator size={28} />
@@ -444,41 +435,7 @@ func main() {
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div className="flex flex-wrap gap-2">
-            {languages.map((lang) => (
-              <button
-                key={lang.id}
-                onClick={() => setActiveLang(lang.id)}
-                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeLang === lang.id
-                    ? "bg-blue-500 text-white"
-                    : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
-                }`}
-              >
-                {lang.name}
-              </button>
-            ))}
-          </div>
-
-          <div className="relative group/terminal">
-            <div className="absolute -inset-1 bg-blue-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
-            <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-rose-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-amber-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
-                </div>
-                <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">math_library_{activeTab}.sh</div>
-              </div>
-              <div className="p-6 overflow-x-auto">
-                <pre className="text-sm leading-relaxed text-blue-400 font-mono">
-                  <code>{codeExamples[activeTab][activeLang]}</code>
-                </pre>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CodeImplementation languages={codeExamples[activeTab]} color="blue" />
       </div>
 
       <div className="mt-12 p-8 bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem]">
@@ -493,6 +450,6 @@ func main() {
           ))}
         </ul>
       </div>
-    </FoundationCard>
+    </PerspectiveCard>
   );
 }

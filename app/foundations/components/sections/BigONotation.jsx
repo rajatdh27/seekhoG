@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import FoundationCard from "./FoundationCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import { ShieldAlert, ShieldCheck, Shield, ChevronRight, CheckCircle2 } from "lucide-react";
 
 export default function BigONotation() {
   return (
-    <FoundationCard>
+    <PerspectiveCard color="purple">
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
           <Shield size={28} />
@@ -79,6 +79,6 @@ export default function BigONotation() {
           &quot;In software interviews and performance reviews, when people say &apos;Complexity&apos;, they almost always mean <span className="text-white underline decoration-rose-500 decoration-2 underline-offset-4">Big-O (Worst Case)</span>. It represents the safety guarantee of your algorithm.&quot;
         </p>
       </div>
-    </FoundationCard>
+    </PerspectiveCard>
   );
 }

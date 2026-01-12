@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SearchingSortingCard from "./SearchingSortingCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import { FileText, Search, BarChart3, HelpCircle, Zap, BookOpen } from "lucide-react";
 
 export default function SearchingSortingCheatsheet() {
   return (
-    <SearchingSortingCard>
+    <PerspectiveCard color="orange">
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
@@ -233,6 +233,6 @@ export default function SearchingSortingCheatsheet() {
         </div>
       </div>
 
-    </SearchingSortingCard>
+    </PerspectiveCard>
   );
 }

@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import FoundationCard from "./FoundationCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import { ListChecks, ArrowRight, BookOpen, Calculator, Clock, Zap } from "lucide-react";
 import Link from "next/link";
 
 export default function FoundationsCheatsheet() {
   return (
-    <FoundationCard>
+    <PerspectiveCard color="indigo">
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
           <ListChecks size={28} />
@@ -136,6 +136,6 @@ export default function FoundationsCheatsheet() {
           </div>
         </div>
       </div>
-    </FoundationCard>
+    </PerspectiveCard>
   );
 }

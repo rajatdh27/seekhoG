@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SearchingSortingCard from "./SearchingSortingCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import { Search, ArrowUpDown, Zap, CheckCircle2, Layout, GitMerge, MousePointerClick } from "lucide-react";
 
 export default function SearchingSortingIntro() {
   return (
-    <SearchingSortingCard>
+    <PerspectiveCard color="orange">
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20">
           <Search size={28} />
@@ -132,6 +132,6 @@ export default function SearchingSortingIntro() {
           ))}
         </div>
       </div>
-    </SearchingSortingCard>
+    </PerspectiveCard>
   );
 }

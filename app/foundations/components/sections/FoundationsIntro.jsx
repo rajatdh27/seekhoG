@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import FoundationCard from "./FoundationCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import { Sparkles, CheckCircle2, Layout, Zap, Target, BookOpen } from "lucide-react";
 
 export default function FoundationsIntro() {
   return (
-    <FoundationCard>
+    <PerspectiveCard color="emerald">
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
           <Sparkles size={28} />
@@ -92,6 +92,6 @@ export default function FoundationsIntro() {
           </div>
         </div>
       </div>
-    </FoundationCard>
+    </PerspectiveCard>
   );
 }

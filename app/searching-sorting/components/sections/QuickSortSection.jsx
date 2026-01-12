@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import SearchingSortingCard from "./SearchingSortingCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { SectionHeader, AlgorithmSteps, ComplexityAnalysis, WhenToUse } from "@/app/components/common/algorithm";
 import { Zap, Play, RefreshCw, Layers, CheckCircle2, AlertCircle, Code2, Gauge, Split, Dice5 } from "lucide-react";
 
 export default function QuickSortSection() {
@@ -240,17 +242,13 @@ func quickSort(arr []int, low, high int) {
   };
 
   return (
-    <SearchingSortingCard>
-      {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 border border-amber-500/20">
-          <Zap size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Quick Sort</h2>
-          <p className="text-slate-400 font-medium">Pick a pivot, partition, and conquer - lightning fast on average!</p>
-        </div>
-      </div>
+    <PerspectiveCard color="amber">
+      <SectionHeader 
+        title="Quick Sort" 
+        description="Pick a pivot, partition, and conquer - lightning fast on average!"
+        icon={Zap}
+        color="amber"
+      />
 
       <div className="space-y-8">
         {/* Key Concept */}
@@ -356,25 +354,16 @@ func quickSort(arr []int, low, high int) {
         </div>
 
         {/* How It Works */}
-        <div className="bg-slate-950/50 border border-blue-500/20 rounded-[2rem] p-8">
-          <h3 className="text-2xl font-black text-blue-400 mb-6">📖 How It Works</h3>
-          <div className="space-y-4">
-            {[
-              "Choose the last element as the pivot.",
-              "Partition: Move smaller elements to left, larger to right.",
-              "Place pivot in its correct sorted position.",
-              "Recursively apply to left partition (elements < pivot).",
-              "Recursively apply to right partition (elements > pivot)."
-            ].map((step, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-black text-sm shrink-0">
-                  {i + 1}
-                </div>
-                <p className="text-slate-300 font-medium pt-1">{step}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <AlgorithmSteps 
+          steps={[
+            "Choose the last element as the pivot.",
+            "Partition: Move smaller elements to left, larger to right.",
+            "Place pivot in its correct sorted position.",
+            "Recursively apply to left partition (elements < pivot).",
+            "Recursively apply to right partition (elements > pivot)."
+          ]}
+          color="amber"
+        />
 
         {/* Pivot Selection */}
         <div className="bg-purple-500/10 border border-purple-500/20 p-6 rounded-[2rem]">
@@ -397,89 +386,15 @@ func quickSort(arr []int, low, high int) {
           </div>
         </div>
 
-              {/* Code Implementation */}
-              <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner mb-8">
-                <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-                  <h3 className="text-2xl font-black text-white flex items-center gap-3">
-                    <Code2 className="text-blue-400" /> Implementation
-                  </h3>
-                </div>
-        
-                <div className="space-y-6">
-                  <div className="flex flex-wrap gap-2">
-                    {Object.keys(languages).map((lang) => (
-                      <button
-                        key={lang}
-                        onClick={() => setCurrentLanguage(lang)}
-                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                          currentLanguage === lang
-                            ? "bg-amber-500 text-white"
-                            : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
-                        }`}
-                      >
-                        {lang.toUpperCase()}
-                      </button>
-                    ))}
-                  </div>
-        
-                  <div className="relative group/terminal">
-                    <div className="absolute -inset-1 bg-amber-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
-                    <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
-                      <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
-                        <div className="flex gap-1.5">
-                          <div className="w-3 h-3 rounded-full bg-rose-500/50" />
-                          <div className="w-3 h-3 rounded-full bg-amber-500/50" />
-                          <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
-                        </div>
-                        <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
-                          quick_sort.{currentLanguage === 'javascript' ? 'js' : currentLanguage === 'python' ? 'py' : currentLanguage}
-                        </div>
-                      </div>
-                      <div className="p-6 overflow-x-auto">
-                        <pre className="text-sm leading-relaxed text-amber-300 font-mono">
-                          <code>{languages[currentLanguage]}</code>
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
         {/* Complexity Analysis */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
-            <h4 className="flex items-center gap-2 text-emerald-400 font-black mb-4">
-              <Gauge size={20} /> Time Complexity
-            </h4>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Best Case</span>
-                <span className="text-emerald-400 font-black">O(n log n)</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Average</span>
-                <span className="text-emerald-400 font-black">O(n log n)</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Worst Case</span>
-                <span className="text-rose-400 font-black">O(n²)</span>
-              </div>
-            </div>
-            <p className="text-center text-slate-500 text-[10px] mt-3 italic">Worst case is rare with random pivot!</p>
-          </div>
-
-          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
-            <h4 className="flex items-center gap-2 text-blue-400 font-black mb-4">
-              <Layers size={20} /> Space Complexity
-            </h4>
-            <div className="flex items-center justify-center h-32">
-              <div className="text-center">
-                <div className="text-4xl font-black text-white mb-2">O(log n)</div>
-                <div className="text-blue-400 text-xs font-bold uppercase tracking-widest">Stack Space</div>
-              </div>
-            </div>
-            <p className="text-center text-slate-500 text-xs mt-2">In-place sorting (only recursion stack used).</p>
-          </div>
-        </div>
+        <ComplexityAnalysis 
+          timeBest="O(n log n)"
+          timeAverage="O(n log n)"
+          timeWorst="O(n²)"
+          space="O(log n)"
+          spaceNote="Stack Space"
+          color="amber"
+        />
 
         {/* Why Quick Sort is Fast */}
         <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-6 rounded-[2rem]">
@@ -512,53 +427,32 @@ func quickSort(arr []int, low, high int) {
               <CheckCircle2 size={16} className="text-emerald-500 mt-1 shrink-0" />
               <div>
                 <p className="text-white font-bold text-sm">Tail Recursion</p>
-                <p className="text-slate-400 text-xs"> optimizable by compilers.</p>
+                <p className="text-slate-400 text-xs">optimizable by compilers.</p>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Code Implementation */}
+        <CodeImplementation languages={languages} color="amber" initialLanguage={currentLanguage} />
+
         {/* When to Use */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem] p-8">
-             <h3 className="text-lg font-black text-emerald-400 mb-4 flex items-center gap-2">
-               <CheckCircle2 size={20} /> When to Use
-             </h3>
-             <ul className="space-y-3">
-               {[
-                 "Average case performance is priority",
-                 "Memory is limited (in-place)",
-                 "Need fastest practical sorting",
-                 "Data is randomly ordered"
-               ].map((item, i) => (
-                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
-                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
-                   {item}
-                 </li>
-               ))}
-             </ul>
-          </div>
-          <div className="bg-rose-500/5 border border-rose-500/10 rounded-[2rem] p-8">
-             <h3 className="text-lg font-black text-rose-400 mb-4 flex items-center gap-2">
-               <AlertCircle size={20} /> Avoid When
-             </h3>
-             <ul className="space-y-3">
-               {[
-                 "Need guaranteed O(n log n)",
-                 "Data is already sorted or nearly sorted",
-                 "Need stable sort",
-                 "Worst-case performance is critical"
-               ].map((item, i) => (
-                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
-                   <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
-                   {item}
-                 </li>
-               ))}
-             </ul>
-          </div>
-        </div>
+        <WhenToUse 
+          useCases={[
+            "Average case performance is priority",
+            "Memory is limited (in-place)",
+            "Need fastest practical sorting",
+            "Data is randomly ordered"
+          ]}
+          avoidCases={[
+            "Need guaranteed O(n log n)",
+            "Data is already sorted or nearly sorted",
+            "Need stable sort",
+            "Worst-case performance is critical"
+          ]}
+        />
 
       </div>
-    </SearchingSortingCard>
+    </PerspectiveCard>
   );
 }

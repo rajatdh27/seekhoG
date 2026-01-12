@@ -2,11 +2,12 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import SearchingSortingCard from "./SearchingSortingCard";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { SectionHeader, AlgorithmSteps, ComplexityAnalysis, WhenToUse } from "@/app/components/common/algorithm";
 import { Search, Play, RefreshCw, CheckCircle2, AlertCircle, Code2 } from "lucide-react";
 
 export default function LinearSearchSection() {
-  const [activeLang, setActiveLang] = useState("python");
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [found, setFound] = useState(false);
@@ -193,38 +194,26 @@ func main() {
   ];
 
   return (
-    <SearchingSortingCard>
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20">
-          <Search size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Linear Search</h2>
-          <p className="text-slate-400 font-medium">The simplest searching algorithm.</p>
-        </div>
-      </div>
+    <PerspectiveCard color="blue">
+      <SectionHeader 
+        title="Linear Search" 
+        description="The simplest searching algorithm - check every element one by one until you find what you're looking for."
+        icon={Search}
+        color="blue"
+      />
 
       <div className="space-y-8">
         {/* Logic Steps */}
-        <div className="bg-slate-950/50 border border-blue-500/20 rounded-[2rem] p-8">
-          <h3 className="text-2xl font-black text-blue-400 mb-6">📖 How It Works</h3>
-          <div className="space-y-4">
-            {[ 
-              "Start from the beginning (index 0).",
-              "Check each element one by one: Is this the target?",
-              "If found: Return the index.",
-              "If not found: Move to the next element.",
-              "End of list: Return -1 (Not found)."
-            ].map((step, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-black text-sm shrink-0">
-                  {i + 1}
-                </div>
-                <p className="text-slate-300 font-medium pt-1">{step}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <AlgorithmSteps 
+          steps={[
+            "Start from the beginning (index 0).",
+            "Check each element one by one: Is this the target?",
+            "If found: Return the index.",
+            "If not found: Move to the next element.",
+            "End of list: Return -1 (Not found)."
+          ]}
+          color="blue"
+        />
 
         {/* Visualization */}
         <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner">
@@ -286,99 +275,56 @@ func main() {
           </div>
         </div>
 
-        {/* Complexity Cards */}
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-2xl">
-            <div className="text-emerald-500 font-black text-sm uppercase tracking-widest mb-1">Best Case</div>
-            <div className="text-3xl font-black text-white mb-1">O(1)</div>
-            <div className="text-emerald-400/60 text-xs font-bold">First element</div>
-          </div>
-          <div className="bg-yellow-500/10 border border-yellow-500/20 p-6 rounded-2xl">
-            <div className="text-yellow-500 font-black text-sm uppercase tracking-widest mb-1">Average</div>
-            <div className="text-3xl font-black text-white mb-1">O(n)</div>
-            <div className="text-yellow-400/60 text-xs font-bold">Middle element</div>
-          </div>
-          <div className="bg-rose-500/10 border border-rose-500/20 p-6 rounded-2xl">
-            <div className="text-rose-500 font-black text-sm uppercase tracking-widest mb-1">Worst Case</div>
-            <div className="text-3xl font-black text-white mb-1">O(n)</div>
-            <div className="text-rose-400/60 text-xs font-bold">Last or not found</div>
-          </div>
-        </div>
+                {/* Complexity Cards */}
+
+                <ComplexityAnalysis 
+
+                  timeBest="O(1)"
+
+                  timeAverage="O(n)"
+
+                  timeWorst="O(n)"
+
+                  space="O(1)"
+
+                  color="blue"
+
+                />
+
+        
 
                 {/* Code Implementation */}
-                <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner">
-                  <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-                    <h3 className="text-2xl font-black text-white flex items-center gap-3">
-                      <Code2 className="text-blue-400" /> Implementation
-                    </h3>
-                  </div>
-        
-                  <div className="space-y-6">
-                    <div className="flex flex-wrap gap-2">
-                      {languages.map((lang) => (
-                        <button
-                          key={lang.id}
-                          onClick={() => setActiveLang(lang.id)}
-                          className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                            activeLang === lang.id
-                              ? "bg-blue-500 text-white"
-                              : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
-                          }`}
-                        >
-                          {lang.name}
-                        </button>
-                      ))}
-                    </div>
-        
-                    <div className="relative group/terminal">
-                      <div className="absolute -inset-1 bg-blue-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
-                      <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
-                        <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
-                          <div className="flex gap-1.5">
-                            <div className="w-3 h-3 rounded-full bg-rose-500/50" />
-                            <div className="w-3 h-3 rounded-full bg-amber-500/50" />
-                            <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
-                          </div>
-                          <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
-                            linear_search.{activeLang === 'javascript' ? 'js' : activeLang === 'python' ? 'py' : activeLang}
-                          </div>
-                        </div>
-                        <div className="p-6 overflow-x-auto">
-                          <pre className="text-sm leading-relaxed text-blue-400 font-mono">
-                            <code>{code[activeLang]}</code>
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-        {/* When to Use */}
-        <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem] p-8">
-           <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-3">
-             <CheckCircle2 /> When to Use
-           </h3>
-           <div className="grid md:grid-cols-2 gap-4">
-             {[ 
-               { text: "Small arrays (< 100 elements)", type: "good" },
-               { text: "Unsorted data", type: "good" },
-               { text: "Simple implementation needed", type: "good" },
-               { text: "Large sorted arrays (Use Binary Search instead)", type: "bad" }
-             ].map((item, i) => (
-               <div key={i} className="flex items-center gap-3">
-                  {item.type === "good" ? (
-                    <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
-                  ) : (
-                    <AlertCircle size={18} className="text-rose-500 shrink-0" />
-                  )}
-                  <span className={`text-sm font-bold ${item.type === "good" ? "text-slate-300" : "text-rose-300/80"}`}>
-                    {item.text}
-                  </span>
-               </div>
-             ))}
-           </div>
-        </div>
 
-      </div>
-    </SearchingSortingCard>
+                <CodeImplementation languages={code} color="blue" />
+
+        
+
+                {/* When to Use */}
+
+                <WhenToUse 
+
+                  useCases={[
+
+                    "Small arrays (< 100 elements)",
+
+                    "Unsorted data",
+
+                    "Simple implementation needed"
+
+                  ]}
+
+                  avoidCases={[
+
+                    "Large sorted arrays (Use Binary Search instead)"
+
+                  ]}
+
+                />
+
+        
+
+              </div>
+
+            </PerspectiveCard>
   );
 }
