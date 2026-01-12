@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { ModuleComplete } from "@/app/components/common/algorithm";
 import { FileText, Search, BarChart3, HelpCircle, Zap, BookOpen } from "lucide-react";
 
 export default function SearchingSortingCheatsheet() {
@@ -232,6 +233,14 @@ export default function SearchingSortingCheatsheet() {
           </div>
         </div>
       </div>
+
+      <ModuleComplete 
+        title="Searching & Sorting Complete" 
+        description="You have mastered the fundamental algorithms. You are now ready to dive into Arrays."
+        nextModuleText="Start Arrays Module" 
+        nextModuleLink="/array" 
+        color="orange" 
+      />
 
     </PerspectiveCard>
   );

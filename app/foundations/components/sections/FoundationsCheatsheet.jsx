@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { ModuleComplete } from "@/app/components/common/algorithm";
 import { ListChecks, ArrowRight, BookOpen, Calculator, Clock, Zap } from "lucide-react";
 import Link from "next/link";
 
@@ -118,24 +119,13 @@ export default function FoundationsCheatsheet() {
         </div>
       </div>
 
-      <div className="relative group/cta">
-        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-[2.5rem] blur opacity-20 group-hover/cta:opacity-40 transition-opacity" />
-        <div className="relative bg-slate-900 border border-white/10 rounded-[2.5rem] p-10 text-center">
-          <div className="text-5xl mb-6 group-hover:scale-110 transition-transform inline-block">🎓</div>
-          <h3 className="text-2xl font-black text-white mb-4">Phase 1 Complete</h3>
-          <p className="text-slate-400 text-base font-medium mb-10 max-w-xl mx-auto">
-            You have mastered the theoretical foundations of engineering. You are now ready to implement efficient structures in code.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/array" 
-              className="px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-black text-lg transition-all shadow-2xl shadow-blue-600/20 active:scale-95 flex items-center justify-center gap-3"
-            >
-              Start Arrays Module <ArrowRight size={20} />
-            </Link>
-          </div>
-        </div>
-      </div>
+      <ModuleComplete 
+        title="Foundations Complete" 
+        description="You have mastered the complexity analysis and mathematical foundations. Next up: Searching & Sorting."
+        nextModuleText="Start Searching & Sorting" 
+        nextModuleLink="/searching-sorting" 
+        color="indigo" 
+      />
     </PerspectiveCard>
   );
 }
