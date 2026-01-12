@@ -2,7 +2,6 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Link from "next/link";
 import AuthGuard from "./components/AuthGuard";
-import ChatWidget from "./components/ChatWidget";
 import { ChatProvider } from "./context/ChatContext";
 
 export const metadata = {
@@ -83,7 +82,6 @@ export default function RootLayout({ children }) {
                 </div>
               </div>
             </footer>
-            <ChatWidget />
           </ChatProvider>
       </body>
     </html>

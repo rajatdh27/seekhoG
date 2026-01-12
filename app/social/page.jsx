@@ -23,6 +23,7 @@ import {
 import { friendsAPI, leaderboardAPI, userAPI, chatAPI } from '../utils/api';
 import { useRouter } from 'next/navigation';
 import { useChat } from '../context/ChatContext';
+import ChatWidget from '../components/ChatWidget';
 
 export default function SocialPage() {
   const router = useRouter();
@@ -493,6 +494,7 @@ export default function SocialPage() {
           )}
         </div>
       </div>
+      <ChatWidget />
     </div>
   );
 }
