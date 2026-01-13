@@ -2,7 +2,7 @@
 
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
-import TableOfContents from "./components/sections/TableOfContents";
+import SidebarTOC from "@/app/components/common/SidebarTOC";
 import { 
   Search, 
   ArrowRight, 
@@ -167,10 +167,11 @@ export default function SearchingSortingPage() {
           <aside className="hidden lg:block lg:w-72 lg:sticky lg:top-24 lg:self-start">
             <div className="bg-slate-900/40 backdrop-blur-xl border border-white/5 rounded-[2rem] p-6 shadow-2xl">
               <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-6 px-4">Curriculum</h3>
-              <TableOfContents
+              <SidebarTOC
                 sections={sections}
                 activeSection={activeSection}
                 onSectionClick={setActiveSection}
+                color="orange"
               />
             </div>
           </aside>

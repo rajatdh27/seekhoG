@@ -1,338 +1,137 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { Database, CheckCircle2, Layout, Zap, Target, HelpCircle, Box, Layers, Grid3X3, Infinity, RotateCcw, SortAsc } from "lucide-react";
 
 export default function ArrayIntro() {
-  const [hoveredBox, setHoveredBox] = useState(null);
-
-  const demoArray = [10, 20, 30, 40, 50];
+  const arrayTypes = [
+    { name: "1D Array (Linear)", desc: "Single row of elements.", icon: <Box size={20} />, usage: "Lists, basic collections", color: "blue" },
+    { name: "2D Array (Matrix)", desc: "Grid structure with rows/cols.", icon: <Grid3X3 size={20} />, usage: "Images, grids, boards", color: "indigo" },
+    { name: "Multidimensional", desc: "3D, 4D or higher dimensions.", icon: <Layers size={20} />, usage: "3D graphics, scientific data", color: "purple" },
+    { name: "Jagged Array", desc: "Array of arrays with different lengths.", icon: <Database size={20} />, usage: "Irregular data structures", color: "cyan" },
+    { name: "Static Array", desc: "Fixed size determined at creation.", icon: <Zap size={20} />, usage: "Embedded systems, fixed data", color: "emerald" },
+    { name: "Dynamic Array", desc: "Resizable (Vector, ArrayList).", icon: <Infinity size={20} />, usage: "When size changes at runtime", color: "orange" },
+    { name: "Circular Array", desc: "Last element connects to first.", icon: <RotateCcw size={20} />, usage: "Ring buffers, scheduling", color: "rose" },
+    { name: "Sorted Array", desc: "Elements in specific order.", icon: <SortAsc size={20} />, usage: "Binary search, range queries", color: "amber" },
+  ];
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-6 text-slate-900 dark:text-slate-100"
-      >
-        What is an Array?
-      </motion.h2>
+    <PerspectiveCard color="blue">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20">
+          <Database size={28} />
+        </div>
+        <h2 className="text-4xl font-black text-white tracking-tight">What is an Array?</h2>
+      </div>
 
-      <div className="space-y-8">
-        {/* Definition */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="prose dark:prose-invert max-w-none"
-        >
-          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            An <strong>array</strong> is a fundamental data structure that stores a{" "}
-            <span className="text-blue-600 dark:text-blue-400 font-semibold">
-              fixed-size collection of elements
-            </span>{" "}
-            of the same type in{" "}
-            <span className="text-blue-600 dark:text-blue-400 font-semibold">
-              contiguous memory locations
-            </span>
-            . Each element can be accessed directly using an index.
-          </p>
-        </motion.div>
+      <div className="space-y-12">
+        <p className="text-xl text-slate-400 font-medium leading-relaxed">
+          An <strong className="text-white">Array</strong> is a fundamental data structure that stores a fixed-size collection of elements of the same type in <strong className="text-blue-400">contiguous memory locations</strong>. Each element can be accessed directly using an index.
+        </p>
 
-        {/* Visual Demonstration */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl"
-        >
-          <h3 className="text-xl font-semibold mb-16 text-slate-900 dark:text-slate-100">
-            Interactive Array Visualization
-          </h3>
-
-          {/* Array Boxes */}
-          <div className="flex justify-center gap-2 mb-8">
-            {demoArray.map((value, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.1 }}
-                onHoverStart={() => setHoveredBox(index)}
-                onHoverEnd={() => setHoveredBox(null)}
-                className="relative"
-              >
-                {/* Index Label */}
-                <motion.div
-                  animate={{
-                    scale: hoveredBox === index ? 1.1 : 1,
-                    y: hoveredBox === index ? -5 : 0,
-                  }}
-                  className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-sm font-mono text-slate-600 dark:text-slate-400"
-                >
-                  [{index}]
-                </motion.div>
-
-                {/* Array Box */}
-                <motion.div
-                  animate={{
-                    scale: hoveredBox === index ? 1.05 : 1,
-                    boxShadow:
-                      hoveredBox === index
-                        ? "0 10px 30px rgba(59, 130, 246, 0.4)"
-                        : "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  }}
-                  className={`w-20 h-20 flex items-center justify-center rounded-lg border-2 font-mono text-xl font-bold cursor-pointer transition-colors ${hoveredBox === index
-                      ? "bg-blue-600 border-blue-700 text-white"
-                      : "bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100"
-                    }`}
-                >
-                  {value}
-                </motion.div>
-
-                {/* Memory Address (simulated) */}
-                <motion.div
-                  animate={{
-                    opacity: hoveredBox === index ? 1 : 0.5,
-                    y: hoveredBox === index ? 5 : 0,
-                  }}
-                  className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-mono text-slate-500 dark:text-slate-500"
-                >
-                  0x{(1000 + index * 4).toString(16).toUpperCase()}
-                </motion.div>
-              </motion.div>
+        {/* Analogy & Core Grid */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 grid md:grid-cols-2 gap-4">
+            {[
+              { title: "Random Access", text: "Instant access to any item using its index (O(1)).", icon: <Zap className="text-amber-400" /> },
+              { title: "Contiguous Memory", text: "Elements stored in adjacent locations for cache speed.", icon: <Box className="text-blue-400" /> },
+              { title: "Fixed Size", text: "Size is determined at creation (in static languages).", icon: <Target className="text-rose-400" /> },
+              { title: "Homogeneous", text: "All elements must be of the same data type.", icon: <Layers className="text-emerald-400" /> }
+            ].map((item, i) => (
+              <div key={i} className="p-6 bg-slate-900/50 border border-white/5 rounded-2xl flex flex-col gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">{item.icon}</div>
+                <div className="font-black text-white text-sm uppercase tracking-tighter">{item.title}</div>
+                <p className="text-slate-400 text-xs font-medium leading-relaxed">{item.text}</p>
+              </div>
             ))}
           </div>
-
-          {/* Hover Info */}
-          <motion.div
-            animate={{ opacity: hoveredBox !== null ? 1 : 0 }}
-            className="text-center min-h-[60px] flex items-center justify-center"
-          >
-            {hoveredBox !== null && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white dark:bg-slate-800 px-6 py-3 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700"
-              >
-                <p className="text-sm text-slate-700 dark:text-slate-300">
-                  <strong>Index {hoveredBox}:</strong> Value = {demoArray[hoveredBox]} |
-                  Memory = 0x{(1000 + hoveredBox * 4).toString(16).toUpperCase()}
-                </p>
-              </motion.div>
-            )}
-          </motion.div>
-        </motion.div>
-
-        {/* Key Characteristics */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="grid md:grid-cols-2 gap-6"
-        >
-          <FeatureCard
-            icon="⚡"
-            title="O(1) Random Access"
-            description="Access any element instantly using its index"
-            color="blue"
-          />
-          <FeatureCard
-            icon="📦"
-            title="Contiguous Memory"
-            description="Elements stored in adjacent memory locations"
-            color="indigo"
-          />
-          <FeatureCard
-            icon="📏"
-            title="Fixed Size"
-            description="Size determined at creation (in most languages)"
-            color="purple"
-          />
-          <FeatureCard
-            icon="🔢"
-            title="Same Data Type"
-            description="All elements must be of the same type"
-            color="pink"
-          />
-        </motion.div>
-
-        {/* Real-World Analogies */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-amber-900 dark:text-amber-200 flex items-center gap-2">
-            <span>🌟</span> Real-World Analogies
-          </h3>
-          <ul className="space-y-3 text-slate-700 dark:text-slate-300">
-            <li className="flex items-start gap-3">
-              <span className="text-amber-600 dark:text-amber-400 mt-1">•</span>
-              <span>
-                <strong>Apartment Building:</strong> Each apartment has a unique number
-                (index) and you can directly go to any apartment
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-amber-600 dark:text-amber-400 mt-1">•</span>
-              <span>
-                <strong>Train Compartments:</strong> Numbered sequentially, all connected
-                in a line
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-amber-600 dark:text-amber-400 mt-1">•</span>
-              <span>
-                <strong>Egg Carton:</strong> Fixed number of slots, each holds exactly one
-                egg
-              </span>
-            </li>
-          </ul>
-        </motion.div>
-
-        {/* Array Types */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
-            <span>📦</span> Types of Arrays
-          </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <ArrayTypeCard
-              title="1D Array (Linear)"
-              description="Single row of elements"
-              example="[1, 2, 3, 4, 5]"
-              uses="Lists, sequences, basic collections"
-            />
-            <ArrayTypeCard
-              title="2D Array (Matrix)"
-              description="Grid/table structure with rows and columns"
-              example="[[1,2,3], [4,5,6], [7,8,9]]"
-              uses="Images, matrices, grids, boards"
-            />
-            <ArrayTypeCard
-              title="Multidimensional Array"
-              description="3D, 4D or higher dimensional arrays"
-              example="[[[1,2],[3,4]], [[5,6],[7,8]]]"
-              uses="3D graphics, video data, scientific computing"
-            />
-            <ArrayTypeCard
-              title="Jagged Array"
-              description="Array of arrays with different lengths"
-              example="[[1,2], [3,4,5,6], [7]]"
-              uses="Irregular data, variable-length rows"
-            />
-            <ArrayTypeCard
-              title="Static Array"
-              description="Fixed size determined at compile/creation time"
-              example="int arr[10]; // C/C++"
-              uses="Embedded systems, when size is known"
-            />
-            <ArrayTypeCard
-              title="Dynamic Array"
-              description="Resizable array (Vector, ArrayList, List)"
-              example="vector<int> arr; // C++"
-              uses="When size changes at runtime"
-            />
-            <ArrayTypeCard
-              title="Circular Array"
-              description="Last element connects back to first"
-              example="Use modulo: (i+1) % length"
-              uses="Ring buffers, round-robin scheduling"
-            />
-            <ArrayTypeCard
-              title="Sorted Array"
-              description="Elements in ascending/descending order"
-              example="[1, 3, 5, 7, 9]"
-              uses="Binary search, range queries"
-            />
+          
+          <div className="bg-gradient-to-br from-indigo-600/20 to-blue-600/20 border border-blue-500/30 rounded-[2.5rem] p-8 flex flex-col justify-center">
+            <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2">
+              <HelpCircle size={20} className="text-blue-400" /> Real-World
+            </h3>
+            <ul className="space-y-6">
+              {[
+                { title: "Apartment Building", desc: "Each apartment has a unique number (index)." },
+                { title: "Train Compartments", desc: "Sequential and connected in a line." },
+                { title: "Egg Carton", desc: "Fixed number of slots for items." }
+              ].map((item, i) => (
+                <li key={i} className="flex gap-4">
+                  <div className="text-2xl mt-1">🏘️</div>
+                  <div>
+                    <div className="text-sm font-bold text-white uppercase tracking-tight">{item.title}</div>
+                    <p className="text-xs text-slate-400 font-medium">{item.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
-        </motion.div>
+        </div>
 
-        {/* When to Use / Avoid */}
+        {/* Types of Arrays */}
+        <div>
+          <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <Layers size={24} className="text-purple-400" /> Types of Arrays
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {arrayTypes.map((type, i) => (
+              <div key={i} className="p-5 bg-slate-900 border border-white/5 rounded-2xl group hover:border-white/10 transition-colors">
+                <div className={`w-10 h-10 rounded-xl bg-${type.color}-500/10 text-${type.color}-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  {type.icon}
+                </div>
+                <h4 className="text-sm font-black text-white mb-1 uppercase tracking-tighter">{type.name}</h4>
+                <p className="text-[10px] text-slate-500 font-bold mb-3">{type.desc}</p>
+                <div className="text-[9px] font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 p-2 rounded-lg border border-blue-500/10">
+                  {type.usage}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Pros & Cons */}
         <div className="grid md:grid-cols-2 gap-6">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
-            className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6"
-          >
-            <h3 className="text-lg font-semibold mb-4 text-green-900 dark:text-green-200 flex items-center gap-2">
-              <span>✅</span> Use Arrays When:
+          <div className="p-8 bg-emerald-500/5 border border-emerald-500/20 rounded-[2.5rem]">
+            <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-2">
+              <CheckCircle2 size={20} /> Use Arrays When:
             </h3>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li>• You need fast random access (O(1))</li>
-              <li>• You know the size in advance</li>
-              <li>• Memory efficiency is important</li>
-              <li>• You need to iterate sequentially</li>
-              <li>• Cache locality is beneficial</li>
+            <ul className="space-y-4">
+              {[
+                "You need fast random access (O(1))",
+                "You know the size in advance",
+                "Memory efficiency is a priority",
+                "Sequential iteration is needed",
+                "Cache locality benefits performance"
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm font-medium text-slate-300">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
+                  {text}
+                </li>
+              ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}
-            className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6"
-          >
-            <h3 className="text-lg font-semibold mb-4 text-red-900 dark:text-red-200 flex items-center gap-2">
-              <span>❌</span> Challenges with Arrays:
+          <div className="p-8 bg-rose-500/5 border border-rose-500/20 rounded-[2.5rem]">
+            <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-2">
+              <HelpCircle size={20} /> Challenges:
             </h3>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li>• Frequent insertions/deletions are expensive (O(n))</li>
-              <li>• Fixed size in most languages (need dynamic arrays)</li>
-              <li>• Unsorted search is slow (O(n))</li>
-              <li>• Memory waste if size is overestimated</li>
-              <li>• Cannot easily grow beyond initial capacity</li>
+            <ul className="space-y-4">
+              {[
+                "Insertions/deletions are expensive (O(n))",
+                "Fixed size in many languages",
+                "Unsorted search is slow (O(n))",
+                "Memory waste if size is overestimated",
+                "Cannot grow easily (Static Arrays)"
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm font-medium text-slate-300">
+                  <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
+                  {text}
+                </li>
+              ))}
             </ul>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function FeatureCard({ icon, title, description, color }) {
-  const colorClasses = {
-    blue: "from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 border-blue-200 dark:border-blue-800",
-    indigo:
-      "from-indigo-50 to-indigo-100 dark:from-indigo-900/30 dark:to-indigo-800/30 border-indigo-200 dark:border-indigo-800",
-    purple:
-      "from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 border-purple-200 dark:border-purple-800",
-    pink: "from-pink-50 to-pink-100 dark:from-pink-900/30 dark:to-pink-800/30 border-pink-200 dark:border-pink-800",
-  };
-
-  return (
-    <motion.div
-      whileHover={{ scale: 1.02, y: -2 }}
-      className={`bg-gradient-to-br ${colorClasses[color]} border rounded-xl p-5`}
-    >
-      <div className="text-3xl mb-2">{icon}</div>
-      <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">{title}</h4>
-      <p className="text-sm text-slate-600 dark:text-slate-400">{description}</p>
-    </motion.div>
-  );
-}
-
-function ArrayTypeCard({ title, description, example, uses }) {
-  return (
-    <motion.div
-      whileHover={{ scale: 1.03, y: -3 }}
-      className="bg-white dark:bg-slate-800 border border-indigo-200 dark:border-indigo-700 rounded-lg p-4"
-    >
-      <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">{title}</h4>
-      <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{description}</p>
-      <div className="bg-slate-50 dark:bg-slate-700 rounded p-2 mb-2">
-        <code className="text-xs font-mono text-blue-600 dark:text-blue-400">{example}</code>
-      </div>
-      <p className="text-xs text-slate-500 dark:text-slate-500">
-        <strong>Uses:</strong> {uses}
-      </p>
-    </motion.div>
+    </PerspectiveCard>
   );
 }
