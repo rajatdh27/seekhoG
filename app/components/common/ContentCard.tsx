@@ -1,7 +1,20 @@
 "use client";
 
+import React from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
+
+interface ContentCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  gradient: string;
+  href: string;
+  status?: string;
+  badges?: string[];
+  actionText?: string;
+  comingSoonText?: string;
+}
 
 export default function ContentCard({ 
   title, 
@@ -13,7 +26,7 @@ export default function ContentCard({
   badges = [], 
   actionText = "Explore Topic", 
   comingSoonText = "Coming Soon..." 
-}) {
+}: ContentCardProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -23,7 +36,7 @@ export default function ContentCard({
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -46,7 +59,7 @@ export default function ContentCard({
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
-      }}
+      } as any}
       className={`group h-full bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 transition-all duration-500 hover:border-white/20 shadow-2xl relative overflow-hidden flex flex-col ${status !== "live" ? "opacity-75" : ""}`}
     >
       {/* Mouse Spotlight Glow */}
@@ -54,7 +67,7 @@ export default function ContentCard({
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
           background: `radial-gradient(circle 400px at var(--mouse-x) var(--mouse-y), rgba(var(--glow-rgb), 0.1), transparent)`,
-        }}
+        } as any}
       />
 
       {/* Gradient overlay on hover */}
@@ -131,7 +144,7 @@ export default function ContentCard({
       className="h-full perspective-container"
       style={{
         "--glow-rgb": "255, 255, 255" // Default glow color, can be customized or extracted from gradient
-      }}
+      } as any}
     >
       {status === "live" ? (
         <Link href={href} className="block h-full">
