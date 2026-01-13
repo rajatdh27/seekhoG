@@ -1,806 +1,225 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { Cpu, Share2, MousePointer2, Zap, ArrowRightLeft, Repeat, Link as LinkIcon, Code2, Plus, Minus } from "lucide-react";
 
 export default function LinkedListMemoryLayout() {
-  const [selectedImpl, setSelectedImpl] = useState("singly");
+  const nodes = [
+    { addr: "0x1024", data: 10, next: "0x2048", pos: { x: 5, y: 20 } },
+    { addr: "0x2048", data: 20, next: "0x1500", pos: { x: 35, y: 55 } },
+    { addr: "0x1500", data: 30, next: "NULL", pos: { x: 65, y: 15 } },
+  ];
+
+  const types = [
+    {
+      title: "Singly Linked List",
+      icon: <LinkIcon size={20} />,
+      color: "emerald",
+      visual: (
+        <div className="flex items-center gap-2 py-4">
+          <div className="flex border border-emerald-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
+            <div className="px-2 py-1 text-[10px] font-bold border-r border-emerald-500/30">Data</div>
+            <div className="px-2 py-1 text-[10px] font-bold text-emerald-400">Next</div>
+          </div>
+          <ArrowRightLeft size={12} className="text-slate-600" />
+          <div className="w-4 h-4 rounded-full border border-slate-700" />
+        </div>
+      ),
+      pros: ["Simple logic", "Minimal memory overhead", "O(1) head insertion"],
+      cons: ["One-way traversal", "Search is O(n)", "Delete needs prev node"]
+    },
+    {
+      title: "Doubly Linked List",
+      icon: <ArrowRightLeft size={20} />,
+      color: "blue",
+      visual: (
+        <div className="flex items-center gap-2 py-4">
+          <div className="w-4 h-4 rounded-full border border-slate-700" />
+          <ArrowRightLeft size={12} className="text-slate-600" />
+          <div className="flex border border-blue-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
+            <div className="px-2 py-1 text-[10px] font-bold border-r border-blue-500/30 text-blue-400">Prev</div>
+            <div className="px-2 py-1 text-[10px] font-bold border-r border-blue-500/30">Data</div>
+            <div className="px-2 py-1 text-[10px] font-bold text-blue-400">Next</div>
+          </div>
+          <ArrowRightLeft size={12} className="text-slate-600" />
+        </div>
+      ),
+      pros: ["Bidirectional traversal", "O(1) delete with node ref", "Easier to reverse"],
+      cons: ["Extra memory for pointers", "More complex logic", "Slightly more writes"]
+    },
+    {
+      title: "Circular Linked List",
+      icon: <Repeat size={20} />,
+      color: "purple",
+      visual: (
+        <div className="flex items-center gap-2 py-4 relative">
+          <div className="flex border border-purple-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
+            <div className="px-2 py-1 text-[10px] font-bold border-r border-purple-500/30">Data</div>
+            <div className="px-2 py-1 text-[10px] font-bold text-purple-400">Next</div>
+          </div>
+          <div className="absolute -bottom-2 right-0 w-16 h-4 border-b border-r border-purple-500/20 rounded-br-lg" />
+          <div className="absolute -bottom-2 left-0 w-4 h-4 border-l border-purple-500/20 rounded-bl-lg" />
+        </div>
+      ),
+      pros: ["No NULL at end", "Back to start instantly", "Ideal for buffers"],
+      cons: ["Infinite loop risk", "Null check complexity", "Harder to debug"]
+    }
+  ];
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-6 text-slate-900 dark:text-slate-100"
-      >
-        Memory Layout & Implementation
-      </motion.h2>
+    <PerspectiveCard color="indigo">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
+          <Cpu size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Memory & Implementation</h2>
+          <p className="text-slate-400 font-medium">Visualizing structural differences and performance trade-offs.</p>
+        </div>
+      </div>
 
-      <div className="space-y-8">
-        {/* Implementation Selector */}
-        <div className="flex flex-wrap gap-4 justify-center">
-          <button
-            onClick={() => setSelectedImpl("singly")}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-              selectedImpl === "singly"
-                ? "bg-green-600 text-white shadow-lg"
-                : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-            }`}
-          >
-            🔗 Singly Linked List
-          </button>
-          <button
-            onClick={() => setSelectedImpl("doubly")}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-              selectedImpl === "doubly"
-                ? "bg-green-600 text-white shadow-lg"
-                : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-            }`}
-          >
-            ⇄ Doubly Linked List
-          </button>
-          <button
-            onClick={() => setSelectedImpl("circular")}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-              selectedImpl === "circular"
-                ? "bg-green-600 text-white shadow-lg"
-                : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-            }`}
-          >
-            🔄 Circular Linked List
-          </button>
+      <div className="space-y-12">
+        {/* Distributed Memory Visualization */}
+        <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner relative min-h-[350px] overflow-hidden">
+          <div className="absolute inset-0 opacity-5 grid grid-cols-12 grid-rows-6 pointer-events-none">
+            {Array.from({ length: 72 }).map((_, i) => (
+              <div key={i} className="border-[0.5px] border-indigo-500/20" />
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between mb-10 relative z-10">
+            <h3 className="text-xl font-black text-white flex items-center gap-3">
+              <Share2 size={20} className="text-indigo-400" /> Non-Contiguous Allocation
+            </h3>
+            <span className="text-[10px] font-black uppercase text-slate-500 bg-slate-900 px-3 py-1.5 rounded-lg border border-white/5">Heap Memory</span>
+          </div>
+
+          <div className="relative h-48 w-full">
+            {nodes.map((node, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.2 }}
+                style={{ position: 'absolute', left: `${node.pos.x}%`, top: `${node.pos.y}%` }}
+                className="group"
+              >
+                <div className="w-24 h-28 bg-slate-900 border-2 border-indigo-500/30 rounded-xl p-3 flex flex-col justify-between shadow-2xl group-hover:border-indigo-500 transition-all">
+                  <div className="text-[8px] font-black text-indigo-400 uppercase">{node.addr}</div>
+                  <div className="text-center py-1">
+                    <div className="text-[10px] font-black text-white">{node.data}</div>
+                  </div>
+                  <div className="pt-2 border-t border-white/5">
+                    <div className="text-[8px] text-slate-500 font-bold uppercase">Next</div>
+                    <div className="text-[9px] font-mono text-emerald-400 font-black truncate">{node.next}</div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-4 p-4 bg-indigo-500/5 rounded-xl border border-indigo-500/10 relative z-10">
+            <p className="text-[10px] text-slate-400 font-medium leading-relaxed">
+              Nodes are scattered. The <strong className="text-white">Pointer</strong> is the only link. If the link is broken, the subsequent nodes become unreachable (Memory Leak).
+            </p>
+          </div>
         </div>
 
-        {/* Singly Linked List Implementation */}
-        {selectedImpl === "singly" && (
-          <motion.div
-            key="singly"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
-            <div className="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-4 text-green-900 dark:text-green-200">
-                🔗 Singly Linked List Implementation
-              </h3>
-
-              <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-green-200 dark:border-green-700 mb-6">
-                <h4 className="font-bold mb-4 text-slate-900 dark:text-slate-100">Memory Layout:</h4>
-
-                {/* Visual Memory Diagram */}
-                <div className="space-y-6 overflow-x-auto pb-4">
-                  <div className="flex items-center gap-3 min-w-max">
-                    <div className="text-sm font-mono text-green-600 dark:text-green-400">HEAD →</div>
-
-                    {/* Node 1 */}
-                    <div className="flex flex-col items-center">
-                      <div className="text-xs text-slate-500 mb-1">0x1A2B</div>
-                      <div className="flex border-2 border-green-600 dark:border-green-500 rounded-lg overflow-hidden bg-green-500 text-white">
-                        <div className="px-4 py-3 border-r-2 border-green-400">
-                          <div className="text-xs opacity-70">data</div>
-                          <div className="font-mono font-bold">10</div>
-                        </div>
-                        <div className="px-4 py-3">
-                          <div className="text-xs opacity-70">next</div>
-                          <div className="font-mono text-xs">0x2C3D</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-2xl text-green-600">→</div>
-
-                    {/* Node 2 */}
-                    <div className="flex flex-col items-center">
-                      <div className="text-xs text-slate-500 mb-1">0x2C3D</div>
-                      <div className="flex border-2 border-green-600 dark:border-green-500 rounded-lg overflow-hidden bg-green-500 text-white">
-                        <div className="px-4 py-3 border-r-2 border-green-400">
-                          <div className="text-xs opacity-70">data</div>
-                          <div className="font-mono font-bold">20</div>
-                        </div>
-                        <div className="px-4 py-3">
-                          <div className="text-xs opacity-70">next</div>
-                          <div className="font-mono text-xs">0x3E4F</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-2xl text-green-600">→</div>
-
-                    {/* Node 3 */}
-                    <div className="flex flex-col items-center">
-                      <div className="text-xs text-slate-500 mb-1">0x3E4F</div>
-                      <div className="flex border-2 border-green-600 dark:border-green-500 rounded-lg overflow-hidden bg-green-500 text-white">
-                        <div className="px-4 py-3 border-r-2 border-green-400">
-                          <div className="text-xs opacity-70">data</div>
-                          <div className="font-mono font-bold">30</div>
-                        </div>
-                        <div className="px-4 py-3">
-                          <div className="text-xs opacity-70">next</div>
-                          <div className="font-mono text-xs">NULL</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-2xl text-green-600">→</div>
-                    <div className="px-3 py-2 bg-slate-300 dark:bg-slate-600 rounded font-mono text-sm">NULL</div>
-                  </div>
-
-                  <div className="bg-green-100 dark:bg-green-900/30 rounded-lg p-4 border border-green-200 dark:border-green-800">
-                    <p className="text-sm text-slate-700 dark:text-slate-300">
-                      <strong>Key Insight:</strong> Nodes are scattered in memory (non-contiguous). Each node
-                      contains data and a pointer to the next node's memory address.
-                    </p>
-                  </div>
-                </div>
+        {/* Comparison Cards with Visuals, Pros, and Cons */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          {types.map((type, i) => (
+            <div key={i} className={`bg-slate-900/50 p-6 rounded-[2.5rem] border border-${type.color}-500/20 flex flex-col group relative overflow-hidden`}>
+              <div className={`w-10 h-10 rounded-xl bg-${type.color}-500/10 flex items-center justify-center text-${type.color}-400 mb-4 group-hover:scale-110 transition-transform`}>
+                {type.icon}
+              </div>
+              <h4 className="text-sm font-black text-white uppercase mb-2 tracking-tight">{type.title}</h4>
+              
+              {/* Mini Visualizer */}
+              <div className="mb-6 bg-black/20 rounded-xl flex items-center justify-center border border-white/5 h-20 overflow-hidden">
+                {type.visual}
               </div>
 
-              {/* Node Structure in C++ */}
-              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto mb-4">
-                <div className="text-xs text-slate-400 mb-2">C++ Node Structure:</div>
-                <pre className="text-sm text-slate-300 font-mono leading-relaxed">
-                  <code>{`struct Node {
-    int data;           // Data stored in the node
-    Node* next;         // Pointer to next node
-
-    // Constructor
-    Node(int val) : data(val), next(nullptr) {}
-};
-
-class SinglyLinkedList {
-private:
-    Node* head;
-    int size;
-
-public:
-    SinglyLinkedList() : head(nullptr), size(0) {}
-
-    // Insert at beginning - O(1)
-    void insertAtHead(int val) {
-        Node* newNode = new Node(val);
-        newNode->next = head;
-        head = newNode;
-        size++;
-    }
-
-    // Insert at end - O(n)
-    void insertAtTail(int val) {
-        Node* newNode = new Node(val);
-        if (!head) {
-            head = newNode;
-        } else {
-            Node* curr = head;
-            while (curr->next) {
-                curr = curr->next;
-            }
-            curr->next = newNode;
-        }
-        size++;
-    }
-
-    // Delete node with value - O(n)
-    void deleteValue(int val) {
-        if (!head) return;
-
-        if (head->data == val) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
-            size--;
-            return;
-        }
-
-        Node* curr = head;
-        while (curr->next && curr->next->data != val) {
-            curr = curr->next;
-        }
-
-        if (curr->next) {
-            Node* temp = curr->next;
-            curr->next = curr->next->next;
-            delete temp;
-            size--;
-        }
-    }
-
-    // Search - O(n)
-    bool search(int val) {
-        Node* curr = head;
-        while (curr) {
-            if (curr->data == val) return true;
-            curr = curr->next;
-        }
-        return false;
-    }
-
-    // Reverse - O(n)
-    void reverse() {
-        Node* prev = nullptr;
-        Node* curr = head;
-        Node* next = nullptr;
-
-        while (curr) {
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
-        }
-        head = prev;
-    }
-};`}</code>
-                </pre>
-              </div>
-
-              {/* Pros and Cons */}
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                  <h4 className="font-bold text-green-900 dark:text-green-200 mb-2">✅ Advantages</h4>
-                  <ul className="text-sm space-y-1 text-slate-700 dark:text-slate-300">
-                    <li>• Simple implementation</li>
-                    <li>• Less memory per node (one pointer)</li>
-                    <li>• Efficient insertion at head O(1)</li>
-                    <li>• Dynamic size</li>
+              <div className="space-y-4 flex-1">
+                <div>
+                  <div className={`text-[9px] font-black text-${type.color}-400 uppercase tracking-widest mb-2 flex items-center gap-1.5`}>
+                    <Plus size={10} /> Advantages
+                  </div>
+                  <ul className="space-y-1.5">
+                    {type.pros.map((pro, j) => (
+                      <li key={j} className="text-[9px] text-slate-400 font-bold flex items-start gap-2">
+                        <div className={`w-1 h-1 rounded-full bg-${type.color}-500 mt-1 shrink-0`} /> {pro}
+                      </li>
+                    ))}
                   </ul>
                 </div>
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                  <h4 className="font-bold text-red-900 dark:text-red-200 mb-2">❌ Disadvantages</h4>
-                  <ul className="text-sm space-y-1 text-slate-700 dark:text-slate-300">
-                    <li>• No backward traversal</li>
-                    <li>• Deletion requires previous node</li>
-                    <li>• No random access</li>
-                    <li>• Not cache-friendly</li>
+                
+                <div className="pt-2 border-t border-white/5">
+                  <div className="text-[9px] font-black text-rose-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                    <Minus size={10} /> Disadvantages
+                  </div>
+                  <ul className="space-y-1.5">
+                    {type.cons.map((con, j) => (
+                      <li key={j} className="text-[9px] text-slate-500 font-bold flex items-start gap-2">
+                        <div className="w-1 h-1 rounded-full bg-rose-500 mt-1 shrink-0" /> {con}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
             </div>
-          </motion.div>
-        )}
+          ))}
+        </div>
 
-        {/* Doubly Linked List Implementation */}
-        {selectedImpl === "doubly" && (
-          <motion.div
-            key="doubly"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
-            <div className="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 border border-teal-200 dark:border-teal-800 rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-4 text-teal-900 dark:text-teal-200">
-                ⇄ Doubly Linked List Implementation
-              </h3>
-
-              <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-teal-200 dark:border-teal-700 mb-6">
-                <h4 className="font-bold mb-4 text-slate-900 dark:text-slate-100">Memory Layout:</h4>
-
-                <div className="space-y-6 overflow-x-auto pb-4">
-                  <div className="flex items-center gap-2 min-w-max">
-                    <div className="px-2 py-1 bg-slate-300 dark:bg-slate-600 rounded font-mono text-xs">NULL</div>
-                    <div className="text-lg text-teal-600">←</div>
-
-                    {/* Node 1 */}
-                    <div className="flex flex-col items-center">
-                      <div className="text-xs text-slate-500 mb-1">0x1A2B</div>
-                      <div className="flex border-2 border-teal-600 dark:border-teal-500 rounded-lg overflow-hidden bg-teal-500 text-white">
-                        <div className="px-3 py-2">
-                          <div className="text-xs opacity-70">prev</div>
-                          <div className="font-mono text-xs">NULL</div>
-                        </div>
-                        <div className="px-3 py-2 border-x-2 border-teal-400">
-                          <div className="text-xs opacity-70">data</div>
-                          <div className="font-mono font-bold">10</div>
-                        </div>
-                        <div className="px-3 py-2">
-                          <div className="text-xs opacity-70">next</div>
-                          <div className="font-mono text-xs">0x2C3D</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-lg text-teal-600">⇄</div>
-
-                    {/* Node 2 */}
-                    <div className="flex flex-col items-center">
-                      <div className="text-xs text-slate-500 mb-1">0x2C3D</div>
-                      <div className="flex border-2 border-teal-600 dark:border-teal-500 rounded-lg overflow-hidden bg-teal-500 text-white">
-                        <div className="px-3 py-2">
-                          <div className="text-xs opacity-70">prev</div>
-                          <div className="font-mono text-xs">0x1A2B</div>
-                        </div>
-                        <div className="px-3 py-2 border-x-2 border-teal-400">
-                          <div className="text-xs opacity-70">data</div>
-                          <div className="font-mono font-bold">20</div>
-                        </div>
-                        <div className="px-3 py-2">
-                          <div className="text-xs opacity-70">next</div>
-                          <div className="font-mono text-xs">0x3E4F</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-lg text-teal-600">⇄</div>
-
-                    {/* Node 3 */}
-                    <div className="flex flex-col items-center">
-                      <div className="text-xs text-slate-500 mb-1">0x3E4F</div>
-                      <div className="flex border-2 border-teal-600 dark:border-teal-500 rounded-lg overflow-hidden bg-teal-500 text-white">
-                        <div className="px-3 py-2">
-                          <div className="text-xs opacity-70">prev</div>
-                          <div className="font-mono text-xs">0x2C3D</div>
-                        </div>
-                        <div className="px-3 py-2 border-x-2 border-teal-400">
-                          <div className="text-xs opacity-70">data</div>
-                          <div className="font-mono font-bold">30</div>
-                        </div>
-                        <div className="px-3 py-2">
-                          <div className="text-xs opacity-70">next</div>
-                          <div className="font-mono text-xs">NULL</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-lg text-teal-600">→</div>
-                    <div className="px-2 py-1 bg-slate-300 dark:bg-slate-600 rounded font-mono text-xs">NULL</div>
-                  </div>
-
-                  <div className="bg-teal-100 dark:bg-teal-900/30 rounded-lg p-4 border border-teal-200 dark:border-teal-800">
-                    <p className="text-sm text-slate-700 dark:text-slate-300">
-                      <strong>Key Insight:</strong> Each node has two pointers - one to the next node and one to
-                      the previous node. This allows bidirectional traversal at the cost of extra memory.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* C++ Code */}
-              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto mb-4">
-                <div className="text-xs text-slate-400 mb-2">C++ Implementation:</div>
-                <pre className="text-sm text-slate-300 font-mono leading-relaxed">
-                  <code>{`struct Node {
-    int data;
-    Node* prev;
-    Node* next;
-
-    Node(int val) : data(val), prev(nullptr), next(nullptr) {}
-};
-
-class DoublyLinkedList {
-private:
-    Node* head;
-    Node* tail;
-    int size;
-
-public:
-    DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
-
-    // Insert at head - O(1)
-    void insertAtHead(int val) {
-        Node* newNode = new Node(val);
-        if (!head) {
-            head = tail = newNode;
-        } else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
-        }
-        size++;
-    }
-
-    // Insert at tail - O(1) with tail pointer
-    void insertAtTail(int val) {
-        Node* newNode = new Node(val);
-        if (!tail) {
-            head = tail = newNode;
-        } else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
-        }
-        size++;
-    }
-
-    // Delete node - O(1) if node pointer is given
-    void deleteNode(Node* node) {
-        if (!node) return;
-
-        if (node->prev) {
-            node->prev->next = node->next;
-        } else {
-            head = node->next;
-        }
-
-        if (node->next) {
-            node->next->prev = node->prev;
-        } else {
-            tail = node->prev;
-        }
-
-        delete node;
-        size--;
-    }
-
-    // Reverse - O(n)
-    void reverse() {
-        Node* curr = head;
-        Node* temp = nullptr;
-
-        while (curr) {
-            temp = curr->prev;
-            curr->prev = curr->next;
-            curr->next = temp;
-            curr = curr->prev;
-        }
-
-        if (temp) {
-            head = temp->prev;
-        }
-        swap(head, tail);
-    }
-};`}</code>
-                </pre>
-              </div>
-
-              {/* Pros and Cons */}
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                  <h4 className="font-bold text-green-900 dark:text-green-200 mb-2">✅ Advantages</h4>
-                  <ul className="text-sm space-y-1 text-slate-700 dark:text-slate-300">
-                    <li>• Bidirectional traversal</li>
-                    <li>• O(1) deletion with node reference</li>
-                    <li>• O(1) insertion at tail (with tail pointer)</li>
-                    <li>• Easier to implement certain algorithms</li>
-                  </ul>
-                </div>
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                  <h4 className="font-bold text-red-900 dark:text-red-200 mb-2">❌ Disadvantages</h4>
-                  <ul className="text-sm space-y-1 text-slate-700 dark:text-slate-300">
-                    <li>• Extra memory for prev pointer</li>
-                    <li>• More complex implementation</li>
-                    <li>• Slower than singly linked list</li>
-                    <li>• More pointers to maintain</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Circular Linked List Implementation */}
-        {selectedImpl === "circular" && (
-          <motion.div
-            key="circular"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
-            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-4 text-indigo-900 dark:text-indigo-200">
-                🔄 Circular Linked List Implementation
-              </h3>
-
-              <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-indigo-200 dark:border-indigo-700 mb-6">
-                <h4 className="font-bold mb-4 text-slate-900 dark:text-slate-100">Memory Layout:</h4>
-
-                <div className="space-y-6">
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="flex items-center gap-3">
-                      {/* Circular visualization */}
-                      <div className="relative w-80 h-80">
-                        <svg viewBox="0 0 200 200" className="w-full h-full">
-                          {/* Circle path */}
-                          <circle
-                            cx="100"
-                            cy="100"
-                            r="60"
-                            fill="none"
-                            stroke="rgb(99 102 241)"
-                            strokeWidth="2"
-                            strokeDasharray="5,5"
-                          />
-
-                          {/* Nodes */}
-                          {[0, 120, 240].map((angle, idx) => {
-                            const x = 100 + 60 * Math.cos((angle - 90) * Math.PI / 180);
-                            const y = 100 + 60 * Math.sin((angle - 90) * Math.PI / 180);
-                            return (
-                              <g key={idx}>
-                                <rect
-                                  x={x - 20}
-                                  y={y - 12}
-                                  width="40"
-                                  height="24"
-                                  fill="rgb(99 102 241)"
-                                  rx="4"
-                                />
-                                <text
-                                  x={x}
-                                  y={y + 5}
-                                  textAnchor="middle"
-                                  fill="white"
-                                  fontSize="14"
-                                  fontWeight="bold"
-                                >
-                                  {(idx + 1) * 10}
-                                </text>
-
-                                {/* Arrow */}
-                                <path
-                                  d={`M ${x + 20} ${y} Q ${100 + 70 * Math.cos((angle + 60 - 90) * Math.PI / 180)} ${100 + 70 * Math.sin((angle + 60 - 90) * Math.PI / 180)} ${100 + 60 * Math.cos((angle + 120 - 90) * Math.PI / 180) - 20} ${100 + 60 * Math.sin((angle + 120 - 90) * Math.PI / 180)}`}
-                                  fill="none"
-                                  stroke="rgb(99 102 241)"
-                                  strokeWidth="2"
-                                  markerEnd="url(#arrowhead)"
-                                />
-                              </g>
-                            );
-                          })}
-
-                          {/* Arrow marker */}
-                          <defs>
-                            <marker
-                              id="arrowhead"
-                              markerWidth="10"
-                              markerHeight="10"
-                              refX="9"
-                              refY="3"
-                              orient="auto"
-                            >
-                              <polygon points="0 0, 10 3, 0 6" fill="rgb(99 102 241)" />
-                            </marker>
-                          </defs>
-                        </svg>
-
-                        {/* HEAD label */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8 text-sm font-mono text-indigo-600 dark:text-indigo-400 font-bold">
-                          HEAD
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-indigo-100 dark:bg-indigo-900/30 rounded-lg p-4 border border-indigo-200 dark:border-indigo-800">
-                    <p className="text-sm text-slate-700 dark:text-slate-300">
-                      <strong>Key Insight:</strong> The last node points back to the first node instead of NULL,
-                      forming a circle. This allows continuous traversal without NULL checks.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* C++ Code */}
-              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto mb-4">
-                <div className="text-xs text-slate-400 mb-2">C++ Implementation:</div>
-                <pre className="text-sm text-slate-300 font-mono leading-relaxed">
-                  <code>{`struct Node {
-    int data;
-    Node* next;
-
-    Node(int val) : data(val), next(nullptr) {}
-};
-
-class CircularLinkedList {
-private:
-    Node* head;
-    int size;
-
-public:
-    CircularLinkedList() : head(nullptr), size(0) {}
-
-    // Insert at head - O(n) to update last node
-    void insertAtHead(int val) {
-        Node* newNode = new Node(val);
-        if (!head) {
-            newNode->next = newNode;  // Points to itself
-            head = newNode;
-        } else {
-            Node* tail = head;
-            while (tail->next != head) {
-                tail = tail->next;
-            }
-            newNode->next = head;
-            tail->next = newNode;
-            head = newNode;
-        }
-        size++;
-    }
-
-    // Insert at end - O(n)
-    void insertAtTail(int val) {
-        Node* newNode = new Node(val);
-        if (!head) {
-            newNode->next = newNode;
-            head = newNode;
-        } else {
-            Node* tail = head;
-            while (tail->next != head) {
-                tail = tail->next;
-            }
-            tail->next = newNode;
-            newNode->next = head;
-        }
-        size++;
-    }
-
-    // Delete node - O(n)
-    void deleteValue(int val) {
-        if (!head) return;
-
-        // If head needs to be deleted
-        if (head->data == val) {
-            if (head->next == head) {
-                delete head;
-                head = nullptr;
-            } else {
-                Node* tail = head;
-                while (tail->next != head) {
-                    tail = tail->next;
-                }
-                Node* temp = head;
-                tail->next = head->next;
-                head = head->next;
-                delete temp;
-            }
-            size--;
-            return;
-        }
-
-        // Delete other nodes
-        Node* curr = head;
-        while (curr->next != head && curr->next->data != val) {
-            curr = curr->next;
-        }
-
-        if (curr->next != head) {
-            Node* temp = curr->next;
-            curr->next = curr->next->next;
-            delete temp;
-            size--;
-        }
-    }
-
-    // Traverse - Be careful to avoid infinite loop
-    void traverse() {
-        if (!head) return;
-        Node* curr = head;
-        do {
-            cout << curr->data << " ";
-            curr = curr->next;
-        } while (curr != head);
-    }
-};`}</code>
-                </pre>
-              </div>
-
-              {/* Pros and Cons */}
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                  <h4 className="font-bold text-green-900 dark:text-green-200 mb-2">✅ Advantages</h4>
-                  <ul className="text-sm space-y-1 text-slate-700 dark:text-slate-300">
-                    <li>• Can traverse entire list from any node</li>
-                    <li>• Useful for round-robin scheduling</li>
-                    <li>• No NULL pointers to check</li>
-                    <li>• Perfect for cyclic processes</li>
-                  </ul>
-                </div>
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                  <h4 className="font-bold text-red-900 dark:text-red-200 mb-2">❌ Disadvantages</h4>
-                  <ul className="text-sm space-y-1 text-slate-700 dark:text-slate-300">
-                    <li>• Risk of infinite loops if not careful</li>
-                    <li>• More complex implementation</li>
-                    <li>• Harder to detect end of list</li>
-                    <li>• Deletion is more complex</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Comparison Table */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="overflow-x-auto"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
-            📊 Linked List Types Comparison
+        {/* Step-by-Step Implementation logic */}
+        <div className="bg-slate-900 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] pointer-events-none" />
+          
+          <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <Code2 className="text-emerald-400" /> Implementation Blueprint
           </h3>
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gradient-to-r from-green-600 to-teal-600 text-white">
-                <th className="border border-green-500 px-4 py-3 text-left">Feature</th>
-                <th className="border border-green-500 px-4 py-3 text-center">Singly Linked</th>
-                <th className="border border-green-500 px-4 py-3 text-center">Doubly Linked</th>
-                <th className="border border-green-500 px-4 py-3 text-center">Circular Linked</th>
-              </tr>
-            </thead>
-            <tbody className="text-sm">
-              <tr className="bg-slate-50 dark:bg-slate-700">
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 font-semibold">
-                  Pointers per Node
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">1 (next)</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">
-                  2 (prev, next)
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">1 (next)</td>
-              </tr>
-              <tr className="bg-white dark:bg-slate-800">
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 font-semibold">
-                  Traversal Direction
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">Forward only</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">Both</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">
-                  Forward (circular)
-                </td>
-              </tr>
-              <tr className="bg-slate-50 dark:bg-slate-700">
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 font-semibold">
-                  Insert at Head
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">O(1)</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">O(1)</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">O(n)</td>
-              </tr>
-              <tr className="bg-white dark:bg-slate-800">
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 font-semibold">
-                  Insert at Tail
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">
-                  O(n) or O(1)*
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">O(1)*</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">O(n)</td>
-              </tr>
-              <tr className="bg-slate-50 dark:bg-slate-700">
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 font-semibold">
-                  Delete Node
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">
-                  O(n) need prev
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">O(1)</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">O(n)</td>
-              </tr>
-              <tr className="bg-white dark:bg-slate-800">
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 font-semibold">
-                  Memory Usage
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">Lowest</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">Highest</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">Low</td>
-              </tr>
-              <tr className="bg-slate-50 dark:bg-slate-700">
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 font-semibold">
-                  Implementation
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">Simplest</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">Complex</td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">
-                  Moderate
-                </td>
-              </tr>
-              <tr className="bg-white dark:bg-slate-800">
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 font-semibold">
-                  Best Use Case
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">
-                  Stacks, basic lists
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">
-                  LRU cache, deque
-                </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-4 py-3 text-center">
-                  Round-robin
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-            * O(1) with tail pointer maintained
-          </p>
-        </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-10">
+            <div className="space-y-6">
+              {[
+                { step: "01", title: "Define the Node", desc: "Create a class/struct with a data field and a pointer field." },
+                { step: "02", title: "Initialize Head", desc: "Set a Head pointer to NULL to indicate an empty list." },
+                { step: "03", title: "Allocate Memory", desc: "For new data, dynamically allocate a new Node on the heap." },
+                { step: "04", title: "Link the Pointers", desc: "Update the 'next' pointer of the new/prev node to point to the correct address." }
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4 group">
+                  <span className="text-xl font-black text-slate-800 group-hover:text-emerald-500/20 transition-colors">{item.step}</span>
+                  <div>
+                    <h4 className="text-xs font-black text-white uppercase tracking-wider mb-1">{item.title}</h4>
+                    <p className="text-[10px] text-slate-500 font-bold leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-slate-950 rounded-2xl p-6 border border-white/5 shadow-2xl flex flex-col justify-center">
+              <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Conceptual logic (Insert Head)</div>
+              <div className="space-y-3 font-mono text-xs text-slate-300">
+                <div className="flex items-center gap-3 p-2 bg-white/5 rounded-lg">
+                  <span className="text-emerald-500">1.</span>
+                  <span>newNode = new Node(value)</span>
+                </div>
+                <div className="flex items-center gap-3 p-2 bg-white/5 rounded-lg">
+                  <span className="text-emerald-500">2.</span>
+                  <span>newNode.next = head</span>
+                </div>
+                <div className="flex items-center gap-3 p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+                  <span className="text-emerald-500">3.</span>
+                  <span>head = newNode</span>
+                </div>
+              </div>
+              <p className="mt-6 text-[9px] text-slate-500 font-bold italic text-center uppercase tracking-widest">
+                Result: New node becomes the entry point in O(1).
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </PerspectiveCard>
   );
 }

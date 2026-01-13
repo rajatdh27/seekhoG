@@ -1,442 +1,329 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
-
-const problemsByPattern = {
-  "two-pointers": {
-    easy: [
-      { name: "Linked List Cycle", key: "Fast/slow pointers meet if cycle exists", frequency: "high" },
-      { name: "Middle of the Linked List", key: "When fast reaches end, slow is at middle", frequency: "high" },
-      { name: "Remove Duplicates from Sorted List", key: "Compare current with next", frequency: "medium" },
-      { name: "Intersection of Two Linked Lists", key: "Switch heads when reaching null", frequency: "high" },
-      { name: "Delete Node in a Linked List", key: "Copy next value and skip next", frequency: "low" },
-      { name: "Palindrome Linked List", key: "Reverse second half, compare with first", frequency: "high" },
-    ],
-    medium: [
-      { name: "Linked List Cycle II", key: "Floyd's: reset slow to head after meeting", frequency: "high" },
-      { name: "Remove Nth Node From End of List", key: "Fast pointer n steps ahead", frequency: "high" },
-      { name: "Reorder List", key: "Find middle, reverse second, merge alternating", frequency: "medium" },
-      { name: "Odd Even Linked List", key: "Two pointers for odd/even positions", frequency: "medium" },
-      { name: "Add Two Numbers", key: "Two pointers with carry", frequency: "high" },
-      { name: "Rotate List", key: "Make circular, find new tail", frequency: "medium" },
-      { name: "Swap Nodes in Pairs", key: "Swap adjacent nodes with pointers", frequency: "medium" },
-      { name: "Delete the Middle Node of a Linked List", key: "Fast/slow to find middle, delete", frequency: "medium" },
-      { name: "Remove Duplicates from Sorted List II", key: "Skip all duplicate sequences", frequency: "medium" },
-      { name: "Sort List", key: "Merge sort with fast/slow to split", frequency: "high" },
-    ],
-    hard: [
-      { name: "Reverse Nodes in k-Group", key: "Reverse k nodes at a time", frequency: "high" },
-      { name: "Merge k Sorted Lists", key: "Divide and conquer merge", frequency: "high" },
-    ],
-  },
-  "reversal": {
-    easy: [
-      { name: "Reverse Linked List", key: "Three pointers: prev, curr, next", frequency: "high" },
-      { name: "Palindrome Linked List", key: "Reverse second half, compare", frequency: "high" },
-    ],
-    medium: [
-      { name: "Reverse Linked List II", key: "Reverse between positions m and n", frequency: "high" },
-      { name: "Swap Nodes in Pairs", key: "Reverse every 2 nodes", frequency: "medium" },
-      { name: "Reorder List", key: "Reverse second half, merge with first", frequency: "medium" },
-      { name: "Add Two Numbers II", key: "Reverse both, add, reverse result", frequency: "medium" },
-      { name: "Reverse Odd Length Groups", key: "Reverse groups of odd length", frequency: "low" },
-      { name: "Swapping Nodes in a Linked List", key: "Swap kth from start with kth from end", frequency: "medium" },
-    ],
-    hard: [
-      { name: "Reverse Nodes in k-Group", key: "Reverse every k nodes", frequency: "high" },
-      { name: "Reverse Linked List in Groups of Size K", key: "Reverse k-sized groups iteratively", frequency: "medium" },
-    ],
-  },
-  "cycle-detection": {
-    easy: [
-      { name: "Linked List Cycle", key: "Floyd's tortoise and hare", frequency: "high" },
-      { name: "Happy Number", key: "Detect cycle in number sequence", frequency: "medium" },
-    ],
-    medium: [
-      { name: "Linked List Cycle II", key: "Find cycle start with Floyd's", frequency: "high" },
-      { name: "Find the Duplicate Number", key: "Array as linked list, find cycle start", frequency: "high" },
-      { name: "Circular Array Loop", key: "Detect cycle in circular array", frequency: "low" },
-    ],
-    hard: [],
-  },
-  "merge-lists": {
-    easy: [
-      { name: "Merge Two Sorted Lists", key: "Compare heads, attach smaller", frequency: "high" },
-      { name: "Remove Duplicates from Sorted List", key: "Skip duplicate nodes", frequency: "medium" },
-    ],
-    medium: [
-      { name: "Merge In Between Linked Lists", key: "Remove section, insert new list", frequency: "medium" },
-      { name: "Add Two Numbers", key: "Merge with carry calculation", frequency: "high" },
-      { name: "Insertion Sort List", key: "Build sorted list by inserting", frequency: "medium" },
-      { name: "Sort List", key: "Merge sort on linked list", frequency: "high" },
-      { name: "Split Linked List in Parts", key: "Divide list into k parts", frequency: "medium" },
-      { name: "Partition List", key: "Split by value, merge back", frequency: "medium" },
-    ],
-    hard: [
-      { name: "Merge k Sorted Lists", key: "Divide and conquer or min heap", frequency: "high" },
-      { name: "Flatten a Multilevel Doubly Linked List", key: "DFS flatten with merging", frequency: "medium" },
-    ],
-  },
-  "intersection": {
-    easy: [
-      { name: "Intersection of Two Linked Lists", key: "Switch heads when null, meet at intersection", frequency: "high" },
-    ],
-    medium: [
-      { name: "Intersection of Two Linked Lists II", key: "Handle different lengths", frequency: "low" },
-    ],
-    hard: [],
-  },
-  "dummy-node": {
-    easy: [
-      { name: "Remove Linked List Elements", key: "Dummy simplifies head removal", frequency: "medium" },
-      { name: "Merge Two Sorted Lists", key: "Dummy as merge start", frequency: "high" },
-      { name: "Delete Node in a Linked List", key: "Copy next, skip next node", frequency: "low" },
-    ],
-    medium: [
-      { name: "Remove Duplicates from Sorted List II", key: "Dummy handles head duplicates", frequency: "medium" },
-      { name: "Partition List", key: "Two dummies for before/after", frequency: "medium" },
-      { name: "Insertion Sort List", key: "Dummy simplifies insertions", frequency: "medium" },
-      { name: "Add Two Numbers", key: "Dummy for result list", frequency: "high" },
-      { name: "Merge In Between Linked Lists", key: "Dummy helps with connection", frequency: "medium" },
-      { name: "Remove Zero Sum Consecutive Nodes", key: "Dummy with prefix sum", frequency: "medium" },
-    ],
-    hard: [],
-  },
-  "runner-technique": {
-    medium: [
-      { name: "Reorder List", key: "Find middle, reverse, merge", frequency: "medium" },
-      { name: "Palindrome Linked List", key: "Find middle, reverse second half", frequency: "high" },
-      { name: "Odd Even Linked List", key: "Separate odd/even positions", frequency: "medium" },
-      { name: "Split Linked List in Parts", key: "Calculate sizes, split", frequency: "medium" },
-    ],
-    hard: [],
-  },
-  "in-place": {
-    easy: [
-      { name: "Remove Duplicates from Sorted List", key: "Skip duplicate nodes in-place", frequency: "medium" },
-      { name: "Delete Node in a Linked List", key: "Copy next value, skip next", frequency: "low" },
-    ],
-    medium: [
-      { name: "Remove Nth Node From End of List", key: "Two pointers, no extra space", frequency: "high" },
-      { name: "Swap Nodes in Pairs", key: "Swap adjacent in-place", frequency: "medium" },
-      { name: "Rotate List", key: "Make circular, break at new tail", frequency: "medium" },
-      { name: "Odd Even Linked List", key: "Rearrange odd/even in-place", frequency: "medium" },
-      { name: "Reverse Linked List II", key: "Reverse portion in-place", frequency: "high" },
-      { name: "Remove Zero Sum Consecutive Nodes", key: "HashMap with prefix sum", frequency: "medium" },
-      { name: "Swapping Nodes in a Linked List", key: "Swap values of kth nodes", frequency: "medium" },
-    ],
-    hard: [
-      { name: "Reverse Nodes in k-Group", key: "Reverse k-groups in-place", frequency: "high" },
-    ],
-  },
-  "design": {
-    easy: [
-      { name: "Design Linked List", key: "Implement all operations", frequency: "medium" },
-      { name: "Design HashSet", key: "Use linked list for chaining", frequency: "low" },
-      { name: "Design HashMap", key: "Array of linked lists", frequency: "low" },
-    ],
-    medium: [
-      { name: "LRU Cache", key: "HashMap + doubly linked list", frequency: "high" },
-      { name: "Design Browser History", key: "Doubly linked list for back/forward", frequency: "medium" },
-      { name: "All O`one Data Structure", key: "HashMap + doubly linked list", frequency: "medium" },
-      { name: "Design Skiplist", key: "Multi-level linked lists", frequency: "low" },
-    ],
-    hard: [
-      { name: "LFU Cache", key: "HashMap + doubly linked lists", frequency: "high" },
-      { name: "Design In-Memory File System", key: "Tree with linked structures", frequency: "low" },
-    ],
-  },
-  "advanced": {
-    medium: [
-      { name: "Copy List with Random Pointer", key: "Interweave or hashmap", frequency: "high" },
-      { name: "Flatten a Multilevel Doubly Linked List", key: "DFS with stack", frequency: "medium" },
-      { name: "Convert Binary Search Tree to Sorted Doubly Linked List", key: "Inorder with linking", frequency: "medium" },
-      { name: "Add Two Numbers II", key: "Reverse, add, reverse back", frequency: "medium" },
-      { name: "Next Greater Node In Linked List", key: "Stack for next greater", frequency: "medium" },
-      { name: "Remove Zero Sum Consecutive Nodes from Linked List", key: "Prefix sum with HashMap", frequency: "medium" },
-    ],
-    hard: [
-      { name: "Reverse Nodes in Even Length Groups", key: "Count groups, reverse even", frequency: "low" },
-      { name: "Maximum Twin Sum of a Linked List", key: "Find middle, reverse, compare", frequency: "medium" },
-    ],
-  },
-};
-
-const patternInfo = {
-  "two-pointers": { icon: "🐢🐇", name: "Two Pointers", color: "green" },
-  "reversal": { icon: "🔄", name: "Reversal", color: "teal" },
-  "cycle-detection": { icon: "🔁", name: "Cycle Detection", color: "cyan" },
-  "merge-lists": { icon: "🔀", name: "Merge Lists", color: "emerald" },
-  "intersection": { icon: "✂️", name: "Intersection", color: "lime" },
-  "dummy-node": { icon: "🎭", name: "Dummy Node", color: "green" },
-  "runner-technique": { icon: "🏃", name: "Runner Technique", color: "teal" },
-  "in-place": { icon: "📍", name: "In-place Operations", color: "emerald" },
-  "design": { icon: "🏗️", name: "Design Problems", color: "blue" },
-  "advanced": { icon: "🚀", name: "Advanced", color: "purple" },
-};
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { 
+  Trophy, 
+  Code2, 
+  CheckCircle2, 
+  ChevronDown, 
+  ChevronUp, 
+  Star, 
+  Compass
+} from "lucide-react";
 
 export default function LinkedListProblems() {
-  const [selectedPattern, setSelectedPattern] = useState("two-pointers");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("all");
+  const [activeProblem, setActiveProblem] = useState(null);
+  const [activePattern, setActivePattern] = useState("Two Pointers");
+  const [filterDifficulty, setFilterDifficulty] = useState("all");
 
-  const currentPattern = problemsByPattern[selectedPattern];
-  const info = patternInfo[selectedPattern];
+  const patterns = [
+    { id: "Two Pointers", icon: "🐢🐇" },
+    { id: "Reversal", icon: "🔄" },
+    { id: "Cycle Detection", icon: "🔁" },
+    { id: "Merge Lists", icon: "🔀" },
+    { id: "Intersection", icon: "✂️" },
+    { id: "Dummy Node", icon: "🎭" },
+    { id: "Runner Technique", icon: "🏃" },
+    { id: "In-place", icon: "📍" },
+    { id: "Design", icon: "🏗️" },
+    { id: "Advanced", icon: "🚀" },
+  ];
 
-  const getProblems = () => {
-    if (selectedDifficulty === "all") {
-      return [
-        ...(currentPattern.easy || []).map((p) => ({ ...p, difficulty: "easy" })),
-        ...(currentPattern.medium || []).map((p) => ({ ...p, difficulty: "medium" })),
-        ...(currentPattern.hard || []).map((p) => ({ ...p, difficulty: "hard" })),
-      ];
+  const problems = [
+    // Two Pointers
+    { id: 1, title: "Linked List Cycle", difficulty: "Easy", pattern: "Two Pointers", freq: "HIGH", desc: "Detect if a cycle exists.", key: "Fast/slow pointers meet if cycle exists.", time: "O(n)", space: "O(1)" },
+    { id: 2, title: "Middle of the Linked List", difficulty: "Easy", pattern: "Two Pointers", freq: "HIGH", desc: "Return the middle node.", key: "When fast reaches end, slow is at middle.", time: "O(n)", space: "O(1)" },
+    { id: 3, title: "Remove Duplicates from Sorted List", difficulty: "Easy", pattern: "Two Pointers", freq: "MEDIUM", desc: "Remove duplicates from sorted list.", key: "Compare current with next.", time: "O(n)", space: "O(1)" },
+    { id: 4, title: "Intersection of Two Linked Lists", difficulty: "Easy", pattern: "Two Pointers", freq: "HIGH", desc: "Find intersection node.", key: "Switch heads when reaching null.", time: "O(n+m)", space: "O(1)" },
+    { id: 5, title: "Delete Node in a Linked List", difficulty: "Easy", pattern: "Two Pointers", freq: "LOW", desc: "Delete given node (not head/tail).", key: "Copy next value and skip next.", time: "O(1)", space: "O(1)" },
+    { id: 6, title: "Palindrome Linked List", difficulty: "Easy", pattern: "Two Pointers", freq: "HIGH", desc: "Check if list is palindrome.", key: "Reverse second half, compare with first.", time: "O(n)", space: "O(1)" },
+    { id: 7, title: "Linked List Cycle II", difficulty: "Medium", pattern: "Two Pointers", freq: "HIGH", desc: "Find cycle start node.", key: "Floyd's: reset slow to head after meeting.", time: "O(n)", space: "O(1)" },
+    { id: 8, title: "Remove Nth Node From End", difficulty: "Medium", pattern: "Two Pointers", freq: "HIGH", desc: "Remove nth from end.", key: "Fast pointer n steps ahead.", time: "O(n)", space: "O(1)" },
+    { id: 9, title: "Reorder List", difficulty: "Medium", pattern: "Two Pointers", freq: "MEDIUM", desc: "L0→Ln→L1→Ln-1...", key: "Find middle, reverse second, merge alternating.", time: "O(n)", space: "O(1)" },
+    { id: 10, title: "Odd Even Linked List", difficulty: "Medium", pattern: "Two Pointers", freq: "MEDIUM", desc: "Group odd/even nodes.", key: "Two pointers for odd/even positions.", time: "O(n)", space: "O(1)" },
+    { id: 11, title: "Add Two Numbers", difficulty: "Medium", pattern: "Two Pointers", freq: "HIGH", desc: "Add two numbers as lists.", key: "Two pointers with carry.", time: "O(max(n,m))", space: "O(max(n,m))" },
+    { id: 12, title: "Rotate List", difficulty: "Medium", pattern: "Two Pointers", freq: "MEDIUM", desc: "Rotate list by k.", key: "Make circular, find new tail.", time: "O(n)", space: "O(1)" },
+    { id: 13, title: "Swap Nodes in Pairs", difficulty: "Medium", pattern: "Two Pointers", freq: "MEDIUM", desc: "Swap adjacent nodes.", key: "Swap adjacent nodes with pointers.", time: "O(n)", space: "O(1)" },
+    { id: 14, title: "Delete Middle Node", difficulty: "Medium", pattern: "Two Pointers", freq: "MEDIUM", desc: "Delete middle node.", key: "Fast/slow to find middle, delete.", time: "O(n)", space: "O(1)" },
+    { id: 15, title: "Remove Duplicates II", difficulty: "Medium", pattern: "Two Pointers", freq: "MEDIUM", desc: "Delete nodes with duplicates.", key: "Skip all duplicate sequences.", time: "O(n)", space: "O(1)" },
+    { id: 16, title: "Sort List", difficulty: "Medium", pattern: "Two Pointers", freq: "HIGH", desc: "Sort list in O(n log n).", key: "Merge sort with fast/slow to split.", time: "O(n log n)", space: "O(log n)" },
+    { id: 17, title: "Reverse Nodes in k-Group", difficulty: "Hard", pattern: "Two Pointers", freq: "HIGH", desc: "Reverse groups of k.", key: "Reverse k nodes at a time.", time: "O(n)", space: "O(1)" },
+    { id: 18, title: "Merge k Sorted Lists", difficulty: "Hard", pattern: "Two Pointers", freq: "HIGH", desc: "Merge k sorted lists.", key: "Divide and conquer merge.", time: "O(N log k)", space: "O(log k)" },
+
+    // Reversal
+    { id: 19, title: "Reverse Linked List", difficulty: "Easy", pattern: "Reversal", freq: "HIGH", desc: "Reverse singly linked list.", key: "Three pointers: prev, curr, next.", time: "O(n)", space: "O(1)" },
+    { id: 20, title: "Palindrome Linked List", difficulty: "Easy", pattern: "Reversal", freq: "HIGH", desc: "Check if list is palindrome.", key: "Reverse second half, compare.", time: "O(n)", space: "O(1)" },
+    { id: 21, title: "Reverse Linked List II", difficulty: "Medium", pattern: "Reversal", freq: "HIGH", desc: "Reverse sub-range m to n.", key: "Reverse between positions m and n.", time: "O(n)", space: "O(1)" },
+    { id: 22, title: "Swap Nodes in Pairs", difficulty: "Medium", pattern: "Reversal", freq: "MEDIUM", desc: "Swap adjacent nodes.", key: "Reverse every 2 nodes.", time: "O(n)", space: "O(1)" },
+    { id: 23, title: "Reorder List", difficulty: "Medium", pattern: "Reversal", freq: "MEDIUM", desc: "L0→Ln→L1→Ln-1...", key: "Reverse second half, merge with first.", time: "O(n)", space: "O(1)" },
+    { id: 24, title: "Add Two Numbers II", difficulty: "Medium", pattern: "Reversal", freq: "MEDIUM", desc: "Add numbers (MSB at head).", key: "Reverse both, add, reverse result.", time: "O(n)", space: "O(max(n,m))" },
+    { id: 25, title: "Reverse Odd Length Groups", difficulty: "Medium", pattern: "Reversal", freq: "LOW", desc: "Reverse odd length groups.", key: "Reverse groups of odd length.", time: "O(n)", space: "O(1)" },
+    { id: 26, title: "Swapping Nodes", difficulty: "Medium", pattern: "Reversal", freq: "MEDIUM", desc: "Swap kth from start and end.", key: "Swap kth from start with kth from end.", time: "O(n)", space: "O(1)" },
+    { id: 27, title: "Reverse Nodes in k-Group", difficulty: "Hard", pattern: "Reversal", freq: "HIGH", desc: "Reverse every k nodes.", key: "Reverse every k nodes.", time: "O(n)", space: "O(1)" },
+    { id: 28, title: "Reverse in Groups of K", difficulty: "Hard", pattern: "Reversal", freq: "MEDIUM", desc: "Reverse k-sized groups.", key: "Reverse k-sized groups iteratively.", time: "O(n)", space: "O(1)" },
+
+    // Cycle Detection
+    { id: 29, title: "Linked List Cycle", difficulty: "Easy", pattern: "Cycle Detection", freq: "HIGH", desc: "Detect if cycle exists.", key: "Floyd's tortoise and hare.", time: "O(n)", space: "O(1)" },
+    { id: 30, title: "Happy Number", difficulty: "Easy", pattern: "Cycle Detection", freq: "MEDIUM", desc: "Detect cycle in digits sum.", key: "Detect cycle in number sequence.", time: "O(log n)", space: "O(1)" },
+    { id: 31, title: "Linked List Cycle II", difficulty: "Medium", pattern: "Cycle Detection", freq: "HIGH", desc: "Find cycle start node.", key: "Find cycle start with Floyd's.", time: "O(n)", space: "O(1)" },
+    { id: 32, title: "Find Duplicate Number", difficulty: "Medium", pattern: "Cycle Detection", freq: "HIGH", desc: "Find duplicate in array.", key: "Array as linked list, find cycle start.", time: "O(n)", space: "O(1)" },
+    { id: 33, title: "Circular Array Loop", difficulty: "Medium", pattern: "Cycle Detection", freq: "LOW", desc: "Cycle in circular array.", key: "Detect cycle in circular array.", time: "O(n)", space: "O(1)" },
+
+    // Merge Lists
+    { id: 34, title: "Merge Two Sorted Lists", difficulty: "Easy", pattern: "Merge Lists", freq: "HIGH", desc: "Combine two sorted lists.", key: "Compare heads, attach smaller.", time: "O(n+m)", space: "O(1)" },
+    { id: 35, title: "Remove Duplicates", difficulty: "Easy", pattern: "Merge Lists", freq: "MEDIUM", desc: "Remove duplicates in sorted.", key: "Skip duplicate nodes.", time: "O(n)", space: "O(1)" },
+    { id: 36, title: "Merge In Between", difficulty: "Medium", pattern: "Merge Lists", freq: "MEDIUM", desc: "Insert list into another.", key: "Remove section, insert new list.", time: "O(n+m)", space: "O(1)" },
+    { id: 37, title: "Add Two Numbers", difficulty: "Medium", pattern: "Merge Lists", freq: "HIGH", desc: "Add two lists.", key: "Merge with carry calculation.", time: "O(n)", space: "O(n)" },
+    { id: 38, title: "Insertion Sort List", difficulty: "Medium", pattern: "Merge Lists", freq: "MEDIUM", desc: "Sort using insertion.", key: "Build sorted list by inserting.", time: "O(n²)", space: "O(1)" },
+    { id: 39, title: "Sort List", difficulty: "Medium", pattern: "Merge Lists", freq: "HIGH", desc: "Merge sort logic.", key: "Merge sort on linked list.", time: "O(n log n)", space: "O(log n)" },
+    { id: 40, title: "Split List in Parts", difficulty: "Medium", pattern: "Merge Lists", freq: "MEDIUM", desc: "Divide list into k parts.", key: "Divide list into k parts.", time: "O(n)", space: "O(k)" },
+    { id: 41, title: "Partition List", difficulty: "Medium", pattern: "Merge Lists", freq: "MEDIUM", desc: "Split by value x.", key: "Split by value, merge back.", time: "O(n)", space: "O(1)" },
+    { id: 42, title: "Merge k Sorted Lists", difficulty: "Hard", pattern: "Merge Lists", freq: "HIGH", desc: "Combine k sorted lists.", key: "Divide and conquer or min heap.", time: "O(N log k)", space: "O(k)" },
+    { id: 43, title: "Flatten Multilevel List", difficulty: "Hard", pattern: "Merge Lists", freq: "MEDIUM", desc: "Flatten doubly list.", key: "DFS flatten with merging.", time: "O(n)", space: "O(n)" },
+
+    // Intersection
+    { id: 44, title: "Intersection of Two Lists", difficulty: "Easy", pattern: "Intersection", freq: "HIGH", desc: "Find intersection point.", key: "Switch heads when null, meet at intersection.", time: "O(n+m)", space: "O(1)" },
+    { id: 45, title: "Intersection II", difficulty: "Medium", pattern: "Intersection", freq: "LOW", desc: "Intersection with diff lengths.", key: "Handle different lengths.", time: "O(n+m)", space: "O(1)" },
+
+    // Dummy Node
+    { id: 46, title: "Remove Elements", difficulty: "Easy", pattern: "Dummy Node", freq: "MEDIUM", desc: "Remove nodes by value.", key: "Dummy simplifies head removal.", time: "O(n)", space: "O(1)" },
+    { id: 47, title: "Merge Sorted Lists", difficulty: "Easy", pattern: "Dummy Node", freq: "HIGH", desc: "Combine two lists.", key: "Dummy as merge start.", time: "O(n+m)", space: "O(1)" },
+    { id: 48, title: "Delete Node", difficulty: "Easy", pattern: "Dummy Node", freq: "LOW", desc: "Delete target node.", key: "Copy next, skip next node.", time: "O(1)", space: "O(1)" },
+    { id: 49, title: "Remove Duplicates II", difficulty: "Medium", pattern: "Dummy Node", freq: "MEDIUM", desc: "Skip all duplicates.", key: "Dummy handles head duplicates.", time: "O(n)", space: "O(1)" },
+    { id: 50, title: "Partition List", difficulty: "Medium", pattern: "Dummy Node", freq: "MEDIUM", desc: "Rearrange around x.", key: "Two dummies for before/after.", time: "O(n)", space: "O(1)" },
+    { id: 51, title: "Insertion Sort List", difficulty: "Medium", pattern: "Dummy Node", freq: "MEDIUM", desc: "Sort list.", key: "Dummy simplifies insertions.", time: "O(n²)", space: "O(1)" },
+    { id: 52, title: "Add Two Numbers", difficulty: "Medium", pattern: "Dummy Node", freq: "HIGH", desc: "Sum up lists.", key: "Dummy for result list.", time: "O(n)", space: "O(n)" },
+    { id: 53, title: "Merge In Between", difficulty: "Medium", pattern: "Dummy Node", freq: "MEDIUM", desc: "Modify middle segment.", key: "Dummy helps with connection.", time: "O(n)", space: "O(1)" },
+    { id: 54, title: "Remove Zero Sum Nodes", difficulty: "Medium", pattern: "Dummy Node", freq: "MEDIUM", desc: "Remove segments that sum to 0.", key: "Dummy with prefix sum.", time: "O(n)", space: "O(n)" },
+
+    // Runner Technique
+    { id: 55, title: "Reorder List", difficulty: "Medium", pattern: "Runner Technique", freq: "MEDIUM", desc: "L0→Ln→L1→Ln-1...", key: "Find middle, reverse, merge.", time: "O(n)", space: "O(1)" },
+    { id: 56, title: "Palindrome Linked List", difficulty: "Medium", pattern: "Runner Technique", freq: "HIGH", desc: "Check palindrome status.", key: "Find middle, reverse second half.", time: "O(n)", space: "O(1)" },
+    { id: 57, title: "Odd Even Linked List", difficulty: "Medium", pattern: "Runner Technique", freq: "MEDIUM", desc: "Split odd/even nodes.", key: "Separate odd/even positions.", time: "O(n)", space: "O(1)" },
+    { id: 58, title: "Split List in Parts", difficulty: "Medium", pattern: "Runner Technique", freq: "MEDIUM", desc: "Split into k chunks.", key: "Calculate sizes, split.", time: "O(n)", space: "O(k)" },
+
+    // In-place
+    { id: 59, title: "Remove Duplicates", difficulty: "Easy", pattern: "In-place", freq: "MEDIUM", desc: "In-place removal.", key: "Skip duplicate nodes in-place.", time: "O(n)", space: "O(1)" },
+    { id: 60, title: "Delete Node", difficulty: "Easy", pattern: "In-place", freq: "LOW", desc: "No access to head.", key: "Copy next value, skip next.", time: "O(1)", space: "O(1)" },
+    { id: 61, title: "Remove Nth Node", difficulty: "Medium", pattern: "In-place", freq: "HIGH", desc: "From end of list.", key: "Two pointers, no extra space.", time: "O(n)", space: "O(1)" },
+    { id: 62, title: "Swap Nodes in Pairs", difficulty: "Medium", pattern: "In-place", freq: "MEDIUM", desc: "Iterative swap.", key: "Swap adjacent in-place.", time: "O(n)", space: "O(1)" },
+    { id: 63, title: "Rotate List", difficulty: "Medium", pattern: "In-place", freq: "MEDIUM", desc: "Shift right by k.", key: "Make circular, break at new tail.", time: "O(n)", space: "O(1)" },
+    { id: 64, title: "Odd Even List", difficulty: "Medium", pattern: "In-place", freq: "MEDIUM", desc: "Rearrange nodes.", key: "Rearrange odd/even in-place.", time: "O(n)", space: "O(1)" },
+    { id: 65, title: "Reverse Linked List II", difficulty: "Medium", pattern: "In-place", freq: "HIGH", desc: "Reverse range.", key: "Reverse portion in-place.", time: "O(n)", space: "O(1)" },
+    { id: 66, title: "Remove Zero Sum Nodes", difficulty: "Medium", pattern: "In-place", freq: "MEDIUM", desc: "Cumulative sum logic.", key: "HashMap with prefix sum.", time: "O(n)", space: "O(n)" },
+    { id: 67, title: "Swapping Nodes", difficulty: "Medium", pattern: "In-place", freq: "MEDIUM", desc: "Swap kth nodes.", key: "Swap values of kth nodes.", time: "O(n)", space: "O(1)" },
+    { id: 68, title: "Reverse in k-Group", difficulty: "Hard", pattern: "In-place", freq: "HIGH", desc: "Complex reversal.", key: "Reverse k-groups in-place.", time: "O(n)", space: "O(1)" },
+
+    // Design
+    { id: 69, title: "Design Linked List", difficulty: "Easy", pattern: "Design", freq: "MEDIUM", desc: "Implement all methods.", key: "Implement all operations.", time: "O(n)", space: "O(n)" },
+    { id: 70, title: "Design HashSet", difficulty: "Easy", pattern: "Design", freq: "LOW", desc: "No built-in maps.", key: "Use linked list for chaining.", time: "O(n)", space: "O(n)" },
+    { id: 71, title: "Design HashMap", difficulty: "Easy", pattern: "Design", freq: "LOW", desc: "Chaining strategy.", key: "Array of linked lists.", time: "O(n)", space: "O(n)" },
+    { id: 72, title: "LRU Cache", difficulty: "Medium", pattern: "Design", freq: "HIGH", desc: "Least Recently Used.", key: "HashMap + doubly linked list.", time: "O(1)", space: "O(cap)" },
+    { id: 73, title: "Browser History", difficulty: "Medium", pattern: "Design", freq: "MEDIUM", desc: "Forward/back ops.", key: "Doubly linked list for back/forward.", time: "O(1)", space: "O(n)" },
+    { id: 74, title: "All O`one Data Structure", difficulty: "Medium", pattern: "Design", freq: "MEDIUM", desc: "O(1) for all ops.", key: "HashMap + doubly linked list.", time: "O(1)", space: "O(n)" },
+    { id: 75, title: "Design Skiplist", difficulty: "Medium", pattern: "Design", freq: "LOW", desc: "O(log n) search.", key: "Multi-level linked lists.", time: "O(log n)", space: "O(n log n)" },
+    { id: 76, title: "LFU Cache", difficulty: "Hard", pattern: "Design", freq: "HIGH", desc: "Least Frequently Used.", key: "HashMap + doubly linked lists.", time: "O(1)", space: "O(cap)" },
+    { id: 77, title: "In-Memory File System", difficulty: "Hard", pattern: "Design", freq: "LOW", desc: "Complex hierarchy.", key: "Tree with linked structures.", time: "O(path)", space: "O(n)" },
+
+    // Advanced
+    { id: 78, title: "Copy with Random Ptr", difficulty: "Medium", pattern: "Advanced", freq: "HIGH", desc: "Deep copy with random links.", key: "Interweave or hashmap.", time: "O(n)", space: "O(n)" },
+    { id: 79, title: "Flatten Multilevel DLL", difficulty: "Medium", pattern: "Advanced", freq: "MEDIUM", desc: "DFS flattening.", key: "DFS with stack.", time: "O(n)", space: "O(n)" },
+    { id: 80, title: "BST to Sorted DLL", difficulty: "Medium", pattern: "Advanced", freq: "MEDIUM", desc: "Inorder traversal.", key: "Inorder with linking.", time: "O(n)", space: "O(log n)" },
+    { id: 81, title: "Add Two Numbers II", difficulty: "Medium", pattern: "Advanced", freq: "MEDIUM", desc: "Numbers as lists.", key: "Reverse, add, reverse back.", time: "O(n)", space: "O(n)" },
+    { id: 82, title: "Next Greater Node", difficulty: "Medium", pattern: "Advanced", freq: "MEDIUM", desc: "Monotonic stack on list.", key: "Stack for next greater.", time: "O(n)", space: "O(n)" },
+    { id: 83, title: "Remove Zero Sum", difficulty: "Medium", pattern: "Advanced", freq: "MEDIUM", desc: "Segment sum removal.", key: "Prefix sum with HashMap.", time: "O(n)", space: "O(n)" },
+    { id: 84, title: "Reverse Even groups", difficulty: "Hard", pattern: "Advanced", freq: "LOW", desc: "Count based groups.", key: "Count groups, reverse even.", time: "O(n)", space: "O(1)" },
+    { id: 85, title: "Max Twin Sum", difficulty: "Hard", pattern: "Advanced", freq: "MEDIUM", desc: "Twin nodes at i, n-1-i.", key: "Find middle, reverse, compare.", time: "O(n)", space: "O(1)" },
+  ];
+
+  const filteredProblems = problems.filter(p => {
+    const matchesPattern = p.pattern === activePattern;
+    const matchesDifficulty = filterDifficulty === "all" || p.difficulty.toLowerCase() === filterDifficulty.toLowerCase();
+    return matchesPattern && matchesDifficulty;
+  });
+
+  const activeStats = {
+    easy: filteredProblems.filter(p => p.difficulty === "Easy").length,
+    medium: filteredProblems.filter(p => p.difficulty === "Medium").length,
+    hard: filteredProblems.filter(p => p.difficulty === "Hard").length,
+  };
+
+  const getDiffStyle = (diff) => {
+    switch (diff) {
+      case "Easy": return "text-emerald-400 bg-emerald-500/10 border-emerald-500/20";
+      case "Medium": return "text-amber-400 bg-amber-500/10 border-amber-500/20";
+      case "Hard": return "text-rose-400 bg-rose-500/10 border-rose-500/20";
+      default: return "";
     }
-    return (currentPattern[selectedDifficulty] || []).map((p) => ({
-      ...p,
-      difficulty: selectedDifficulty,
-    }));
   };
 
-  const getDifficultyColor = (diff) => {
-    if (diff === "easy") return "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300";
-    if (diff === "medium") return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300";
-    return "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300";
+  const getFreqStyle = (freq) => {
+    switch (freq) {
+      case "HIGH": return "text-rose-400 bg-rose-500/10";
+      case "MEDIUM": return "text-amber-400 bg-amber-500/10";
+      case "LOW": return "text-slate-400 bg-slate-500/10";
+      default: return "";
+    }
   };
-
-  const getFrequencyBadge = (freq) => {
-    if (freq === "high") return "bg-red-500 text-white";
-    if (freq === "medium") return "bg-orange-500 text-white";
-    return "bg-gray-400 text-white";
-  };
-
-  const allProblems = Object.entries(problemsByPattern).reduce((total, [_, pattern]) => {
-    return total + (pattern.easy?.length || 0) + (pattern.medium?.length || 0) + (pattern.hard?.length || 0);
-  }, 0);
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-4 bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent"
-      >
-        Must-Know Linked List Problems
-      </motion.h2>
-
-      <p className="text-slate-700 dark:text-slate-300 mb-2">
-        {allProblems}+ curated linked list problems organized by pattern. Master these patterns to solve any linked list problem.
-      </p>
-      <p className="text-sm text-slate-600 dark:text-slate-400 mb-8">
-        Each problem includes the key insight/approach and frequency indicator to help you prioritize.
-      </p>
-
-      {/* Pattern Selector */}
-      <div className="mb-6">
-        <h3 className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3">
-          Select Pattern:
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-          {Object.entries(patternInfo).map(([key, { icon, name }]) => (
-            <motion.button
-              key={key}
-              onClick={() => {
-                setSelectedPattern(key);
-                setSelectedDifficulty("all");
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`p-3 rounded-lg border-2 text-center transition-all ${
-                selectedPattern === key
-                  ? "border-green-500 bg-green-50 dark:bg-green-900/30 shadow-lg"
-                  : "border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 hover:border-green-300 dark:hover:border-green-700"
-              }`}
-            >
-              <div className="text-2xl mb-1">{icon}</div>
-              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">
-                {name}
-              </div>
-            </motion.button>
-          ))}
+    <PerspectiveCard color="orange">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20 shadow-lg">
+            <Trophy size={28} />
+          </div>
+          <div>
+            <h2 className="text-4xl font-black text-white tracking-tight">Must-Know Problems</h2>
+            <p className="text-slate-400 font-medium">85+ curated problems organized by pattern.</p>
+          </div>
         </div>
-      </div>
 
-      {/* Difficulty Filter */}
-      <div className="mb-6">
-        <h3 className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3">
-          Filter by Difficulty:
-        </h3>
-        <div className="flex gap-2">
-          {["all", "easy", "medium", "hard"].map((diff) => (
+        <div className="flex bg-slate-950 p-1 rounded-xl border border-white/5 h-fit">
+          {["all", "easy", "medium", "hard"].map(d => (
             <button
-              key={diff}
-              onClick={() => setSelectedDifficulty(diff)}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all capitalize ${
-                selectedDifficulty === diff
-                  ? "bg-gradient-to-r from-green-600 to-teal-600 text-white shadow"
-                  : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
-              }`}
+              key={d}
+              onClick={() => setFilterDifficulty(d)}
+              className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${filterDifficulty === d ? "bg-white text-black shadow-lg" : "text-slate-500 hover:text-white"}`}
             >
-              {diff} {diff === "all" && `(${getProblems().length})`}
+              {d}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Problem List */}
-      <motion.div
-        key={`${selectedPattern}-${selectedDifficulty}`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-xl p-6 border border-green-200 dark:border-green-800"
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-            <span className="text-2xl">{info.icon}</span>
-            {info.name}
-          </h3>
-          <span className="px-3 py-1 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-full text-sm font-semibold">
-            {getProblems().length} problems
-          </span>
+      {/* Pattern Tabs */}
+      <div className="flex p-1 bg-slate-950 rounded-2xl border border-white/5 mb-8 overflow-x-auto scrollbar-hide">
+        {patterns.map((p) => (
+          <button
+            key={p.id}
+            onClick={() => {
+              setActivePattern(p.id);
+              setActiveProblem(null);
+            }}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+              activePattern === p.id 
+                ? "bg-orange-500 text-white shadow-lg" 
+                : "text-slate-500 hover:text-white hover:bg-white/5"
+            }`}
+          >
+            <span className="text-sm">{p.icon}</span>
+            {p.id}
+          </button>
+        ))}
+      </div>
+
+      <div className="space-y-3">
+        <div className="flex items-center justify-between px-2 mb-4">
+          <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+            <span className="text-lg">{patterns.find(pt => pt.id === activePattern).icon}</span>
+            {activePattern} • {filteredProblems.length} Problems
+          </div>
+          <div className="flex gap-3">
+            <span className="text-[9px] font-black text-emerald-500 uppercase">{activeStats.easy} Easy</span>
+            <span className="text-[9px] font-black text-amber-500 uppercase">{activeStats.medium} Medium</span>
+            <span className="text-[9px] font-black text-rose-500 uppercase">{activeStats.hard} Hard</span>
+          </div>
         </div>
 
-        <div className="space-y-2">
-          {getProblems().map((problem, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.02 }}
-              className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-600 hover:border-green-400 dark:hover:border-green-600 transition-all group"
+        {filteredProblems.map((p) => (
+          <div 
+            key={p.id}
+            className={`rounded-2xl border transition-all duration-300 overflow-hidden ${activeProblem === p.id ? "bg-slate-900 border-orange-500/30 shadow-2xl" : "bg-slate-900/40 border-white/5 hover:border-white/10"}`}
+          >
+            <div 
+              className="p-5 cursor-pointer flex items-center justify-between group"
+              onClick={() => setActiveProblem(activeProblem === p.id ? null : p.id)}
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <span className="text-slate-400 dark:text-slate-600 text-sm font-mono">
-                      #{idx + 1}
-                    </span>
-                    <h4 className="font-semibold text-slate-900 dark:text-slate-100 break-words">
-                      {problem.name}
-                    </h4>
-                    {problem.frequency && (
-                      <span className={`px-2 py-0.5 rounded text-xs font-bold ${getFrequencyBadge(problem.frequency)}`}>
-                        {problem.frequency.toUpperCase()}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-1">
-                    <span className="text-green-600 dark:text-green-400">Key:</span>
-                    {problem.key}
-                  </p>
-                </div>
-                <span
-                  className={`px-2 py-1 rounded-full text-xs font-semibold capitalize whitespace-nowrap ${getDifficultyColor(
-                    problem.difficulty
-                  )}`}
-                >
-                  {problem.difficulty}
+              <div className="flex items-center gap-4">
+                <span className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest border ${getDiffStyle(p.difficulty)}`}>
+                  {p.difficulty}
                 </span>
+                <span className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest ${getFreqStyle(p.freq)}`}>
+                  {p.freq}
+                </span>
+                <h3 className="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">#{p.id} {p.title}</h3>
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+              {activeProblem === p.id ? <ChevronUp size={18} className="text-orange-500" /> : <ChevronDown size={18} className="text-slate-600 group-hover:text-slate-400" />}
+            </div>
 
-      {/* Stats Summary */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="mt-8 grid grid-cols-3 gap-4"
-      >
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-green-900 dark:text-green-200">
-            {(currentPattern.easy || []).length}
-          </div>
-          <div className="text-sm text-green-700 dark:text-green-300">Easy</div>
-        </div>
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-yellow-900 dark:text-yellow-200">
-            {(currentPattern.medium || []).length}
-          </div>
-          <div className="text-sm text-yellow-700 dark:text-yellow-300">Medium</div>
-        </div>
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-red-900 dark:text-red-200">
-            {(currentPattern.hard || []).length || 0}
-          </div>
-          <div className="text-sm text-red-700 dark:text-red-300">Hard</div>
-        </div>
-      </motion.div>
+            {activeProblem === p.id && (
+              <div className="px-5 pb-6 pt-0 border-t border-white/5">
+                <div className="mt-5 space-y-5">
+                  <div>
+                    <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2"><Star size={10} /> Description</div>
+                    <p className="text-slate-300 text-xs leading-relaxed">{p.desc}</p>
+                  </div>
+                  
+                  <div className="bg-slate-950/50 rounded-xl p-4 border border-white/5">
+                    <h4 className="text-[9px] font-black text-orange-400 uppercase tracking-[0.2em] mb-2 flex items-center gap-2">
+                      <Code2 size={12} /> Key Strategy
+                    </h4>
+                    <p className="text-slate-400 text-[11px] leading-relaxed font-bold italic">
+                      &quot;{p.key}&quot;
+                    </p>
+                  </div>
 
-      {/* Frequency Legend */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mt-6 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4"
-      >
-        <h3 className="text-sm font-bold mb-3 text-amber-900 dark:text-amber-200">
-          Frequency Legend:
-        </h3>
-        <div className="flex gap-4 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-1 bg-red-500 text-white rounded font-bold">HIGH</span>
-            <span className="text-slate-700 dark:text-slate-300">Asked in 70%+ interviews</span>
+                  <div className="flex gap-6 pt-2">
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase text-emerald-400 tracking-widest">
+                      <CheckCircle2 size={12} /> Time: {p.time}
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase text-blue-400 tracking-widest">
+                      <CheckCircle2 size={12} /> Space: {p.space}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-1 bg-orange-500 text-white rounded font-bold">MEDIUM</span>
-            <span className="text-slate-700 dark:text-slate-300">Asked in 30-70% interviews</span>
+        ))}
+        {filteredProblems.length === 0 && (
+          <div className="py-12 text-center text-slate-500 text-xs font-bold uppercase tracking-widest italic border-2 border-dashed border-white/5 rounded-2xl">
+            No problems found for this criteria
           </div>
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-1 bg-gray-400 text-white rounded font-bold">LOW</span>
-            <span className="text-slate-700 dark:text-slate-300">Asked in &lt;30% interviews</span>
+        )}
+      </div>
+
+      {/* Legend & Help */}
+      <div className="mt-12 grid md:grid-cols-2 gap-6">
+        <div className="p-6 bg-slate-950/50 border border-white/5 rounded-[2rem]">
+          <h4 className="text-xs font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2">
+            <Compass size={16} className="text-blue-400" /> How to Practice
+          </h4>
+          <div className="space-y-3">
+            {[
+              { step: "1", text: "Start with Easy problems and HIGH frequency problems first" },
+              { step: "2", text: "Read the 'Key' hint - it reveals the essential pattern to use" },
+              { step: "3", text: "Master Two Pointers and Reversal patterns first" },
+              { step: "4", text: "Progress to Medium and Hard after mastering Easy in each pattern" }
+            ].map((item, i) => (
+              <div key={i} className="flex gap-3 items-start">
+                <div className="w-5 h-5 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center text-[10px] font-black text-blue-400 shrink-0">{item.step}</div>
+                <p className="text-[10px] text-slate-400 font-bold leading-relaxed">{item.text}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </motion.div>
 
-      {/* Learning Path */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold mb-3 text-blue-900 dark:text-blue-200">
-          How to Practice
-        </h3>
-        <ol className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-          <li className="flex items-start gap-2">
-            <span className="bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-              1
-            </span>
-            <span>Start with <strong>Easy</strong> problems and <strong>HIGH</strong> frequency problems first</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-              2
-            </span>
-            <span>Read the "Key" hint - it reveals the essential pattern to use</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-              3
-            </span>
-            <span>Use the pattern template from the Patterns section as your starting point</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-              4
-            </span>
-            <span>Master <strong>Two Pointers</strong> and <strong>Reversal</strong> patterns first - they appear most often</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-              5
-            </span>
-            <span>Progress to <strong>Medium</strong> and <strong>Hard</strong> after mastering Easy problems in each pattern</span>
-          </li>
-        </ol>
-      </motion.div>
-    </div>
+        <div className="p-6 bg-slate-950/50 border border-white/5 rounded-[2rem]">
+          <h4 className="text-xs font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2">
+            <Star size={16} className="text-orange-400" /> Frequency Legend
+          </h4>
+          <div className="space-y-2">
+            {[
+              { label: "HIGH", desc: "Asked in 70%+ interviews", color: "rose" },
+              { label: "MEDIUM", desc: "Asked in 30-70% interviews", color: "amber" },
+              { label: "LOW", desc: "Asked in <30% interviews", color: "slate" }
+            ].map((item, i) => (
+              <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5">
+                <span className={`text-[8px] font-black px-2 py-0.5 rounded bg-${item.color}-500/10 text-${item.color}-400`}>{item.label}</span>
+                <span className="text-[9px] font-bold text-slate-500">{item.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </PerspectiveCard>
   );
 }

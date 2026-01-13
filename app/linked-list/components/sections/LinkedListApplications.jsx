@@ -1,34 +1,40 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { 
+  Layout, 
+  Globe, 
+  History, 
+  Music, 
+  Database, 
+  Terminal, 
+  Undo2, 
+  Image as ImageIcon, 
+  Cpu, 
+  FileJson, 
+  ChevronRight,
+  Code2,
+  Share2
+} from "lucide-react";
 
-const applications = [
-  {
-    id: "browser-history",
-    icon: "🌐",
-    title: "Browser History Navigation",
-    description: "Web browsers use doubly linked lists to implement back and forward button functionality",
-    realWorld: [
-      "Chrome, Firefox, Safari navigation",
-      "Back button traverses backward",
-      "Forward button moves forward",
-      "New visit clears forward history",
-    ],
-    example: `class BrowserHistory {
+export default function LinkedListApplications() {
+  const [activeApp, setActiveApp] = useState(0);
+
+  const apps = [
+    {
+      title: "Browser History",
+      desc: "Web browsers use doubly linked lists to implement back and forward button functionality.",
+      icon: <History size={24} />,
+      color: "blue",
+      usedIn: ["Chrome, Firefox, Safari navigation", "Back button traverses backward", "Forward button moves forward", "New visit clears forward history"],
+      code: `class BrowserHistory {
   constructor(homepage) {
-    this.current = {
-      url: homepage,
-      prev: null,
-      next: null
-    };
+    this.current = { url: homepage, prev: null, next: null };
   }
 
   visit(url) {
-    const newNode = {
-      url: url,
-      prev: this.current,
-      next: null
-    };
+    const newNode = { url, prev: this.current, next: null };
     this.current.next = newNode;
     this.current = newNode;
   }
@@ -40,105 +46,40 @@ const applications = [
     }
     return this.current.url;
   }
-
-  forward(steps) {
-    while (steps > 0 && this.current.next) {
-      this.current = this.current.next;
-      steps--;
-    }
-    return this.current.url;
-  }
-}`,
-    color: "green",
-  },
-  {
-    id: "music-playlist",
-    icon: "🎵",
-    title: "Music Playlists",
-    description: "Music players use circular linked lists for continuous playlist looping and shuffle features",
-    realWorld: [
-      "Spotify, Apple Music playlists",
-      "Next/Previous song navigation",
-      "Repeat and shuffle modes",
-      "Queue management",
-    ],
-    example: `class MusicPlaylist {
-  constructor() {
-    this.head = null;
-    this.current = null;
-    this.tail = null;
-  }
-
+}`
+    },
+    {
+      title: "Music Playlists",
+      desc: "Music players use circular linked lists for continuous playlist looping and shuffle features.",
+      icon: <Music size={24} />,
+      color: "emerald",
+      usedIn: ["Spotify, Apple Music playlists", "Next/Previous song navigation", "Repeat and shuffle modes", "Queue management"],
+      code: `class MusicPlaylist {
   addSong(song) {
-    const newNode = {
-      song: song,
-      next: null,
-      prev: null
-    };
-
+    const newNode = { song, next: null, prev: null };
     if (!this.head) {
-      this.head = newNode;
-      this.current = newNode;
-      this.tail = newNode;
-      // Make circular for repeat
-      newNode.next = newNode;
-      newNode.prev = newNode;
+      this.head = this.current = this.tail = newNode;
+      newNode.next = newNode.prev = newNode; // Circular
     } else {
       newNode.prev = this.tail;
       newNode.next = this.head;
-      this.tail.next = newNode;
-      this.head.prev = newNode;
+      this.tail.next = this.head.prev = newNode;
       this.tail = newNode;
     }
   }
-
-  nextSong() {
-    if (this.current) {
-      this.current = this.current.next;
-      return this.current.song;
-    }
-    return null;
-  }
-
-  previousSong() {
-    if (this.current) {
-      this.current = this.current.prev;
-      return this.current.song;
-    }
-    return null;
-  }
-}`,
-    color: "teal",
-  },
-  {
-    id: "undo-redo",
-    icon: "↩️",
-    title: "Undo/Redo Operations",
-    description: "Text editors and design software use linked lists to track and navigate through action history",
-    realWorld: [
-      "VSCode, Word, Google Docs",
-      "Photoshop, Figma, Canva",
-      "Video editors (Premiere, Final Cut)",
-      "Any app with edit history",
-    ],
-    example: `class UndoRedoManager {
-  constructor() {
-    this.current = null;
-  }
-
+}`
+    },
+    {
+      title: "Undo/Redo Operations",
+      desc: "Text editors and design software use linked lists to track and navigate through action history.",
+      icon: <Undo2 size={24} />,
+      color: "purple",
+      usedIn: ["VSCode, Word, Google Docs", "Photoshop, Figma, Canva", "Video editors (Premiere, Final Cut)", "Any app with edit history"],
+      code: `class UndoRedoManager {
   executeAction(action) {
-    const newNode = {
-      action: action,
-      prev: this.current,
-      next: null
-    };
-
-    if (this.current) {
-      this.current.next = newNode;
-    }
+    const newNode = { action, prev: this.current, next: null };
+    if (this.current) this.current.next = newNode;
     this.current = newNode;
-
-    // Execute the action
     action.execute();
   }
 
@@ -148,632 +89,223 @@ const applications = [
       this.current = this.current.prev;
     }
   }
-
-  redo() {
-    if (this.current && this.current.next) {
-      this.current = this.current.next;
-      this.current.action.execute();
-    }
-  }
-
-  canUndo() {
-    return this.current !== null;
-  }
-
-  canRedo() {
-    return this.current && this.current.next !== null;
-  }
-}`,
-    color: "emerald",
-  },
-  {
-    id: "image-viewer",
-    icon: "🖼️",
-    title: "Image Viewer Gallery",
-    description: "Photo gallery apps use doubly linked lists for efficient next/previous image navigation",
-    realWorld: [
-      "Instagram, Facebook photo viewers",
-      "Google Photos, Apple Photos",
-      "Windows Photo Viewer",
-      "Gallery apps on mobile",
-    ],
-    example: `class ImageGallery {
-  constructor(images) {
-    this.head = null;
-    this.current = null;
-
-    // Build doubly linked list
-    for (let i = 0; i < images.length; i++) {
-      const newNode = {
-        image: images[i],
-        prev: null,
-        next: null
-      };
-
-      if (!this.head) {
-        this.head = newNode;
-        this.current = newNode;
-      } else {
-        let curr = this.head;
-        while (curr.next) {
-          curr = curr.next;
-        }
-        curr.next = newNode;
-        newNode.prev = curr;
-      }
-    }
-  }
-
-  getCurrentImage() {
-    return this.current ? this.current.image : null;
-  }
-
+}`
+    },
+    {
+      title: "Image Viewer Gallery",
+      desc: "Photo gallery apps use doubly linked lists for efficient next/previous image navigation.",
+      icon: <ImageIcon size={24} />,
+      color: "rose",
+      usedIn: ["Instagram, Facebook photo viewers", "Google Photos, Apple Photos", "Windows Photo Viewer", "Gallery apps on mobile"],
+      code: `class ImageGallery {
   nextImage() {
     if (this.current && this.current.next) {
       this.current = this.current.next;
       return this.current.image;
     }
-    return null;  // At last image
-  }
-
-  prevImage() {
-    if (this.current && this.current.prev) {
-      this.current = this.current.prev;
-      return this.current.image;
-    }
-    return null;  // At first image
+    return null;
   }
 
   deleteCurrentImage() {
     if (!this.current) return;
-
-    const next = this.current.next;
-    const prev = this.current.prev;
-
+    const { next, prev } = this.current;
     if (prev) prev.next = next;
     if (next) next.prev = prev;
-
-    // Move to next or prev
     this.current = next || prev;
   }
-}`,
-    color: "cyan",
-  },
-  {
-    id: "hash-table-chaining",
-    icon: "🔗",
-    title: "Hash Table Collision Resolution",
-    description: "Hash tables use linked lists for chaining to handle hash collisions efficiently",
-    realWorld: [
-      "JavaScript objects/Maps",
-      "Python dictionaries",
-      "Java HashMap",
-      "Database indexing",
-    ],
-    example: `class HashTable {
-  constructor(size = 50) {
-    this.buckets = new Array(size);
-    this.size = size;
+}`
+    },
+    {
+      title: "Hash Table Chaining",
+      desc: "Hash tables use linked lists for chaining to handle hash collisions efficiently.",
+      icon: <FileJson size={24} />,
+      color: "amber",
+      usedIn: ["JavaScript objects/Maps", "Python dictionaries", "Java HashMap", "Database indexing"],
+      code: `set(key, value) {
+  const index = this.hash(key);
+  const newNode = { key, value, next: null };
+  if (!this.buckets[index]) {
+    this.buckets[index] = newNode;
+  } else {
+    let curr = this.buckets[index];
+    while (curr.next && curr.key !== key) curr = curr.next;
+    if (curr.key === key) curr.value = value;
+    else curr.next = newNode;
   }
-
-  hash(key) {
-    let hash = 0;
-    for (let char of key) {
-      hash = (hash + char.charCodeAt(0)) % this.size;
+}`
+    },
+    {
+      title: "Memory Management",
+      desc: "Operating systems use linked lists to manage free memory blocks and allocation.",
+      icon: <Database size={24} />,
+      color: "indigo",
+      usedIn: ["OS memory allocators (malloc/free)", "Garbage collection", "Memory pool management", "Dynamic memory allocation"],
+      code: `allocate(size) {
+  let curr = this.freeList;
+  while (curr) {
+    if (curr.size >= size) {
+      const allocated = { start: curr.start, size, next: this.allocatedList };
+      this.allocatedList = allocated;
+      curr.start += size; curr.size -= size;
+      return allocated.start;
     }
-    return hash;
+    curr = curr.next;
   }
-
-  set(key, value) {
-    const index = this.hash(key);
-    const newNode = { key, value, next: null };
-
-    if (!this.buckets[index]) {
-      this.buckets[index] = newNode;
-    } else {
-      // Chain: add to linked list
-      let current = this.buckets[index];
-
-      // Update if key exists
-      while (current) {
-        if (current.key === key) {
-          current.value = value;
-          return;
-        }
-        if (!current.next) break;
-        current = current.next;
-      }
-
-      // Add new node to chain
-      current.next = newNode;
+}`
+    },
+    {
+      title: "File System Organization",
+      desc: "File systems use linked lists to track file blocks and directory entries.",
+      icon: <Terminal size={24} />,
+      color: "cyan",
+      usedIn: ["FAT32 file allocation table", "Directory linked lists", "Inode lists in Unix/Linux", "File block chaining"],
+      code: `readFile(filename) {
+  let current = this.files[filename];
+  let data = '';
+  while (current) {
+    data += current.data;
+    current = current.next;
+  }
+  return data;
+}`
+    },
+    {
+      title: "Process Scheduling",
+      desc: "Operating systems use circular linked lists for round-robin CPU scheduling.",
+      icon: <Cpu size={24} />,
+      color: "orange",
+      usedIn: ["OS process schedulers", "Task scheduling in real-time systems", "Round-robin scheduling", "CPU time-slicing"],
+      code: `scheduleNext() {
+  if (!this.current) return null;
+  const process = this.current.process;
+  if (process.executeTimeSlice()) {
+    this.removeProcess(process.id);
+  } else {
+    this.current = this.current.next;
+  }
+  return process;
+}`
     }
-  }
+  ];
 
-  get(key) {
-    const index = this.hash(key);
-    let current = this.buckets[index];
-
-    while (current) {
-      if (current.key === key) {
-        return current.value;
-      }
-      current = current.next;
-    }
-
-    return undefined;
-  }
-}`,
-    color: "lime",
-  },
-  {
-    id: "memory-allocation",
-    icon: "💾",
-    title: "Memory Management",
-    description: "Operating systems use linked lists to manage free memory blocks and allocation",
-    realWorld: [
-      "OS memory allocators (malloc/free)",
-      "Garbage collection",
-      "Memory pool management",
-      "Dynamic memory allocation",
-    ],
-    example: `class MemoryManager {
-  constructor(totalMemory) {
-    // Start with one big free block
-    this.freeList = {
-      start: 0,
-      size: totalMemory,
-      next: null
-    };
-    this.allocatedList = null;
-  }
-
-  // First-fit allocation
-  allocate(size) {
-    let current = this.freeList;
-    let prev = null;
-
-    while (current) {
-      if (current.size >= size) {
-        // Allocate from this block
-        const allocated = {
-          start: current.start,
-          size: size,
-          next: this.allocatedList
-        };
-        this.allocatedList = allocated;
-
-        // Update free list
-        if (current.size === size) {
-          // Remove entire block
-          if (prev) {
-            prev.next = current.next;
-          } else {
-            this.freeList = current.next;
-          }
-        } else {
-          // Shrink the block
-          current.start += size;
-          current.size -= size;
-        }
-
-        return allocated.start;
-      }
-
-      prev = current;
-      current = current.next;
-    }
-
-    return -1;  // Out of memory
-  }
-
-  free(address) {
-    // Find and remove from allocated list
-    let current = this.allocatedList;
-    let prev = null;
-
-    while (current) {
-      if (current.start === address) {
-        // Remove from allocated list
-        if (prev) {
-          prev.next = current.next;
-        } else {
-          this.allocatedList = current.next;
-        }
-
-        // Add back to free list
-        current.next = this.freeList;
-        this.freeList = current;
-        return true;
-      }
-      prev = current;
-      current = current.next;
-    }
-
-    return false;
-  }
-}`,
-    color: "green",
-  },
-  {
-    id: "file-systems",
-    icon: "📁",
-    title: "File System Organization",
-    description: "File systems use linked lists to track file blocks and directory entries",
-    realWorld: [
-      "FAT32 file allocation table",
-      "Directory linked lists",
-      "Inode lists in Unix/Linux",
-      "File block chaining",
-    ],
-    example: `class FileSystem {
-  constructor() {
-    this.files = {};
-    this.freeBlocks = null;
-    this.initFreeBlocks(100);  // 100 blocks
-  }
-
-  initFreeBlocks(count) {
-    for (let i = count - 1; i >= 0; i--) {
-      const block = {
-        blockId: i,
-        next: this.freeBlocks
-      };
-      this.freeBlocks = block;
-    }
-  }
-
-  createFile(filename, data) {
-    const blocks = Math.ceil(data.length / 512);
-    let fileHead = null;
-    let fileTail = null;
-
-    // Allocate blocks for file
-    for (let i = 0; i < blocks; i++) {
-      if (!this.freeBlocks) {
-        throw new Error('Disk full');
-      }
-
-      // Take block from free list
-      const block = this.freeBlocks;
-      this.freeBlocks = this.freeBlocks.next;
-
-      // Add to file's block chain
-      block.data = data.slice(i * 512, (i + 1) * 512);
-      block.next = null;
-
-      if (!fileHead) {
-        fileHead = block;
-        fileTail = block;
-      } else {
-        fileTail.next = block;
-        fileTail = block;
-      }
-    }
-
-    this.files[filename] = fileHead;
-  }
-
-  readFile(filename) {
-    let current = this.files[filename];
-    let data = '';
-
-    while (current) {
-      data += current.data;
-      current = current.next;
-    }
-
-    return data;
-  }
-
-  deleteFile(filename) {
-    let current = this.files[filename];
-
-    // Return all blocks to free list
-    while (current) {
-      const next = current.next;
-      current.next = this.freeBlocks;
-      this.freeBlocks = current;
-      current = next;
-    }
-
-    delete this.files[filename];
-  }
-}`,
-    color: "teal",
-  },
-  {
-    id: "process-scheduling",
-    icon: "⚙️",
-    title: "Process Scheduling",
-    description: "Operating systems use circular linked lists for round-robin CPU scheduling",
-    realWorld: [
-      "OS process schedulers",
-      "Task scheduling in real-time systems",
-      "Round-robin scheduling",
-      "CPU time-slicing",
-    ],
-    example: `class ProcessScheduler {
-  constructor() {
-    this.head = null;
-    this.current = null;
-  }
-
-  addProcess(process) {
-    const newNode = {
-      process: process,
-      next: null
-    };
-
-    if (!this.head) {
-      this.head = newNode;
-      this.current = newNode;
-      newNode.next = newNode;  // Circular
-    } else {
-      // Find tail
-      let tail = this.head;
-      while (tail.next !== this.head) {
-        tail = tail.next;
-      }
-
-      // Insert and maintain circular structure
-      tail.next = newNode;
-      newNode.next = this.head;
-    }
-  }
-
-  // Round-robin scheduling
-  scheduleNext() {
-    if (!this.current) return null;
-
-    const process = this.current.process;
-
-    // Execute process for time quantum
-    if (process.executeTimeSlice()) {
-      // Process completed
-      this.removeProcess(process.id);
-    } else {
-      // Move to next process
-      this.current = this.current.next;
-    }
-
-    return process;
-  }
-
-  removeProcess(processId) {
-    if (!this.head) return;
-
-    let current = this.head;
-    let prev = null;
-
-    do {
-      if (current.process.id === processId) {
-        if (current === this.head && current.next === this.head) {
-          // Only one process
-          this.head = null;
-          this.current = null;
-        } else {
-          // Find tail
-          let tail = this.head;
-          while (tail.next !== this.head) {
-            tail = tail.next;
-          }
-
-          if (current === this.head) {
-            this.head = current.next;
-            tail.next = this.head;
-          } else {
-            prev.next = current.next;
-          }
-
-          if (this.current === current) {
-            this.current = current.next;
-          }
-        }
-        return;
-      }
-
-      prev = current;
-      current = current.next;
-    } while (current !== this.head);
-  }
-}`,
-    color: "emerald",
-  },
-];
-
-export default function LinkedListApplications() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-6 bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent"
-      >
-        Real-World Applications
-      </motion.h2>
+    <PerspectiveCard color="blue">
+      <div className="flex items-center gap-4 mb-10">
+        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20 shadow-lg">
+          <Layout size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Real-World Usage</h2>
+          <p className="text-slate-400 font-medium">Where dynamic pointer structures power modern software.</p>
+        </div>
+      </div>
 
-      <p className="text-slate-700 dark:text-slate-300 mb-8">
-        Linked lists are fundamental data structures used extensively in software development.
-        Here are the most important real-world applications you'll encounter.
-      </p>
-
-      <div className="grid gap-6">
-        {applications.map((app, idx) => (
-          <motion.div
-            key={app.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            className="bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-700 dark:to-green-900/20 rounded-xl p-6 border border-slate-200 dark:border-slate-600"
-          >
-            <div className="flex items-start gap-4 mb-4">
-              <div className="text-4xl">{app.icon}</div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-                  {app.title}
-                </h3>
-                <p className="text-slate-700 dark:text-slate-300 text-sm">
-                  {app.description}
-                </p>
+      <div className="grid lg:grid-cols-12 gap-8">
+        {/* Navigation Sidebar */}
+        <div className="lg:col-span-4 space-y-2">
+          {apps.map((app, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveApp(i)}
+              className={`w-full p-4 rounded-2xl border transition-all text-left flex items-center gap-4 group ${
+                activeApp === i 
+                  ? `bg-${app.color}-500/10 border-${app.color}-500/40 shadow-lg` 
+                  : "bg-slate-950/40 border-white/5 hover:border-white/10"
+              }`}
+            >
+              <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                activeApp === i ? `bg-${app.color}-500 text-white` : "bg-slate-900 text-slate-500 group-hover:text-slate-300"
+              }`}>
+                {app.icon}
               </div>
-            </div>
+              <span className={`text-xs font-black uppercase tracking-wider ${activeApp === i ? "text-white" : "text-slate-500"}`}>
+                {app.title}
+              </span>
+            </button>
+          ))}
+        </div>
 
-            <div className="mb-4">
-              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2 text-sm">
-                Used In:
-              </h4>
-              <div className="grid md:grid-cols-2 gap-2">
-                {app.realWorld.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
-                  >
-                    <span className="text-green-600 dark:text-green-400">▸</span>
-                    <span>{item}</span>
+        {/* Content Area */}
+        <div className="lg:col-span-8 space-y-8">
+          <div className={`p-8 rounded-[2.5rem] bg-slate-900/50 border border-${apps[activeApp].color}-500/20 relative overflow-hidden`}>
+            <div className={`absolute top-0 right-0 p-8 opacity-5 text-${apps[activeApp].color}-500`} style={{ transform: 'scale(4)' }}>
+              {apps[activeApp].icon}
+            </div>
+            
+            <div className="relative z-10">
+              <h3 className={`text-3xl font-black text-${apps[activeApp].color}-400 mb-4`}>{apps[activeApp].title}</h3>
+              <p className="text-slate-300 text-sm font-medium leading-relaxed mb-8 max-w-xl">
+                {apps[activeApp].desc}
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Used In</h4>
+                  <ul className="space-y-3">
+                    {apps[activeApp].usedIn.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs font-bold text-slate-400">
+                        <ChevronRight size={14} className={`text-${apps[activeApp].color}-500 shrink-0`} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Why It Matters</h4>
+                  <div className="bg-slate-950/50 p-4 rounded-2xl border border-white/5">
+                    <p className="text-[10px] text-slate-500 font-bold leading-relaxed italic">
+                      Linked lists allow for <span className="text-white">non-contiguous growth</span> and <span className="text-white">O(1) updates</span>, making them superior to arrays for high-frequency history and sequence management.
+                    </p>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
+          </div>
 
-            <div>
-              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2 text-sm">
-                Code Example:
-              </h4>
-              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto">
-                <pre className="text-xs text-slate-300 font-mono leading-relaxed">
-                  <code>{app.example}</code>
+          {/* Code Snippet */}
+          <div className="relative group/terminal">
+            <div className={`absolute -inset-1 bg-${apps[activeApp].color}-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity`} />
+            <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-rose-500/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-500/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
+                  </div>
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-2">Implementation Sketch</span>
+                </div>
+                <Code2 size={14} className="text-slate-600" />
+              </div>
+              <div className="p-6 overflow-x-auto">
+                <pre className="text-xs leading-relaxed text-blue-300 font-mono">
+                  <code>{apps[activeApp].code}</code>
                 </pre>
               </div>
             </div>
-          </motion.div>
-        ))}
+          </div>
+        </div>
       </div>
 
-      {/* Industry Impact */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold mb-4 text-blue-900 dark:text-blue-200">
-          Why Linked Lists Matter in Industry
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4 text-sm text-slate-700 dark:text-slate-300">
-          <div>
-            <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">
-              Dynamic Memory:
-            </h4>
-            <ul className="space-y-1">
-              <li>• No need to pre-allocate size</li>
-              <li>• Efficient insertion/deletion at any position</li>
-              <li>• Grow and shrink dynamically</li>
-              <li>• No wasted memory from unused capacity</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">
-              User Interface:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Browser navigation (back/forward)</li>
-              <li>• Undo/Redo in all major applications</li>
-              <li>• Image gallery navigation</li>
-              <li>• Music playlist management</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">
-              System Programming:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Memory allocation and management</li>
-              <li>• File system organization</li>
-              <li>• Process scheduling in OS</li>
-              <li>• Device driver management</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">
-              Data Structures:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Foundation for stacks and queues</li>
-              <li>• Hash table collision resolution</li>
-              <li>• Graph adjacency lists</li>
-              <li>• LRU cache implementation</li>
-            </ul>
-          </div>
+      {/* Industry Impact Summary */}
+      <div className="mt-12 p-8 bg-slate-900 border border-white/5 rounded-[2.5rem]">
+        <h3 className="text-2xl font-black text-white mb-8 text-center uppercase tracking-tighter">Why Industry Prefers Linked Lists</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: "Dynamic Memory", desc: "No need to pre-allocate size. Grow and shrink as needed.", icon: <Database className="text-blue-400" /> },
+            { title: "Efficient UI", desc: "Powers browser history, Undo/Redo, and image galleries.", icon: <Layout className="text-emerald-400" /> },
+            { title: "System Logic", desc: "Core of OS scheduling, memory allocation, and file systems.", icon: <Cpu className="text-purple-400" /> },
+            { title: "Data Core", desc: "Foundation for stacks, queues, and hash table chaining.", icon: <Share2 className="text-orange-400" /> }
+          ].map((item, i) => (
+            <div key={i} className="text-center space-y-3 p-4">
+              <div className="inline-flex w-12 h-12 rounded-xl bg-white/5 items-center justify-center mb-2">{item.icon}</div>
+              <h4 className="text-xs font-black text-white uppercase tracking-tight">{item.title}</h4>
+              <p className="text-[10px] text-slate-500 font-bold leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
         </div>
-      </motion.div>
-
-      {/* Advantages vs Arrays */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="mt-8 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold mb-4 text-green-900 dark:text-green-200">
-          When to Use Linked Lists vs Arrays
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-semibold text-green-700 dark:text-green-300 mb-3">
-              Choose Linked Lists When:
-            </h4>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">✓</span>
-                <span>Frequent insertions/deletions at beginning or middle</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">✓</span>
-                <span>Size changes dynamically and unpredictably</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">✓</span>
-                <span>Don't need random access by index</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">✓</span>
-                <span>Need to maintain insertion order efficiently</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">✓</span>
-                <span>Implementing stacks, queues, or other ADTs</span>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-red-700 dark:text-red-300 mb-3">
-              Choose Arrays When:
-            </h4>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">✓</span>
-                <span>Need fast random access by index (O(1))</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">✓</span>
-                <span>Size is known and relatively stable</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">✓</span>
-                <span>Memory locality is important for cache performance</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">✓</span>
-                <span>Need to minimize memory overhead (no pointers)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">✓</span>
-                <span>Binary search or other index-based algorithms</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </motion.div>
-    </div>
+      </div>
+    </PerspectiveCard>
   );
 }

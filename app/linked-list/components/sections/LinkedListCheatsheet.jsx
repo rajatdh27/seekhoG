@@ -1,600 +1,281 @@
 "use client";
 
-import { motion } from "framer-motion";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { ModuleComplete } from "@/app/components/common/algorithm";
+import { 
+  FileText, 
+  Zap, 
+  Compass, 
+  AlertTriangle, 
+  Code2, 
+  Target, 
+  CheckCircle2, 
+  Trash2, 
+  List, 
+  Share2, 
+  ArrowRight,
+  MousePointer2,
+  Brackets,
+  IterationCcw,
+  ZapOff,
+  BarChart3,
+  ChevronRight,
+  GitMerge
+} from "lucide-react";
 
 export default function LinkedListCheatsheet() {
+  const snippets = [
+    { 
+      title: "Reverse List", 
+      code: "let prev = null, curr = head;\nwhile (curr) {\n  let next = curr.next;\n  curr.next = prev;\n  prev = curr; curr = next;\n}\nreturn prev;" 
+    },
+    { 
+      title: "Cycle Detection (Floyd's)", 
+      code: "let slow = head, fast = head;\nwhile (fast && fast.next) {\n  slow = slow.next;\n  fast = fast.next.next;\n  if (slow === fast) return true;\n}\nreturn false;" 
+    },
+    { 
+      title: "Merge Sorted Lists", 
+      code: "const dummy = new Node(0);\nlet curr = dummy;\nwhile (l1 && l2) {\n  if (l1.val <= l2.val) { curr.next = l1; l1 = l1.next; }\n  else { curr.next = l2; l2 = l2.next; }\n  curr = curr.next;\n}\ncurr.next = l1 || l2;" 
+    },
+    { 
+      title: "Find Middle", 
+      code: "let slow = head, fast = head;\nwhile (fast && fast.next) {\n  slow = slow.next;\n  fast = fast.next.next;\n}\nreturn slow;" 
+    }
+  ];
+
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-6 bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent"
-      >
-        Linked List Quick Reference Cheatsheet
-      </motion.h2>
+    <PerspectiveCard color="emerald">
+      <div className="flex items-center gap-4 mb-10">
+        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20 shadow-lg">
+          <FileText size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Quick Reference</h2>
+          <p className="text-slate-400 font-medium">Core pointer mechanics and complexity shortcuts.</p>
+        </div>
+      </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-8 mb-12">
         {/* Pattern Recognition */}
-        <CheatCard
-          title="Pattern Recognition"
-          items={[
-            "Cycle/Middle/Nth → Two Pointers (Fast/Slow)",
-            "Reverse List → Reversal Pattern",
-            "Find Cycle Start → Floyd's Algorithm",
-            "Merge Sorted → Merge Lists Pattern",
-            "Head Changes → Dummy Node",
-            "Palindrome/Reorder → Runner Technique",
-          ]}
-          color="green"
-        />
+        <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
+          <h3 className="text-xl font-black text-blue-400 mb-6 flex items-center gap-3">
+            <Compass size={20} /> Pattern Recognition
+          </h3>
+          <ul className="space-y-3">
+            {[ 
+              { q: "Cycle/Middle/Nth?", a: "Two Pointers (Fast/Slow)" },
+              { q: "Reverse List?", a: "Reversal Pattern" },
+              { q: "Detect Cycle Start?", a: "Floyd's Algorithm" },
+              { q: "Merge Sorted?", a: "Merge Lists Pattern" },
+              { q: "Head Changes?", a: "Dummy Node Sentinel" },
+              { q: "Palindrome/Reorder?", a: "Runner Technique" }
+            ].map((item, i) => (
+              <li key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{item.q}</span>
+                <span className="text-[11px] font-bold text-slate-300">{item.a}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        {/* Time Complexities */}
-        <CheatCard
-          title="Time Complexities"
-          items={[
-            "Insert at Head: O(1)",
-            "Insert at Tail: O(1) with tail pointer",
-            "Delete at Head: O(1)",
-            "Search: O(n)",
-            "Access by Index: O(n)",
-            "Reverse: O(n), Space: O(1)",
-          ]}
-          color="teal"
-        />
+        {/* Complexity Guide */}
+        <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
+          <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-3">
+            <Zap size={20} /> Time Complexities
+          </h3>
+          <div className="grid grid-cols-2 gap-3">
+            {[ 
+              { op: "Insert Head", val: "O(1)" },
+              { op: "Insert Tail", val: "O(1)*" },
+              { op: "Delete Head", val: "O(1)" },
+              { op: "Search", val: "O(n)" },
+              { op: "Access Index", val: "O(n)" },
+              { op: "Reverse", val: "O(n)" }
+            ].map((item, i) => (
+              <div key={i} className="p-3 bg-white/5 rounded-xl border border-white/5 flex flex-col">
+                <span className="text-[9px] font-black text-slate-500 uppercase tracking-tight mb-1">{item.op}</span>
+                <span className="text-xs font-black text-white font-mono">{item.val}</span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-[8px] text-slate-600 font-bold uppercase text-center">* O(1) if tail pointer is maintained</p>
+        </div>
 
         {/* Edge Cases */}
-        <CheatCard
-          title="Edge Cases to Check"
-          items={[
-            "Empty list (head = null)",
-            "Single node list",
-            "Two nodes only",
-            "Cycle in list",
-            "NULL pointer dereference",
-            "Modifying while traversing",
-          ]}
-          color="cyan"
-        />
+        <div className="bg-rose-500/5 border border-rose-500/20 p-8 rounded-[2rem]">
+          <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-3">
+            <AlertTriangle size={20} /> Edge Cases to Check
+          </h3>
+          <div className="grid grid-cols-2 gap-4">
+            {["Empty list (head = null)", "Single node list", "Two nodes only", "Cycle in list", "NULL dereference", "Modify while traversing"].map((text, i) => (
+              <div key={i} className="flex items-center gap-2 text-[10px] font-bold text-slate-400">
+                <div className="w-1 h-1 rounded-full bg-rose-500" />
+                {text}
+              </div>
+            ))}
+          </div>
+        </div>
 
-        {/* Common Patterns */}
-        <CheatCard
-          title="Common Patterns"
-          items={[
-            "Fast/Slow: Detect cycle, find middle",
-            "Dummy: Simplify head edge cases",
-            "Prev/Curr/Next: For reversal",
-            "Two Lists: Compare or merge",
-            "Recursive: For tree-like operations",
-            "HashMap: Track visited nodes",
-          ]}
-          color="emerald"
-        />
-
-        {/* Optimization Tricks */}
-        <CheatCard
-          title="Optimization Tricks"
-          items={[
-            "Keep tail pointer for O(1) append",
-            "Use dummy node to avoid null checks",
-            "Fast/slow for O(1) space solutions",
-            "Reverse in-place to save space",
-            "Circular for infinite loops",
-            "Doubly linked for bidirectional",
-          ]}
-          color="lime"
-        />
-
-        {/* Common Mistakes */}
-        <CheatCard
-          title="Common Mistakes"
-          items={[
-            "Not checking for null before .next",
-            "Losing reference to head",
-            "Infinite loops in cycles",
-            "Off-by-one in nth from end",
-            "Not handling single node case",
-            "Forgetting to update tail pointer",
-          ]}
-          color="red"
-        />
+        {/* Interview Tips */}
+        <div className="bg-emerald-500/5 border border-emerald-500/20 p-8 rounded-[2rem]">
+          <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-3">
+            <CheckCircle2 size={20} /> Interview Tips
+          </h3>
+          <ul className="space-y-3">
+            {[ 
+              "Check null BEFORE accessing .next",
+              "Use dummy node for head modifications",
+              "Draw diagrams for pointer manipulation",
+              "Discuss brute force first, then optimize",
+              "Always clarify: Singly or Doubly linked?"
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-2 text-[10px] font-bold text-slate-400 leading-relaxed">
+                <ArrowRight size={10} className="text-emerald-500 shrink-0 mt-1" />
+                {text}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      {/* Essential Code Snippets */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="mt-8 bg-slate-900 dark:bg-slate-950 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold text-slate-100 mb-4">
-          Essential Code Snippets
+      {/* Language Quick Reference */}
+      <div className="mb-12 bg-slate-900/50 border border-white/5 rounded-[2.5rem] p-10">
+        <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+          <Brackets size={24} className="text-blue-400" /> Language Quick Ref
         </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <CodeSnippet
-            title="Reverse Linked List"
-            code={`function reverseList(head) {
-  let prev = null;
-  let curr = head;
-
-  while (curr) {
-    const next = curr.next;
-    curr.next = prev;
-    prev = curr;
-    curr = next;
-  }
-
-  return prev;
-}`}
-          />
-          <CodeSnippet
-            title="Detect Cycle (Floyd's)"
-            code={`function hasCycle(head) {
-  let slow = head;
-  let fast = head;
-
-  while (fast && fast.next) {
-    slow = slow.next;
-    fast = fast.next.next;
-
-    if (slow === fast) {
-      return true;
-    }
-  }
-
-  return false;
-}`}
-          />
-          <CodeSnippet
-            title="Merge Two Sorted Lists"
-            code={`function merge(l1, l2) {
-  const dummy = new ListNode(0);
-  let curr = dummy;
-
-  while (l1 && l2) {
-    if (l1.val <= l2.val) {
-      curr.next = l1;
-      l1 = l1.next;
-    } else {
-      curr.next = l2;
-      l2 = l2.next;
-    }
-    curr = curr.next;
-  }
-
-  curr.next = l1 || l2;
-  return dummy.next;
-}`}
-          />
-          <CodeSnippet
-            title="Find Middle Node"
-            code={`function findMiddle(head) {
-  let slow = head;
-  let fast = head;
-
-  while (fast && fast.next) {
-    slow = slow.next;
-    fast = fast.next.next;
-  }
-
-  return slow;
-}`}
-          />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {[ 
+            { lang: "JS", create: "new Node()", next: ".next", null: "null" },
+            { lang: "Py", create: "Node()", next: ".next", null: "None" },
+            { lang: "C++", create: "new Node()", next: "->next", null: "nullptr" },
+            { lang: "Java", create: "new Node()", next: ".next", null: "null" },
+            { lang: "Go", create: "&Node{}", next: ".Next", null: "nil" },
+            { lang: "C", create: "malloc()", next: "->next", null: "NULL" }
+          ].map((item, i) => (
+            <div key={i} className="bg-slate-950 p-4 rounded-xl border border-white/5 text-center group hover:border-blue-500/30 transition-all">
+              <div className="text-[10px] font-black text-white mb-3 uppercase tracking-widest">{item.lang}</div>
+              <div className="space-y-2">
+                <div className="text-[8px] font-mono text-slate-500 uppercase">Create</div>
+                <div className="text-[9px] font-mono text-blue-400 font-bold">{item.create}</div>
+                <div className="text-[8px] font-mono text-slate-500 uppercase">Next</div>
+                <div className="text-[9px] font-mono text-emerald-400 font-bold">{item.next}</div>
+              </div>
+            </div>
+          ))}
         </div>
-      </motion.div>
+      </div>
 
-      {/* Node Structures */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mt-8 bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-semibold mb-4 text-green-900 dark:text-green-200">
-          Node Structure Templates
+      {/* Complexity Comparison Table */}
+      <div className="mb-12 bg-slate-950 border border-white/5 rounded-[2.5rem] p-8 overflow-hidden shadow-2xl relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] pointer-events-none" />
+        <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3 relative z-10">
+          <BarChart3 size={24} className="text-emerald-400" /> Complexity Comparison
         </h3>
-        <div className="grid md:grid-cols-3 gap-4">
-          <NodeStructure
-            title="Singly Linked"
-            code={`class Node {
-  constructor(val) {
-    this.val = val;
-    this.next = null;
-  }
-}`}
-          />
-          <NodeStructure
-            title="Doubly Linked"
-            code={`class Node {
-  constructor(val) {
-    this.val = val;
-    this.next = null;
-    this.prev = null;
-  }
-}`}
-          />
-          <NodeStructure
-            title="Random Pointer"
-            code={`class Node {
-  constructor(val) {
-    this.val = val;
-    this.next = null;
-    this.random = null;
-  }
-}`}
-          />
-        </div>
-      </motion.div>
-
-      {/* Language-Specific Quick Ref */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-semibold mb-4 text-blue-900 dark:text-blue-200">
-          Language Quick Reference
-        </h3>
-        <div className="grid md:grid-cols-3 gap-4 text-sm">
-          <LanguageQuickRef
-            lang="JavaScript"
-            icon="🟨"
-            create="new ListNode(val)"
-            next="node.next"
-            null="null"
-            check="node !== null"
-          />
-          <LanguageQuickRef
-            lang="Python"
-            icon="🐍"
-            create="ListNode(val)"
-            next="node.next"
-            null="None"
-            check="node is not None"
-          />
-          <LanguageQuickRef
-            lang="C++"
-            icon="⚡"
-            create="new ListNode(val)"
-            next="node->next"
-            null="nullptr"
-            check="node != nullptr"
-          />
-          <LanguageQuickRef
-            lang="Java"
-            icon="☕"
-            create="new ListNode(val)"
-            next="node.next"
-            null="null"
-            check="node != null"
-          />
-          <LanguageQuickRef
-            lang="Go"
-            icon="🔵"
-            create="&ListNode{Val: val}"
-            next="node.Next"
-            null="nil"
-            check="node != nil"
-          />
-          <LanguageQuickRef
-            lang="C"
-            icon="🔷"
-            create="malloc(sizeof(Node))"
-            next="node->next"
-            null="NULL"
-            check="node != NULL"
-          />
-        </div>
-      </motion.div>
-
-      {/* Interview Tips */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="mt-8 bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold mb-4 text-amber-900 dark:text-amber-200">
-          Interview Tips
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4 text-sm text-slate-700 dark:text-slate-300">
-          <div>
-            <h4 className="font-semibold text-amber-700 dark:text-amber-300 mb-2">
-              Before Coding:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Ask: Singly or doubly linked?</li>
-              <li>• Ask: Is there a cycle possible?</li>
-              <li>• Ask: Can I use extra space?</li>
-              <li>• Clarify: Do I need to return new head?</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-amber-700 dark:text-amber-300 mb-2">
-              While Coding:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Always check null before accessing .next</li>
-              <li>• Use dummy node for head modifications</li>
-              <li>• Draw diagrams for pointer manipulation</li>
-              <li>• Test with 0, 1, 2 nodes first</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-amber-700 dark:text-amber-300 mb-2">
-              Pattern Hints:
-            </h4>
-            <ul className="space-y-1">
-              <li>• "Find middle" → Fast/slow pointers</li>
-              <li>• "Reverse" → Three pointer technique</li>
-              <li>• "Nth from end" → Two pointers n apart</li>
-              <li>• "Cycle" → Floyd's algorithm</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-amber-700 dark:text-amber-300 mb-2">
-              Common Follow-ups:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Can you do it in O(1) space?</li>
-              <li>• Can you do it in one pass?</li>
-              <li>• What if it's a doubly linked list?</li>
-              <li>• Can you handle circular list?</li>
-            </ul>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Templates & Formulas */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-        className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold text-purple-900 dark:text-purple-200 mb-4">
-          Templates & Formulas
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <TemplateCard
-            title="Fast/Slow Pointer"
-            code="slow = head, fast = head
-while fast && fast.next:
-  slow = slow.next
-  fast = fast.next.next"
-          />
-          <TemplateCard
-            title="Reversal"
-            code="prev = null, curr = head
-while curr:
-  next = curr.next
-  curr.next = prev
-  prev, curr = curr, next"
-          />
-          <TemplateCard
-            title="Dummy Node"
-            code="dummy = new Node(0)
-dummy.next = head
-// do operations
-return dummy.next"
-          />
-          <TemplateCard
-            title="Nth from End"
-            code="fast = head
-for i in range(n):
-  fast = fast.next
-slow = head
-while fast:
-  slow, fast = slow.next, fast.next"
-          />
-        </div>
-      </motion.div>
-
-      {/* Complexity Comparison */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        className="mt-8 bg-gradient-to-r from-slate-50 to-gray-50 dark:from-slate-700 dark:to-gray-800 border border-slate-200 dark:border-slate-600 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold text-slate-900 dark:text-slate-200 mb-4">
-          Complexity Comparison
-        </h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        
+        <div className="overflow-x-auto relative z-10">
+          <table className="w-full text-sm text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-300 dark:border-slate-600">
-                <th className="text-left py-2 px-4 text-slate-900 dark:text-slate-200">Operation</th>
-                <th className="text-center py-2 px-4 text-slate-900 dark:text-slate-200">Singly Linked</th>
-                <th className="text-center py-2 px-4 text-slate-900 dark:text-slate-200">Doubly Linked</th>
-                <th className="text-center py-2 px-4 text-slate-900 dark:text-slate-200">Array</th>
+              <tr className="border-b border-white/10 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                <th className="py-4 px-4">Operation</th>
+                <th className="py-4 px-4 text-emerald-400">Singly</th>
+                <th className="py-4 px-4 text-blue-400">Doubly</th>
+                <th className="py-4 px-4 text-amber-400">Array</th>
               </tr>
             </thead>
-            <tbody className="text-slate-700 dark:text-slate-300">
-              <tr className="border-b border-slate-200 dark:border-slate-700">
-                <td className="py-2 px-4 font-medium">Insert at Head</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-                <td className="text-center py-2 px-4 font-mono text-red-600 dark:text-red-400">O(n)</td>
-              </tr>
-              <tr className="border-b border-slate-200 dark:border-slate-700">
-                <td className="py-2 px-4 font-medium">Insert at Tail</td>
-                <td className="text-center py-2 px-4 font-mono text-yellow-600 dark:text-yellow-400">O(n)*</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-              </tr>
-              <tr className="border-b border-slate-200 dark:border-slate-700">
-                <td className="py-2 px-4 font-medium">Delete at Head</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-                <td className="text-center py-2 px-4 font-mono text-red-600 dark:text-red-400">O(n)</td>
-              </tr>
-              <tr className="border-b border-slate-200 dark:border-slate-700">
-                <td className="py-2 px-4 font-medium">Delete at Tail</td>
-                <td className="text-center py-2 px-4 font-mono text-yellow-600 dark:text-yellow-400">O(n)</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-              </tr>
-              <tr className="border-b border-slate-200 dark:border-slate-700">
-                <td className="py-2 px-4 font-medium">Access by Index</td>
-                <td className="text-center py-2 px-4 font-mono text-red-600 dark:text-red-400">O(n)</td>
-                <td className="text-center py-2 px-4 font-mono text-red-600 dark:text-red-400">O(n)</td>
-                <td className="text-center py-2 px-4 font-mono text-green-600 dark:text-green-400">O(1)</td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 font-medium">Search</td>
-                <td className="text-center py-2 px-4 font-mono text-yellow-600 dark:text-yellow-400">O(n)</td>
-                <td className="text-center py-2 px-4 font-mono text-yellow-600 dark:text-yellow-400">O(n)</td>
-                <td className="text-center py-2 px-4 font-mono text-yellow-600 dark:text-yellow-400">O(n)</td>
-              </tr>
+            <tbody className="divide-y divide-white/5">
+              {[
+                { op: "Insert at Head", s: "O(1)", d: "O(1)", a: "O(n)" },
+                { op: "Insert at Tail", s: "O(n)*", d: "O(1)", a: "O(1)" },
+                { op: "Delete at Head", s: "O(1)", d: "O(1)", a: "O(n)" },
+                { op: "Delete at Tail", s: "O(n)", d: "O(1)", a: "O(1)" },
+                { op: "Access by Index", s: "O(n)", d: "O(n)", a: "O(1)" },
+                { op: "Search", s: "O(n)", d: "O(n)", a: "O(n)" }
+              ].map((row, i) => (
+                <tr key={i} className="group hover:bg-white/[0.02] transition-colors">
+                  <td className="py-4 px-4 font-black text-slate-500 uppercase text-[9px] tracking-tighter">{row.op}</td>
+                  <td className="py-4 px-4 font-bold text-slate-300 group-hover:text-emerald-400 transition-colors">{row.s}</td>
+                  <td className="py-4 px-4 font-bold text-slate-300 group-hover:text-blue-400 transition-colors">{row.d}</td>
+                  <td className="py-4 px-4 font-bold text-slate-300 group-hover:text-amber-400 transition-colors">{row.a}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-            * O(1) if tail pointer is maintained
-          </p>
         </div>
-      </motion.div>
+        <p className="mt-6 text-[9px] text-slate-600 font-bold uppercase text-center">* O(1) if tail pointer is maintained</p>
+      </div>
 
-      {/* Quick Decision Tree */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9 }}
-        className="mt-8 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold text-green-900 dark:text-green-200 mb-4">
-          Quick Decision Tree
+      {/* Templates & Decision Tree */}
+      <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem]">
+          <h3 className="text-xl font-black text-white mb-6 flex items-center gap-3">
+            <GitMerge size={20} className="text-purple-400" /> Quick Decision Tree
+          </h3>
+          <div className="space-y-4">
+            {[ 
+              { q: "Finding middle/cycle/nth?", a: "Fast & Slow Pointers" },
+              { q: "Reversing entire/part of list?", a: "Use prev, curr, next pointers" },
+              { q: "Head might change?", a: "Use Dummy Node" },
+              { q: "Merging sorted lists?", a: "Compare heads, attach smaller" },
+              { q: "Detecting cycle start?", a: "Floyd's algorithm (2 phases)" }
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col p-3 bg-white/5 rounded-xl border border-white/5 group hover:border-purple-500/30 transition-colors">
+                <div className="text-[9px] font-black text-slate-500 uppercase flex items-center gap-2">
+                  <span className="text-purple-500 font-black tracking-tighter">IF</span> {item.q}
+                </div>
+                <div className="text-xs font-bold text-slate-200 mt-1 flex items-center gap-2">
+                  <ChevronRight size={12} className="text-purple-500" /> {item.a}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem]">
+          <h3 className="text-xl font-black text-white mb-6 flex items-center gap-3">
+            <ZapOff size={20} className="text-rose-400" /> Common Mistakes
+          </h3>
+          <ul className="space-y-3">
+            {[ 
+              "Not checking null before .next",
+              "Losing reference to head",
+              "Infinite loops in cycles",
+              "Off-by-one in nth from end",
+              "Forgetting tail pointer update"
+            ].map((text, i) => (
+              <li key={i} className="text-[10px] font-bold text-slate-400 flex items-center gap-2">
+                <div className="w-1 h-1 bg-rose-500 rounded-full" /> {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Code Snippets */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+          <Code2 size={24} className="text-indigo-400" /> Essential Code Snippets
         </h3>
-        <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
-          <div className="flex items-start gap-3">
-            <span className="font-mono text-green-600 dark:text-green-400 whitespace-nowrap">
-              if (finding middle/cycle/nth):
-            </span>
-            <span>→ Use Fast/Slow Pointers</span>
-          </div>
-          <div className="flex items-start gap-3">
-            <span className="font-mono text-green-600 dark:text-green-400 whitespace-nowrap">
-              if (reversing list):
-            </span>
-            <span>→ Use prev, curr, next pointers</span>
-          </div>
-          <div className="flex items-start gap-3">
-            <span className="font-mono text-green-600 dark:text-green-400 whitespace-nowrap">
-              if (head might change):
-            </span>
-            <span>→ Use Dummy Node</span>
-          </div>
-          <div className="flex items-start gap-3">
-            <span className="font-mono text-green-600 dark:text-green-400 whitespace-nowrap">
-              if (merging lists):
-            </span>
-            <span>→ Compare heads, attach smaller</span>
-          </div>
-          <div className="flex items-start gap-3">
-            <span className="font-mono text-green-600 dark:text-green-400 whitespace-nowrap">
-              if (detecting cycle start):
-            </span>
-            <span>→ Floyd's algorithm (2 phases)</span>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-function CheatCard({ title, items, color }) {
-  const colors = {
-    green: "from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-800",
-    teal: "from-teal-50 to-teal-100 dark:from-teal-900/30 dark:to-teal-800/30 border-teal-200 dark:border-teal-800",
-    cyan: "from-cyan-50 to-cyan-100 dark:from-cyan-900/30 dark:to-cyan-800/30 border-cyan-200 dark:border-cyan-800",
-    emerald: "from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 border-emerald-200 dark:border-emerald-800",
-    lime: "from-lime-50 to-lime-100 dark:from-lime-900/30 dark:to-lime-800/30 border-lime-200 dark:border-lime-800",
-    red: "from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 border-red-200 dark:border-red-800",
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ scale: 1.02 }}
-      className={`bg-gradient-to-br ${colors[color]} border rounded-xl p-5`}
-    >
-      <h3 className="font-bold text-lg mb-3 text-slate-900 dark:text-slate-100">
-        {title}
-      </h3>
-      <ul className="space-y-2">
-        {items.map((item, idx) => (
-          <li
-            key={idx}
-            className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2"
-          >
-            <span className="text-green-600 dark:text-green-400 mt-0.5">•</span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </motion.div>
-  );
-}
-
-function CodeSnippet({ title, code }) {
-  return (
-    <div className="bg-slate-800 dark:bg-slate-900 rounded-lg p-4 border border-slate-700">
-      <div className="text-sm font-semibold text-slate-300 mb-2">{title}</div>
-      <pre className="text-xs text-slate-400 font-mono leading-relaxed overflow-x-auto">
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
-}
-
-function NodeStructure({ title, code }) {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-green-200 dark:border-green-800">
-      <div className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-2">{title}</div>
-      <pre className="text-xs text-slate-600 dark:text-slate-400 font-mono leading-relaxed">
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
-}
-
-function LanguageQuickRef({ lang, icon, create, next, null: nullVal, check }) {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-2xl">{icon}</span>
-        <span className="font-bold text-slate-900 dark:text-slate-100">{lang}</span>
-      </div>
-      <div className="space-y-2 text-xs font-mono">
-        <div className="flex justify-between gap-2">
-          <span className="text-slate-600 dark:text-slate-400">Create:</span>
-          <code className="text-green-600 dark:text-green-400 text-right">{create}</code>
-        </div>
-        <div className="flex justify-between gap-2">
-          <span className="text-slate-600 dark:text-slate-400">Next:</span>
-          <code className="text-green-600 dark:text-green-400">{next}</code>
-        </div>
-        <div className="flex justify-between gap-2">
-          <span className="text-slate-600 dark:text-slate-400">Null:</span>
-          <code className="text-green-600 dark:text-green-400">{nullVal}</code>
-        </div>
-        <div className="flex justify-between gap-2">
-          <span className="text-slate-600 dark:text-slate-400">Check:</span>
-          <code className="text-green-600 dark:text-green-400 text-right">{check}</code>
+        <div className="grid md:grid-cols-2 gap-4">
+          {snippets.map((snip, i) => (
+            <div key={i} className="bg-slate-900 border border-white/5 rounded-2xl p-5 group hover:border-indigo-500/30 transition-all flex flex-col">
+              <div className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-3">{snip.title}</div>
+              <div className="bg-black/40 rounded-lg border border-white/5 p-4 overflow-x-auto flex-1">
+                <pre className="text-xs font-mono text-slate-300 leading-relaxed group-hover:text-white transition-colors">
+                  <code>{snip.code}</code>
+                </pre>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
-  );
-}
 
-function TemplateCard({ title, code }) {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border border-purple-200 dark:border-purple-800">
-      <div className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2">{title}</div>
-      <pre className="text-xs font-mono text-purple-900 dark:text-purple-200 whitespace-pre-wrap">
-        <code>{code}</code>
-      </pre>
-    </div>
+      <ModuleComplete 
+        title="Linked List Mastery" 
+        description="You've mastered nodes, dynamic allocation, and the Tortoise & Hare patterns. You are now ready for Stacks."
+        nextModuleText="Start Stacks" 
+        nextModuleLink="/stack" 
+        color="emerald" 
+      />
+    </PerspectiveCard>
   );
 }
