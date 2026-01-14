@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080'
 // For SockJS, we must use http/https. It handles the upgrade to ws/wss internally.
 export const SOCKET_URL = `${BASE_URL}/ws`;
 
-export const SEND_SOUND_URL = 'https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3';
+export const SEND_SOUND_URL = '';
 
 export const CHAT_CONFIG = {
   subscribeTopic: '/topic/public',
