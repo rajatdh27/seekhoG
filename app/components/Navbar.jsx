@@ -101,7 +101,7 @@ export default function Navbar() {
                 <Link
                   href="/"
                   className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
-                    isActive("/")
+                    isActive("/") || (!pathname.startsWith("/home") && !pathname.startsWith("/backend") && !pathname.startsWith("/languages") && !pathname.startsWith("/leaderboard") && !pathname.startsWith("/social") && !pathname.startsWith("/journey") && !pathname.startsWith("/auth"))
                       ? "bg-white/10 text-blue-400 shadow-inner"
                       : "text-slate-400 hover:text-white hover:bg-white/5"
                   }`}
@@ -316,7 +316,7 @@ export default function Navbar() {
                     <Link
                     href="/"
                     className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-base font-bold transition-all ${
-                        isActive("/")
+                        isActive("/") || (!pathname.startsWith("/home") && !pathname.startsWith("/backend") && !pathname.startsWith("/languages") && !pathname.startsWith("/leaderboard") && !pathname.startsWith("/social") && !pathname.startsWith("/journey") && !pathname.startsWith("/auth"))
                         ? "bg-blue-600/10 text-blue-400 border border-blue-500/20 shadow-inner"
                         : "text-slate-400 hover:text-white"
                     }`}

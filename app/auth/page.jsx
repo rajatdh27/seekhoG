@@ -34,7 +34,7 @@ export default function AuthPage() {
       } else if (data) {
         console.log('Auth Success:', data);
         localStorage.setItem('user', JSON.stringify(data));
-        router.push('/'); 
+        router.push('/home'); 
       }
     } catch (e) {
       console.error("Unexpected error:", e);
@@ -50,7 +50,7 @@ export default function AuthPage() {
     if (data) {
       console.log('Anonymous Login Success (Local Mode):', data);
       localStorage.setItem('user', JSON.stringify(data));
-      router.push('/');
+      router.push('/home');
     }
   };
 
