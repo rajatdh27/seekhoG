@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
 
-// For SockJS, we must use http/https. It handles the upgrade to ws/wss internally.
+// For SockJS, we must use http/https. It handles the upgrade to ws/wss internally. some changes
 export const SOCKET_URL = `${BASE_URL}/ws`;
 
 export const SEND_SOUND_URL = '';
