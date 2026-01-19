@@ -217,29 +217,42 @@ export default function StackIntro() {
           </div>
         </div>
 
-        {/* Implementation Comparison */}
+        {/* Implementation Comparison / Types of Stacks */}
         <div>
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
-            <BarChart3 size={24} className="text-blue-400" /> Implementation Choices
+            <BarChart3 size={24} className="text-blue-400" /> Types of Stacks
           </h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Box size={100} className="text-emerald-500" /></div>
               <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-2">
-                Array-Based Stack
+                Fixed-Size / Array
               </h3>
-              <p className="text-xs text-slate-400 mb-4">Uses a fixed-size or dynamic array (like a vector) under the hood. Simple and cache-friendly.</p>
+              <p className="text-xs text-slate-400 mb-4">Uses a static array. Simple and cache-friendly, but has a fixed capacity.</p>
               <ul className="space-y-2 relative z-10 text-xs font-bold">
                 <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Fast, O(1) operations.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Good cache locality.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Can lead to stack overflow if fixed-size.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Dynamic arrays have O(n) resize cost.</li>
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Excellent cache locality.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Stack overflow possible.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Wasted space if underutilized.</li>
               </ul>
             </div>
             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-rose-500"/></div>
               <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-2">
-                Linked-List-Based Stack
+                Dynamic / Resizable
+              </h3>
+              <p className="text-xs text-slate-400 mb-4">Uses a dynamic array (like std::vector or ArrayList) that grows as needed.</p>
+              <ul className="space-y-2 relative z-10 text-xs font-bold">
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Flexible, no size limit.</li>
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Easy to use.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Occasional O(n) resize cost.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Slight memory overhead.</li>
+              </ul>
+            </div>
+             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-cyan-500"/></div>
+              <h3 className="text-xl font-black text-cyan-400 mb-6 flex items-center gap-2">
+                Linked-List-Based
               </h3>
               <p className="text-xs text-slate-400 mb-4">Each element is a node pointing to the next. Push/Pop operations affect the head of the list.</p>
               <ul className="space-y-2 relative z-10 text-xs font-bold">
@@ -247,6 +260,19 @@ export default function StackIntro() {
                 <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> No resizing overhead.</li>
                 <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Uses extra memory for pointers.</li>
                 <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Poor cache locality.</li>
+              </ul>
+            </div>
+             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-amber-500"/></div>
+              <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-2">
+                Min/Max Stack
+              </h3>
+              <p className="text-xs text-slate-400 mb-4">An augmented stack that also tracks the minimum or maximum element in O(1) time.</p>
+              <ul className="space-y-2 relative z-10 text-xs font-bold">
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> O(1) getMin/getMax.</li>
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> All other stack ops are O(1).</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Extra O(n) space required.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> More complex implementation.</li>
               </ul>
             </div>
           </div>

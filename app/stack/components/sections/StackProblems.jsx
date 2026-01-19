@@ -5,38 +5,73 @@ import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import { Trophy, Tag } from "lucide-react";
 
-
 const problemsByPattern = {
   "Monotonic Stack": [
     { name: "Next Greater Element I", d: "e", key: "Hash map + monotonic stack" },
+    { name: "Baseball Game", d: "e", key: "Stack simulation" },
+    { name: "Backspace String Compare", d: "e", key: "Build strings using stack" },
     { name: "Daily Temperatures", d: "m", key: "Monotonic decreasing stack" },
-    { name: "Largest Rectangle in Histogram", d: "h", key: "Monotonic increasing stack" },
+    { name: "Next Greater Element II", d: "m", key: "Circular array + stack" },
+    { name: "Online Stock Span", d: "m", key: "Monotonic stack with count" },
+    { name: "Sum of Subarray Minimums", d: "m", key: "Previous/next smaller with stack" },
     { name: "132 Pattern", d: "m", key: "Monotonic stack tracking" },
-    { name: "Remove K Digits", d: "m", key: "Monotonic increasing stack" },
+    { name: "Largest Rectangle in Histogram", d: "h", key: "Monotonic increasing stack" },
+    { name: "Maximal Rectangle", d: "h", key: "Histogram per row" },
     { name: "Trapping Rain Water", d: "h", key: "Monotonic decreasing stack" },
-    { name: "Sum of Subarray Minimums", d: "m", key: "Previous/next smaller elements" },
   ],
   "Expression Evaluation": [
-      { name: "Valid Parentheses", d: "e", key: "Stack matching pairs" },
-      { name: "Evaluate Reverse Polish Notation", d: "m", key: "Postfix evaluation" },
-      { name: "Basic Calculator II", d: "m", key: "Operator precedence" },
-      { name: "Decode String", d: "m", key: "Nested encoding with counts" },
-      { name: "Simplify Path", d: "m", key: "Unix path parsing" },
-      { name: "Basic Calculator", d: "h", key: "Handle parentheses" },
+    { name: "Valid Parentheses", d: "e", key: "Stack matching pairs" },
+    { name: "Basic Calculator II", d: "m", key: "Operator precedence + stack" },
+    { name: "Evaluate Reverse Polish Notation", d: "m", key: "Postfix evaluation" },
+    { name: "Decode String", d: "m", key: "Nested encoding with stack" },
+    { name: "Simplify Path", d: "m", key: "Unix path parsing" },
+    { name: "Basic Calculator", d: "h", key: "Handle +, -, ()" },
+    { name: "Expression Add Operators", d: "h", key: "Backtracking + evaluation" },
   ],
-  "Backtracking / DFS": [
-      { name: "Binary Tree Inorder Traversal", d: "e", key: "Iterative with stack" },
-      { name: "Clone Graph", d: "m", key: "DFS with stack + visited map" },
-      { name: "Number of Islands", d: "m", key: "Iterative DFS" },
-      { name: "Generate Parentheses", d: "m", key: "Backtracking with counts" },
-      { name: "Target Sum", d: "m", key: "DFS with state" },
+  "Parentheses Matching": [
+    { name: "Valid Parentheses", d: "e", key: "Basic stack matching" },
+    { name: "Maximum Nesting Depth", d: "e", key: "Counter approach" },
+    { name: "Longest Valid Parentheses", d: "m", key: "Stack with indices" },
+    { name: "Minimum Add to Make Valid", d: "m", key: "Count unmatched" },
+    { name: "Generate Parentheses", d: "m", key: "Backtracking generation" },
+    { name: "Remove Invalid Parentheses", d: "h", key: "BFS to find minimum removals" },
   ],
   "Design": [
     { name: "Min Stack", d: "e", key: "Auxiliary min stack" },
-    { name: "Implement Stack using Queues", d: "e", key: "Two-queue simulation" },
+    { name: "Implement Stack using Queues", d: "e", key: "Queue simulation" },
+    { name: "Max Stack", d: "m", key: "Two stacks or stack + heap" },
     { name: "Design Browser History", d: "m", key: "Two stacks for back/forward" },
-    { name: "Maximum Frequency Stack", d: "h", key: "Map of stacks" },
-    { name: "Dinner Plate Stacks", d: "h", key: "Array of stacks + min-heap" },
+    { name: "Maximum Frequency Stack", d: "h", key: "Frequency map + stacks" },
+  ],
+  "Tree Traversal": [
+      { name: "Binary Tree Inorder Traversal", d: "e", key: "Iterative with stack" },
+      { name: "Binary Tree Preorder Traversal", d: "e", key: "Iterative DFS" },
+      { name: "Binary Tree Postorder Traversal", d: "e", key: "Modified preorder" },
+      { name: "Binary Tree Zigzag Level Order Traversal", d: "m", key: "Two stacks for zigzag" },
+      { name: "Binary Search Tree Iterator", d: "m", key: "Controlled inorder" },
+      { name: "Flatten Binary Tree to Linked List", d: "m", key: "Modified preorder" },
+      { name: "Kth Smallest Element in a BST", d: "m", key: "Inorder until kth" },
+      { name: "Binary Tree Maximum Path Sum", d: "h", key: "DFS with global max" },
+  ],
+  "String Processing": [
+      { name: "Valid Parentheses", d: "e", key: "Basic stack" },
+      { name: "Backspace String Compare", d: "e", key: "Build final strings" },
+      { name: "Decode String", d: "m", key: "Nested brackets" },
+      { name: "Simplify Path", d: "m", key: "Parse Unix path" },
+      { name: "Remove Duplicate Letters", d: "m", key: "Lexicographically smallest" },
+      { name: "Validate Stack Sequences", d: "m", key: "Simulate push/pop" },
+      { name: "Longest Valid Parentheses", d: "h", key: "DP or stack approach" },
+  ],
+  "Sliding Window / Deque": [
+      { name: "Sliding Window Maximum", d: "m", key: "Monotonic deque" },
+      { name: "Shortest Subarray with Sum at Least K", d: "m", key: "Prefix sum + deque" },
+      { name: "Longest Continuous Subarray With Absolute Diff", d: "h", key: "Two deques" },
+  ],
+  "Graph / DFS": [
+      { name: "Clone Graph", d: "m", key: "DFS with stack + visited" },
+      { name: "All Paths From Source to Target", d: "m", key: "DFS path tracking" },
+      { name: "Number of Islands", d: "m", key: "DFS with stack" },
+      { name: "Critical Connections in a Network", d: "h", key: "Tarjan's algorithm" },
   ],
 };
 const patterns = Object.keys(problemsByPattern);
@@ -58,6 +93,17 @@ export default function StackProblems() {
   const [activeDiff, setActiveDiff] = useState("all");
 
   const filteredProblems = problemsByPattern[activePattern].filter(p => activeDiff === 'all' || p.d === activeDiff);
+
+  const getStats = (pattern) => {
+    const problems = problemsByPattern[pattern];
+    return {
+      easy: problems.filter(p => p.d === 'e').length,
+      medium: problems.filter(p => p.d === 'm').length,
+      hard: problems.filter(p => p.d === 'h').length,
+    }
+  }
+
+  const currentStats = getStats(activePattern);
 
   return (
     <PerspectiveCard color="purple">
@@ -83,6 +129,12 @@ export default function StackProblems() {
                  </button>
             ))}
         </div>
+      </div>
+      
+      <div className="mb-8 grid grid-cols-3 gap-4 text-center">
+          <div className="p-4 bg-emerald-500/10 rounded-lg border border-emerald-500/20"><span className="font-black text-2xl text-emerald-400">{currentStats.easy}</span><p className="text-xs text-slate-400">Easy</p></div>
+          <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20"><span className="font-black text-2xl text-amber-400">{currentStats.medium}</span><p className="text-xs text-slate-400">Medium</p></div>
+          <div className="p-4 bg-rose-500/10 rounded-lg border border-rose-500/20"><span className="font-black text-2xl text-rose-400">{currentStats.hard}</span><p className="text-xs text-slate-400">Hard</p></div>
       </div>
 
       <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -114,6 +166,17 @@ export default function StackProblems() {
             <p className="text-slate-500 font-bold">No problems match the selected difficulty.</p>
          </div>
       )}
+
+      <div className="mt-12 p-8 bg-slate-900/70 border border-white/5 rounded-2xl">
+         <h3 className="text-xl font-black text-white mb-4 flex items-center gap-3">How to Practice</h3>
+         <ol className="space-y-2 text-sm text-slate-400">
+            <li className="flex items-start gap-3"><span className="bg-purple-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</span><span>Start with <strong>Easy</strong> problems to understand the core pattern.</span></li>
+            <li className="flex items-start gap-3"><span className="bg-purple-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</span><span>Read the "Key" hint - it reveals the essential insight.</span></li>
+            <li className="flex items-start gap-3"><span className="bg-purple-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</span><span>Use the pattern template from the Patterns section.</span></li>
+            <li className="flex items-start gap-3"><span className="bg-purple-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</span><span>Progress to <strong>Medium</strong> after mastering the easy ones.</span></li>
+            <li className="flex items-start gap-3"><span className="bg-purple-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">5</span><span>Tackle <strong>Hard</strong> problems once confident with the pattern.</span></li>
+         </ol>
+      </div>
 
     </PerspectiveCard>
   );

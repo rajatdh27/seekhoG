@@ -19,17 +19,21 @@ public:
     }
     void push(int x) {
         if (top >= capacity - 1) {
-            // Stack Overflow
-            return; 
+            throw overflow_error("Stack Overflow");
         }
         arr[++top] = x;
     }
     int pop() {
         if (top < 0) {
-            // Stack Underflow
-            return -1; 
+            throw underflow_error("Stack Underflow");
         }
         return arr[top--];
+    }
+    int peek() {
+        return (top < 0) ? -1 : arr[top];
+    }
+    bool isEmpty() {
+        return top < 0;
     }
 };`;
 
@@ -42,25 +46,35 @@ const linkedImplCode = `struct Node {
 class Stack {
 private:
     Node* top;
+    int stackSize;
 public:
-    Stack() : top(nullptr) {}
+    Stack() : top(nullptr), stackSize(0) {}
 
     void push(int x) {
         Node* newNode = new Node(x);
         newNode->next = top;
         top = newNode;
+        stackSize++;
     }
 
     int pop() {
-        if (top == nullptr) {
-            // Stack is Empty
-            return -1;
+        if (isEmpty()) {
+            throw underflow_error("Stack Empty");
         }
         Node* temp = top;
         int value = top->data;
         top = top->next;
         delete temp;
+        stackSize--;
         return value;
+    }
+
+    int peek() {
+        return isEmpty() ? -1 : top->data;
+    }
+
+    bool isEmpty() {
+        return top == nullptr;
     }
 };`;
 
@@ -72,8 +86,8 @@ export default function StackMemoryLayout() {
     <PerspectiveCard color="purple">
       <div className="flex items-center justify-center mb-10">
         <div className="flex p-1.5 bg-slate-800/80 rounded-2xl border border-slate-700">
-          <button onClick={() => setImpl("array")} className={`px-6 py-2.5 text-sm font-black uppercase tracking-widest rounded-xl transition-colors ${impl === 'array' ? 'bg-purple-500 text-white' : 'text-slate-400 hover:bg-slate-700/50'}`}>Array</button>
-          <button onClick={() => setImpl("linked")} className={`px-6 py-2.5 text-sm font-black uppercase tracking-widest rounded-xl transition-colors ${impl === 'linked' ? 'bg-pink-500 text-white' : 'text-slate-400 hover:bg-slate-700/50'}`}>Linked List</button>
+          <button onClick={() => setImpl("array")} className={`px-6 py-2.5 text-sm font-black uppercase tracking-widest rounded-xl transition-colors ${impl === 'array' ? 'bg-purple-500 text-white' : 'text-slate-400 hover:bg-slate-700/50'}`}>Array-Based</button>
+          <button onClick={() => setImpl("linked")} className={`px-6 py-2.5 text-sm font-black uppercase tracking-widest rounded-xl transition-colors ${impl === 'linked' ? 'bg-pink-500 text-white' : 'text-slate-400 hover:bg-slate-700/50'}`}>Linked-List</button>
         </div>
       </div>
       
@@ -81,6 +95,41 @@ export default function StackMemoryLayout() {
         {impl === 'array' ? <ArrayImpl /> : <LinkedImpl />}
       </AnimatePresence>
 
+      {/* Comparison Table */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="overflow-x-auto mt-12"
+      >
+        <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+          <Layers size={24} className="text-blue-400" /> Array vs Linked-List
+        </h3>
+        <table className="w-full text-sm text-left border-collapse">
+          <thead className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+            <tr className="border-b border-white/10">
+              <th className="py-4 px-4">Feature</th>
+              <th className="py-4 px-4 text-purple-400">Array-Based</th>
+              <th className="py-4 px-4 text-pink-400">Linked List</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-white/5">
+            {[
+              { f: "Push/Pop Time", a: "O(1)", l: "O(1)" },
+              { f: "Memory per Element", a: "Just data", l: "Data + pointer" },
+              { f: "Cache Performance", a: "Excellent", l: "Poor" },
+              { f: "Max Size", a: "Fixed", l: "Unlimited" },
+              { f: "Best Use Case", a: "Known max size", l: "Unknown size" },
+            ].map((row) => (
+              <tr key={row.f} className="group hover:bg-white/[0.02] transition-colors">
+                <td className="py-4 px-4 font-black text-slate-500 uppercase text-[10px] tracking-tighter">{row.f}</td>
+                <td className="py-4 px-4 font-bold text-slate-300 group-hover:text-purple-400 transition-colors">{row.a}</td>
+                <td className="py-4 px-4 font-bold text-slate-300 group-hover:text-pink-400 transition-colors">{row.l}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </motion.div>
     </PerspectiveCard>
   );
 }
@@ -124,17 +173,19 @@ const ArrayImpl = () => (
             <div className="p-4 bg-slate-900 border border-green-500/20 rounded-xl">
                 <h4 className="text-sm font-black text-green-400 mb-2 flex items-center gap-2"><Plus/> Pros</h4>
                 <ul className="space-y-1 text-xs text-slate-400">
+                    <li>Fast O(1) operations</li>
                     <li>Cache-friendly</li>
-                    <li>Minimal memory overhead</li>
-                    <li>Simple logic</li>
+                    <li>Simple implementation</li>
+                    <li>No pointer overhead</li>
                 </ul>
             </div>
             <div className="p-4 bg-slate-900 border border-red-500/20 rounded-xl">
                 <h4 className="text-sm font-black text-red-400 mb-2 flex items-center gap-2"><Minus/> Cons</h4>
                 <ul className="space-y-1 text-xs text-slate-400">
-                    <li>Fixed size (can overflow)</li>
-                    <li>Resizing is expensive (O(n))</li>
-                    <li>Potentially wasted space</li>
+                    <li>Fixed maximum size</li>
+                    <li>Stack overflow possible</li>
+                    <li>Wasted space if underused</li>
+                    <li>Resize is expensive</li>
                 </ul>
             </div>
         </div>

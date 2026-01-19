@@ -12,7 +12,8 @@ import {
   Trophy, 
   Layout, 
   FileText,
-  ChevronDown
+  ChevronDown,
+  HelpCircle
 } from "lucide-react";
 
 // Eager load only the first section for instant display

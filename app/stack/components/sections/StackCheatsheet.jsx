@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import { FileText, Plus, Minus, Check, X, RefreshCcwDot, Lightbulb, TrendingUp, Code2 } from "lucide-react";
+import { FileText, Plus, Minus, Check, X, RefreshCcwDot, Lightbulb, TrendingUp, Code2, HelpCircle } from "lucide-react";
 
 export default function StackCheatsheet() {
   return (
@@ -14,7 +14,6 @@ export default function StackCheatsheet() {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {/* Pattern Recognition */}
         <CheatCard
           title="Pattern Recognition"
           items={[
@@ -28,89 +27,33 @@ export default function StackCheatsheet() {
           color="purple"
           icon={<Lightbulb />}
         />
-
-        {/* Time Complexities */}
         <CheatCard
           title="Time Complexities"
           items={[
-            "Push: O(1)",
-            "Pop: O(1)",
-            "Peek/Top: O(1)",
-            "isEmpty: O(1)",
-            "Size: O(1)",
-            "Search: O(n) - avoid",
+            "Push: O(1)", "Pop: O(1)", "Peek/Top: O(1)",
+            "isEmpty: O(1)", "Size: O(1)", "Search: O(n) - avoid",
           ]}
           color="pink"
           icon={<TrendingUp />}
         />
-
-        {/* Edge Cases */}
         <CheatCard
-          title="Edge Cases to Check"
+          title="Edge Cases"
           items={[
-            "Empty stack",
-            "Full stack (array-based)",
-            "Single element stack",
-            "Duplicate elements",
-            "Null/undefined values",
-            "Invalid input",
+            "Empty stack", "Full stack (array-based)", "Single element stack",
+            "Duplicate elements", "Null/undefined values", "Invalid input",
           ]}
           color="blue"
           icon={<RefreshCcwDot />}
         />
-
-        {/* Common Mistakes */}
-        <CheatCard
-          title="Common Mistakes"
-          items={[
-            "Not checking isEmpty before pop/peek",
-            "Accessing middle elements (wrong DS)",
-            "Forgetting stack overflow for arrays",
-            "Wrong monotonic stack direction",
-            "Confusing LIFO with FIFO",
-            "Not handling parentheses properly",
-          ]}
-          color="rose"
-          icon={<X />}
-        />
-        
-        {/* Implementation Comparison */}
-        <CheatCard
-          title="Implementation Choices"
-          items={[
-            "Array-Based: fixed size, cache-friendly, O(1) ops*",
-            "Linked-List: dynamic size, extra memory for pointers, O(1) ops",
-            "*Array push can be O(N) on resize (amortized O(1))"
-          ]}
-          color="emerald"
-          icon={<Code2 />}
-        />
-        
-         {/* Interview Tips */}
-        <CheatCard
-          title="Interview Tips"
-          items={[
-            "Clearly state assumptions",
-            "Discuss tradeoffs (space/time)",
-            "Handle edge cases explicitly",
-            "Dry run with examples",
-            "Always check constraints",
-            "Explain your thought process"
-          ]}
-          color="amber"
-          icon={<Check />}
-        />
       </div>
 
       <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
-        <Code2 size={24} className="text-purple-400" /> Essential Code Snippets
+        <Code2 size={24} className="text-purple-400" /> Essential Snippets
       </h3>
       <div className="grid md:grid-cols-2 gap-6 mb-12">
-        <CodeBlock code={`// Monotonic Stack (Next Greater)
-function nextGreater(arr) {
+        <CodeBlock code={`function nextGreater(arr) {
   const result = new Array(arr.length).fill(-1);
-  const stack = []; // Stores indices
-
+  const stack = [];
   for (let i = 0; i < arr.length; i++) {
     while (stack.length && arr[i] > arr[stack[stack.length - 1]]) {
       result[stack.pop()] = arr[i];
@@ -118,127 +61,87 @@ function nextGreater(arr) {
     stack.push(i);
   }
   return result;
-}`} language="javascript" title="Monotonic Stack" />
-
-        <CodeBlock code={`// Valid Parentheses
-function isValid(s) {
+}`} language="javascript" title="Monotonic Stack (Next Greater)" />
+        <CodeBlock code={`function isValid(s) {
   const stack = [];
   const pairs = { ')': '(', '}': '{', ']': '[' };
-
   for (let char of s) {
-    if (!(char in pairs)) { // Opening bracket
+    if (!(char in pairs)) {
       stack.push(char);
-    } else { // Closing bracket
-      if (!stack.length || stack.pop() !== pairs[char]) {
-        return false;
-      }
+    } else if (!stack.length || stack.pop() !== pairs[char]) {
+      return false;
     }
   }
   return stack.length === 0;
 }`} language="javascript" title="Valid Parentheses" />
-
-        <CodeBlock code={`// Min Stack Design
-class MinStack {
-  constructor() {
-    this.stack = [];
-    this.minStack = []; // Auxiliary stack
-  }
-
-  push(val) {
-    this.stack.push(val);
-    const currentMin = this.minStack.length === 0 ? val :
-                        this.minStack[this.minStack.length - 1];
-    this.minStack.push(Math.min(currentMin, val));
-  }
-
-  pop() {
-    this.stack.pop();
-    this.minStack.pop();
-  }
-
-  getMin() {
-    return this.minStack[this.minStack.length - 1];
-  }
-}`} language="javascript" title="Min Stack" />
-
-        <CodeBlock code={`// DFS Iterative with Stack
-function dfs(graph, start) {
-  const stack = [start];
-  const visited = new Set();
-  const result = [];
-
-  while (stack.length > 0) {
-    const node = stack.pop();
-    if (visited.has(node)) continue;
-
-    visited.add(node);
-    result.push(node); // Process node
-
-    // Add neighbors in reverse order for consistent traversal
-    for (let i = graph[node].length - 1; i >= 0; i--) {
-      const neighbor = graph[node][i];
-      if (!visited.has(neighbor)) {
-        stack.push(neighbor);
-      }
-    }
-  }
-  return result;
-}`} language="javascript" title="DFS Iterative" />
       </div>
 
-      <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
-        <Code2 size={24} className="text-pink-400" /> Language Quick Reference
-      </h3>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <LanguageQuickRef
-            lang="JavaScript"
-            icon="🟨"
-            push="arr.push(x)"
-            pop="arr.pop()"
-            peek="arr[arr.length - 1]"
-            isEmpty="arr.length === 0"
-          />
-          <LanguageQuickRef
-            lang="Python"
-            icon="🐍"
-            push="stack.append(x)"
-            pop="stack.pop()"
-            peek="stack[-1]"
-            isEmpty="not stack"
-          />
-          <LanguageQuickRef
-            lang="C++ (std::stack)"
-            icon="⚡"
-            push="st.push(x)"
-            pop="st.pop()" // returns void
-            peek="st.top()"
-            isEmpty="st.empty()"
-          />
-          <LanguageQuickRef
-            lang="Java (Deque)"
-            icon="☕"
-            push="deque.push(x)"
-            pop="deque.pop()"
-            peek="deque.peek()"
-            isEmpty="deque.isEmpty()"
-          />
-          <LanguageQuickRef
-            lang="Go (slice)"
-            icon="🔵"
-            push="stack = append(stack, x)"
-            pop="stack = stack[:len(stack)-1]"
-            peek="stack[len(stack)-1]"
-            isEmpty="len(stack) == 0"
-          />
-          <LanguageQuickRef
-            lang="C (Array-based)"
-            icon="🔷"
-            push="s[++top] = x"
-            pop="s[top--]"
-            peek="s[top]"
-            isEmpty="top == -1"
-          />
+      <div className="p-8 bg-slate-900/70 border border-white/5 rounded-[2.5rem] mb-12">
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">Interview Tips</h3>
+        <div className="grid md:grid-cols-2 gap-8">
+            <div>
+                <h4 className="font-bold text-purple-400 mb-3">Before Coding:</h4>
+                <ul className="space-y-2 text-sm text-slate-300">
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Ask if LIFO order is required</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Clarify size constraints</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Discuss array vs. linked list tradeoffs</li>
+                </ul>
+            </div>
+             <div>
+                <h4 className="font-bold text-purple-400 mb-3">While Coding:</h4>
+                <ul className="space-y-2 text-sm text-slate-300">
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Always check `isEmpty` before pop/peek</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Consider using indices instead of values</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Test with edge cases (empty, single)</li>
+                </ul>
+            </div>
+            <div>
+                <h4 className="font-bold text-purple-400 mb-3">Pattern Hints:</h4>
+                <ul className="space-y-2 text-sm text-slate-300">
+                    <li className="flex items-start gap-2"><Lightbulb size={14} className="mt-1 text-yellow-500"/>"Next Greater" → Monotonic stack</li>
+                    <li className="flex items-start gap-2"><Lightbulb size={14} className="mt-1 text-yellow-500"/>"Valid brackets" → Stack matching</li>
+                    <li className="flex items-start gap-2"><Lightbulb size={14} className="mt-1 text-yellow-500"/>"Histogram" → Monotonic stack with area</li>
+                </ul>
+            </div>
+            <div>
+                <h4 className="font-bold text-purple-400 mb-3">Common Follow-ups:</h4>
+                <ul className="space-y-2 text-sm text-slate-300">
+                    <li className="flex items-start gap-2"><HelpCircle size={14} className="mt-1 text-sky-500"/>Solve without extra space?</li>
+                    <li className="flex items-start gap-2"><HelpCircle size={14} className="mt-1 text-sky-500"/>How to getMin in O(1)?</li>
+                    <li className="flex items-start gap-2"><HelpCircle size={14} className="mt-1 text-sky-500"/>Handle circular array?</li>
+                </ul>
+            </div>
         </div>
+      </div>
+      
+      <div className="overflow-x-auto">
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">Complexity Comparison</h3>
+        <table className="w-full text-sm text-left border-collapse">
+            <thead className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+                <tr className="border-b border-white/10">
+                    <th className="py-3 px-4">Operation</th>
+                    <th className="py-3 px-4 text-center">Stack</th>
+                    <th className="py-3 px-4 text-center">Queue</th>
+                    <th className="py-3 px-4 text-center">Array</th>
+                </tr>
+            </thead>
+            <tbody className="divide-y divide-white/5">
+                {[
+                    { op: "Insert at end", stack: "O(1)", queue: "O(1)", array: "O(1)" },
+                    { op: "Remove from end", stack: "O(1)", queue: "O(n)", array: "O(1)" },
+                    { op: "Access by index", stack: "O(n)", queue: "O(n)", array: "O(1)" },
+                    { op: "Search", stack: "O(n)", queue: "O(n)", array: "O(n)" },
+                ].map((row) => (
+                    <tr key={row.op} className="group hover:bg-white/[0.02] transition-colors">
+                        <td className="py-3 px-4 font-bold text-slate-400 text-xs">{row.op}</td>
+                        <td className="py-3 px-4 text-center font-mono text-emerald-400">{row.stack}</td>
+                        <td className="py-3 px-4 text-center font-mono text-amber-400">{row.queue}</td>
+                        <td className="py-3 px-4 text-center font-mono text-sky-400">{row.array}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+      </div>
     </PerspectiveCard>
   );
 }
@@ -248,20 +151,12 @@ function CheatCard({ title, items, color, icon }) {
     purple: "from-purple-500/10 to-purple-500/10 border-purple-500/20",
     pink: "from-pink-500/10 to-pink-500/10 border-pink-500/20",
     blue: "from-blue-500/10 to-blue-500/10 border-blue-500/20",
-    rose: "from-rose-500/10 to-rose-500/10 border-rose-500/20",
-    emerald: "from-emerald-500/10 to-emerald-500/10 border-emerald-500/20",
-    amber: "from-amber-500/10 to-amber-500/10 border-amber-500/20",
   };
-
   const iconColors = {
     purple: "text-purple-400",
     pink: "text-pink-400",
     blue: "text-blue-400",
-    rose: "text-rose-400",
-    emerald: "text-emerald-400",
-    amber: "text-amber-400",
   }
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -273,55 +168,15 @@ function CheatCard({ title, items, color, icon }) {
       <div className={`absolute -top-4 -right-4 text-7xl opacity-5 group-hover:opacity-10 transition-opacity ${iconColors[color]}`}>
         {icon}
       </div>
-      <h3 className="font-black text-lg text-white mb-4 relative z-10">
-        {title}
-      </h3>
+      <h3 className="font-black text-lg text-white mb-4 relative z-10">{title}</h3>
       <ul className="space-y-2 relative z-10">
-        {items.map((item, idx) => (
-          <li
-            key={idx}
-            className="text-xs text-slate-300 flex items-start gap-2"
-          >
+        {items.map((item) => (
+          <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5" />
             <span>{item}</span>
           </li>
         ))}
       </ul>
-    </motion.div>
-  );
-}
-
-function LanguageQuickRef({ lang, icon, push, pop, peek, isEmpty }) {
-  return (
-    <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.5 }}
-        className="p-6 bg-slate-900/70 border border-white/5 rounded-2xl flex flex-col items-center text-center group"
-    >
-      <div className={`text-3xl mb-4 p-3 rounded-full bg-slate-800 border border-white/10 group-hover:scale-110 transition-transform`}>
-        {icon}
-      </div>
-      <h4 className="font-black text-sm text-purple-400 uppercase tracking-wider mb-4">{lang}</h4>
-      <div className="space-y-2 w-full text-xs font-mono">
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Push:</span>
-          <code className="text-white bg-slate-800 px-2 py-1 rounded">{push}</code>
-        </div>
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Pop:</span>
-          <code className="text-white bg-slate-800 px-2 py-1 rounded">{pop}</code>
-        </div>
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Peek:</span>
-          <code className="text-white bg-slate-800 px-2 py-1 rounded">{peek}</code>
-        </div>
-        <div className="flex justify-between items-center text-slate-400">
-          <span>isEmpty:</span>
-          <code className="text-white bg-slate-800 px-2 py-1 rounded">{isEmpty}</code>
-        </div>
-      </div>
     </motion.div>
   );
 }
