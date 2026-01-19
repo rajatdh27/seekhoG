@@ -1,388 +1,257 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { 
+  Layers, 
+  CheckCircle2, 
+  Zap, 
+  Target, 
+  HelpCircle, 
+  Box, 
+  RefreshCw, 
+  ChevronRight,
+  Plus,
+  Minus,
+  Search,
+  RotateCcw,
+  TrainFront,
+  Users,
+  Paperclip,
+  Music,
+  Blocks,
+  AlertCircle,
+  BarChart3,
+  BookCopy,
+  Undo,
+  Globe
+} from "lucide-react";
 
 export default function StackIntro() {
-  const [hoveredBox, setHoveredBox] = useState(null);
-  const [stackDemo, setStackDemo] = useState([10, 20, 30]);
+  const [stackDemo, setStackDemo] = useState([
+    { id: 1, value: 10 },
+    { id: 2, value: 20 },
+    { id: 3, value: 30 },
+  ]);
+  const [nextId, setNextId] = useState(4);
 
-  const pushDemo = () => {
-    if (stackDemo.length < 6) {
-      setStackDemo([...stackDemo, (stackDemo[stackDemo.length - 1] || 0) + 10]);
+  const push = () => {
+    if (stackDemo.length < 8) {
+      setStackDemo([...stackDemo, { id: nextId, value: nextId * 10 }]);
+      setNextId(nextId + 1);
     }
   };
 
-  const popDemo = () => {
+  const pop = () => {
     if (stackDemo.length > 0) {
       setStackDemo(stackDemo.slice(0, -1));
     }
   };
 
+  const operations = [
+    { title: "Push", icon: <Plus size={18} />, color: "purple", items: ["Adds to top - O(1)"] },
+    { title: "Pop", icon: <Minus size={18} />, color: "pink", items: ["Removes from top - O(1)"] },
+    { title: "Peek / Top", icon: <Search size={18} />, color: "blue", items: ["Views top - O(1)"] },
+    { title: "isEmpty", icon: <RotateCcw size={18} />, color: "rose", items: ["Checks if empty - O(1)"] }
+  ];
+
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-6 text-slate-900 dark:text-slate-100"
-      >
-        What is a Stack?
-      </motion.h2>
+    <PerspectiveCard color="purple">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/20">
+          <Layers size={28} />
+        </div>
+        <h2 className="text-4xl font-black text-white tracking-tight">What is a Stack?</h2>
+      </div>
 
-      <div className="space-y-8">
-        {/* Definition */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="prose dark:prose-invert max-w-none"
-        >
-          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            A <strong>stack</strong> is a linear data structure that follows the{" "}
-            <span className="text-purple-600 dark:text-purple-400 font-semibold">
-              LIFO (Last In, First Out)
-            </span>{" "}
-            principle. The last element added to the stack will be the first one to be removed, like a{" "}
-            <span className="text-purple-600 dark:text-purple-400 font-semibold">
-              stack of plates
-            </span>{" "}
-            where you can only add or remove from the top.
-          </p>
-        </motion.div>
+      <div className="space-y-12">
+        <p className="text-xl text-slate-400 font-medium leading-relaxed">
+          A <strong className="text-white">Stack</strong> is a linear data structure that follows the <strong className="text-purple-400">LIFO (Last-In, First-Out)</strong> principle. The last element added to the stack is the first element to be removed. Think of it like a stack of plates or a pile of books.
+        </p>
 
-        {/* Interactive Stack Visualization */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl"
-        >
-          <h3 className="text-xl font-semibold mb-6 text-slate-900 dark:text-slate-100">
-            Interactive Stack Visualization (LIFO)
-          </h3>
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            {/* Stack Display - Vertical */}
-            <div className="flex flex-col-reverse items-center gap-2 min-h-[400px] justify-start">
-              {stackDemo.map((value, index) => (
+        {/* Interactive Stack Demo */}
+        <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner relative overflow-hidden">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl font-black text-white flex items-center gap-3">
+              <Zap size={24} className="text-yellow-400" /> Interactive LIFO Principle
+            </h3>
+            <div className="flex gap-2">
+              <button onClick={push} className="px-3 py-1.5 bg-purple-500/10 text-purple-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-purple-500/20 hover:bg-purple-500 hover:text-white transition-all disabled:opacity-50" disabled={stackDemo.length >= 8}>Push</button>
+              <button onClick={pop} className="px-3 py-1.5 bg-pink-500/10 text-pink-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-pink-500/20 hover:bg-pink-500 hover:text-white transition-all disabled:opacity-50" disabled={stackDemo.length === 0}>Pop</button>
+            </div>
+          </div>
+          
+          <div className="relative flex flex-col-reverse items-center justify-end w-full min-h-[300px] bg-grid-slate-800/[0.2] p-4 rounded-xl border border-white/5">
+             <div className="w-48 h-2 bg-slate-800 rounded-full mt-2 border border-white/5"/>
+             <AnimatePresence mode="popLayout">
+              {stackDemo.map((item, index) => (
                 <motion.div
-                  key={`${value}-${index}`}
-                  initial={{ opacity: 0, scale: 0.8, y: -20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, y: 20 }}
-                  transition={{ duration: 0.3 }}
-                  onHoverStart={() => setHoveredBox(index)}
-                  onHoverEnd={() => setHoveredBox(null)}
-                  className="relative"
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: -50, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 50, scale: 0.8, transition: { duration: 0.2 } }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  className={`w-48 h-14 rounded-lg flex items-center justify-center font-black text-lg text-white shadow-lg relative ${index === stackDemo.length -1 ? 'mt-0' : 'mt-1.5'}`}
+                  style={{
+                    background: index === stackDemo.length - 1 
+                      ? 'linear-gradient(145deg, #c084fc, #a855f7)'
+                      : 'linear-gradient(145deg, #2d3748, #1a202c)',
+                    border: index === stackDemo.length - 1 
+                      ? '2px solid #d8b4fe'
+                      : '2px solid #4a5568',
+                    zIndex: index,
+                  }}
                 >
-                  {/* Stack Element */}
-                  <motion.div
-                    animate={{
-                      scale: hoveredBox === index ? 1.05 : 1,
-                      boxShadow:
-                        hoveredBox === index
-                          ? "0 10px 30px rgba(168, 85, 247, 0.4)"
-                          : index === stackDemo.length - 1
-                          ? "0 8px 20px rgba(168, 85, 247, 0.3)"
-                          : "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    }}
-                    className={`w-48 h-16 flex items-center justify-center rounded-lg border-2 font-mono text-xl font-bold cursor-pointer transition-colors ${
-                      index === stackDemo.length - 1
-                        ? "bg-purple-600 border-purple-700 text-white"
-                        : hoveredBox === index
-                        ? "bg-purple-500 border-purple-600 text-white"
-                        : "bg-white dark:bg-slate-800 border-purple-300 dark:border-purple-600 text-slate-900 dark:text-slate-100"
-                    }`}
-                  >
-                    {value}
-                    {index === stackDemo.length - 1 && (
-                      <span className="ml-2 text-xs bg-white/20 px-2 py-1 rounded">TOP</span>
+                  {item.value}
+                   {index === stackDemo.length - 1 && (
+                      <motion.span 
+                        initial={{opacity:0, scale: 0.5}} animate={{opacity:1, scale:1}}
+                        className="absolute -top-3 -right-3 bg-pink-500 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full shadow-md">
+                        TOP
+                      </motion.span>
                     )}
-                  </motion.div>
-
-                  {/* Index Label */}
-                  <div className="absolute -left-12 top-1/2 -translate-y-1/2 text-sm font-mono text-slate-600 dark:text-slate-400">
-                    [{index}]
-                  </div>
                 </motion.div>
               ))}
+            </AnimatePresence>
+            {stackDemo.length === 0 && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-slate-500 font-bold text-sm italic">Stack is empty</p>
+              </div>
+            )}
+          </div>
+        </div>
 
-              {stackDemo.length === 0 && (
-                <div className="text-slate-400 dark:text-slate-500 text-center py-8">
-                  Stack is empty
+        {/* Complexity Summary */}
+        <div>
+          <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <Target size={24} className="text-rose-400" /> Core Operations
+          </h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {operations.map((op, i) => (
+              <div key={i} className={`p-6 bg-slate-900 border border-${op.color}-500/20 rounded-2xl`}>
+                <div className={`w-10 h-10 rounded-xl bg-${op.color}-500/10 text-${op.color}-400 flex items-center justify-center mb-4`}>
+                  {op.icon}
                 </div>
-              )}
-
-              {/* Base */}
-              <div className="w-56 h-3 bg-slate-300 dark:bg-slate-600 rounded-b-lg"></div>
-            </div>
-
-            {/* Controls */}
-            <div className="flex flex-col gap-4">
-              <button
-                onClick={pushDemo}
-                disabled={stackDemo.length >= 6}
-                className="px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-green-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-              >
-                <span className="text-2xl">⬆️</span>
-                <div className="text-left">
-                  <div>PUSH</div>
-                  <div className="text-xs opacity-80">Add to top</div>
-                </div>
-              </button>
-
-              <button
-                onClick={popDemo}
-                disabled={stackDemo.length === 0}
-                className="px-6 py-3 bg-red-600 hover:bg-red-700 disabled:bg-red-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-              >
-                <span className="text-2xl">⬇️</span>
-                <div className="text-left">
-                  <div>POP</div>
-                  <div className="text-xs opacity-80">Remove from top</div>
-                </div>
-              </button>
-
-              <div className="mt-4 bg-white dark:bg-slate-800 rounded-lg p-4 border border-purple-200 dark:border-purple-700">
-                <div className="text-sm text-slate-600 dark:text-slate-400 space-y-1">
-                  <div className="flex justify-between">
-                    <span>Size:</span>
-                    <span className="font-bold text-purple-600 dark:text-purple-400">{stackDemo.length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Top:</span>
-                    <span className="font-bold text-purple-600 dark:text-purple-400">
-                      {stackDemo.length > 0 ? stackDemo[stackDemo.length - 1] : "null"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Empty:</span>
-                    <span className="font-bold text-purple-600 dark:text-purple-400">
-                      {stackDemo.length === 0 ? "true" : "false"}
-                    </span>
-                  </div>
+                <h4 className="text-sm font-black text-white uppercase mb-4">{op.title}</h4>
+                <ul className="space-y-2">
+                  {op.items.map((item, j) => (
+                    <li key={j} className="text-xs text-slate-400 font-bold flex items-center gap-2">
+                      <div className={`w-1 h-1 rounded-full bg-${op.color}-500`} /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Real-World Analogies */}
+        <div>
+          <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <HelpCircle size={24} className="text-purple-400" /> Real-World Analogies
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { title: "Stack of Plates", desc: "You add or remove plates only from the top of the pile.", icon: <Layers className="text-blue-400" /> },
+              { title: "Book Pile", desc: "The last book placed on the pile is the first one you'll pick up.", icon: <BookCopy className="text-emerald-400" /> },
+              { title: "Undo/Redo", desc: "Actions are pushed onto a stack; undo 'pops' the last action.", icon: <Undo className="text-rose-400" /> },
+              { title: "Browser History", desc: "Each visited page is pushed. The back button 'pops' the last page.", icon: <Globe className="text-purple-400" /> },
+              { title: "Function Calls", desc: "The 'call stack' manages active functions in a LIFO manner.", icon: <Zap className="text-amber-400" /> }
+            ].map((item, i) => (
+              <div key={i} className="p-6 bg-slate-900 border border-white/5 rounded-2xl flex gap-4 group hover:border-white/10 transition-colors">
+                <div className="shrink-0 group-hover:scale-110 transition-transform">{item.icon}</div>
+                <div>
+                  <div className="text-sm font-black text-white uppercase tracking-tight mb-1">{item.title}</div>
+                  <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* When to Use */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-8 bg-purple-500/5 border border-purple-500/20 rounded-[2.5rem]">
+            <h3 className="text-xl font-black text-purple-400 mb-6 flex items-center gap-3">
+              <CheckCircle2 size={20} /> Use Stacks When:
+            </h3>
+            <ul className="space-y-3">
+              {[
+                "You need strict LIFO ordering",
+                "Reversing sequences or strings",
+                "Implementing Backtracking (e.g., DFS)",
+                "Parsing expressions (e.g., compilers)",
+                "Managing function calls (Call Stack)",
+                "Implementing Undo/Redo features",
+                "Solving Monotonic Stack problems"
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-xs font-bold text-slate-300">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="p-8 bg-pink-500/5 border border-pink-500/20 rounded-[2.5rem]">
+            <h3 className="text-xl font-black text-pink-400 mb-6 flex items-center gap-3">
+              <AlertCircle size={20} /> Avoid Stacks When:
+            </h3>
+            <ul className="space-y-3">
+              {[
+                "You need to access elements by index",
+                "You need to search for an element",
+                "Data needs to be sorted",
+                "You require a FIFO (First-In, First-Out) order",
+                "Frequent insertions or deletions in the middle",
+                "Cache performance is absolutely critical"
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-xs font-bold text-slate-300">
+                  <div className="w-1.5 h-1.5 rounded-full bg-pink-500 mt-1.5" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Implementation Comparison */}
+        <div>
+          <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <BarChart3 size={24} className="text-blue-400" /> Implementation Choices
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Box size={100} className="text-emerald-500" /></div>
+              <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-2">
+                Array-Based Stack
+              </h3>
+              <p className="text-xs text-slate-400 mb-4">Uses a fixed-size or dynamic array (like a vector) under the hood. Simple and cache-friendly.</p>
+              <ul className="space-y-2 relative z-10 text-xs font-bold">
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Fast, O(1) operations.</li>
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Good cache locality.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Can lead to stack overflow if fixed-size.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Dynamic arrays have O(n) resize cost.</li>
+              </ul>
+            </div>
+            <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-rose-500"/></div>
+              <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-2">
+                Linked-List-Based Stack
+              </h3>
+              <p className="text-xs text-slate-400 mb-4">Each element is a node pointing to the next. Push/Pop operations affect the head of the list.</p>
+              <ul className="space-y-2 relative z-10 text-xs font-bold">
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Truly dynamic, no overflow.</li>
+                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> No resizing overhead.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Uses extra memory for pointers.</li>
+                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Poor cache locality.</li>
+              </ul>
             </div>
           </div>
-
-          {/* LIFO Explanation */}
-          <div className="mt-6 bg-purple-100 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              <strong className="text-purple-900 dark:text-purple-200">LIFO Principle:</strong>{" "}
-              The element at the TOP is the most recently added and will be the first to be removed.
-              You cannot access elements in the middle - only the top element is accessible!
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Key Characteristics */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="grid md:grid-cols-2 gap-6"
-        >
-          <FeatureCard
-            icon="⬆️"
-            title="Push - O(1)"
-            description="Add element to the top of stack"
-            color="green"
-          />
-          <FeatureCard
-            icon="⬇️"
-            title="Pop - O(1)"
-            description="Remove and return top element"
-            color="red"
-          />
-          <FeatureCard
-            icon="👁️"
-            title="Peek/Top - O(1)"
-            description="View top element without removing"
-            color="blue"
-          />
-          <FeatureCard
-            icon="❓"
-            title="isEmpty - O(1)"
-            description="Check if stack has no elements"
-            color="purple"
-          />
-        </motion.div>
-
-        {/* Stack Types */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
-            <span>📦</span> Types of Stacks
-          </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <StackTypeCard
-              title="Fixed Size Stack (Array-based)"
-              description="Stack with maximum capacity"
-              example="Stack<int> stack(100); // Max 100 elements"
-              uses="Embedded systems, limited memory"
-              pros="• Fast O(1) operations • Cache-friendly • No memory overhead"
-              cons="• Fixed capacity • Stack overflow possible • Wasted space if underutilized"
-            />
-            <StackTypeCard
-              title="Dynamic Stack (Resizable)"
-              description="Grows as needed (like vector/ArrayList)"
-              example="std::stack<int> stack; // Grows automatically"
-              uses="General purpose, unknown size"
-              pros="• No size limit • Flexible capacity • Easy to use"
-              cons="• Occasional O(n) resize • Slight memory overhead • May waste some space"
-            />
-            <StackTypeCard
-              title="Linked Stack"
-              description="Stack using linked list nodes"
-              example="Each node points to next, top points to head"
-              uses="When size varies significantly"
-              pros="• True dynamic size • No resize overhead • No wasted space"
-              cons="• Extra memory per node (pointer) • Not cache-friendly • Slightly slower"
-            />
-            <StackTypeCard
-              title="Min/Max Stack"
-              description="Stack that tracks minimum/maximum"
-              example="Each push also updates min/max tracker"
-              uses="Stock span, histogram problems"
-              pros="• O(1) getMin/getMax • All stack operations O(1) • Useful in interviews"
-              cons="• Extra space for min/max tracking • More complex implementation"
-            />
-          </div>
-        </motion.div>
-
-        {/* Real-World Analogies */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-amber-900 dark:text-amber-200 flex items-center gap-2">
-            <span>🌟</span> Real-World Analogies
-          </h3>
-          <ul className="space-y-3 text-slate-700 dark:text-slate-300">
-            <li className="flex items-start gap-3">
-              <span className="text-amber-600 dark:text-amber-400 mt-1 text-xl">🍽️</span>
-              <span>
-                <strong>Stack of Plates:</strong> You add plates on top and remove from top. Cannot take middle plate!
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-amber-600 dark:text-amber-400 mt-1 text-xl">📚</span>
-              <span>
-                <strong>Stack of Books:</strong> Add new books on top, remove from top
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-amber-600 dark:text-amber-400 mt-1 text-xl">↩️</span>
-              <span>
-                <strong>Undo/Redo:</strong> Most recent action is undone first (Ctrl+Z)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-amber-600 dark:text-amber-400 mt-1 text-xl">🔙</span>
-              <span>
-                <strong>Browser Back Button:</strong> Go back to most recent page first
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-amber-600 dark:text-amber-400 mt-1 text-xl">📞</span>
-              <span>
-                <strong>Function Call Stack:</strong> Most recently called function returns first
-              </span>
-            </li>
-          </ul>
-        </motion.div>
-
-        {/* When to Use / Challenges */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
-            className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6"
-          >
-            <h3 className="text-lg font-semibold mb-4 text-green-900 dark:text-green-200 flex items-center gap-2">
-              <span>✅</span> Use Stacks When:
-            </h3>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li>• You need LIFO ordering</li>
-              <li>• Reversing sequences</li>
-              <li>• Backtracking (DFS, parentheses matching)</li>
-              <li>• Function call management</li>
-              <li>• Expression evaluation/conversion</li>
-              <li>• Undo/Redo functionality</li>
-              <li>• Monotonic stack problems</li>
-            </ul>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}
-            className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6"
-          >
-            <h3 className="text-lg font-semibold mb-4 text-red-900 dark:text-red-200 flex items-center gap-2">
-              <span>❌</span> Challenges with Stacks:
-            </h3>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li>• Cannot access middle elements</li>
-              <li>• No random access (only top)</li>
-              <li>• Fixed size can cause overflow (array-based)</li>
-              <li>• Sequential access only (LIFO)</li>
-              <li>• Not suitable for searching</li>
-              <li>• Cannot iterate without popping</li>
-            </ul>
-          </motion.div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function FeatureCard({ icon, title, description, color }) {
-  const colorClasses = {
-    green: "from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-800",
-    red: "from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 border-red-200 dark:border-red-800",
-    blue: "from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 border-blue-200 dark:border-blue-800",
-    purple: "from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 border-purple-200 dark:border-purple-800",
-  };
-
-  return (
-    <motion.div
-      whileHover={{ scale: 1.02, y: -2 }}
-      className={`bg-gradient-to-br ${colorClasses[color]} border rounded-xl p-5`}
-    >
-      <div className="text-3xl mb-2">{icon}</div>
-      <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">{title}</h4>
-      <p className="text-sm text-slate-600 dark:text-slate-400">{description}</p>
-    </motion.div>
-  );
-}
-
-function StackTypeCard({ title, description, example, uses, pros, cons }) {
-  return (
-    <motion.div
-      whileHover={{ scale: 1.02, y: -3 }}
-      className="bg-white dark:bg-slate-800 border border-indigo-200 dark:border-indigo-700 rounded-lg p-4"
-    >
-      <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">{title}</h4>
-      <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{description}</p>
-      <div className="bg-slate-50 dark:bg-slate-700 rounded p-2 mb-2">
-        <code className="text-xs font-mono text-purple-600 dark:text-purple-400">{example}</code>
-      </div>
-      <p className="text-xs text-slate-500 dark:text-slate-500 mb-2">
-        <strong>Uses:</strong> {uses}
-      </p>
-      <div className="text-xs space-y-1">
-        <div className="text-green-600 dark:text-green-400">{pros}</div>
-        <div className="text-red-600 dark:text-red-400">{cons}</div>
-      </div>
-    </motion.div>
+    </PerspectiveCard>
   );
 }

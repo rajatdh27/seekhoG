@@ -1,399 +1,104 @@
 "use client";
 
 import { motion } from "framer-motion";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { 
+  Layout, 
+  RefreshCw, 
+  History, 
+  Calculator, 
+  Code, 
+  Map, 
+  Undo, 
+  Server, 
+  MessageCircleQuestion 
+} from "lucide-react";
 
 const applications = [
   {
-    id: "function-calls",
-    icon: "📞",
-    title: "Function Call Stack",
-    description: "The runtime stack tracks function calls, local variables, and return addresses",
-    realWorld: [
-      "Every program execution uses call stack",
-      "Recursion relies on call stack",
-      "Stack overflow occurs when too deep",
-      "Debuggers use call stack for tracebacks",
-    ],
-    example: `function factorial(n) {
-  if (n <= 1) return 1;
-  return n * factorial(n - 1);
-}
-// Call Stack:
-// factorial(3)
-//   factorial(2)
-//     factorial(1) <- top
-//       returns 1
-//     returns 2
-//   returns 6`,
-    color: "blue",
+    icon: <Undo size={28} className="text-purple-400" />,
+    title: "Undo/Redo Functionality",
+    description: "Most applications implement undo/redo using two stacks. One for actions performed, and one for actions undone.",
+    keywords: ["history", "actions", "editor"],
   },
   {
-    id: "undo-redo",
-    icon: "↩️",
-    title: "Undo/Redo Operations",
-    description: "Text editors, graphics software use stacks for undo/redo functionality",
-    realWorld: [
-      "Text editors (VSCode, Word, etc.)",
-      "Photo editing (Photoshop, GIMP)",
-      "Drawing applications",
-      "Any software with undo/redo",
-    ],
-    example: `class TextEditor {
-  constructor() {
-    this.undoStack = [];
-    this.redoStack = [];
-  }
-
-  type(text) {
-    this.undoStack.push({ action: 'type', text });
-    this.redoStack = []; // Clear redo on new action
-  }
-
-  undo() {
-    if (this.undoStack.length > 0) {
-      const action = this.undoStack.pop();
-      this.redoStack.push(action);
-      // Reverse the action
-    }
-  }
-
-  redo() {
-    if (this.redoStack.length > 0) {
-      const action = this.redoStack.pop();
-      this.undoStack.push(action);
-      // Reapply the action
-    }
-  }
-}`,
-    color: "purple",
+    icon: <Calculator size={28} className="text-pink-400" />,
+    title: "Expression Evaluation/Parsing",
+    description: "Compilers use stacks to evaluate arithmetic expressions, convert infix to postfix/prefix, and manage operator precedence.",
+    keywords: ["compiler", "arithmetic", "precedence"],
   },
   {
-    id: "browser-history",
-    icon: "🌐",
-    title: "Browser Back/Forward",
-    description: "Web browsers use stacks to navigate through page history",
-    realWorld: [
-      "Chrome, Firefox, Safari navigation",
-      "Back button uses stack pop",
-      "Forward button uses another stack",
-      "Session history management",
-    ],
-    example: `class BrowserHistory {
-  constructor() {
-    this.backStack = [];
-    this.forwardStack = [];
-    this.currentPage = null;
-  }
-
-  visit(url) {
-    if (this.currentPage) {
-      this.backStack.push(this.currentPage);
-    }
-    this.currentPage = url;
-    this.forwardStack = []; // Clear forward on new visit
-  }
-
-  back() {
-    if (this.backStack.length > 0) {
-      this.forwardStack.push(this.currentPage);
-      this.currentPage = this.backStack.pop();
-    }
-  }
-
-  forward() {
-    if (this.forwardStack.length > 0) {
-      this.backStack.push(this.currentPage);
-      this.currentPage = this.forwardStack.pop();
-    }
-  }
-}`,
-    color: "indigo",
+    icon: <Code size={28} className="text-blue-400" />,
+    title: "Function Call Management (Call Stack)",
+    description: "The operating system uses a call stack to manage function calls. When a function is called, its state is pushed; when it returns, it's popped.",
+    keywords: ["recursion", "OS", "program execution"],
   },
   {
-    id: "expression-parsing",
-    icon: "🧮",
-    title: "Expression Evaluation",
-    description: "Compilers and calculators use stacks to parse and evaluate expressions",
-    realWorld: [
-      "Calculator apps",
-      "Programming language compilers",
-      "Mathematical software (MATLAB, Mathematica)",
-      "Spreadsheet formula evaluation (Excel)",
-    ],
-    example: `// Evaluating postfix: "2 3 + 5 *"
-function evaluatePostfix(expr) {
-  const stack = [];
-
-  for (let token of expr.split(' ')) {
-    if (!isNaN(token)) {
-      stack.push(Number(token));
-    } else {
-      const b = stack.pop();
-      const a = stack.pop();
-      stack.push(operate(a, b, token));
-    }
-  }
-
-  return stack.pop(); // Result: 25
-}`,
-    color: "green",
+    icon: <History size={28} className="text-emerald-400" />,
+    title: "Browser History",
+    description: "The 'back' and 'forward' buttons in web browsers typically use two stacks to keep track of visited pages.",
+    keywords: ["web", "navigation", "browsing"],
   },
   {
-    id: "syntax-checking",
-    icon: "✅",
-    title: "Syntax Checking",
-    description: "IDEs and compilers use stacks to check balanced brackets and syntax",
-    realWorld: [
-      "Code editors (VSCode, IntelliJ)",
-      "Compilers (GCC, Clang)",
-      "Linters and syntax validators",
-      "HTML/XML parsers",
-    ],
-    example: `function checkBalanced(code) {
-  const stack = [];
-  const pairs = { '(': ')', '[': ']', '{': '}' };
-
-  for (let char of code) {
-    if (char in pairs) {
-      stack.push(char);
-    } else if (Object.values(pairs).includes(char)) {
-      if (stack.length === 0) return false;
-      const last = stack.pop();
-      if (pairs[last] !== char) return false;
-    }
-  }
-
-  return stack.length === 0;
-}`,
-    color: "pink",
+    icon: <Map size={28} className="text-orange-400" />,
+    title: "Backtracking Algorithms (DFS)",
+    description: "Depth-First Search (DFS) on graphs and trees often uses an explicit stack (or implicitly the call stack for recursion) to manage paths and visited nodes.",
+    keywords: ["graph", "tree", "search", "maze"],
   },
   {
-    id: "dfs-traversal",
-    icon: "🕸️",
-    title: "DFS Traversal",
-    description: "Graph and tree algorithms use stacks for depth-first search",
-    realWorld: [
-      "File system traversal",
-      "Web crawlers",
-      "Maze solving algorithms",
-      "Dependency resolution",
-      "Topological sorting",
-    ],
-    example: `function dfsIterative(graph, start) {
-  const stack = [start];
-  const visited = new Set();
-  const result = [];
-
-  while (stack.length > 0) {
-    const node = stack.pop();
-
-    if (visited.has(node)) continue;
-    visited.add(node);
-    result.push(node);
-
-    // Add neighbors to stack
-    for (let neighbor of graph[node]) {
-      if (!visited.has(neighbor)) {
-        stack.push(neighbor);
-      }
-    }
-  }
-
-  return result;
-}`,
-    color: "orange",
-  },
-  {
-    id: "backtracking",
-    icon: "🔙",
-    title: "Backtracking Algorithms",
-    description: "Solving puzzles and games using backtracking with stack",
-    realWorld: [
-      "Sudoku solvers",
-      "Chess engines",
-      "Path finding in mazes",
-      "N-Queens problem",
-      "Constraint satisfaction",
-    ],
-    example: `function solveMaze(maze, start, end) {
-  const stack = [[start, [start]]]; // [position, path]
-  const visited = new Set();
-
-  while (stack.length > 0) {
-    const [pos, path] = stack.pop();
-
-    if (pos === end) return path;
-    if (visited.has(pos)) continue;
-    visited.add(pos);
-
-    // Try all 4 directions
-    for (let next of getNeighbors(maze, pos)) {
-      if (!visited.has(next)) {
-        stack.push([next, [...path, next]]);
-      }
-    }
-  }
-
-  return null; // No solution
-}`,
-    color: "red",
-  },
-  {
-    id: "memory-management",
-    icon: "💾",
+    icon: <Server size={28} className="text-red-400" />,
     title: "Memory Management",
-    description: "Operating systems use stack for automatic memory allocation",
-    realWorld: [
-      "Local variable storage",
-      "Thread stack allocation",
-      "Stack vs Heap memory",
-      "Stack pointer management",
-    ],
-    example: `// Each function call allocates stack frame
-function example() {
-  int localVar = 10;     // Allocated on stack
-  int array[100];        // Allocated on stack
-
-  // When function returns:
-  // - Stack pointer moves back
-  // - Memory automatically freed
-  // - No garbage collection needed
-}
-
-// Benefits:
-// - Fast allocation/deallocation (O(1))
-// - Automatic cleanup
-// - No fragmentation
-// - Cache-friendly`,
-    color: "teal",
+    description: "The 'stack' segment in memory stores local variables and function call frames. It's automatically managed in a LIFO manner by the CPU.",
+    keywords: ["RAM", "variables", "CPU"],
+  },
+  {
+    icon: <MessageCircleQuestion size={28} className="text-yellow-400" />,
+    title: "Validating Syntax",
+    description: "Used to check for balanced parentheses, curly braces, and square brackets in programming languages or markup.",
+    keywords: ["syntax", "validation", "compiler"],
+  },
+  {
+    icon: <RefreshCw size={28} className="text-cyan-400" />,
+    title: "Reversing Data",
+    description: "Stacks are a natural choice for reversing data structures like strings or lists, as elements are retrieved in reverse order of insertion.",
+    keywords: ["reverse", "string", "list"],
   },
 ];
 
 export default function StackApplications() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
-      >
-        Real-World Applications
-      </motion.h2>
+    <PerspectiveCard color="purple">
+       <div className="mb-10 text-center">
+        <h3 className="text-sm font-black text-purple-400 uppercase tracking-widest mb-3">Real-World Relevance</h3>
+        <p className="text-3xl md:text-4xl font-black text-white">Stack Applications</p>
+      </div>
 
-      <p className="text-slate-700 dark:text-slate-300 mb-8">
-        Stacks are fundamental to computer science and used everywhere in software development.
-        Here are the most important real-world applications.
-      </p>
-
-      <div className="grid gap-6">
-        {applications.map((app, idx) => (
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {applications.map((app, index) => (
           <motion.div
-            key={app.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            className="bg-gradient-to-br from-slate-50 to-purple-50 dark:from-slate-700 dark:to-purple-900/20 rounded-xl p-6 border border-slate-200 dark:border-slate-600"
+            key={index}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="p-6 bg-slate-900/70 border border-white/5 rounded-2xl flex flex-col items-center text-center group relative overflow-hidden"
           >
-            <div className="flex items-start gap-4 mb-4">
-              <div className="text-4xl">{app.icon}</div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-                  {app.title}
-                </h3>
-                <p className="text-slate-700 dark:text-slate-300 text-sm">
-                  {app.description}
-                </p>
-              </div>
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative z-10 mb-4 p-3 bg-slate-800 rounded-full group-hover:scale-110 transition-transform border border-white/10">
+              {app.icon}
             </div>
-
-            <div className="mb-4">
-              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2 text-sm">
-                Used In:
-              </h4>
-              <div className="grid md:grid-cols-2 gap-2">
-                {app.realWorld.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
-                  >
-                    <span className="text-purple-600 dark:text-purple-400">▸</span>
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2 text-sm">
-                Code Example:
-              </h4>
-              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto">
-                <pre className="text-xs text-slate-300 font-mono leading-relaxed">
-                  <code>{app.example}</code>
-                </pre>
-              </div>
+            <h4 className="relative z-10 text-xl font-black text-white mb-2">{app.title}</h4>
+            <p className="relative z-10 text-sm text-slate-400 leading-relaxed mb-4">{app.description}</p>
+            <div className="relative z-10 flex flex-wrap justify-center gap-2 mt-auto">
+              {app.keywords.map((keyword, kIndex) => (
+                <span key={kIndex} className="px-3 py-1 bg-slate-800 border border-white/10 rounded-full text-xs font-medium text-slate-300 group-hover:border-purple-400 transition-colors">
+                  {keyword}
+                </span>
+              ))}
             </div>
           </motion.div>
         ))}
       </div>
-
-      {/* Industry Impact */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6"
-      >
-        <h3 className="text-xl font-bold mb-4 text-blue-900 dark:text-blue-200">
-          Why Stacks Matter in Industry
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4 text-sm text-slate-700 dark:text-slate-300">
-          <div>
-            <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">
-              System Programming:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Every program execution uses the call stack</li>
-              <li>• Understanding stack is crucial for debugging</li>
-              <li>• Critical for performance optimization</li>
-              <li>• Essential for understanding recursion</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">
-              Application Development:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Undo/Redo in every major application</li>
-              <li>• Navigation history in browsers and apps</li>
-              <li>• Expression parsing in calculators</li>
-              <li>• Syntax checking in IDEs</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">
-              Algorithms:
-            </h4>
-            <ul className="space-y-1">
-              <li>• DFS traversal in graphs and trees</li>
-              <li>• Backtracking for constraint problems</li>
-              <li>• Iterative tree traversals</li>
-              <li>• State management in simulations</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">
-              Language Design:
-            </h4>
-            <ul className="space-y-1">
-              <li>• Compiler design and parsing</li>
-              <li>• Runtime environment management</li>
-              <li>• Exception handling mechanisms</li>
-              <li>• Closure and scope management</li>
-            </ul>
-          </div>
-        </div>
-      </motion.div>
-    </div>
+    </PerspectiveCard>
   );
 }
