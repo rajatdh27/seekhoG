@@ -99,7 +99,7 @@ export default function Footer() {
                 { name: "Leaderboard", href: "/leaderboard" },
                 { name: "My Journey", href: "/journey" },
                 { name: "Social Hub", href: "/social" },
-                { name: "About Us", href: "/" }
+                { name: "About Us", href: "/about" }
               ].map((link, i) => (
                 <li key={i}>
                   <Link href={link.href} className="text-slate-400 hover:text-emerald-400 text-sm font-medium transition-colors flex items-center gap-2 group">

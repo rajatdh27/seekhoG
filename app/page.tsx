@@ -13,7 +13,7 @@ const dsaSections = [
   { name: "Arrays", icon: "📊", href: "/array", description: "Master array fundamentals, patterns, and 130+ problems", gradient: "from-blue-600 to-indigo-600", status: "live", badges: ["Sliding Window", "Two Pointers"] },
   { name: "Linked Lists", icon: "🔗", href: "/linked-list", description: "Master pointers, nodes, and 100+ linked list problems", gradient: "from-emerald-600 to-teal-600", status: "live", badges: ["Fast & Slow", "Reversal"] },
   { name: "Stacks", icon: "📚", href: "/stack", description: "Learn LIFO operations, patterns, and 120+ problems", gradient: "from-purple-600 to-pink-600", status: "live", badges: ["Monotonic Stack", "Recursion"] },
-  { name: "Queues", icon: "📋", href: "/queue", description: "FIFO operations, circular queue, priority queue, and deque patterns", gradient: "from-orange-600 to-amber-600", status: "live", badges: ["BFS", "Priority Queue"] },
+  { name: "Queues", icon: "📋", href: "/queue", description: "FIFO operations, circular queue, priority queue, and deque patterns", gradient: "from-green-500 to-emerald-500", status: "live", badges: ["BFS", "Priority Queue"] },
 
   // Tree-based Structures
   { name: "Trees", icon: "🌳", href: "/tree", description: "Binary trees, BST, AVL, and tree traversal patterns", gradient: "from-emerald-600 to-green-600", status: "live", badges: ["DFS", "BFS", "BST"] },

@@ -214,7 +214,7 @@ export default function HomeHub() {
               title="Data Structures"
               subtitle="Master the fundamental building blocks of efficient software and advanced algorithmic patterns."
               icon={Database}
-              href="/"
+              href="/array"
               color="blue-500"
               gradient="from-blue-600 to-indigo-600"
               stats={[
