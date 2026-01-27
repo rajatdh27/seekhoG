@@ -1,145 +1,74 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { Settings, RefreshCw, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function AVLTreeSection() {
   const [currentRotation, setCurrentRotation] = useState("ll");
 
   const rotations = {
-    ll: { name: "Left-Left (LL) Rotation", desc: "Right rotate once" },
-    rr: { name: "Right-Right (RR) Rotation", desc: "Left rotate once" },
-    lr: { name: "Left-Right (LR) Rotation", desc: "Left rotate child, then right rotate parent" },
-    rl: { name: "Right-Left (RL) Rotation", desc: "Right rotate child, then left rotate parent" },
+    ll: { name: "Left-Left (LL)", desc: "Right rotate once", visual: "Right Rotation" },
+    rr: { name: "Right-Right (RR)", desc: "Left rotate once", visual: "Left Rotation" },
+    lr: { name: "Left-Right (LR)", desc: "Left rotate child, then right rotate parent", visual: "Left then Right Rotation" },
+    rl: { name: "Right-Left (RL)", desc: "Right rotate child, then left rotate parent", visual: "Right then Left Rotation" },
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl">
-          <span className="text-4xl">⚖️</span>
-        </div>
-        <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            AVL Trees
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Self-balancing Binary Search Tree
-          </p>
-        </div>
-      </div>
+    <PerspectiveCard color="teal">
+        <div className="grid lg:grid-cols-12 gap-8">
+            <aside className="lg:col-span-4 xl:col-span-3">
+                <div className="sticky top-24 space-y-2">
+                    {Object.keys(rotations).map(key => (
+                        <button 
+                            key={key} 
+                            onClick={() => setCurrentRotation(key)}
+                            className={`w-full flex items-center gap-3 p-3 rounded-xl transition-colors text-left ${currentRotation === key ? 'bg-teal-500/20 text-white' : 'text-slate-400 hover:bg-slate-800/50'}`}
+                        >
+                            <span className="text-sm font-bold">{rotations[key].name}</span>
+                        </button>
+                    ))}
+                </div>
+            </aside>
+            <main className="lg:col-span-8 xl:col-span-9 min-h-[400px]">
+                <h3 className="text-3xl font-black text-white mb-4">AVL Trees & Balancing</h3>
+                <p className="text-slate-400 font-medium leading-relaxed mb-8">
+                    An AVL tree is a self-balancing Binary Search Tree (BST) where the difference between heights of left and right subtrees cannot be more than one for all nodes.
+                </p>
 
-      {/* AVL Property */}
-      <div className="mb-12">
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-6 rounded-xl border-l-4 border-amber-600">
-          <h3 className="text-2xl font-bold text-amber-900 dark:text-amber-100 mb-4">
-            🎯 Balance Factor
-          </h3>
-          <p className="text-lg text-amber-900 dark:text-amber-100 mb-4">
-            For every node: <strong>|height(left) - height(right)| ≤ 1</strong>
-          </p>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">-1</div>
-              <div className="text-sm text-amber-800 dark:text-amber-200">Right Heavy (OK)</div>
-            </div>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg text-center">
-              <div className="text-3xl font-bold text-emerald-600 mb-2">0</div>
-              <div className="text-sm text-amber-800 dark:text-amber-200">Perfectly Balanced</div>
-            </div>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">+1</div>
-              <div className="text-sm text-amber-800 dark:text-amber-200">Left Heavy (OK)</div>
-            </div>
-          </div>
-        </div>
-      </div>
+                <div className="bg-slate-900/50 border border-teal-500/20 rounded-2xl p-8 mb-8">
+                    <h4 className="text-xl font-bold text-teal-400 mb-2">{rotations[currentRotation].name} Case</h4>
+                    <p className="text-slate-300 mb-4">{rotations[currentRotation].desc}</p>
+                    <div className="bg-slate-800 rounded-xl p-4 text-center">
+                        <p className="text-sm font-mono text-teal-300">Visual Representation: {rotations[currentRotation].visual}</p>
+                        {/* Placeholder for complex SVG or animation */}
+                        <div className="h-32 flex items-center justify-center text-slate-500 text-xs mt-2 border border-dashed border-slate-700 rounded-lg">
+                            [Interactive Rotation Visualization Placeholder]
+                        </div>
+                    </div>
+                </div>
 
-      {/* Rotation Types */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          🔄 Rotation Types
-        </h3>
-        <div className="flex flex-wrap gap-3 mb-6">
-          {Object.keys(rotations).map((type) => (
-            <button
-              key={type}
-              onClick={() => setCurrentRotation(type)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                currentRotation === type
-                  ? "bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg"
-                  : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-              }`}
-            >
-              {rotations[type].name}
-            </button>
-          ))}
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="p-6 bg-green-500/10 border border-green-500/20 rounded-2xl">
+                        <h4 className="flex items-center gap-2 font-bold text-green-400 mb-3"><CheckCircle2 size={18}/> Advantages</h4>
+                        <ul className="text-sm text-slate-300 space-y-2">
+                            <li>• Guaranteed O(log n) search, insert, delete</li>
+                            <li>• Strictly balanced structure</li>
+                            <li>• Ideal for read-heavy operations</li>
+                        </ul>
+                    </div>
+                    <div className="p-6 bg-rose-500/10 border border-rose-500/20 rounded-2xl">
+                        <h4 className="flex items-center gap-2 font-bold text-rose-400 mb-3"><AlertCircle size={18}/> Disadvantages</h4>
+                        <ul className="text-sm text-slate-300 space-y-2">
+                            <li>• Complex rotation logic</li>
+                            <li>• Higher overhead for insertions/deletions</li>
+                            <li>• Extra storage for height factor</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
         </div>
-        <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-8 rounded-xl">
-          <p className="text-center text-lg font-semibold text-amber-900 dark:text-amber-100">
-            {rotations[currentRotation].desc}
-          </p>
-        </div>
-      </div>
-
-      {/* Time Complexity */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚡ Time Complexity
-        </h3>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { op: "Search", time: "O(log n)" },
-            { op: "Insert", time: "O(log n)" },
-            { op: "Delete", time: "O(log n)" },
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800 text-center"
-            >
-              <div className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-                {item.op}
-              </div>
-              <div className="text-3xl font-bold text-green-600 dark:text-green-400">
-                {item.time}
-              </div>
-              <div className="text-sm text-green-700 dark:text-green-300 mt-2">
-                Guaranteed!
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Advantages */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⭐ Why Use AVL Trees?
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="font-bold text-green-900 dark:text-green-100 mb-3 text-lg">
-              ✅ Advantages
-            </h4>
-            <ul className="space-y-2 text-green-800 dark:text-green-200">
-              <li>• Guaranteed O(log n) for all operations</li>
-              <li>• Faster search than insertion-heavy trees</li>
-              <li>• Good for lookup-intensive applications</li>
-              <li>• Strict balance ensures predictable performance</li>
-            </ul>
-          </div>
-          <div className="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-xl border border-orange-200 dark:border-orange-800">
-            <h4 className="font-bold text-orange-900 dark:text-orange-100 mb-3 text-lg">
-              ⚠️ Disadvantages
-            </h4>
-            <ul className="space-y-2 text-orange-800 dark:text-orange-200">
-              <li>• Extra space for storing height/balance factor</li>
-              <li>• More rotations on insertion (compared to Red-Black trees)</li>
-              <li>• Complex implementation</li>
-              <li>• Not ideal for frequent insertions/deletions</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    </PerspectiveCard>
   );
 }
