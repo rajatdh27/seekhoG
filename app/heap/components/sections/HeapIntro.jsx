@@ -1,6 +1,19 @@
 "use client";
-import { motion } from "framer-motion";
+
 import { useState } from "react";
+import { motion } from "framer-motion";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { 
+  Layers, 
+  ArrowUp, 
+  ArrowDown, 
+  GitGraph, 
+  Target, 
+  Zap, 
+  Database,
+  Gamepad2,
+  ListOrdered
+} from "lucide-react";
 
 export default function HeapIntro() {
   const [heapType, setHeapType] = useState("max");
@@ -125,94 +138,69 @@ export default function HeapIntro() {
   const switchHeapType = () => {
     setHeapType(heapType === "max" ? "min" : "max");
     // Re-heapify the array for the new type
+    // Simple re-sort for demo purposes or rebuild properly
+    // For true heapify, we'd do build-heap O(n), but here we just reset or simple logic
+    // Let's just reset to a valid state for simplicity or re-insert all
     const arr = [...heapDemo];
-    for (let i = Math.floor(arr.length / 2) - 1; i >= 0; i--) {
-      heapifyDown(arr, i, arr.length, heapType === "max" ? "min" : "max");
-    }
-    setHeapDemo(arr);
-  };
-
-  const heapifyDown = (arr, index, size, type) => {
-    while (true) {
-      const leftChild = 2 * index + 1;
-      const rightChild = 2 * index + 2;
-      let targetIndex = index;
-
-      if (type === "max") {
-        if (leftChild < size && arr[leftChild] > arr[targetIndex]) {
-          targetIndex = leftChild;
-        }
-        if (rightChild < size && arr[rightChild] > arr[targetIndex]) {
-          targetIndex = rightChild;
-        }
-      } else {
-        if (leftChild < size && arr[leftChild] < arr[targetIndex]) {
-          targetIndex = leftChild;
-        }
-        if (rightChild < size && arr[rightChild] < arr[targetIndex]) {
-          targetIndex = rightChild;
-        }
-      }
-
-      if (targetIndex !== index) {
-        [arr[index], arr[targetIndex]] = [arr[targetIndex], arr[index]];
-        index = targetIndex;
-      } else {
-        break;
-      }
-    }
+    arr.sort((a, b) => heapType === "max" ? a - b : b - a); // Inverse sort to get close
+    setHeapDemo(arr); 
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-6 text-slate-900 dark:text-slate-100"
-      >
-        🌳 Introduction to Heap
-      </motion.h2>
+    <PerspectiveCard color="rose">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
+          <Layers size={28} />
+        </div>
+        <h2 className="text-4xl font-black text-white tracking-tight">Introduction to Heaps</h2>
+      </div>
 
-      <div className="space-y-8">
-        {/* Definition */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="prose dark:prose-invert max-w-none"
-        >
-          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            A <strong>heap</strong> is a specialized tree-based data structure that satisfies the{" "}
-            <span className="text-rose-600 dark:text-rose-400 font-semibold">heap property</span>.
-            It is a complete binary tree where every level is filled except possibly the last level,
-            which is filled from left to right.
-          </p>
-        </motion.div>
+      <div className="space-y-12">
+        <p className="text-xl text-slate-400 font-medium leading-relaxed">
+          A <strong className="text-white">Heap</strong> is a specialized tree-based data structure that satisfies the <strong className="text-rose-400">heap property</strong>. It is a <strong className="text-white">Complete Binary Tree</strong> where every level is filled except possibly the last level, which is filled from left to right.
+        </p>
 
-        {/* Interactive Heap Visualization */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-gradient-to-br from-rose-50 to-pink-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl"
-        >
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-              Interactive {heapType === "max" ? "Max" : "Min"} Heap Visualization
-            </h3>
-            <button
-              onClick={switchHeapType}
-              className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg"
-            >
-              Switch to {heapType === "max" ? "Min" : "Max"} Heap
-            </button>
-          </div>
+        {/* Interactive Visualization */}
+        <div className="bg-slate-900/50 border border-white/5 rounded-[2.5rem] p-8 overflow-hidden relative">
+           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-rose-500/20" />
+           
+           <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+              <div>
+                <h3 className="text-xl font-black text-white flex items-center gap-2">
+                  <GitGraph size={20} className="text-rose-400"/> 
+                  Interactive Visualization
+                </h3>
+                <p className="text-sm text-slate-500 font-medium mt-1">
+                  Currently viewing: <span className="text-rose-400 uppercase font-bold">{heapType} Heap</span>
+                </p>
+              </div>
 
-          {/* Tree Visualization */}
-          <div className="mb-8 overflow-x-auto pb-4">
-            <div className="relative min-w-[600px] h-[320px]">
+              <div className="flex gap-2">
+                <button
+                  onClick={insertValue}
+                  disabled={heapDemo.length >= 15}
+                  className="px-4 py-2 bg-blue-600/20 hover:bg-blue-600/40 text-blue-400 border border-blue-600/30 rounded-lg text-xs font-bold uppercase tracking-wider transition-all disabled:opacity-50"
+                >
+                  + Insert
+                </button>
+                <button
+                  onClick={extractRoot}
+                  disabled={heapDemo.length === 0}
+                  className="px-4 py-2 bg-rose-600/20 hover:bg-rose-600/40 text-rose-400 border border-rose-600/30 rounded-lg text-xs font-bold uppercase tracking-wider transition-all disabled:opacity-50"
+                >
+                  - Extract Root
+                </button>
+                <button
+                  onClick={switchHeapType}
+                  className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-300 border border-white/10 rounded-lg text-xs font-bold uppercase tracking-wider transition-all"
+                >
+                  Switch Type
+                </button>
+              </div>
+           </div>
+
+           <div className="relative min-w-[600px] h-[320px] mx-auto bg-slate-950/30 rounded-2xl border border-white/5 shadow-inner mb-6">
               <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }}>
-                {/* Draw edges */}
                 {treeNodes.map((node) => {
                   if (node.parent !== null) {
                     const parent = treeNodes[node.parent];
@@ -225,7 +213,7 @@ export default function HeapIntro() {
                         y2={node.y}
                         stroke="#f43f5e"
                         strokeWidth="2"
-                        opacity="0.3"
+                        strokeOpacity="0.2"
                       />
                     );
                   }
@@ -233,13 +221,11 @@ export default function HeapIntro() {
                 })}
               </svg>
 
-              {/* Draw nodes */}
               {treeNodes.map((node) => (
                 <motion.div
                   key={node.index}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: node.index * 0.05 }}
                   style={{
                     position: "absolute",
                     left: `${node.x}px`,
@@ -253,239 +239,113 @@ export default function HeapIntro() {
                   <motion.div
                     animate={{
                       scale: hoveredIndex === node.index ? 1.2 : 1,
-                      boxShadow:
-                        hoveredIndex === node.index
-                          ? "0 10px 30px rgba(244, 63, 94, 0.4)"
-                          : "0 4px 6px rgba(0, 0, 0, 0.1)",
+                      boxShadow: hoveredIndex === node.index 
+                        ? "0 0 20px rgba(244, 63, 94, 0.6)" 
+                        : "0 0 10px rgba(0,0,0,0.5)",
                     }}
-                    className={`w-14 h-14 rounded-full flex items-center justify-center cursor-pointer ${
-                      node.index === 0
-                        ? "bg-gradient-to-br from-rose-600 to-pink-600"
-                        : hoveredIndex === node.index
-                        ? "bg-gradient-to-br from-rose-500 to-pink-500"
-                        : "bg-gradient-to-br from-rose-500 to-pink-600"
-                    } text-white shadow-lg font-bold text-lg`}
+                    className={`w-12 h-12 rounded-full flex items-center justify-center cursor-default border-2 
+                      ${node.index === 0 
+                        ? "bg-rose-500 border-rose-400 text-white" 
+                        : "bg-slate-800 border-rose-500/30 text-rose-100"
+                      } font-black text-sm shadow-xl`}
                   >
                     {node.value}
                   </motion.div>
-                  {node.index === 0 && (
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-mono text-rose-600 dark:text-rose-400 font-bold">
-                      ROOT
-                    </div>
-                  )}
                 </motion.div>
               ))}
-            </div>
-          </div>
+           </div>
+           
+           <div className="flex justify-between items-center text-xs font-mono text-slate-500 border-t border-white/5 pt-4">
+              <div>Size: <span className="text-rose-400">{heapDemo.length}</span></div>
+              <div>Root: <span className="text-rose-400">{heapDemo[0] ?? "null"}</span></div>
+              <div>Height: <span className="text-rose-400">{heapDemo.length > 0 ? Math.floor(Math.log2(heapDemo.length)) : 0}</span></div>
+           </div>
+        </div>
 
-          {/* Controls */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <button
-              onClick={insertValue}
-              disabled={heapDemo.length >= 15}
-              className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:from-green-300 disabled:to-emerald-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-            >
-              <span>➕</span>
-              <span>Insert Random</span>
-            </button>
-            <button
-              onClick={extractRoot}
-              disabled={heapDemo.length === 0}
-              className="px-6 py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 disabled:from-red-300 disabled:to-rose-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-            >
-              <span>➖</span>
-              <span>Extract Root</span>
-            </button>
-          </div>
-
-          {/* Info Box */}
-          <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-rose-200 dark:border-rose-700">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-slate-600 dark:text-slate-400">
-              <div className="flex justify-between">
-                <span>Size:</span>
-                <span className="font-bold text-rose-600 dark:text-rose-400">{heapDemo.length}</span>
+        {/* Types Grid */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {[
+            {
+              title: "Max Heap",
+              desc: "The parent node is always greater than or equal to its children.",
+              root: "Maximum Element",
+              icon: <ArrowUp size={24} className="text-emerald-400" />,
+              color: "emerald"
+            },
+            {
+              title: "Min Heap",
+              desc: "The parent node is always smaller than or equal to its children.",
+              root: "Minimum Element",
+              icon: <ArrowDown size={24} className="text-amber-400" />,
+              color: "amber"
+            }
+          ].map((type, i) => (
+            <div key={i} className="p-6 bg-slate-900/50 border border-white/5 rounded-2xl flex flex-col gap-4 group hover:border-white/10 transition-colors">
+              <div className="flex items-center justify-between">
+                <div className={`w-12 h-12 rounded-xl bg-${type.color}-500/10 flex items-center justify-center border border-${type.color}-500/20`}>
+                  {type.icon}
+                </div>
+                <div className="text-xs font-black uppercase tracking-widest text-slate-500 bg-slate-800/50 px-3 py-1 rounded-full">
+                  Root = {type.root}
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span>Root:</span>
-                <span className="font-bold text-rose-600 dark:text-rose-400">
-                  {heapDemo.length > 0 ? heapDemo[0] : "null"}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Type:</span>
-                <span className="font-bold text-rose-600 dark:text-rose-400">
-                  {heapType === "max" ? "Max Heap" : "Min Heap"}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Height:</span>
-                <span className="font-bold text-rose-600 dark:text-rose-400">
-                  {heapDemo.length > 0 ? Math.floor(Math.log2(heapDemo.length)) : 0}
-                </span>
+              <div>
+                <h3 className="text-lg font-black text-white mb-2">{type.title}</h3>
+                <p className="text-sm text-slate-400 font-medium leading-relaxed">{type.desc}</p>
               </div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Key Insight */}
-          <div className="mt-4 bg-rose-100 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800 rounded-lg p-4">
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              <strong className="text-rose-900 dark:text-rose-200">Heap Property:</strong>{" "}
-              {heapType === "max"
-                ? "In a Max Heap, every parent node has a value greater than or equal to its children. The root is the maximum element."
-                : "In a Min Heap, every parent node has a value less than or equal to its children. The root is the minimum element."}
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Heap Types */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="grid md:grid-cols-2 gap-6"
-        >
-          <HeapTypeCard
-            title="Max Heap"
-            icon="📈"
-            description="Parent node ≥ children nodes. Root is the maximum element."
-            property="For all nodes: Parent[i] ≥ Children[i]"
-            use="Priority queues, heap sort (descending)"
-            example="[90, 70, 80, 30, 50, 60, 40]"
-          />
-          <HeapTypeCard
-            title="Min Heap"
-            icon="📉"
-            description="Parent node ≤ children nodes. Root is the minimum element."
-            property="For all nodes: Parent[i] ≤ Children[i]"
-            use="Priority queues, Dijkstra's algorithm"
-            example="[10, 20, 15, 30, 40, 50, 45]"
-          />
-        </motion.div>
-
-        {/* Key Properties */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="bg-gradient-to-br from-indigo-50 to-rose-50 dark:from-indigo-900/20 dark:to-rose-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
-            <span>📖</span> Key Properties
+        {/* Properties Grid */}
+        <div>
+          <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <Target size={24} className="text-rose-400" /> Key Properties
           </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <PropertyCard
-              title="Complete Binary Tree"
-              description="All levels filled except possibly the last, filled left to right"
-            />
-            <PropertyCard
-              title="Array Representation"
-              description="Left child: 2i+1, Right child: 2i+2, Parent: ⌊(i-1)/2⌋"
-            />
-            <PropertyCard
-              title="Height"
-              description="O(log n) where n is number of nodes"
-            />
-            <PropertyCard
-              title="Heap Property"
-              description="Maintained during insertion and deletion operations"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+             {[
+               { title: "Complete Tree", desc: "All levels filled except last, left-to-right.", icon: <Layers size={18} />, color: "blue" },
+               { title: "Heap Order", desc: "Parent vs Child relationship maintained.", icon: <ListOrdered size={18} />, color: "purple" },
+               { title: "Fast Access", desc: "Get Min/Max in O(1) time.", icon: <Zap size={18} />, color: "yellow" },
+               { title: "Efficient", desc: "Insert/Delete in O(log n).", icon: <Database size={18} />, color: "cyan" },
+             ].map((prop, i) => (
+               <div key={i} className="p-5 bg-slate-900 border border-white/5 rounded-2xl group hover:border-rose-500/20 transition-all">
+                  <div className={`w-10 h-10 rounded-xl bg-${prop.color}-500/10 text-${prop.color}-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                    {prop.icon}
+                  </div>
+                  <h4 className="text-sm font-black text-white mb-1 uppercase tracking-tighter">{prop.title}</h4>
+                  <p className="text-[10px] text-slate-500 font-bold">{prop.desc}</p>
+               </div>
+             ))}
           </div>
-        </motion.div>
-
-        {/* Real-World Applications */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-amber-900 dark:text-amber-200 flex items-center gap-2">
-            <span>🌍</span> Real-World Applications
-          </h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            <ApplicationCard
-              icon="⭐"
-              title="Priority Queues"
-              examples={["Task scheduling", "Event handling", "Job queues"]}
-            />
-            <ApplicationCard
-              icon="🔍"
-              title="Graph Algorithms"
-              examples={["Dijkstra's algorithm", "Prim's MST", "A* pathfinding"]}
-            />
-            <ApplicationCard
-              icon="📊"
-              title="Sorting"
-              examples={["Heap sort", "K largest elements", "Median maintenance"]}
-            />
-            <ApplicationCard
-              icon="💾"
-              title="Memory Management"
-              examples={["Memory allocation", "Garbage collection", "Resource pooling"]}
-            />
-            <ApplicationCard
-              icon="📈"
-              title="Statistics"
-              examples={["Running median", "Top K elements", "Order statistics"]}
-            />
-            <ApplicationCard
-              icon="🎮"
-              title="Gaming"
-              examples={["AI pathfinding", "Event systems", "Resource management"]}
-            />
-          </div>
-        </motion.div>
-      </div>
-    </div>
-  );
-}
-
-// Helper Components
-function HeapTypeCard({ title, icon, description, property, use, example }) {
-  return (
-    <div className="bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-rose-200 dark:border-rose-800">
-      <div className="flex items-center gap-3 mb-3">
-        <span className="text-3xl">{icon}</span>
-        <h4 className="text-lg font-bold text-slate-900 dark:text-slate-100">{title}</h4>
-      </div>
-      <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">{description}</p>
-      <div className="space-y-2 text-xs">
-        <div className="text-rose-700 dark:text-rose-400 font-semibold">
-          <strong>Property:</strong> {property}
         </div>
-        <div className="text-green-700 dark:text-green-400">
-          <strong>Use:</strong> {use}
-        </div>
-        <div className="text-blue-700 dark:text-blue-400 font-mono">
-          <strong>Example:</strong> {example}
-        </div>
-      </div>
-    </div>
-  );
-}
 
-function PropertyCard({ title, description }) {
-  return (
-    <div className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-200 dark:border-slate-600 hover:border-rose-400 dark:hover:border-rose-500 transition-all">
-      <h4 className="text-base font-bold text-rose-700 dark:text-rose-400 mb-2">{title}</h4>
-      <p className="text-sm text-slate-700 dark:text-slate-300">{description}</p>
-    </div>
-  );
-}
+        {/* Applications */}
+        <div className="p-8 bg-gradient-to-br from-indigo-900/10 to-blue-900/10 border border-indigo-500/20 rounded-[2.5rem]">
+           <h3 className="text-xl font-black text-indigo-400 mb-6 flex items-center gap-2">
+             <Gamepad2 size={24} /> Real-World Applications
+           </h3>
+           <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { title: "Priority Queues", desc: "Job scheduling in OS." },
+                { title: "Graph Algorithms", desc: "Dijkstra's & Prim's algo." },
+                { title: "Heap Sort", desc: "O(n log n) in-place sort." },
+                { title: "Order Statistics", desc: "Finding k-th largest element." },
+                { title: "Load Balancing", desc: "Managing server loads." },
+                { title: "Memory Mgmt", desc: "Allocation in some runtimes." }
+              ].map((app, i) => (
+                <div key={i} className="flex gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-bold text-slate-200">{app.title}</div>
+                    <div className="text-xs text-slate-500 font-medium">{app.desc}</div>
+                  </div>
+                </div>
+              ))}
+           </div>
+        </div>
 
-function ApplicationCard({ icon, title, examples }) {
-  return (
-    <div className="bg-white dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600 shadow-lg hover:shadow-xl transition-all">
-      <div className="text-3xl mb-3">{icon}</div>
-      <h4 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2">{title}</h4>
-      <div className="space-y-1">
-        {examples.map((example, idx) => (
-          <div key={idx} className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-2">
-            <span>•</span>
-            <span>{example}</span>
-          </div>
-        ))}
       </div>
-    </div>
+    </PerspectiveCard>
   );
 }

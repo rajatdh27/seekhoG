@@ -1,18 +1,19 @@
 "use client";
-import { motion } from "framer-motion";
 import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { Code2, Terminal, Zap } from "lucide-react";
 
 export default function HeapImplementation() {
   const [currentLanguage, setCurrentLanguage] = useState("cpp");
   const [heapType, setHeapType] = useState("max");
 
   const languages = [
-    { id: "c", name: "C", icon: "🔷" },
-    { id: "cpp", name: "C++", icon: "⚡" },
-    { id: "java", name: "Java", icon: "☕" },
-    { id: "javascript", name: "JavaScript", icon: "🟨" },
-    { id: "python", name: "Python", icon: "🐍" },
-    { id: "go", name: "Go", icon: "🔵" },
+    { id: "c", name: "C", icon: "C" },
+    { id: "cpp", name: "C++", icon: "C++" },
+    { id: "java", name: "Java", icon: "Java" },
+    { id: "javascript", name: "JavaScript", icon: "JS" },
+    { id: "python", name: "Python", icon: "Py" },
+    { id: "go", name: "Go", icon: "Go" },
   ];
 
   const codeExamples = {
@@ -34,22 +35,11 @@ MaxHeap* createHeap() {
     return heap;
 }
 
-// Helper: Get parent index - O(1)
-int parent(int i) {
-    return (i - 1) / 2;
-}
+// Helper indices - O(1)
+int parent(int i) { return (i - 1) / 2; }
+int leftChild(int i) { return 2 * i + 1; }
+int rightChild(int i) { return 2 * i + 2; }
 
-// Helper: Get left child index - O(1)
-int leftChild(int i) {
-    return 2 * i + 1;
-}
-
-// Helper: Get right child index - O(1)
-int rightChild(int i) {
-    return 2 * i + 2;
-}
-
-// Swap two elements - O(1)
 void swap(int* a, int* b) {
     int temp = *a;
     *a = *b;
@@ -70,12 +60,8 @@ void heapifyDown(MaxHeap* heap, int index) {
     int left = leftChild(index);
     int right = rightChild(index);
 
-    if (left < heap->size && heap->data[left] > heap->data[maxIndex]) {
-        maxIndex = left;
-    }
-    if (right < heap->size && heap->data[right] > heap->data[maxIndex]) {
-        maxIndex = right;
-    }
+    if (left < heap->size && heap->data[left] > heap->data[maxIndex]) maxIndex = left;
+    if (right < heap->size && heap->data[right] > heap->data[maxIndex]) maxIndex = right;
 
     if (index != maxIndex) {
         swap(&heap->data[index], &heap->data[maxIndex]);
@@ -83,64 +69,21 @@ void heapifyDown(MaxHeap* heap, int index) {
     }
 }
 
-// Insert element - O(log n)
 void insert(MaxHeap* heap, int value) {
-    if (heap->size >= MAX_SIZE) {
-        printf("Heap is full\\n");
-        return;
-    }
+    if (heap->size >= MAX_SIZE) return;
     heap->data[heap->size] = value;
     heapifyUp(heap, heap->size);
     heap->size++;
 }
 
-// Extract maximum - O(log n)
 int extractMax(MaxHeap* heap) {
-    if (heap->size == 0) {
-        printf("Heap is empty\\n");
-        return -1;
-    }
+    if (heap->size == 0) return -1;
     int max = heap->data[0];
     heap->data[0] = heap->data[heap->size - 1];
     heap->size--;
     heapifyDown(heap, 0);
     return max;
-}
-
-// Get maximum - O(1)
-int getMax(MaxHeap* heap) {
-    if (heap->size == 0) {
-        printf("Heap is empty\\n");
-        return -1;
-    }
-    return heap->data[0];
-}
-
-// Print heap - O(n)
-void printHeap(MaxHeap* heap) {
-    for (int i = 0; i < heap->size; i++) {
-        printf("%d ", heap->data[i]);
-    }
-    printf("\\n");
-}
-
-// Usage
-int main() {
-    MaxHeap* heap = createHeap();
-    insert(heap, 50);
-    insert(heap, 30);
-    insert(heap, 70);
-    insert(heap, 20);
-    insert(heap, 40);
-
-    printHeap(heap);  // 70 40 50 20 30
-    printf("Max: %d\\n", extractMax(heap));  // 70
-    printHeap(heap);  // 50 40 30 20
-
-    free(heap);
-    return 0;
 }`,
-
       cpp: `#include <iostream>
 #include <vector>
 using namespace std;
@@ -148,744 +91,306 @@ using namespace std;
 class MaxHeap {
 private:
     vector<int> data;
-
-    // Helper: Get parent index - O(1)
     int parent(int i) { return (i - 1) / 2; }
+    int left(int i) { return 2 * i + 1; }
+    int right(int i) { return 2 * i + 2; }
 
-    // Helper: Get left child index - O(1)
-    int leftChild(int i) { return 2 * i + 1; }
-
-    // Helper: Get right child index - O(1)
-    int rightChild(int i) { return 2 * i + 2; }
-
-    // Heapify up - O(log n)
-    void heapifyUp(int index) {
-        while (index > 0 && data[parent(index)] < data[index]) {
-            swap(data[parent(index)], data[index]);
-            index = parent(index);
+    void heapifyUp(int i) {
+        while (i > 0 && data[parent(i)] < data[i]) {
+            swap(data[parent(i)], data[i]);
+            i = parent(i);
         }
     }
 
-    // Heapify down - O(log n)
-    void heapifyDown(int index) {
-        int maxIndex = index;
-        int left = leftChild(index);
-        int right = rightChild(index);
-
-        if (left < data.size() && data[left] > data[maxIndex]) {
-            maxIndex = left;
-        }
-        if (right < data.size() && data[right] > data[maxIndex]) {
-            maxIndex = right;
-        }
-
-        if (index != maxIndex) {
-            swap(data[index], data[maxIndex]);
-            heapifyDown(maxIndex);
+    void heapifyDown(int i) {
+        int maxIdx = i;
+        int l = left(i), r = right(i);
+        if (l < data.size() && data[l] > data[maxIdx]) maxIdx = l;
+        if (r < data.size() && data[r] > data[maxIdx]) maxIdx = r;
+        if (i != maxIdx) {
+            swap(data[i], data[maxIdx]);
+            heapifyDown(maxIdx);
         }
     }
 
 public:
-    // Constructor - O(1)
-    MaxHeap() {}
-
-    // Insert element - O(log n)
-    void insert(int value) {
-        data.push_back(value);
+    void insert(int val) {
+        data.push_back(val);
         heapifyUp(data.size() - 1);
     }
 
-    // Extract maximum - O(log n)
     int extractMax() {
-        if (isEmpty()) {
-            cout << "Heap is empty" << endl;
-            return -1;
-        }
-        int max = data[0];
+        if (data.empty()) return -1;
+        int res = data[0];
         data[0] = data.back();
         data.pop_back();
-        if (!isEmpty()) {
-            heapifyDown(0);
-        }
-        return max;
+        if (!data.empty()) heapifyDown(0);
+        return res;
     }
-
-    // Get maximum - O(1)
-    int getMax() {
-        if (isEmpty()) {
-            cout << "Heap is empty" << endl;
-            return -1;
-        }
-        return data[0];
-    }
-
-    // Check if empty - O(1)
-    bool isEmpty() {
-        return data.empty();
-    }
-
-    // Get size - O(1)
-    int size() {
-        return data.size();
-    }
-
-    // Print heap - O(n)
-    void print() {
-        for (int val : data) {
-            cout << val << " ";
-        }
-        cout << endl;
-    }
-};
-
-// Usage
-int main() {
-    MaxHeap heap;
-    heap.insert(50);
-    heap.insert(30);
-    heap.insert(70);
-    heap.insert(20);
-    heap.insert(40);
-
-    heap.print();  // 70 40 50 20 30
-    cout << "Max: " << heap.extractMax() << endl;  // 70
-    heap.print();  // 50 40 30 20
-
-    return 0;
-}`,
-
+};`,
       java: `import java.util.ArrayList;
 
 public class MaxHeap {
-    private ArrayList<Integer> data;
+    private ArrayList<Integer> data = new ArrayList<>();
 
-    // Constructor - O(1)
-    public MaxHeap() {
-        data = new ArrayList<>();
+    public void insert(int val) {
+        data.add(val);
+        heapifyUp(data.size() - 1);
     }
 
-    // Helper: Get parent index - O(1)
-    private int parent(int i) { return (i - 1) / 2; }
+    private void heapifyUp(int i) {
+        while (i > 0 && data.get((i-1)/2) < data.get(i)) {
+            swap((i-1)/2, i);
+            i = (i-1)/2;
+        }
+    }
 
-    // Helper: Get left child index - O(1)
-    private int leftChild(int i) { return 2 * i + 1; }
+    public int extractMax() {
+        if (data.isEmpty()) return -1;
+        int max = data.get(0);
+        data.set(0, data.get(data.size()-1));
+        data.remove(data.size()-1);
+        if (!data.isEmpty()) heapifyDown(0);
+        return max;
+    }
 
-    // Helper: Get right child index - O(1)
-    private int rightChild(int i) { return 2 * i + 2; }
+    private void heapifyDown(int i) {
+        int max = i, l = 2*i+1, r = 2*i+2;
+        if (l < data.size() && data.get(l) > data.get(max)) max = l;
+        if (r < data.size() && data.get(r) > data.get(max)) max = r;
+        if (max != i) {
+            swap(i, max);
+            heapifyDown(max);
+        }
+    }
 
-    // Swap two elements - O(1)
     private void swap(int i, int j) {
         int temp = data.get(i);
         data.set(i, data.get(j));
         data.set(j, temp);
     }
-
-    // Heapify up - O(log n)
-    private void heapifyUp(int index) {
-        while (index > 0 && data.get(parent(index)) < data.get(index)) {
-            swap(parent(index), index);
-            index = parent(index);
-        }
-    }
-
-    // Heapify down - O(log n)
-    private void heapifyDown(int index) {
-        int maxIndex = index;
-        int left = leftChild(index);
-        int right = rightChild(index);
-
-        if (left < data.size() && data.get(left) > data.get(maxIndex)) {
-            maxIndex = left;
-        }
-        if (right < data.size() && data.get(right) > data.get(maxIndex)) {
-            maxIndex = right;
-        }
-
-        if (index != maxIndex) {
-            swap(index, maxIndex);
-            heapifyDown(maxIndex);
-        }
-    }
-
-    // Insert element - O(log n)
-    public void insert(int value) {
-        data.add(value);
-        heapifyUp(data.size() - 1);
-    }
-
-    // Extract maximum - O(log n)
-    public int extractMax() {
-        if (isEmpty()) {
-            System.out.println("Heap is empty");
-            return -1;
-        }
-        int max = data.get(0);
-        data.set(0, data.get(data.size() - 1));
-        data.remove(data.size() - 1);
-        if (!isEmpty()) {
-            heapifyDown(0);
-        }
-        return max;
-    }
-
-    // Get maximum - O(1)
-    public int getMax() {
-        if (isEmpty()) {
-            System.out.println("Heap is empty");
-            return -1;
-        }
-        return data.get(0);
-    }
-
-    // Check if empty - O(1)
-    public boolean isEmpty() {
-        return data.isEmpty();
-    }
-
-    // Get size - O(1)
-    public int size() {
-        return data.size();
-    }
-
-    // Print heap - O(n)
-    public void print() {
-        for (int val : data) {
-            System.out.print(val + " ");
-        }
-        System.out.println();
-    }
-
-    // Usage
-    public static void main(String[] args) {
-        MaxHeap heap = new MaxHeap();
-        heap.insert(50);
-        heap.insert(30);
-        heap.insert(70);
-        heap.insert(20);
-        heap.insert(40);
-
-        heap.print();  // 70 40 50 20 30
-        System.out.println("Max: " + heap.extractMax());  // 70
-        heap.print();  // 50 40 30 20
-    }
 }`,
-
       javascript: `class MaxHeap {
-    constructor() {
-        this.data = [];
+  constructor() {
+    this.data = [];
+  }
+
+  insert(val) {
+    this.data.push(val);
+    this.heapifyUp(this.data.length - 1);
+  }
+
+  heapifyUp(i) {
+    while (i > 0) {
+      let p = Math.floor((i - 1) / 2);
+      if (this.data[p] < this.data[i]) {
+        [this.data[p], this.data[i]] = [this.data[i], this.data[p]];
+        i = p;
+      } else break;
     }
+  }
 
-    // Helper: Get parent index - O(1)
-    parent(i) { return Math.floor((i - 1) / 2); }
-
-    // Helper: Get left child index - O(1)
-    leftChild(i) { return 2 * i + 1; }
-
-    // Helper: Get right child index - O(1)
-    rightChild(i) { return 2 * i + 2; }
-
-    // Swap two elements - O(1)
-    swap(i, j) {
-        [this.data[i], this.data[j]] = [this.data[j], this.data[i]];
+  extractMax() {
+    if (this.data.length === 0) return null;
+    const max = this.data[0];
+    const last = this.data.pop();
+    if (this.data.length > 0) {
+      this.data[0] = last;
+      this.heapifyDown(0);
     }
+    return max;
+  }
 
-    // Heapify up - O(log n)
-    heapifyUp(index) {
-        while (index > 0 && this.data[this.parent(index)] < this.data[index]) {
-            this.swap(this.parent(index), index);
-            index = this.parent(index);
-        }
+  heapifyDown(i) {
+    let max = i, l = 2*i+1, r = 2*i+2;
+    if (l < this.data.length && this.data[l] > this.data[max]) max = l;
+    if (r < this.data.length && this.data[r] > this.data[max]) max = r;
+    if (max !== i) {
+      [this.data[i], this.data[max]] = [this.data[max], this.data[i]];
+      this.heapifyDown(max);
     }
-
-    // Heapify down - O(log n)
-    heapifyDown(index) {
-        let maxIndex = index;
-        const left = this.leftChild(index);
-        const right = this.rightChild(index);
-
-        if (left < this.data.length && this.data[left] > this.data[maxIndex]) {
-            maxIndex = left;
-        }
-        if (right < this.data.length && this.data[right] > this.data[maxIndex]) {
-            maxIndex = right;
-        }
-
-        if (index !== maxIndex) {
-            this.swap(index, maxIndex);
-            this.heapifyDown(maxIndex);
-        }
-    }
-
-    // Insert element - O(log n)
-    insert(value) {
-        this.data.push(value);
-        this.heapifyUp(this.data.length - 1);
-    }
-
-    // Extract maximum - O(log n)
-    extractMax() {
-        if (this.isEmpty()) {
-            return "Heap is empty";
-        }
-        const max = this.data[0];
-        this.data[0] = this.data[this.data.length - 1];
-        this.data.pop();
-        if (!this.isEmpty()) {
-            this.heapifyDown(0);
-        }
-        return max;
-    }
-
-    // Get maximum - O(1)
-    getMax() {
-        if (this.isEmpty()) {
-            return "Heap is empty";
-        }
-        return this.data[0];
-    }
-
-    // Check if empty - O(1)
-    isEmpty() {
-        return this.data.length === 0;
-    }
-
-    // Get size - O(1)
-    size() {
-        return this.data.length;
-    }
-
-    // Print heap - O(n)
-    print() {
-        return this.data.join(' ');
-    }
-}
-
-// Usage
-const heap = new MaxHeap();
-heap.insert(50);
-heap.insert(30);
-heap.insert(70);
-heap.insert(20);
-heap.insert(40);
-
-console.log(heap.print());  // 70 40 50 20 30
-console.log("Max:", heap.extractMax());  // 70
-console.log(heap.print());  // 50 40 30 20`,
-
+  }
+}`,
       python: `class MaxHeap:
     def __init__(self):
         self.data = []
 
-    # Helper: Get parent index - O(1)
-    def parent(self, i):
-        return (i - 1) // 2
+    def insert(self, val):
+        self.data.append(val)
+        self._heapify_up(len(self.data) - 1)
 
-    # Helper: Get left child index - O(1)
-    def left_child(self, i):
-        return 2 * i + 1
+    def _heapify_up(self, i):
+        while i > 0 and self.data[(i-1)//2] < self.data[i]:
+            self.data[i], self.data[(i-1)//2] = self.data[(i-1)//2], self.data[i]
+            i = (i-1)//2
 
-    # Helper: Get right child index - O(1)
-    def right_child(self, i):
-        return 2 * i + 2
-
-    # Swap two elements - O(1)
-    def swap(self, i, j):
-        self.data[i], self.data[j] = self.data[j], self.data[i]
-
-    # Heapify up - O(log n)
-    def heapify_up(self, index):
-        while index > 0 and self.data[self.parent(index)] < self.data[index]:
-            self.swap(self.parent(index), index)
-            index = self.parent(index)
-
-    # Heapify down - O(log n)
-    def heapify_down(self, index):
-        max_index = index
-        left = self.left_child(index)
-        right = self.right_child(index)
-
-        if left < len(self.data) and self.data[left] > self.data[max_index]:
-            max_index = left
-        if right < len(self.data) and self.data[right] > self.data[max_index]:
-            max_index = right
-
-        if index != max_index:
-            self.swap(index, max_index)
-            self.heapify_down(max_index)
-
-    # Insert element - O(log n)
-    def insert(self, value):
-        self.data.append(value)
-        self.heapify_up(len(self.data) - 1)
-
-    # Extract maximum - O(log n)
     def extract_max(self):
-        if self.is_empty():
-            return "Heap is empty"
+        if not self.data: return None
+        if len(self.data) == 1: return self.data.pop()
+        root = self.data[0]
+        self.data[0] = self.data.pop()
+        self._heapify_down(0)
+        return root
 
-        max_val = self.data[0]
-        self.data[0] = self.data[-1]
-        self.data.pop()
-        if not self.is_empty():
-            self.heapify_down(0)
-        return max_val
-
-    # Get maximum - O(1)
-    def get_max(self):
-        if self.is_empty():
-            return "Heap is empty"
-        return self.data[0]
-
-    # Check if empty - O(1)
-    def is_empty(self):
-        return len(self.data) == 0
-
-    # Get size - O(1)
-    def size(self):
-        return len(self.data)
-
-    # Print heap - O(n)
-    def print_heap(self):
-        return ' '.join(map(str, self.data))
-
-# Usage
-heap = MaxHeap()
-heap.insert(50)
-heap.insert(30)
-heap.insert(70)
-heap.insert(20)
-heap.insert(40)
-
-print(heap.print_heap())  # 70 40 50 20 30
-print("Max:", heap.extract_max())  # 70
-print(heap.print_heap())  # 50 40 30 20`,
-
-      go: `package main
-
-import "fmt"
-
-type MaxHeap struct {
+    def _heapify_down(self, i):
+        max_idx, l, r = i, 2*i+1, 2*i+2
+        if l < len(self.data) and self.data[l] > self.data[max_idx]: max_idx = l
+        if r < len(self.data) and self.data[r] > self.data[max_idx]: max_idx = r
+        if max_idx != i:
+            self.data[i], self.data[max_idx] = self.data[max_idx], self.data[i]
+            self._heapify_down(max_idx)`,
+      go: `type MaxHeap struct {
     data []int
 }
 
-// Initialize heap - O(1)
-func NewMaxHeap() *MaxHeap {
-    return &MaxHeap{
-        data: make([]int, 0),
-    }
-}
-
-// Helper: Get parent index - O(1)
-func (h *MaxHeap) parent(i int) int {
-    return (i - 1) / 2
-}
-
-// Helper: Get left child index - O(1)
-func (h *MaxHeap) leftChild(i int) int {
-    return 2*i + 1
-}
-
-// Helper: Get right child index - O(1)
-func (h *MaxHeap) rightChild(i int) int {
-    return 2*i + 2
-}
-
-// Swap two elements - O(1)
-func (h *MaxHeap) swap(i, j int) {
-    h.data[i], h.data[j] = h.data[j], h.data[i]
-}
-
-// Heapify up - O(log n)
-func (h *MaxHeap) heapifyUp(index int) {
-    for index > 0 && h.data[h.parent(index)] < h.data[index] {
-        h.swap(h.parent(index), index)
-        index = h.parent(index)
-    }
-}
-
-// Heapify down - O(log n)
-func (h *MaxHeap) heapifyDown(index int) {
-    maxIndex := index
-    left := h.leftChild(index)
-    right := h.rightChild(index)
-
-    if left < len(h.data) && h.data[left] > h.data[maxIndex] {
-        maxIndex = left
-    }
-    if right < len(h.data) && h.data[right] > h.data[maxIndex] {
-        maxIndex = right
-    }
-
-    if index != maxIndex {
-        h.swap(index, maxIndex)
-        h.heapifyDown(maxIndex)
-    }
-}
-
-// Insert element - O(log n)
-func (h *MaxHeap) Insert(value int) {
-    h.data = append(h.data, value)
+func (h *MaxHeap) Insert(val int) {
+    h.data = append(h.data, val)
     h.heapifyUp(len(h.data) - 1)
 }
 
-// Extract maximum - O(log n)
-func (h *MaxHeap) ExtractMax() int {
-    if h.IsEmpty() {
-        fmt.Println("Heap is empty")
-        return -1
+func (h *MaxHeap) heapifyUp(i int) {
+    for i > 0 && h.data[(i-1)/2] < h.data[i] {
+        h.data[i], h.data[(i-1)/2] = h.data[(i-1)/2], h.data[i]
+        i = (i-1)/2
     }
+}
+
+func (h *MaxHeap) ExtractMax() int {
+    if len(h.data) == 0 { return -1 }
     max := h.data[0]
     h.data[0] = h.data[len(h.data)-1]
     h.data = h.data[:len(h.data)-1]
-    if !h.IsEmpty() {
-        h.heapifyDown(0)
-    }
+    h.heapifyDown(0)
     return max
 }
 
-// Get maximum - O(1)
-func (h *MaxHeap) GetMax() int {
-    if h.IsEmpty() {
-        fmt.Println("Heap is empty")
-        return -1
+func (h *MaxHeap) heapifyDown(i int) {
+    max, l, r := i, 2*i+1, 2*i+2
+    if l < len(h.data) && h.data[l] > h.data[max] { max = l }
+    if r < len(h.data) && h.data[r] > h.data[max] { max = r }
+    if max != i {
+        h.data[i], h.data[max] = h.data[max], h.data[i]
+        h.heapifyDown(max)
     }
-    return h.data[0]
-}
-
-// Check if empty - O(1)
-func (h *MaxHeap) IsEmpty() bool {
-    return len(h.data) == 0
-}
-
-// Get size - O(1)
-func (h *MaxHeap) Size() int {
-    return len(h.data)
-}
-
-// Print heap - O(n)
-func (h *MaxHeap) Print() {
-    for _, val := range h.data {
-        fmt.Print(val, " ")
-    }
-    fmt.Println()
-}
-
-// Usage
-func main() {
-    heap := NewMaxHeap()
-    heap.Insert(50)
-    heap.Insert(30)
-    heap.Insert(70)
-    heap.Insert(20)
-    heap.Insert(40)
-
-    heap.Print()  // 70 40 50 20 30
-    fmt.Println("Max:", heap.ExtractMax())  // 70
-    heap.Print()  // 50 40 30 20
 }`,
     },
     min: {
-      cpp: `#include <iostream>
-#include <vector>
-using namespace std;
-
-class MinHeap {
-private:
-    vector<int> data;
-
-    int parent(int i) { return (i - 1) / 2; }
-    int leftChild(int i) { return 2 * i + 1; }
-    int rightChild(int i) { return 2 * i + 2; }
-
-    void heapifyUp(int index) {
-        while (index > 0 && data[parent(index)] > data[index]) {
-            swap(data[parent(index)], data[index]);
-            index = parent(index);
-        }
-    }
-
-    void heapifyDown(int index) {
-        int minIndex = index;
-        int left = leftChild(index);
-        int right = rightChild(index);
-
-        if (left < data.size() && data[left] < data[minIndex]) {
-            minIndex = left;
-        }
-        if (right < data.size() && data[right] < data[minIndex]) {
-            minIndex = right;
-        }
-
-        if (index != minIndex) {
-            swap(data[index], data[minIndex]);
-            heapifyDown(minIndex);
-        }
-    }
-
-public:
-    MinHeap() {}
-
-    void insert(int value) {
-        data.push_back(value);
-        heapifyUp(data.size() - 1);
-    }
-
-    int extractMin() {
-        if (isEmpty()) {
-            cout << "Heap is empty" << endl;
-            return -1;
-        }
-        int min = data[0];
-        data[0] = data.back();
-        data.pop_back();
-        if (!isEmpty()) {
-            heapifyDown(0);
-        }
-        return min;
-    }
-
-    int getMin() {
-        if (isEmpty()) {
-            cout << "Heap is empty" << endl;
-            return -1;
-        }
-        return data[0];
-    }
-
-    bool isEmpty() { return data.empty(); }
-    int size() { return data.size(); }
-
-    void print() {
-        for (int val : data) {
-            cout << val << " ";
-        }
-        cout << endl;
-    }
-};`,
+      cpp: `// Min Heap implementation is similar, just flip the comparison logic
+// Parent < Child instead of Parent > Child in Heapify Up/Down.`,
     },
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <PerspectiveCard color="rose">
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-rose-600 to-pink-600 rounded-xl">
-          <span className="text-4xl">💻</span>
+        <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
+          <Code2 size={28} />
         </div>
+        <h2 className="text-4xl font-black text-white tracking-tight">Heap Implementation</h2>
+      </div>
+
+      <div className="space-y-12">
+        {/* Controls */}
+        <div className="flex flex-col md:flex-row gap-6 justify-between items-center bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+           <div className="flex gap-2 p-1 bg-slate-900 rounded-lg border border-white/10">
+              {["max", "min"].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setHeapType(type)}
+                  className={`px-6 py-2 rounded-md text-sm font-bold uppercase tracking-wider transition-all ${
+                    heapType === type
+                      ? "bg-rose-600 text-white shadow-lg"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  {type} Heap
+                </button>
+              ))}
+           </div>
+
+           <div className="flex flex-wrap gap-2 justify-center">
+              {languages.map((lang) => (
+                <button
+                  key={lang.id}
+                  onClick={() => setCurrentLanguage(lang.id)}
+                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 border ${
+                    currentLanguage === lang.id
+                      ? "bg-rose-500/10 border-rose-500 text-rose-400"
+                      : "bg-slate-800 border-white/5 text-slate-400 hover:border-white/20"
+                  }`}
+                >
+                  {lang.icon}
+                </button>
+              ))}
+           </div>
+        </div>
+
+        {/* Code Block */}
+        <div className="relative group">
+           <div className="absolute -inset-0.5 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity blur" />
+           <div className="relative bg-[#0d1117] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+              <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
+                 <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
+                 </div>
+                 <div className="text-xs font-mono text-slate-500">{heapType}_heap.{currentLanguage === "cpp" ? "cpp" : currentLanguage}</div>
+              </div>
+              <div className="p-6 overflow-x-auto custom-scrollbar">
+                 <pre className="font-mono text-sm leading-relaxed text-slate-300">
+                    <code>{codeExamples[heapType][currentLanguage] || codeExamples["max"][currentLanguage]}</code>
+                 </pre>
+              </div>
+           </div>
+        </div>
+
+        {/* Complexity Grid */}
         <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Heap Implementation
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Complete implementation in all major languages
-          </p>
-        </div>
-      </div>
-
-      {/* Heap Type Selector */}
-      <div className="mb-8 flex gap-4">
-        <button
-          onClick={() => setHeapType("max")}
-          className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-            heapType === "max"
-              ? "bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-lg"
-              : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-          }`}
-        >
-          📈 Max Heap
-        </button>
-        <button
-          onClick={() => setHeapType("min")}
-          className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-            heapType === "min"
-              ? "bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-lg"
-              : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-          }`}
-        >
-          📉 Min Heap
-        </button>
-      </div>
-
-      {/* Code Implementation */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          {heapType === "max" ? "Max" : "Min"} Heap Code
-        </h3>
-
-        <div className="flex flex-wrap gap-2 mb-4">
-          {languages.map((lang) => (
-            <button
-              key={lang.id}
-              onClick={() => setCurrentLanguage(lang.id)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
-                currentLanguage === lang.id
-                  ? "bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-lg"
-                  : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-              }`}
-            >
-              <span>{lang.icon}</span>
-              <span>{lang.name}</span>
-            </button>
-          ))}
+           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+             <Zap size={24} className="text-yellow-400" /> Time Complexity
+           </h3>
+           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                { op: "Insert", val: "O(log n)", desc: "Heapify Up path", color: "emerald" },
+                { op: "Extract Max", val: "O(log n)", desc: "Heapify Down path", color: "rose" },
+                { op: "Get Max", val: "O(1)", desc: "Root element access", color: "blue" },
+                { op: "Heapify", val: "O(log n)", desc: "Fix single violation", color: "purple" },
+                { op: "Build Heap", val: "O(n)", desc: "Optimized construction", color: "orange" },
+                { op: "Sort", val: "O(n log n)", desc: "Extract n times", color: "cyan" }
+              ].map((item, i) => (
+                <div key={i} className="p-5 bg-slate-900 border border-white/5 rounded-2xl flex flex-col gap-2 group hover:border-white/10 transition-colors">
+                   <div className="text-slate-400 text-xs font-bold uppercase tracking-wider">{item.op}</div>
+                   <div className={`text-2xl font-black text-${item.color}-400 font-mono`}>{item.val}</div>
+                   <div className="text-xs text-slate-600 font-medium">{item.desc}</div>
+                </div>
+              ))}
+           </div>
         </div>
 
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{codeExamples[heapType][currentLanguage]}</code>
-          </pre>
+        {/* Array Formulas */}
+        <div className="p-8 bg-slate-900/50 border border-white/5 rounded-[2.5rem]">
+           <h3 className="text-xl font-black text-white mb-8 flex items-center gap-2">
+             <Terminal size={20} className="text-rose-400" /> Array Indexing Formulas
+           </h3>
+           <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { label: "Parent(i)", formula: "⌊(i - 1) / 2⌋" },
+                { label: "Left Child(i)", formula: "2i + 1" },
+                { label: "Right Child(i)", formula: "2i + 2" }
+              ].map((item, i) => (
+                <div key={i} className="bg-[#0d1117] rounded-xl p-6 border border-white/5 flex flex-col items-center gap-3">
+                   <div className="text-slate-400 text-xs font-bold uppercase tracking-widest">{item.label}</div>
+                   <code className="text-xl font-mono text-rose-400">{item.formula}</code>
+                </div>
+              ))}
+           </div>
+           <p className="text-center text-slate-500 text-xs mt-6 font-mono">
+             * 0-based indexing used in most modern languages
+           </p>
         </div>
-      </div>
 
-      {/* Complexity Analysis */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚡ Time Complexity
-        </h3>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { op: "Insert", complexity: "O(log n)", desc: "Insert and heapify up" },
-            { op: "Extract Min/Max", complexity: "O(log n)", desc: "Remove root and heapify down" },
-            { op: "Get Min/Max", complexity: "O(1)", desc: "Access root element" },
-            { op: "Heapify", complexity: "O(log n)", desc: "Restore heap property" },
-            { op: "Build Heap", complexity: "O(n)", desc: "Build heap from array" },
-            { op: "Heap Sort", complexity: "O(n log n)", desc: "Sort using heap" },
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-rose-50 dark:bg-rose-900/20 p-6 rounded-xl border border-rose-200 dark:border-rose-800"
-            >
-              <h4 className="font-bold text-rose-900 dark:text-rose-100 mb-2">{item.op}</h4>
-              <div className="text-3xl font-bold text-rose-600 mb-2 font-mono">{item.complexity}</div>
-              <p className="text-sm text-slate-600 dark:text-slate-400">{item.desc}</p>
-            </div>
-          ))}
-        </div>
       </div>
-
-      {/* Array Representation */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          📊 Array Representation Formulas
-        </h3>
-        <div className="bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-rose-200 dark:border-rose-800">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white dark:bg-slate-800 p-4 rounded-lg">
-              <div className="text-rose-600 dark:text-rose-400 font-bold mb-2">Parent</div>
-              <code className="text-lg font-mono">⌊(i-1)/2⌋</code>
-            </div>
-            <div className="bg-white dark:bg-slate-800 p-4 rounded-lg">
-              <div className="text-rose-600 dark:text-rose-400 font-bold mb-2">Left Child</div>
-              <code className="text-lg font-mono">2i + 1</code>
-            </div>
-            <div className="bg-white dark:bg-slate-800 p-4 rounded-lg">
-              <div className="text-rose-600 dark:text-rose-400 font-bold mb-2">Right Child</div>
-              <code className="text-lg font-mono">2i + 2</code>
-            </div>
-          </div>
-          <div className="mt-4 text-sm text-slate-600 dark:text-slate-400">
-            <strong>Example:</strong> For index i=1, parent=0, left child=3, right child=4
-          </div>
-        </div>
-      </div>
-    </div>
+    </PerspectiveCard>
   );
 }

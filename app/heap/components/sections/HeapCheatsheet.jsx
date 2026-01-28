@@ -1,65 +1,59 @@
 "use client";
-import { motion } from "framer-motion";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { FileText, Zap, Terminal } from "lucide-react";
 
 export default function HeapCheatsheet() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <h2 className="text-4xl font-bold mb-8 text-slate-900 dark:text-slate-100">
-        📚 Heap Cheatsheet
-      </h2>
+    <PerspectiveCard color="rose">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
+          <FileText size={28} />
+        </div>
+        <h2 className="text-4xl font-black text-white tracking-tight">Heap Cheatsheet</h2>
+      </div>
+
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-rose-200 dark:border-rose-800">
-          <h3 className="text-xl font-bold text-rose-900 dark:text-rose-100 mb-4">
-            Basic Operations
+        {/* Basic Operations */}
+        <div className="p-6 bg-slate-900/50 border border-white/5 rounded-2xl">
+          <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-2">
+            <Zap size={20} /> Time Complexity
           </h3>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">insert(value)</span>
-              <span className="font-mono text-green-600 dark:text-green-400">O(log n)</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">extractMin/Max()</span>
-              <span className="font-mono text-green-600 dark:text-green-400">O(log n)</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">getMin/Max()</span>
-              <span className="font-mono text-green-600 dark:text-green-400">O(1)</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">heapify()</span>
-              <span className="font-mono text-green-600 dark:text-green-400">O(log n)</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">buildHeap()</span>
-              <span className="font-mono text-green-600 dark:text-green-400">O(n)</span>
-            </div>
+          <div className="space-y-4">
+            {[
+              { op: "insert(value)", val: "O(log n)" },
+              { op: "extractMin/Max()", val: "O(log n)" },
+              { op: "getMin/Max()", val: "O(1)" },
+              { op: "heapify()", val: "O(log n)" },
+              { op: "buildHeap()", val: "O(n)" },
+            ].map((item, i) => (
+              <div key={i} className="flex justify-between items-center border-b border-white/5 pb-2 last:border-0 last:pb-0">
+                <span className="text-slate-300 font-medium text-sm">{item.op}</span>
+                <span className="font-mono text-emerald-400 font-bold text-sm bg-emerald-500/10 px-2 py-1 rounded">{item.val}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-          <h3 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-4">
-            Array Formulas
+        {/* Array Formulas */}
+        <div className="p-6 bg-slate-900/50 border border-white/5 rounded-2xl">
+          <h3 className="text-xl font-black text-blue-400 mb-6 flex items-center gap-2">
+            <Terminal size={20} /> Array Formulas
           </h3>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">Parent of i</span>
-              <span className="font-mono text-blue-600 dark:text-blue-400">⌊(i-1)/2⌋</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">Left Child of i</span>
-              <span className="font-mono text-blue-600 dark:text-blue-400">2i + 1</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">Right Child of i</span>
-              <span className="font-mono text-blue-600 dark:text-blue-400">2i + 2</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-700 dark:text-slate-300">Height</span>
-              <span className="font-mono text-blue-600 dark:text-blue-400">⌊log₂(n)⌋</span>
-            </div>
+          <div className="space-y-4">
+            {[
+              { label: "Parent of i", val: "⌊(i-1)/2⌋" },
+              { label: "Left Child of i", val: "2i + 1" },
+              { label: "Right Child of i", val: "2i + 2" },
+              { label: "Height", val: "⌊log₂(n)⌋" },
+            ].map((item, i) => (
+              <div key={i} className="flex justify-between items-center border-b border-white/5 pb-2 last:border-0 last:pb-0">
+                <span className="text-slate-300 font-medium text-sm">{item.label}</span>
+                <span className="font-mono text-blue-400 font-bold text-sm bg-blue-500/10 px-2 py-1 rounded">{item.val}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </div>
+    </PerspectiveCard>
   );
 }
