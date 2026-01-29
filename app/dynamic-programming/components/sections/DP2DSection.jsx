@@ -1,224 +1,377 @@
 "use client";
-import { motion } from "framer-motion";
+
+import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  Grid, 
+  ArrowDownRight, 
+  Box, 
+  ArrowRightLeft
+} from "lucide-react";
 
 export default function DP2DSection() {
+  const [currentLanguage, setCurrentLanguage] = useState("javascript");
+
+  const uniquePathsCode = {
+    javascript: `// Unique Paths: 2D DP
+function uniquePaths(m, n) {
+    // 1. Initialize Table
+    // dp[i][j] = paths to reach cell (i, j)
+    const dp = Array(m).fill().map(() => Array(n).fill(1));
+    
+    // 2. Iterate
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            // Can arrive from top or left
+            dp[i][j] = dp[i-1][j] + dp[i][j-1];
+        }
+    }
+    
+    return dp[m-1][n-1];
+}
+// Space: O(m*n), Optimized: O(n)`,
+    python: `# Unique Paths: 2D DP
+def unique_paths(m, n):
+    # 1. Initialize Table
+    dp = [[1] * n for _ in range(m)]
+    
+    # 2. Iterate
+    for i in range(1, m):
+        for j in range(1, n):
+            # From top + from left
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+            
+    return dp[m-1][n-1]
+# Space: O(m*n)`,
+    java: `// Unique Paths: 2D DP
+public int uniquePaths(int m, int n) {
+    int[][] dp = new int[m][n];
+    
+    // Base cases
+    for (int i = 0; i < m; i++) dp[i][0] = 1;
+    for (int j = 0; j < n; j++) dp[0][j] = 1;
+    
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            dp[i][j] = dp[i-1][j] + dp[i][j-1];
+        }
+    }
+    
+    return dp[m-1][n-1];
+}`,
+    cpp: `// Unique Paths: 2D DP
+#include <vector>
+using namespace std;
+
+int uniquePaths(int m, int n) {
+    vector<vector<int>> dp(m, vector<int>(n, 1));
+    
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            dp[i][j] = dp[i-1][j] + dp[i][j-1];
+        }
+    }
+    
+    return dp[m-1][n-1];
+}`,
+    go: `// Unique Paths: 2D DP
+func uniquePaths(m int, n int) int {
+    dp := make([][]int, m)
+    for i := range dp {
+        dp[i] = make([]int, n)
+        for j := range dp[i] {
+            dp[i][j] = 1
+        }
+    }
+    
+    for i := 1; i < m; i++ {
+        for j := 1; j < n; j++ {
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        }
+    }
+    
+    return dp[m-1][n-1]
+}`
+  };
+
+  const lcsCode = {
+    javascript: `// Longest Common Subsequence
+function longestCommonSubsequence(text1, text2) {
+    const m = text1.length, n = text2.length;
+    const dp = Array(m + 1).fill().map(() => Array(n + 1).fill(0));
+    
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (text1[i-1] === text2[j-1]) {
+                dp[i][j] = 1 + dp[i-1][j-1];
+            } else {
+                dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    return dp[m][n];
+}`,
+    python: `# Longest Common Subsequence
+def longest_common_subsequence(text1, text2):
+    m, n = len(text1), len(text2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i-1] == text2[j-1]:
+                dp[i][j] = 1 + dp[i-1][j-1]
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+                
+    return dp[m][n]`,
+    java: `// Longest Common Subsequence
+public int longestCommonSubsequence(String text1, String text2) {
+    int m = text1.length(), n = text2.length();
+    int[][] dp = new int[m + 1][n + 1];
+    
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (text1.charAt(i-1) == text2.charAt(j-1)) {
+                dp[i][j] = 1 + dp[i-1][j-1];
+            } else {
+                dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    return dp[m][n];
+}`,
+    cpp: `// Longest Common Subsequence
+int longestCommonSubsequence(string text1, string text2) {
+    int m = text1.length(), n = text2.length();
+    vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+    
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (text1[i-1] == text2[j-1]) {
+                dp[i][j] = 1 + dp[i-1][j-1];
+            } else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    return dp[m][n];
+}`,
+    go: `// Longest Common Subsequence
+func longestCommonSubsequence(text1 string, text2 string) int {
+    m, n := len(text1), len(text2)
+    dp := make([][]int, m+1)
+    for i := range dp { dp[i] = make([]int, n+1) }
+    
+    for i := 1; i <= m; i++ {
+        for j := 1; j <= n; j++ {
+            if text1[i-1] == text2[j-1] {
+                dp[i][j] = 1 + dp[i-1][j-1]
+            } else {
+                if dp[i-1][j] > dp[i][j-1] {
+                    dp[i][j] = dp[i-1][j]
+                } else {
+                    dp[i][j] = dp[i][j-1]
+                }
+            }
+        }
+    }
+    return dp[m][n]
+}`
+  };
+
+  const knapsackCode = {
+    javascript: `// 0/1 Knapsack
+function knapsack(weights, values, capacity) {
+    const n = weights.length;
+    const dp = Array(n + 1).fill().map(() => Array(capacity + 1).fill(0));
+    
+    for (let i = 1; i <= n; i++) {
+        for (let w = 0; w <= capacity; w++) {
+            if (weights[i-1] <= w) {
+                dp[i][w] = Math.max(
+                    values[i-1] + dp[i-1][w - weights[i-1]], 
+                    dp[i-1][w]
+                );
+            } else {
+                dp[i][w] = dp[i-1][w];
+            }
+        }
+    }
+    return dp[n][capacity];
+}`,
+    python: `# 0/1 Knapsack
+def knapsack(weights, values, capacity):
+    n = len(weights)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        for w in range(capacity + 1):
+            if weights[i-1] <= w:
+                dp[i][w] = max(
+                    values[i-1] + dp[i-1][w - weights[i-1]],
+                    dp[i-1][w]
+                )
+            else:
+                dp[i][w] = dp[i-1][w]
+                
+    return dp[n][capacity]`,
+    java: `// 0/1 Knapsack
+public int knapsack(int[] weights, int[] values, int capacity) {
+    int n = weights.length;
+    int[][] dp = new int[n + 1][capacity + 1];
+    
+    for (int i = 1; i <= n; i++) {
+        for (int w = 0; w <= capacity; w++) {
+            if (weights[i-1] <= w) {
+                dp[i][w] = Math.max(
+                    values[i-1] + dp[i-1][w - weights[i-1]],
+                    dp[i-1][w]
+                );
+            } else {
+                dp[i][w] = dp[i-1][w];
+            }
+        }
+    }
+    return dp[n][capacity];
+}`,
+    cpp: `// 0/1 Knapsack
+int knapsack(vector<int>& weights, vector<int>& values, int capacity) {
+    int n = weights.size();
+    vector<vector<int>> dp(n + 1, vector<int>(capacity + 1, 0));
+    
+    for (int i = 1; i <= n; i++) {
+        for (int w = 0; w <= capacity; w++) {
+            if (weights[i-1] <= w) {
+                dp[i][w] = max(
+                    values[i-1] + dp[i-1][w - weights[i-1]],
+                    dp[i-1][w]
+                );
+            } else {
+                dp[i][w] = dp[i-1][w];
+            }
+        }
+    }
+    return dp[n][capacity];
+}`,
+    go: `// 0/1 Knapsack
+func knapsack(weights, values []int, capacity int) int {
+    n := len(weights)
+    dp := make([][]int, n+1)
+    for i := range dp { dp[i] = make([]int, capacity+1) }
+    
+    for i := 1; i <= n; i++ {
+        for w := 0; w <= capacity; w++ {
+            if weights[i-1] <= w {
+                val := values[i-1] + dp[i-1][w-weights[i-1]]
+                if val > dp[i-1][w] {
+                    dp[i][w] = val
+                } else {
+                    dp[i][w] = dp[i-1][w]
+                }
+            } else {
+                dp[i][w] = dp[i-1][w]
+            }
+        }
+    }
+    return dp[n][capacity]
+}`
+  };
+
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <PerspectiveCard color="cyan">
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl">
-          <span className="text-4xl">🎯</span>
+        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
+          <Grid size={28} />
         </div>
         <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            2D Dynamic Programming
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Problems with two dimensional state (matrix DP)
-          </p>
+          <h2 className="text-4xl font-black text-white tracking-tight">2D DP Problems</h2>
+          <p className="text-slate-400 font-medium">Matrix problems and multi-variable states.</p>
         </div>
+      </div>
+
+      {/* Intro to 2D DP */}
+      <div className="mb-12 p-8 bg-slate-900/50 border border-white/5 rounded-[2rem]">
+        <h3 className="text-xl font-black text-white mb-4">Grid & Matrix States</h3>
+        <p className="text-slate-400 text-sm leading-relaxed mb-6">
+          When the state depends on two variables (like row & column <code className="text-cyan-400 bg-white/5 px-1 rounded">i, j</code> or index & capacity <code className="text-cyan-400 bg-white/5 px-1 rounded">i, w</code>), we use a 2D table.
+        </p>
       </div>
 
       {/* Problem 1: Unique Paths */}
       <div className="mb-12">
-        <h3 className="text-2xl font-bold text-violet-700 dark:text-violet-400 mb-6">
-          1️⃣ Unique Paths (LeetCode #62)
-        </h3>
-        <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-200 dark:border-violet-800 mb-6">
-          <p className="text-lg text-violet-900 dark:text-violet-100 mb-4">
-            Count paths in m×n grid from top-left to bottom-right (only right/down moves).
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Recurrence:</strong> dp[i][j] = dp[i-1][j] + dp[i][j-1]
-          </p>
+        <div className="flex items-center gap-3 mb-6">
+          <ArrowDownRight size={24} className="text-cyan-400" />
+          <h3 className="text-2xl font-black text-white">1. Unique Paths</h3>
+        </div>
+        
+        <div className="bg-slate-950 p-6 rounded-2xl border border-white/5 mb-6 font-mono text-sm text-slate-300">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-cyan-500 font-bold">Goal:</span> 
+            <span>Paths from (0,0) to (m,n) moving only Right/Down</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-emerald-500 font-bold">Recurrence:</span> 
+            <span>dp[i][j] = dp[i-1][j] + dp[i][j-1]</span>
+          </div>
         </div>
 
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function uniquePaths(m, n) {
-    const dp = Array(m).fill().map(() => Array(n).fill(0));
-
-    // Base cases: first row and column all have 1 path
-    for (let i = 0; i < m; i++) dp[i][0] = 1;
-    for (let j = 0; j < n; j++) dp[0][j] = 1;
-
-    for (let i = 1; i < m; i++) {
-        for (let j = 1; j < n; j++) {
-            dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-        }
-    }
-
-    return dp[m - 1][n - 1];
-}
-
-// Example: 3×7 grid
-// 1  1  1  1  1  1  1
-// 1  2  3  4  5  6  7
-// 1  3  6 10 15 21 28  ← answer
-
-// Space Optimized: O(n)
-function uniquePathsOptimized(m, n) {
-    const dp = new Array(n).fill(1);
-
-    for (let i = 1; i < m; i++) {
-        for (let j = 1; j < n; j++) {
-            dp[j] += dp[j - 1];
-        }
-    }
-
-    return dp[n - 1];
-}
-
-// Time: O(m×n), Space: O(n)`}</code>
-          </pre>
-        </div>
+        <CodeImplementation 
+          languages={uniquePathsCode}
+          color="cyan"
+          initialLanguage={currentLanguage}
+        />
       </div>
 
-      {/* Problem 2: Longest Common Subsequence */}
+      {/* Problem 2: LCS */}
       <div className="mb-12">
-        <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-6">
-          2️⃣ Longest Common Subsequence (LeetCode #1143)
-        </h3>
-        <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800 mb-6">
-          <p className="text-lg text-purple-900 dark:text-purple-100 mb-4">
-            Find length of longest subsequence common to both strings.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Example:</strong> "abcde", "ace" → 3 (ace)
-          </p>
+        <div className="flex items-center gap-3 mb-6">
+          <ArrowRightLeft size={24} className="text-amber-400" />
+          <h3 className="text-2xl font-black text-white">2. Longest Common Subsequence</h3>
+        </div>
+        
+        <div className="bg-slate-950 p-6 rounded-2xl border border-white/5 mb-6 font-mono text-sm text-slate-300">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-amber-500 font-bold">Goal:</span> 
+            <span>Longest subsequence present in both strings</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-emerald-500 font-bold">Recurrence:</span> 
+            <span>match ? 1+dp[i-1][j-1] : max(dp[i-1][j], dp[i][j-1])</span>
+          </div>
         </div>
 
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function longestCommonSubsequence(text1, text2) {
-    const m = text1.length, n = text2.length;
-    const dp = Array(m + 1).fill().map(() => Array(n + 1).fill(0));
-
-    for (let i = 1; i <= m; i++) {
-        for (let j = 1; j <= n; j++) {
-            if (text1[i - 1] === text2[j - 1]) {
-                dp[i][j] = dp[i - 1][j - 1] + 1;
-            } else {
-                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-            }
-        }
-    }
-
-    return dp[m][n];
-}
-
-// Example: "abcde", "ace"
-//     ""  a  c  e
-// ""   0  0  0  0
-// a    0  1  1  1
-// b    0  1  1  1
-// c    0  1  2  2
-// d    0  1  2  2
-// e    0  1  2  3  ← answer
-
-// Time: O(m×n), Space: O(m×n)`}</code>
-          </pre>
-        </div>
+        <CodeImplementation 
+          languages={lcsCode}
+          color="amber"
+          initialLanguage={currentLanguage}
+        />
       </div>
 
-      {/* Problem 3: 0/1 Knapsack */}
+      {/* Problem 3: Knapsack */}
       <div className="mb-12">
-        <h3 className="text-2xl font-bold text-pink-700 dark:text-pink-400 mb-6">
-          3️⃣ 0/1 Knapsack Problem
-        </h3>
-        <div className="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-xl border border-pink-200 dark:border-pink-800 mb-6">
-          <p className="text-lg text-pink-900 dark:text-pink-100 mb-4">
-            Given weights & values, maximize value within capacity (can't take fraction of item).
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Recurrence:</strong> dp[i][w] = max(dp[i-1][w], values[i] + dp[i-1][w-weights[i]])
-          </p>
+        <div className="flex items-center gap-3 mb-6">
+          <Box size={24} className="text-purple-400" />
+          <h3 className="text-2xl font-black text-white">3. 0/1 Knapsack</h3>
+        </div>
+        
+        <div className="bg-slate-950 p-6 rounded-2xl border border-white/5 mb-6 font-mono text-sm text-slate-300">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-purple-500 font-bold">Goal:</span> 
+            <span>Maximize value within weight capacity W</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-emerald-500 font-bold">Recurrence:</span> 
+            <span>max(dp[i-1][w], val + dp[i-1][w-wt])</span>
+          </div>
         </div>
 
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function knapsack(weights, values, capacity) {
-    const n = weights.length;
-    const dp = Array(n + 1).fill().map(() => Array(capacity + 1).fill(0));
-
-    for (let i = 1; i <= n; i++) {
-        for (let w = 0; w <= capacity; w++) {
-            if (weights[i - 1] <= w) {
-                // Either take item or skip
-                dp[i][w] = Math.max(
-                    dp[i - 1][w],  // Skip
-                    values[i - 1] + dp[i - 1][w - weights[i - 1]]  // Take
-                );
-            } else {
-                dp[i][w] = dp[i - 1][w];  // Can't take (too heavy)
-            }
-        }
-    }
-
-    return dp[n][capacity];
-}
-
-// Example: weights=[1,3,4,5], values=[1,4,5,7], capacity=7
-// Answer: 9 (take items 2 and 3: values 4+5)
-
-// Time: O(n×capacity), Space: O(n×capacity)`}</code>
-          </pre>
-        </div>
+        <CodeImplementation 
+          languages={knapsackCode}
+          color="purple"
+          initialLanguage={currentLanguage}
+        />
       </div>
-
-      {/* Problem 4: Edit Distance */}
-      <div>
-        <h3 className="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">
-          4️⃣ Edit Distance (LeetCode #72)
-        </h3>
-        <div className="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl border border-indigo-200 dark:border-indigo-800 mb-6">
-          <p className="text-lg text-indigo-900 dark:text-indigo-100 mb-4">
-            Minimum operations to convert word1 to word2 (insert, delete, replace).
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Example:</strong> "horse" → "ros" = 3 operations
-          </p>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function minDistance(word1, word2) {
-    const m = word1.length, n = word2.length;
-    const dp = Array(m + 1).fill().map(() => Array(n + 1).fill(0));
-
-    // Base cases
-    for (let i = 0; i <= m; i++) dp[i][0] = i;  // Delete all
-    for (let j = 0; j <= n; j++) dp[0][j] = j;  // Insert all
-
-    for (let i = 1; i <= m; i++) {
-        for (let j = 1; j <= n; j++) {
-            if (word1[i - 1] === word2[j - 1]) {
-                dp[i][j] = dp[i - 1][j - 1];  // No operation needed
-            } else {
-                dp[i][j] = 1 + Math.min(
-                    dp[i - 1][j],      // Delete
-                    dp[i][j - 1],      // Insert
-                    dp[i - 1][j - 1]   // Replace
-                );
-            }
-        }
-    }
-
-    return dp[m][n];
-}
-
-// Example: "horse" → "ros"
-//       ""  r  o  s
-// ""     0  1  2  3
-// h      1  1  2  3
-// o      2  2  1  2
-// r      3  2  2  2
-// s      4  3  3  2
-// e      5  4  4  3  ← answer
-
-// Time: O(m×n), Space: O(m×n)`}</code>
-          </pre>
-        </div>
-      </div>
-    </div>
+    </PerspectiveCard>
   );
 }

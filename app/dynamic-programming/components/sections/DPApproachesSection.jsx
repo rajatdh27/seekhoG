@@ -1,365 +1,291 @@
 "use client";
-import { motion } from "framer-motion";
+
+import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  ArrowDownUp, 
+  BrainCircuit, 
+  ArrowUp, 
+  ArrowDown, 
+  CheckCircle2, 
+  XCircle,
+  Table as TableIcon
+} from "lucide-react";
 
 export default function DPApproachesSection() {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl">
-          <span className="text-4xl">🔄</span>
-        </div>
-        <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Memoization vs Tabulation
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Two approaches to implement Dynamic Programming
-          </p>
-        </div>
-      </div>
+  const [currentLanguage, setCurrentLanguage] = useState("javascript");
 
-      {/* Approach 1: Memoization (Top-Down) */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-6">
-          1️⃣ Memoization (Top-Down DP)
-        </h3>
-        <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800 mb-6">
-          <p className="text-lg text-purple-900 dark:text-purple-100 mb-4">
-            Start with original problem, break down recursively, and <strong>cache results</strong> in a memo (HashMap/Array).
-          </p>
-          <div className="space-y-2 text-sm">
-            <div>1. Write recursive solution</div>
-            <div>2. Add memo (cache) to store computed values</div>
-            <div>3. Check memo before computing</div>
-            <div>4. Store result in memo after computing</div>
-          </div>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto mb-6">
-          <pre className="text-sm text-slate-100">
-            <code>{`// Example: Fibonacci with Memoization
+  const memoizationCode = {
+    javascript: `// Top-Down: Memoization
 function fibMemo(n, memo = {}) {
-    // Base cases
+    // 1. Base cases
     if (n <= 1) return n;
 
-    // Check if already computed
-    if (memo[n] !== undefined) {
-        return memo[n];
-    }
+    // 2. Check cache
+    if (n in memo) return memo[n];
 
-    // Compute and store in memo
+    // 3. Compute and store
     memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);
-
     return memo[n];
+}`,
+    python: `# Top-Down: Memoization
+def fib_memo(n, memo={}):
+    # 1. Base cases
+    if n <= 1: return n
+    
+    # 2. Check cache
+    if n in memo: return memo[n]
+    
+    # 3. Compute and store
+    memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)
+    return memo[n]`,
+    java: `// Top-Down: Memoization
+import java.util.HashMap;
+
+public class Fibonacci {
+    private HashMap<Integer, Integer> memo = new HashMap<>();
+
+    public int fib(int n) {
+        if (n <= 1) return n;
+        
+        if (memo.containsKey(n)) {
+            return memo.get(n);
+        }
+        
+        int result = fib(n - 1) + fib(n - 2);
+        memo.put(n, result);
+        return result;
+    }
+}`,
+    cpp: `// Top-Down: Memoization
+#include <vector>
+using namespace std;
+
+int fib(int n, vector<int>& memo) {
+    if (n <= 1) return n;
+    
+    if (memo[n] != -1) return memo[n];
+    
+    return memo[n] = fib(n-1, memo) + fib(n-2, memo);
 }
 
-// Time: O(n) - each subproblem computed once
-// Space: O(n) - memo + recursion stack
+// Initial call: vector<int> memo(n+1, -1);`,
+    go: `// Top-Down: Memoization
+func fib(n int, memo map[int]int) int {
+    if n <= 1 {
+        return n
+    }
+    
+    if val, exists := memo[n]; exists {
+        return val
+    }
+    
+    memo[n] = fib(n-1, memo) + fib(n-2, memo)
+    return memo[n]
+}`
+  };
 
-console.log(fibMemo(50));  // Fast! ⚡
-
-// Example: Climbing Stairs (n steps, can climb 1 or 2 at a time)
-function climbStairsMemo(n, memo = {}) {
-    if (n <= 2) return n;
-
-    if (memo[n]) return memo[n];
-
-    memo[n] = climbStairsMemo(n - 1, memo) + climbStairsMemo(n - 2, memo);
-
-    return memo[n];
-}
-
-// Visualization of memoization:
-// fib(5) → compute fib(4) and fib(3)
-//   fib(4) → compute fib(3) and fib(2) ← fib(3) already in memo!
-//   fib(3) → retrieved from memo ✓`}</code>
-          </pre>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="font-bold text-green-900 dark:text-green-100 mb-2">
-              ✅ Advantages
-            </h4>
-            <div className="space-y-1 text-sm">
-              <div>• Easier to write (natural recursion)</div>
-              <div>• Intuitive problem decomposition</div>
-              <div>• Only computes needed subproblems</div>
-              <div>• Good for sparse problems</div>
-            </div>
-          </div>
-
-          <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-200 dark:border-red-800">
-            <h4 className="font-bold text-red-900 dark:text-red-100 mb-2">
-              ❌ Disadvantages
-            </h4>
-            <div className="space-y-1 text-sm">
-              <div>• Recursion stack overhead</div>
-              <div>• Stack overflow for large n</div>
-              <div>• Extra space for call stack</div>
-              <div>• Harder to optimize space</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Approach 2: Tabulation (Bottom-Up) */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-pink-700 dark:text-pink-400 mb-6">
-          2️⃣ Tabulation (Bottom-Up DP)
-        </h3>
-        <div className="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-xl border border-pink-200 dark:border-pink-800 mb-6">
-          <p className="text-lg text-pink-900 dark:text-pink-100 mb-4">
-            Start with base cases, build up iteratively using a <strong>DP table/array</strong>. No recursion!
-          </p>
-          <div className="space-y-2 text-sm">
-            <div>1. Identify base cases</div>
-            <div>2. Create DP table (array/matrix)</div>
-            <div>3. Fill table iteratively from base cases</div>
-            <div>4. Return final result from table</div>
-          </div>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto mb-6">
-          <pre className="text-sm text-slate-100">
-            <code>{`// Example: Fibonacci with Tabulation
+  const tabulationCode = {
+    javascript: `// Bottom-Up: Tabulation
 function fibTab(n) {
     if (n <= 1) return n;
-
-    // Create DP table
+    
+    // 1. Create table
     const dp = new Array(n + 1);
-
-    // Base cases
+    
+    // 2. Base cases
     dp[0] = 0;
     dp[1] = 1;
-
-    // Fill table bottom-up
+    
+    // 3. Fill iteratively
     for (let i = 2; i <= n; i++) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
-
+    
     return dp[n];
-}
-
-// Time: O(n)
-// Space: O(n)
-
-// Space Optimized Version (only need last 2 values)
-function fibTabOptimized(n) {
+}`,
+    python: `# Bottom-Up: Tabulation
+def fib_tab(n):
+    if n <= 1: return n
+    
+    # 1. Create table
+    dp = [0] * (n + 1)
+    
+    # 2. Base cases
+    dp[1] = 1
+    
+    # 3. Fill iteratively
+    for i in range(2, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+        
+    return dp[n]`,
+    java: `// Bottom-Up: Tabulation
+public int fib(int n) {
     if (n <= 1) return n;
-
-    let prev2 = 0, prev1 = 1;
-
-    for (let i = 2; i <= n; i++) {
-        let curr = prev1 + prev2;
-        prev2 = prev1;
-        prev1 = curr;
-    }
-
-    return prev1;
-}
-
-// Time: O(n)
-// Space: O(1) ✅ Optimal!
-
-// Example: Climbing Stairs
-function climbStairsTab(n) {
-    if (n <= 2) return n;
-
-    const dp = new Array(n + 1);
+    
+    int[] dp = new int[n + 1];
+    dp[0] = 0;
     dp[1] = 1;
-    dp[2] = 2;
-
-    for (let i = 3; i <= n; i++) {
+    
+    for (int i = 2; i <= n; i++) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
-
+    
     return dp[n];
-}
+}`,
+    cpp: `// Bottom-Up: Tabulation
+#include <vector>
+using namespace std;
 
-// Visualization of tabulation:
-// dp[0] = 0
-// dp[1] = 1
-// dp[2] = dp[1] + dp[0] = 1
-// dp[3] = dp[2] + dp[1] = 2
-// dp[4] = dp[3] + dp[2] = 3
-// dp[5] = dp[4] + dp[3] = 5`}</code>
-          </pre>
+int fib(int n) {
+    if (n <= 1) return n;
+    
+    vector<int> dp(n + 1);
+    dp[0] = 0;
+    dp[1] = 1;
+    
+    for (int i = 2; i <= n; i++) {
+        dp[i] = dp[i-1] + dp[i-2];
+    }
+    
+    return dp[n];
+}`,
+    go: `// Bottom-Up: Tabulation
+func fib(n int) int {
+    if n <= 1 {
+        return n
+    }
+    
+    dp := make([]int, n+1)
+    dp[0] = 0
+    dp[1] = 1
+    
+    for i := 2; i <= n; i++ {
+        dp[i] = dp[i-1] + dp[i-2]
+    }
+    
+    return dp[n]
+}`
+  };
+
+  return (
+    <PerspectiveCard color="purple">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
+          <ArrowDownUp size={28} />
         </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="font-bold text-green-900 dark:text-green-100 mb-2">
-              ✅ Advantages
-            </h4>
-            <div className="space-y-1 text-sm">
-              <div>• No recursion overhead</div>
-              <div>• No stack overflow issues</div>
-              <div>• Easier to optimize space</div>
-              <div>• Generally faster in practice</div>
-            </div>
-          </div>
-
-          <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-200 dark:border-red-800">
-            <h4 className="font-bold text-red-900 dark:text-red-100 mb-2">
-              ❌ Disadvantages
-            </h4>
-            <div className="space-y-1 text-sm">
-              <div>• Harder to write initially</div>
-              <div>• Need to find correct order</div>
-              <div>• Computes all subproblems</div>
-              <div>• Less intuitive</div>
-            </div>
-          </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Memoization vs Tabulation</h2>
+          <p className="text-slate-400 font-medium">Top-down vs Bottom-up: Two ways to conquer complexity.</p>
         </div>
       </div>
 
-      {/* Conversion Steps */}
+      {/* Memoization */}
       <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          🔄 Converting Recursion → Memoization → Tabulation
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <ArrowDown size={24} className="text-purple-400" /> 1. Top-Down (Memoization)
         </h3>
-        <div className="space-y-6">
-          {/* Step 1: Recursion */}
-          <div>
-            <h4 className="text-lg font-bold text-red-700 dark:text-red-400 mb-3">
-              Step 1: Start with Recursion (Slow)
-            </h4>
-            <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-              <pre className="text-sm text-slate-100">
-                <code>{`function minCostClimbingStairs(cost) {
-    function dp(i) {
-        if (i >= cost.length) return 0;
-        return cost[i] + Math.min(dp(i + 1), dp(i + 2));
-    }
-    return Math.min(dp(0), dp(1));
-}
-// Time: O(2^n) - Exponential!`}</code>
-              </pre>
+        <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 md:p-8 mb-6">
+          <p className="text-slate-300 mb-6 font-medium leading-relaxed">
+            Start with the main problem and break it down recursively. Store the result of each subproblem in a <strong className="text-purple-400">cache (memo)</strong> so you never solve it twice.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div className="flex gap-3">
+              <CheckCircle2 className="text-emerald-400 shrink-0" size={20} />
+              <span className="text-sm text-slate-400">Easy to write (natural recursion)</span>
+            </div>
+            <div className="flex gap-3">
+              <CheckCircle2 className="text-emerald-400 shrink-0" size={20} />
+              <span className="text-sm text-slate-400">Solves only needed subproblems</span>
+            </div>
+            <div className="flex gap-3">
+              <XCircle className="text-rose-400 shrink-0" size={20} />
+              <span className="text-sm text-slate-400">Recursion stack overhead</span>
+            </div>
+            <div className="flex gap-3">
+              <XCircle className="text-rose-400 shrink-0" size={20} />
+              <span className="text-sm text-slate-400">Harder to optimize space</span>
             </div>
           </div>
+          
+          <CodeImplementation 
+            languages={memoizationCode}
+            color="purple"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+      </div>
 
-          {/* Step 2: Add Memoization */}
-          <div>
-            <h4 className="text-lg font-bold text-purple-700 dark:text-purple-400 mb-3">
-              Step 2: Add Memoization (Fast)
-            </h4>
-            <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-              <pre className="text-sm text-slate-100">
-                <code>{`function minCostClimbingStairsMemo(cost) {
-    const memo = {};
-
-    function dp(i) {
-        if (i >= cost.length) return 0;
-        if (memo[i] !== undefined) return memo[i];  // ← Check memo
-
-        memo[i] = cost[i] + Math.min(dp(i + 1), dp(i + 2));  // ← Store
-        return memo[i];
-    }
-
-    return Math.min(dp(0), dp(1));
-}
-// Time: O(n) ✅`}</code>
-              </pre>
+      {/* Tabulation */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <ArrowUp size={24} className="text-pink-400" /> 2. Bottom-Up (Tabulation)
+        </h3>
+        <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 md:p-8 mb-6">
+          <p className="text-slate-300 mb-6 font-medium leading-relaxed">
+            Start with the smallest subproblems (base cases) and iteratively build up the solution in a <strong className="text-pink-400">table</strong>. Avoids recursion completely.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div className="flex gap-3">
+              <CheckCircle2 className="text-emerald-400 shrink-0" size={20} />
+              <span className="text-sm text-slate-400">No recursion overhead (faster)</span>
+            </div>
+            <div className="flex gap-3">
+              <CheckCircle2 className="text-emerald-400 shrink-0" size={20} />
+              <span className="text-sm text-slate-400">Easy to optimize space (O(1))</span>
+            </div>
+            <div className="flex gap-3">
+              <XCircle className="text-rose-400 shrink-0" size={20} />
+              <span className="text-sm text-slate-400">Solves all subproblems</span>
+            </div>
+            <div className="flex gap-3">
+              <XCircle className="text-rose-400 shrink-0" size={20} />
+              <span className="text-sm text-slate-400">Less intuitive ordering</span>
             </div>
           </div>
-
-          {/* Step 3: Convert to Tabulation */}
-          <div>
-            <h4 className="text-lg font-bold text-pink-700 dark:text-pink-400 mb-3">
-              Step 3: Convert to Tabulation (Optimal)
-            </h4>
-            <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-              <pre className="text-sm text-slate-100">
-                <code>{`function minCostClimbingStairsTab(cost) {
-    const n = cost.length;
-    const dp = new Array(n + 1);
-
-    dp[n] = 0;  // Base case
-    dp[n - 1] = cost[n - 1];  // Base case
-
-    // Fill table backwards
-    for (let i = n - 2; i >= 0; i--) {
-        dp[i] = cost[i] + Math.min(dp[i + 1], dp[i + 2]);
-    }
-
-    return Math.min(dp[0], dp[1]);
-}
-// Time: O(n), Space: O(n)`}</code>
-              </pre>
-            </div>
-          </div>
+          
+          <CodeImplementation 
+            languages={tabulationCode}
+            color="pink"
+            initialLanguage={currentLanguage}
+          />
         </div>
       </div>
 
       {/* Comparison Table */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚖️ Memoization vs Tabulation Comparison
-        </h3>
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50">
+        <div className="p-6 border-b border-white/10 flex items-center gap-3">
+          <TableIcon size={24} className="text-purple-400" />
+          <h3 className="text-lg font-black text-white">Quick Comparison</h3>
+        </div>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="bg-purple-100 dark:bg-purple-900/30">
-                <th className="border border-purple-300 dark:border-purple-700 p-4 text-left">Aspect</th>
-                <th className="border border-purple-300 dark:border-purple-700 p-4 text-left">Memoization (Top-Down)</th>
-                <th className="border border-purple-300 dark:border-purple-700 p-4 text-left">Tabulation (Bottom-Up)</th>
+          <table className="w-full text-left text-sm text-slate-400">
+            <thead className="bg-white/5 text-slate-200 uppercase font-bold tracking-wider text-xs">
+              <tr>
+                <th className="px-6 py-4">Feature</th>
+                <th className="px-6 py-4">Memoization</th>
+                <th className="px-6 py-4">Tabulation</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/5">
               {[
-                {
-                  aspect: "Approach",
-                  memo: "Recursion + Caching",
-                  tab: "Iteration + DP Table",
-                },
-                {
-                  aspect: "Direction",
-                  memo: "Top to bottom (original → base)",
-                  tab: "Bottom to top (base → original)",
-                },
-                {
-                  aspect: "Implementation",
-                  memo: "Easier (natural recursion)",
-                  tab: "Harder (find correct order)",
-                },
-                {
-                  aspect: "Space",
-                  memo: "O(n) table + O(n) stack",
-                  tab: "O(n) table only",
-                },
-                {
-                  aspect: "Performance",
-                  memo: "Slightly slower (recursion)",
-                  tab: "Slightly faster (no recursion)",
-                },
-                {
-                  aspect: "Space Optimization",
-                  memo: "Difficult",
-                  tab: "Easy (rolling array)",
-                },
-                {
-                  aspect: "Subproblems",
-                  memo: "Only needed ones",
-                  tab: "All subproblems",
-                },
+                { feature: "Approach", memo: "Top-Down (Recursive)", tab: "Bottom-Up (Iterative)" },
+                { feature: "State Storage", memo: "Map / Array (Sparse)", tab: "Array / Matrix (Dense)" },
+                { feature: "Speed", memo: "Slower (Function calls)", tab: "Faster (Loops)" },
+                { feature: "Space Opt.", memo: "Hard (Stack needed)", tab: "Easy (Rolling variables)" },
+                { feature: "Subproblems", memo: "On-demand", tab: "All" }
               ].map((row, idx) => (
-                <tr key={idx} className="hover:bg-purple-50 dark:hover:bg-purple-900/10">
-                  <td className="border border-purple-300 dark:border-purple-700 p-4 font-bold">
-                    {row.aspect}
-                  </td>
-                  <td className="border border-purple-300 dark:border-purple-700 p-4 text-xs">
-                    {row.memo}
-                  </td>
-                  <td className="border border-purple-300 dark:border-purple-700 p-4 text-xs">
-                    {row.tab}
-                  </td>
+                <tr key={idx} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 font-bold text-slate-200">{row.feature}</td>
+                  <td className="px-6 py-4 text-purple-300">{row.memo}</td>
+                  <td className="px-6 py-4 text-pink-300">{row.tab}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-    </div>
+    </PerspectiveCard>
   );
 }
