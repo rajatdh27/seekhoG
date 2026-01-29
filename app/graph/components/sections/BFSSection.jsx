@@ -1,8 +1,19 @@
 "use client";
-import { motion } from "framer-motion";
+
 import { useState } from "react";
+import { motion } from "framer-motion";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  Workflow, 
+  Play, 
+  RotateCcw, 
+  Layers, 
+  ArrowRight 
+} from "lucide-react";
 
 export default function BFSSection() {
+  const [currentLanguage, setCurrentLanguage] = useState("javascript");
   const [isAnimating, setIsAnimating] = useState(false);
   const [visitedNodes, setVisitedNodes] = useState([]);
   const [currentNode, setCurrentNode] = useState(null);
@@ -21,246 +32,208 @@ export default function BFSSection() {
     setVisitedNodes([]);
     setCurrentNode(null);
 
-    const bfsOrder = [0, 1, 2, 3, 4, 5]; // A → B → C → D → E → F (level by level)
+    const bfsOrder = [0, 1, 2, 3, 4, 5]; // A -> B -> C -> D -> E -> F (Level Order)
 
     for (let i = 0; i < bfsOrder.length; i++) {
       setCurrentNode(bfsOrder[i]);
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise(r => setTimeout(r, 800));
       setVisitedNodes(prev => [...prev, bfsOrder[i]]);
       setCurrentNode(null);
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise(r => setTimeout(r, 200));
     }
-
     setIsAnimating(false);
   };
 
+  const bfsCode = {
+    javascript: `// BFS
+function bfs(graph, start) {
+    const queue = [start];
+    const visited = new Set();
+    visited.add(start);
+    
+    while (queue.length > 0) {
+        const node = queue.shift(); // Dequeue
+        console.log(node); // Process
+        
+        for (let neighbor of graph[node]) {
+            if (!visited.has(neighbor)) {
+                visited.add(neighbor);
+                queue.push(neighbor); // Enqueue
+            }
+        }
+    }
+}`,
+    python: `# BFS
+from collections import deque
+
+def bfs(graph, start):
+    queue = deque([start])
+    visited = set([start])
+    
+    while queue:
+        node = queue.popleft() # Dequeue
+        print(node) # Process
+        
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor) # Enqueue`,
+    java: `// BFS
+void bfs(Map<Integer, List<Integer>> graph, int start) {
+    Queue<Integer> queue = new LinkedList<>();
+    Set<Integer> visited = new HashSet<>();
+    
+    queue.offer(start);
+    visited.add(start);
+    
+    while (!queue.isEmpty()) {
+        int node = queue.poll();
+        System.out.println(node); // Process
+        
+        for (int neighbor : graph.get(node)) {
+            if (!visited.contains(neighbor)) {
+                visited.add(neighbor);
+                queue.offer(neighbor);
+            }
+        }
+    }
+}`,
+    cpp: `// BFS
+void bfs(vector<vector<int>>& graph, int start) {
+    queue<int> q;
+    vector<bool> visited(graph.size(), false);
+    
+    q.push(start);
+    visited[start] = true;
+    
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout << node << " "; // Process
+        
+        for (int neighbor : graph[node]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+}`,
+    go: `// BFS
+func bfs(graph map[int][]int, start int) {
+    queue := []int{start}
+    visited := make(map[int]bool)
+    visited[start] = true
+    
+    for len(queue) > 0 {
+        // Dequeue
+        node := queue[0]
+        queue = queue[1:]
+        
+        fmt.Println(node) // Process
+        
+        for _, neighbor := range graph[node] {
+            if !visited[neighbor] {
+                visited[neighbor] = true
+                queue = append(queue, neighbor) // Enqueue
+            }
+        }
+    }
+}`
+  };
+
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <PerspectiveCard color="cyan">
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-teal-600 to-cyan-600 rounded-xl">
-          <span className="text-4xl">📊</span>
+        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
+          <Workflow size={28} />
         </div>
         <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Breadth First Search (BFS)
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Explore level by level - visit all neighbors before going deeper
-          </p>
+          <h2 className="text-4xl font-black text-white tracking-tight">Breadth First Search</h2>
+          <p className="text-slate-400 font-medium">Explore level by level.</p>
         </div>
       </div>
 
-      {/* Key Concept */}
-      <div className="mb-12">
-        <div className="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-6 rounded-xl border-l-4 border-teal-600">
-          <h3 className="text-2xl font-bold text-teal-900 dark:text-teal-100 mb-4">
-            🎯 BFS Strategy
+      <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        {/* Concept Card */}
+        <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] p-8 flex flex-col justify-center">
+          <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+            <Layers size={24} className="text-cyan-400" /> The Strategy
           </h3>
-          <p className="text-lg text-teal-900 dark:text-teal-100 mb-4">
-            Think of ripples in water: spread outward in waves. Uses a <strong>Queue</strong> (FIFO).
+          <p className="text-slate-400 text-sm leading-relaxed mb-6">
+            BFS explores neighbors level by level, like ripples in a pond. It visits all immediate neighbors before moving to the next level. Useful for finding the shortest path in unweighted graphs.
           </p>
-          <div className="grid md:grid-cols-3 gap-4 text-sm">
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold text-teal-700 dark:text-teal-300 mb-2">1️⃣ Start Node</p>
-              <p>Add start node to queue</p>
+          <div className="bg-slate-950 p-4 rounded-xl border border-white/5 font-mono text-xs text-slate-300 space-y-2">
+            <div className="flex justify-between">
+              <span>Data Structure:</span>
+              <span className="text-cyan-400 font-bold">Queue (FIFO)</span>
             </div>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold text-teal-700 dark:text-teal-300 mb-2">2️⃣ Visit Level</p>
-              <p>Process all nodes at current level</p>
+            <div className="flex justify-between">
+              <span>Time Complexity:</span>
+              <span className="text-emerald-400 font-bold">O(V + E)</span>
             </div>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold text-teal-700 dark:text-teal-300 mb-2">3️⃣ Next Level</p>
-              <p>Add neighbors to queue, repeat</p>
+            <div className="flex justify-between">
+              <span>Space Complexity:</span>
+              <span className="text-emerald-400 font-bold">O(V)</span>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Interactive Animation */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          🎬 BFS Animation
-        </h3>
-        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-8 rounded-xl">
-          <div className="flex justify-between items-center mb-6">
-            <p className="text-slate-700 dark:text-slate-300">
-              Watch BFS traverse the graph level by level
-            </p>
-            <button
-              onClick={animateBFS}
-              disabled={isAnimating}
-              className="px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-lg font-semibold hover:from-teal-700 hover:to-cyan-700 disabled:opacity-50 transition-all"
-            >
-              {isAnimating ? "Animating..." : "Start BFS"}
-            </button>
-          </div>
-
-          <div className="relative h-96">
-            <svg className="absolute inset-0 w-full h-full">
-              <line x1="50%" y1="15%" x2="25%" y2="40%" stroke="#94a3b8" strokeWidth="3" />
-              <line x1="50%" y1="15%" x2="75%" y2="40%" stroke="#94a3b8" strokeWidth="3" />
-              <line x1="25%" y1="40%" x2="12.5%" y2="65%" stroke="#94a3b8" strokeWidth="3" />
-              <line x1="25%" y1="40%" x2="37.5%" y2="65%" stroke="#94a3b8" strokeWidth="3" />
-              <line x1="75%" y1="40%" x2="87.5%" y2="65%" stroke="#94a3b8" strokeWidth="3" />
+        {/* Animation */}
+        <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] p-8 relative overflow-hidden flex flex-col items-center">
+          <div className="relative w-64 h-64 mb-6">
+            {/* Edges */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none">
+              <line x1="50%" y1="15%" x2="25%" y2="40%" stroke="#334155" strokeWidth="2" />
+              <line x1="50%" y1="15%" x2="75%" y2="40%" stroke="#334155" strokeWidth="2" />
+              <line x1="25%" y1="40%" x2="12.5%" y2="65%" stroke="#334155" strokeWidth="2" />
+              <line x1="25%" y1="40%" x2="37.5%" y2="65%" stroke="#334155" strokeWidth="2" />
+              <line x1="75%" y1="40%" x2="87.5%" y2="65%" stroke="#334155" strokeWidth="2" />
             </svg>
-
-            {nodes.map((node) => {
+            
+            {nodes.map((node, i) => {
               const isVisited = visitedNodes.includes(node.id);
               const isCurrent = currentNode === node.id;
-              const visitIndex = visitedNodes.indexOf(node.id);
-
+              
               return (
                 <motion.div
                   key={node.id}
-                  animate={{
-                    scale: isCurrent ? 1.3 : 1,
-                    backgroundColor: isCurrent ? "#14b8a6" : isVisited ? "#06b6d4" : "#94a3b8",
-                  }}
-                  style={{
-                    position: "absolute",
-                    left: `${node.x}%`,
-                    top: `${node.y}%`,
-                    transform: "translate(-50%, -50%)",
-                  }}
-                  className="w-16 h-16 rounded-full flex flex-col items-center justify-center text-white font-bold text-xl shadow-lg"
+                  className={`absolute w-10 h-10 -ml-5 -mt-5 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-colors
+                    ${isCurrent ? "bg-cyan-500 border-white text-white scale-125 z-10" : 
+                      isVisited ? "bg-cyan-900/50 border-cyan-500 text-cyan-200" : 
+                      "bg-slate-800 border-slate-700 text-slate-500"}
+                  `}
+                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                  animate={{ scale: isCurrent ? 1.2 : 1 }}
                 >
-                  <div>{node.label}</div>
-                  {isVisited && (
-                    <div className="text-xs mt-1">#{visitIndex + 1}</div>
-                  )}
+                  {node.label}
                 </motion.div>
               );
             })}
           </div>
-
-          <div className="mt-6 bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg text-center">
-            <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">BFS Order:</p>
-            <p className="text-xl font-bold text-teal-900 dark:text-teal-100">
-              {visitedNodes.length > 0
-                ? visitedNodes.map(id => nodes[id].label).join(" → ")
-                : "Click 'Start BFS' to begin"}
-            </p>
-          </div>
+          
+          <button
+            onClick={animateBFS}
+            disabled={isAnimating}
+            className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isAnimating ? <RotateCcw size={16} className="animate-spin" /> : <Play size={16} />}
+            {isAnimating ? "Traversing..." : "Start BFS"}
+          </button>
+          
+          {visitedNodes.length > 0 && (
+            <div className="mt-4 text-xs font-mono text-cyan-300">
+              Order: {visitedNodes.map(id => nodes[id].label).join(" → ")}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Code Implementation */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          💻 Implementation
-        </h3>
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function bfs(graph, start) {
-    const visited = new Set();
-    const queue = [start];
-    visited.add(start);
-
-    while (queue.length > 0) {
-        const node = queue.shift(); // Dequeue (FIFO)
-        console.log(node);
-
-        // Add all unvisited neighbors to queue
-        for (let neighbor of graph[node]) {
-            if (!visited.has(neighbor)) {
-                visited.add(neighbor);
-                queue.push(neighbor);
-            }
-        }
-    }
-}
-
-// BFS with level tracking
-function bfsWithLevels(graph, start) {
-    const visited = new Set([start]);
-    const queue = [[start, 0]]; // [node, level]
-
-    while (queue.length > 0) {
-        const [node, level] = queue.shift();
-        console.log(\`Node \${node} at level \${level}\`);
-
-        for (let neighbor of graph[node]) {
-            if (!visited.has(neighbor)) {
-                visited.add(neighbor);
-                queue.push([neighbor, level + 1]);
-            }
-        }
-    }
-}`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* DFS vs BFS Comparison */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚖️ DFS vs BFS
-        </h3>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-teal-100 dark:bg-teal-900/30">
-                <th className="border border-teal-300 dark:border-teal-700 p-4 text-left">Aspect</th>
-                <th className="border border-teal-300 dark:border-teal-700 p-4 text-left">DFS</th>
-                <th className="border border-teal-300 dark:border-teal-700 p-4 text-left">BFS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { aspect: "Data Structure", dfs: "Stack (or recursion)", bfs: "Queue" },
-                { aspect: "Traversal", dfs: "Go deep first", bfs: "Go level by level" },
-                { aspect: "Memory", dfs: "O(h) - height", bfs: "O(w) - width" },
-                { aspect: "Shortest Path", dfs: "❌ Not guaranteed", bfs: "✅ Guaranteed (unweighted)" },
-                { aspect: "Use Case", dfs: "Topological sort, cycles", bfs: "Shortest path, min distance" },
-              ].map((row, idx) => (
-                <tr key={idx} className="hover:bg-teal-50 dark:hover:bg-teal-900/10">
-                  <td className="border border-teal-300 dark:border-teal-700 p-4 font-bold">
-                    {row.aspect}
-                  </td>
-                  <td className="border border-teal-300 dark:border-teal-700 p-4">
-                    {row.dfs}
-                  </td>
-                  <td className="border border-teal-300 dark:border-teal-700 p-4">
-                    {row.bfs}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Applications */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          🎯 BFS Applications
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          {[
-            { app: "Shortest Path", desc: "Find shortest path in unweighted graph", icon: "🛤️" },
-            { app: "Level Order Traversal", desc: "Tree level-by-level traversal", icon: "🌳" },
-            { app: "Web Crawler", desc: "Crawl web pages level by level", icon: "🕷️" },
-            { app: "Social Network", desc: "Find connections within N degrees", icon: "👥" },
-            { app: "GPS Navigation", desc: "Find nearby locations", icon: "🗺️" },
-            { app: "Peer-to-Peer Networks", desc: "Broadcasting in networks", icon: "📡" },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="flex items-start gap-4 bg-teal-50 dark:bg-teal-900/20 p-4 rounded-xl border border-teal-200 dark:border-teal-800"
-            >
-              <span className="text-3xl">{item.icon}</span>
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-1">{item.app}</h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">{item.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </div>
+      <CodeImplementation 
+        languages={bfsCode}
+        color="cyan"
+        initialLanguage={currentLanguage}
+      />
+    </PerspectiveCard>
   );
 }

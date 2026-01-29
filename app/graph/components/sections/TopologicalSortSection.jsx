@@ -1,266 +1,332 @@
 "use client";
-import { motion } from "framer-motion";
+
+import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  ListOrdered, 
+  GitCommit, 
+  Workflow, 
+  CheckCircle2, 
+  AlertTriangle
+} from "lucide-react";
 
 export default function TopologicalSortSection() {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl">
-          <span className="text-4xl">📋</span>
-        </div>
-        <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Topological Sort
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Linear ordering of vertices in Directed Acyclic Graph (DAG)
-          </p>
-        </div>
-      </div>
+  const [currentLanguage, setCurrentLanguage] = useState("javascript");
 
-      {/* What is Topological Sort */}
-      <div className="mb-12">
-        <div className="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 p-6 rounded-xl border-l-4 border-violet-600">
-          <h3 className="text-2xl font-bold text-violet-900 dark:text-violet-100 mb-4">
-            🎯 What is Topological Sort?
-          </h3>
-          <p className="text-lg text-violet-900 dark:text-violet-100 mb-4">
-            A linear ordering of vertices such that for every directed edge (u → v), vertex u comes before v.
-          </p>
-          <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-            <p className="font-bold mb-2">Example: Course Prerequisites</p>
-            <p className="text-sm">If Calculus requires Algebra, Algebra must come before Calculus in the ordering.</p>
-            <p className="text-sm text-violet-700 dark:text-violet-300 mt-2">
-              Only works for <strong>Directed Acyclic Graphs (DAG)</strong> - no cycles allowed!
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* DFS-based Approach */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-violet-700 dark:text-violet-400 mb-6">
-          🔍 DFS-Based Topological Sort
-        </h3>
-        <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-200 dark:border-violet-800 mb-6">
-          <p className="text-lg text-violet-900 dark:text-violet-100 mb-4">
-            Use DFS and add vertices to stack after visiting all neighbors. Pop from stack for topological order.
-          </p>
-          <div className="space-y-2 text-sm">
-            <div>1. Run DFS from all unvisited vertices</div>
-            <div>2. After visiting all neighbors, push vertex to stack</div>
-            <div>3. Pop all vertices from stack → topological order</div>
-          </div>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function topologicalSortDFS(graph, V) {
-    const visited = new Set();
+  const dfsSortCode = {
+    javascript: `// DFS Topological Sort
+function topologicalSortDFS(graph, V) {
     const stack = [];
+    const visited = new Set();
 
-    function dfs(vertex) {
-        visited.add(vertex);
-
-        // Visit all neighbors
-        for (let neighbor of graph[vertex]) {
-            if (!visited.has(neighbor)) {
-                dfs(neighbor);
-            }
+    function dfs(node) {
+        visited.add(node);
+        for (let neighbor of graph[node] || []) {
+            if (!visited.has(neighbor)) dfs(neighbor);
         }
-
-        // Push to stack after visiting all neighbors
-        stack.push(vertex);
+        stack.push(node);
     }
 
-    // Call DFS for all unvisited vertices
     for (let i = 0; i < V; i++) {
-        if (!visited.has(i)) {
-            dfs(i);
-        }
+        if (!visited.has(i)) dfs(i);
     }
-
-    // Stack contains topological order (reverse)
     return stack.reverse();
+}`,
+    python: `# DFS Topological Sort
+def topological_sort_dfs(graph, V):
+    visited = set()
+    stack = []
+
+    def dfs(node):
+        visited.add(node)
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                dfs(neighbor)
+        stack.append(node)
+
+    for i in range(V):
+        if i not in visited:
+            dfs(i)
+            
+    return stack[::-1]`,
+    java: `// DFS Topological Sort
+public List<Integer> topologicalSortDFS(List<List<Integer>> graph, int V) {
+    boolean[] visited = new boolean[V];
+    Stack<Integer> stack = new Stack<>();
+    
+    for (int i = 0; i < V; i++) {
+        if (!visited[i]) dfs(graph, i, visited, stack);
+    }
+    
+    List<Integer> result = new ArrayList<>();
+    while (!stack.isEmpty()) result.add(stack.pop());
+    return result;
 }
 
-// Time: O(V + E)
-// Space: O(V)`}</code>
-          </pre>
-        </div>
-      </div>
+void dfs(List<List<Integer>> graph, int u, boolean[] visited, Stack<Integer> stack) {
+    visited[u] = true;
+    for (int v : graph.get(u)) {
+        if (!visited[v]) dfs(graph, v, visited, stack);
+    }
+    stack.push(u);
+}`,
+    cpp: `// DFS Topological Sort
+void dfs(int u, vector<vector<int>>& adj, vector<bool>& visited, stack<int>& st) {
+    visited[u] = true;
+    for (int v : adj[u]) {
+        if (!visited[v]) dfs(v, adj, visited, st);
+    }
+    st.push(u);
+}
 
-      {/* Kahn's Algorithm (BFS) */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-6">
-          📊 Kahn's Algorithm (BFS-Based)
-        </h3>
-        <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800 mb-6">
-          <p className="text-lg text-purple-900 dark:text-purple-100 mb-4">
-            Uses <strong>in-degree</strong> (number of incoming edges). Process vertices with in-degree 0.
-          </p>
-          <div className="space-y-2 text-sm">
-            <div>1. Calculate in-degree for all vertices</div>
-            <div>2. Add all vertices with in-degree 0 to queue</div>
-            <div>3. Process queue: remove vertex, decrease neighbors' in-degree</div>
-            <div>4. If neighbor's in-degree becomes 0, add to queue</div>
-            <div>5. If processed &lt; V vertices → cycle exists!</div>
-          </div>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function topologicalSortKahn(graph, V) {
-    const inDegree = new Array(V).fill(0);
-    const result = [];
-
-    // Calculate in-degree for all vertices
-    for (let u = 0; u < V; u++) {
-        for (let v of graph[u]) {
-            inDegree[v]++;
+vector<int> topologicalSortDFS(int V, vector<vector<int>>& adj) {
+    stack<int> st;
+    vector<bool> visited(V, false);
+    
+    for (int i = 0; i < V; i++) {
+        if (!visited[i]) dfs(i, adj, visited, st);
+    }
+    
+    vector<int> result;
+    while (!st.empty()) {
+        result.push_back(st.top());
+        st.pop();
+    }
+    return result;
+}`,
+    go: `// DFS Topological Sort
+func topologicalSortDFS(V int, graph map[int][]int) []int {
+    visited := make(map[int]bool)
+    stack := []int{}
+    
+    var dfs func(int)
+    dfs = func(node int) {
+        visited[node] = true
+        for _, neighbor := range graph[node] {
+            if !visited[neighbor] {
+                dfs(neighbor)
+            }
+        }
+        stack = append(stack, node)
+    }
+    
+    for i := 0; i < V; i++ {
+        if !visited[i] {
+            dfs(i)
         }
     }
+    
+    // Reverse
+    for i, j := 0, len(stack)-1; i < j; i, j = i+1, j-1 {
+        stack[i], stack[j] = stack[j], stack[i]
+    }
+    return stack
+}`
+  };
 
-    // Add all vertices with in-degree 0 to queue
+  const kahnCode = {
+    javascript: `// Kahn's Algorithm (BFS)
+function kahnSort(graph, V) {
+    const inDegree = new Array(V).fill(0);
+    for (let u = 0; u < V; u++) {
+        for (let v of graph[u] || []) inDegree[v]++;
+    }
+
     const queue = [];
     for (let i = 0; i < V; i++) {
-        if (inDegree[i] === 0) {
-            queue.push(i);
-        }
+        if (inDegree[i] === 0) queue.push(i);
     }
 
-    // Process queue
+    const result = [];
     while (queue.length > 0) {
         const u = queue.shift();
         result.push(u);
 
-        // Decrease in-degree of neighbors
-        for (let v of graph[u]) {
+        for (let v of graph[u] || []) {
             inDegree[v]--;
-            if (inDegree[v] === 0) {
-                queue.push(v);
+            if (inDegree[v] === 0) queue.push(v);
+        }
+    }
+    
+    return result.length === V ? result : []; // Cycle check
+}`,
+    python: `# Kahn's Algorithm (BFS)
+from collections import deque
+
+def kahn_sort(graph, V):
+    in_degree = [0] * V
+    for u in range(V):
+        for v in graph[u]:
+            in_degree[v] += 1
+            
+    queue = deque([i for i in range(V) if in_degree[i] == 0])
+    result = []
+    
+    while queue:
+        u = queue.popleft()
+        result.append(u)
+        
+        for v in graph[u]:
+            in_degree[v] -= 1
+            if in_degree[v] == 0:
+                queue.append(v)
+                
+    return result if len(result) == V else []`,
+    java: `// Kahn's Algorithm (BFS)
+public int[] kahnSort(List<List<Integer>> graph, int V) {
+    int[] inDegree = new int[V];
+    for (List<Integer> adj : graph) {
+        for (int v : adj) inDegree[v]++;
+    }
+    
+    Queue<Integer> q = new LinkedList<>();
+    for (int i = 0; i < V; i++) {
+        if (inDegree[i] == 0) q.offer(i);
+    }
+    
+    int[] result = new int[V];
+    int idx = 0;
+    while (!q.isEmpty()) {
+        int u = q.poll();
+        result[idx++] = u;
+        
+        for (int v : graph.get(u)) {
+            inDegree[v]--;
+            if (inDegree[v] == 0) q.offer(v);
+        }
+    }
+    return idx == V ? result : new int[0];
+}`,
+    cpp: `// Kahn's Algorithm (BFS)
+vector<int> kahnSort(int V, vector<vector<int>>& adj) {
+    vector<int> inDegree(V, 0);
+    for (int u = 0; u < V; u++) {
+        for (int v : adj[u]) inDegree[v]++;
+    }
+    
+    queue<int> q;
+    for (int i = 0; i < V; i++) {
+        if (inDegree[i] == 0) q.push(i);
+    }
+    
+    vector<int> result;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        result.push_back(u);
+        
+        for (int v : adj[u]) {
+            inDegree[v]--;
+            if (inDegree[v] == 0) q.push(v);
+        }
+    }
+    return result.size() == V ? result : vector<int>();
+}`,
+    go: `// Kahn's Algorithm (BFS)
+func kahnSort(V int, graph map[int][]int) []int {
+    inDegree := make([]int, V)
+    for u := 0; u < V; u++ {
+        for _, v := range graph[u] {
+            inDegree[v]++
+        }
+    }
+    
+    queue := []int{}
+    for i := 0; i < V; i++ {
+        if inDegree[i] == 0 {
+            queue = append(queue, i)
+        }
+    }
+    
+    result := []int{}
+    for len(queue) > 0 {
+        u := queue[0]; queue = queue[1:]
+        result = append(result, u)
+        
+        for _, v := range graph[u] {
+            inDegree[v]--
+            if inDegree[v] == 0 {
+                queue = append(queue, v)
             }
         }
     }
+    
+    if len(result) != V { return []int{} }
+    return result
+}`
+  };
 
-    // Check if topological sort is possible
-    if (result.length !== V) {
-        console.log("Cycle detected! Topological sort not possible.");
-        return null;
-    }
-
-    return result;
-}
-
-// Time: O(V + E)
-// Space: O(V)`}</code>
-          </pre>
+  return (
+    <PerspectiveCard color="violet">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 border border-violet-500/20">
+          <ListOrdered size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Topological Sort</h2>
+          <p className="text-slate-400 font-medium">Linear ordering of dependencies.</p>
         </div>
       </div>
 
-      {/* Applications */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          🎯 Applications
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          {[
-            {
-              app: "Course Scheduling",
-              desc: "Determine order to take courses with prerequisites",
-              icon: "📚",
-            },
-            {
-              app: "Build Systems",
-              desc: "Order compilation of dependent modules (Makefile)",
-              icon: "🔨",
-            },
-            {
-              app: "Task Scheduling",
-              desc: "Schedule tasks with dependencies",
-              icon: "📅",
-            },
-            {
-              app: "Package Management",
-              desc: "Install packages in correct order (npm, apt)",
-              icon: "📦",
-            },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="flex items-start gap-4 bg-violet-50 dark:bg-violet-900/20 p-4 rounded-xl border border-violet-200 dark:border-violet-800"
-            >
-              <span className="text-3xl">{item.icon}</span>
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-1">
-                  {item.app}
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">{item.desc}</p>
+      <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        {/* DFS Card */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <GitCommit size={24} className="text-violet-400" />
+            <h3 className="text-2xl font-black text-white">1. DFS Approach</h3>
+          </div>
+          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
+            <p className="text-slate-300 text-sm mb-4">
+              Add node to stack <strong>after</strong> visiting all its neighbors. Reverse stack for result.
+            </p>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Simple recursion
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* DFS vs Kahn's */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚖️ DFS vs Kahn's Algorithm
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-200 dark:border-violet-800">
-            <h4 className="font-bold text-violet-900 dark:text-violet-100 mb-4 text-lg">
-              DFS-Based
-            </h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Uses recursion/stack</span>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Time: O(V + E)
               </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Simpler to implement</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>O(V + E) time</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span>✗</span>
-                <span>Doesn't explicitly detect cycles</span>
+              <div className="flex items-center gap-2 text-rose-400">
+                <AlertTriangle size={14} /> Can't detect cycles easily
               </div>
             </div>
           </div>
+          <CodeImplementation 
+            languages={dfsSortCode}
+            color="violet"
+            initialLanguage={currentLanguage}
+          />
+        </div>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
-            <h4 className="font-bold text-purple-900 dark:text-purple-100 mb-4 text-lg">
-              Kahn's (BFS-Based)
-            </h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Uses queue + in-degree</span>
+        {/* Kahn's Card */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <Workflow size={24} className="text-purple-400" />
+            <h3 className="text-2xl font-black text-white">2. Kahn's Algorithm</h3>
+          </div>
+          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
+            <p className="text-slate-300 text-sm mb-4">
+              Repeatedly remove nodes with <strong>in-degree 0</strong>. If nodes remain, graph has a cycle.
+            </p>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Detects Cycles
               </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Explicitly detects cycles</span>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> BFS-based (Queue)
               </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>O(V + E) time</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>More intuitive for some problems</span>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Time: O(V + E)
               </div>
             </div>
           </div>
+          <CodeImplementation 
+            languages={kahnCode}
+            color="purple"
+            initialLanguage={currentLanguage}
+          />
         </div>
       </div>
-    </div>
+    </PerspectiveCard>
   );
 }

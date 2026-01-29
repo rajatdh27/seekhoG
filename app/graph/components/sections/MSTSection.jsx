@@ -1,238 +1,387 @@
 "use client";
-import { motion } from "framer-motion";
+
+import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  TreePine, 
+  GitMerge, 
+  GitCommit, 
+  CheckCircle2, 
+  XCircle,
+  ArrowRightLeft
+} from "lucide-react";
 
 export default function MSTSection() {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl">
-          <span className="text-4xl">🌲</span>
-        </div>
-        <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Minimum Spanning Tree (MST)
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Connect all vertices with minimum total edge weight
-          </p>
-        </div>
-      </div>
+  const [currentLanguage, setCurrentLanguage] = useState("javascript");
 
-      {/* What is MST */}
-      <div className="mb-12">
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-600">
-          <h3 className="text-2xl font-bold text-green-900 dark:text-green-100 mb-4">
-            🎯 What is MST?
-          </h3>
-          <p className="text-lg text-green-900 dark:text-green-100 mb-4">
-            A spanning tree that connects all vertices with the <strong>minimum possible total edge weight</strong>. No cycles, exactly V-1 edges.
-          </p>
-          <div className="grid md:grid-cols-3 gap-4 text-sm">
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold mb-2">Spanning</p>
-              <p>Connects all vertices</p>
-            </div>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold mb-2">Tree</p>
-              <p>No cycles, V-1 edges</p>
-            </div>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg">
-              <p className="font-bold mb-2">Minimum</p>
-              <p>Lowest total weight</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Kruskal's Algorithm */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-6">
-          ⚡ Kruskal's Algorithm
-        </h3>
-        <div className="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-xl border border-emerald-200 dark:border-emerald-800 mb-6">
-          <p className="text-lg text-emerald-900 dark:text-emerald-100 mb-4">
-            <strong>Edge-based greedy approach:</strong> Sort edges by weight, add them one by one if they don't create a cycle.
-          </p>
-          <div className="space-y-2 text-sm">
-            <div>1. Sort all edges by weight (ascending)</div>
-            <div>2. Pick smallest edge that doesn't form cycle</div>
-            <div>3. Use Union-Find to detect cycles</div>
-            <div>4. Repeat until V-1 edges selected</div>
-          </div>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`class UnionFind {
+  const kruskalCode = {
+    javascript: `// Kruskal's Algorithm (Union-Find)
+class UnionFind {
     constructor(n) {
         this.parent = Array.from({length: n}, (_, i) => i);
-        this.rank = new Array(n).fill(0);
     }
-
     find(x) {
-        if (this.parent[x] !== x) {
-            this.parent[x] = this.find(this.parent[x]);
-        }
+        if (this.parent[x] !== x) this.parent[x] = this.find(this.parent[x]);
         return this.parent[x];
     }
-
     union(x, y) {
-        const rootX = this.find(x);
-        const rootY = this.find(y);
-
+        let rootX = this.find(x), rootY = this.find(y);
         if (rootX !== rootY) {
-            if (this.rank[rootX] < this.rank[rootY]) {
-                this.parent[rootX] = rootY;
-            } else if (this.rank[rootX] > this.rank[rootY]) {
-                this.parent[rootY] = rootX;
-            } else {
-                this.parent[rootY] = rootX;
-                this.rank[rootX]++;
-            }
+            this.parent[rootX] = rootY;
             return true;
         }
         return false;
     }
 }
 
-function kruskal(V, edges) {
-    // Sort edges by weight
-    edges.sort((a, b) => a[2] - b[2]);
-
-    const uf = new UnionFind(V);
-    const mst = [];
-    let totalWeight = 0;
-
-    for (let [u, v, weight] of edges) {
+function kruskal(n, edges) {
+    edges.sort((a, b) => a[2] - b[2]); // Sort by weight
+    const uf = new UnionFind(n);
+    let mstCost = 0, edgesCount = 0;
+    
+    for (let [u, v, w] of edges) {
         if (uf.union(u, v)) {
-            mst.push([u, v, weight]);
-            totalWeight += weight;
-
-            if (mst.length === V - 1) break;
+            mstCost += w;
+            edgesCount++;
+            if (edgesCount === n - 1) break;
         }
     }
+    return mstCost;
+}`,
+    python: `# Kruskal's Algorithm
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+        
+    def union(self, x, y):
+        rootX, rootY = self.find(x), self.find(y)
+        if rootX != rootY:
+            self.parent[rootX] = rootY
+            return True
+        return False
 
-    return { mst, totalWeight };
+def kruskal(n, edges):
+    edges.sort(key=lambda x: x[2]) # Sort by weight
+    uf = UnionFind(n)
+    mst_cost = 0
+    count = 0
+    
+    for u, v, w in edges:
+        if uf.union(u, v):
+            mst_cost += w
+            count += 1
+            if count == n - 1: break
+            
+    return mst_cost`,
+    java: `// Kruskal's Algorithm
+class UnionFind {
+    int[] parent;
+    UnionFind(int n) {
+        parent = new int[n];
+        for(int i=0; i<n; i++) parent[i] = i;
+    }
+    int find(int x) {
+        if(parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    boolean union(int x, int y) {
+        int rootX = find(x), rootY = find(y);
+        if(rootX != rootY) {
+            parent[rootX] = rootY;
+            return true;
+        }
+        return false;
+    }
 }
 
-// Time: O(E log E) for sorting
-// Space: O(V)`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Prim's Algorithm */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">
-          🌿 Prim's Algorithm
-        </h3>
-        <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800 mb-6">
-          <p className="text-lg text-green-900 dark:text-green-100 mb-4">
-            <strong>Vertex-based greedy approach:</strong> Start from a vertex, grow MST by adding cheapest edge to new vertex.
-          </p>
-          <div className="space-y-2 text-sm">
-            <div>1. Start from any vertex</div>
-            <div>2. Add cheapest edge to unvisited vertex</div>
-            <div>3. Mark vertex as visited</div>
-            <div>4. Repeat until all vertices included</div>
-          </div>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function prims(graph, V) {
-    const visited = new Set();
-    const pq = new MinPriorityQueue();
-    const mst = [];
-    let totalWeight = 0;
-
-    // Start from vertex 0
-    visited.add(0);
-    for (let [neighbor, weight] of graph[0]) {
-        pq.enqueue([0, neighbor, weight], weight);
+public int kruskal(int n, int[][] edges) {
+    Arrays.sort(edges, (a, b) -> a[2] - b[2]);
+    UnionFind uf = new UnionFind(n);
+    int cost = 0, count = 0;
+    
+    for(int[] edge : edges) {
+        if(uf.union(edge[0], edge[1])) {
+            cost += edge[2];
+            if(++count == n - 1) break;
+        }
     }
+    return cost;
+}`,
+    cpp: `// Kruskal's Algorithm
+struct Edge { int u, v, w; };
+bool compare(Edge a, Edge b) { return a.w < b.w; }
 
-    while (!pq.isEmpty() && visited.size < V) {
-        const { element: [u, v, weight] } = pq.dequeue();
+struct UnionFind {
+    vector<int> parent;
+    UnionFind(int n) {
+        parent.resize(n);
+        iota(parent.begin(), parent.end(), 0);
+    }
+    int find(int x) {
+        if(parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    bool unite(int x, int y) {
+        int rootX = find(x), rootY = find(y);
+        if(rootX != rootY) {
+            parent[rootX] = rootY;
+            return true;
+        }
+        return false;
+    }
+};
 
-        if (visited.has(v)) continue;
+int kruskal(int n, vector<Edge>& edges) {
+    sort(edges.begin(), edges.end(), compare);
+    UnionFind uf(n);
+    int cost = 0, count = 0;
+    
+    for(auto& e : edges) {
+        if(uf.unite(e.u, e.v)) {
+            cost += e.w;
+            if(++count == n - 1) break;
+        }
+    }
+    return cost;
+}`,
+    go: `// Kruskal's Algorithm
+type Edge struct { u, v, w int }
+type UnionFind struct { parent []int }
 
-        visited.add(v);
-        mst.push([u, v, weight]);
-        totalWeight += weight;
+func NewUnionFind(n int) *UnionFind {
+    p := make([]int, n)
+    for i := range p { p[i] = i }
+    return &UnionFind{p}
+}
 
-        // Add edges from newly added vertex
-        for (let [neighbor, edgeWeight] of graph[v]) {
-            if (!visited.has(neighbor)) {
-                pq.enqueue([v, neighbor, edgeWeight], edgeWeight);
+func (uf *UnionFind) Find(x int) int {
+    if uf.parent[x] != x {
+        uf.parent[x] = uf.Find(uf.parent[x])
+    }
+    return uf.parent[x]
+}
+
+func (uf *UnionFind) Union(x, y int) bool {
+    rootX, rootY := uf.Find(x), uf.Find(y)
+    if rootX != rootY {
+        uf.parent[rootX] = rootY
+        return true
+    }
+    return false
+}
+
+func kruskal(n int, edges []Edge) int {
+    sort.Slice(edges, func(i, j int) bool { return edges[i].w < edges[j].w })
+    uf := NewUnionFind(n)
+    cost := 0
+    count := 0
+    
+    for _, e := range edges {
+        if uf.Union(e.u, e.v) {
+            cost += e.w
+            count++
+            if count == n-1 { break }
+        }
+    }
+    return cost
+}`
+  };
+
+  const primsCode = {
+    javascript: `// Prim's Algorithm
+function prims(n, adj) {
+    const minHeap = new MinPriorityQueue();
+    const visited = new Set();
+    let cost = 0;
+    
+    minHeap.enqueue(0, 0); // start at node 0, cost 0
+    
+    while (!minHeap.isEmpty() && visited.size < n) {
+        const { element: u, priority: w } = minHeap.dequeue();
+        
+        if (visited.has(u)) continue;
+        visited.add(u);
+        cost += w;
+        
+        for (let [v, weight] of adj[u]) {
+            if (!visited.has(v)) {
+                minHeap.enqueue(v, weight);
             }
         }
     }
+    return cost;
+}`,
+    python: `# Prim's Algorithm
+import heapq
 
-    return { mst, totalWeight };
-}
+def prims(n, adj):
+    visited = set()
+    min_heap = [(0, 0)] # cost, node
+    total_cost = 0
+    
+    while min_heap and len(visited) < n:
+        w, u = heapq.heappop(min_heap)
+        
+        if u in visited: continue
+        visited.add(u)
+        total_cost += w
+        
+        for v, weight in adj[u]:
+            if v not in visited:
+                heapq.heappush(min_heap, (weight, v))
+                
+    return total_cost`,
+    java: `// Prim's Algorithm
+public int prims(int n, List<List<int[]>> adj) {
+    boolean[] visited = new boolean[n];
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] - b[0]);
+    int cost = 0, count = 0;
+    
+    pq.offer(new int[]{0, 0}); // cost, node
+    
+    while (!pq.isEmpty() && count < n) {
+        int[] curr = pq.poll();
+        int w = curr[0], u = curr[1];
+        
+        if (visited[u]) continue;
+        visited[u] = true;
+        cost += w;
+        count++;
+        
+        for (int[] neighbor : adj.get(u)) {
+            if (!visited[neighbor[0]]) {
+                pq.offer(new int[]{neighbor[1], neighbor[0]});
+            }
+        }
+    }
+    return cost;
+}`,
+    cpp: `// Prim's Algorithm
+int prims(int n, vector<vector<pair<int,int>>>& adj) {
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
+    vector<bool> visited(n, false);
+    int cost = 0, count = 0;
+    
+    pq.push({0, 0}); // cost, node
+    
+    while (!pq.empty() && count < n) {
+        auto [w, u] = pq.top(); pq.pop();
+        
+        if (visited[u]) continue;
+        visited[u] = true;
+        cost += w;
+        count++;
+        
+        for (auto& [v, weight] : adj[u]) {
+            if (!visited[v]) {
+                pq.push({weight, v});
+            }
+        }
+    }
+    return cost;
+}`,
+    go: `// Prim's Algorithm
+func prims(n int, adj map[int][]Edge) int {
+    visited := make(map[int]bool)
+    pq := &MinHeap{} // Assume heap impl
+    heap.Push(pq, Item{node: 0, cost: 0})
+    totalCost := 0
+    
+    for pq.Len() > 0 && len(visited) < n {
+        item := heap.Pop(pq).(Item)
+        u, w := item.node, item.cost
+        
+        if visited[u] { continue }
+        visited[u] = true
+        totalCost += w
+        
+        for _, e := range adj[u] {
+            if !visited[e.to] {
+                heap.Push(pq, Item{node: e.to, cost: e.weight})
+            }
+        }
+    }
+    return totalCost
+}`
+  };
 
-// Time: O((V + E) log V) with min-heap
-// Space: O(V + E)`}</code>
-          </pre>
+  return (
+    <PerspectiveCard color="emerald">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+          <TreePine size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Minimum Spanning Tree</h2>
+          <p className="text-slate-400 font-medium">Connect all nodes with minimal cost.</p>
         </div>
       </div>
 
-      {/* Comparison */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚖️ Kruskal vs Prim
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-xl border border-emerald-200 dark:border-emerald-800">
-            <h4 className="font-bold text-emerald-900 dark:text-emerald-100 mb-4 text-lg">
-              Kruskal's Algorithm
-            </h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Edge-based (sorts all edges)</span>
+      <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        {/* Kruskal's Card */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <GitMerge size={24} className="text-emerald-400" />
+            <h3 className="text-2xl font-black text-white">1. Kruskal's Algorithm</h3>
+          </div>
+          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
+            <p className="text-slate-300 text-sm mb-4">
+              Greedy approach processing <strong>edges</strong> by weight. Uses Union-Find to detect cycles.
+            </p>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Good for Sparse Graphs
               </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Better for sparse graphs</span>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Easy to implement with Union-Find
               </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Uses Union-Find</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>O(E log E) time</span>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Time: O(E log E)
               </div>
             </div>
           </div>
+          <CodeImplementation 
+            languages={kruskalCode}
+            color="emerald"
+            initialLanguage={currentLanguage}
+          />
+        </div>
 
-          <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="font-bold text-green-900 dark:text-green-100 mb-4 text-lg">
-              Prim's Algorithm
-            </h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Vertex-based (grows from start)</span>
+        {/* Prim's Card */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <GitCommit size={24} className="text-green-400" />
+            <h3 className="text-2xl font-black text-white">2. Prim's Algorithm</h3>
+          </div>
+          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
+            <p className="text-slate-300 text-sm mb-4">
+              Greedy approach growing from a <strong>vertex</strong>. Uses Min-Heap to find nearest unvisited node.
+            </p>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Good for Dense Graphs
               </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Better for dense graphs</span>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Grows single component
               </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>Uses Min-Heap</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span>✓</span>
-                <span>O((V+E) log V) time</span>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Time: O(E log V)
               </div>
             </div>
           </div>
+          <CodeImplementation 
+            languages={primsCode}
+            color="green"
+            initialLanguage={currentLanguage}
+          />
         </div>
       </div>
-    </div>
+    </PerspectiveCard>
   );
 }

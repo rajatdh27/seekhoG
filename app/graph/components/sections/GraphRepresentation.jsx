@@ -1,352 +1,259 @@
 "use client";
-import { motion } from "framer-motion";
+
 import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  Share2, 
+  Grid, 
+  List, 
+  CheckCircle2, 
+  XCircle,
+  ArrowRightLeft
+} from "lucide-react";
 
 export default function GraphRepresentation() {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
 
-  const languages = {
-    javascript: `// Adjacency List
+  const adjacencyListCode = {
+    javascript: `// Adjacency List Representation
 class Graph {
     constructor() {
-        this.adjacencyList = new Map();
+        this.adjList = new Map();
     }
 
-    addVertex(vertex) {
-        if (!this.adjacencyList.has(vertex)) {
-            this.adjacencyList.set(vertex, []);
-        }
+    addVertex(v) {
+        if (!this.adjList.has(v)) this.adjList.set(v, []);
     }
 
     addEdge(v1, v2) {
-        this.adjacencyList.get(v1).push(v2);
-        this.adjacencyList.get(v2).push(v1); // For undirected
+        this.adjList.get(v1).push(v2);
+        this.adjList.get(v2).push(v1); // Undirected
     }
 }
-
-// Adjacency Matrix
-const adjacencyMatrix = [
-    [0, 1, 1, 0],
-    [1, 0, 1, 1],
-    [1, 1, 0, 1],
-    [0, 1, 1, 0]
-];`,
-    python: `# Adjacency List
+// Space: O(V + E)`,
+    python: `# Adjacency List Representation
 class Graph:
     def __init__(self):
-        self.adjacency_list = {}
+        self.adj_list = {}
 
-    def add_vertex(self, vertex):
-        if vertex not in self.adjacency_list:
-            self.adjacency_list[vertex] = []
+    def add_vertex(self, v):
+        if v not in self.adj_list:
+            self.adj_list[v] = []
 
     def add_edge(self, v1, v2):
-        self.adjacency_list[v1].append(v2)
-        self.adjacency_list[v2].append(v1)  # For undirected
-
-# Adjacency Matrix
-adjacency_matrix = [
-    [0, 1, 1, 0],
-    [1, 0, 1, 1],
-    [1, 1, 0, 1],
-    [0, 1, 1, 0]
-]`,
-    java: `// Adjacency List
+        self.adj_list[v1].append(v2)
+        self.adj_list[v2].append(v1) # Undirected
+# Space: O(V + E)`,
+    java: `// Adjacency List Representation
 import java.util.*;
 
 class Graph {
-    private Map<Integer, List<Integer>> adjacencyList;
+    private Map<Integer, List<Integer>> adjList;
 
     public Graph() {
-        adjacencyList = new HashMap<>();
+        adjList = new HashMap<>();
     }
 
-    public void addVertex(int vertex) {
-        adjacencyList.putIfAbsent(vertex, new ArrayList<>());
+    public void addVertex(int v) {
+        adjList.putIfAbsent(v, new ArrayList<>());
     }
 
     public void addEdge(int v1, int v2) {
-        adjacencyList.get(v1).add(v2);
-        adjacencyList.get(v2).add(v1); // For undirected
+        adjList.get(v1).add(v2);
+        adjList.get(v2).add(v1); // Undirected
     }
-}
-
-// Adjacency Matrix
-int[][] adjacencyMatrix = {
-    {0, 1, 1, 0},
-    {1, 0, 1, 1},
-    {1, 1, 0, 1},
-    {0, 1, 1, 0}
-};`,
-    cpp: `// Adjacency List
+}`,
+    cpp: `// Adjacency List Representation
 #include <vector>
 #include <unordered_map>
 using namespace std;
 
 class Graph {
-    unordered_map<int, vector<int>> adjacencyList;
+    unordered_map<int, vector<int>> adjList;
 
 public:
-    void addVertex(int vertex) {
-        if (adjacencyList.find(vertex) == adjacencyList.end()) {
-            adjacencyList[vertex] = vector<int>();
+    void addVertex(int v) {
+        if (adjList.find(v) == adjList.end()) {
+            adjList[v] = vector<int>();
         }
     }
 
     void addEdge(int v1, int v2) {
-        adjacencyList[v1].push_back(v2);
-        adjacencyList[v2].push_back(v1); // For undirected
+        adjList[v1].push_back(v2);
+        adjList[v2].push_back(v1); // Undirected
     }
-};
-
-// Adjacency Matrix
-vector<vector<int>> adjacencyMatrix = {
-    {0, 1, 1, 0},
-    {1, 0, 1, 1},
-    {1, 1, 0, 1},
-    {0, 1, 1, 0}
 };`,
-    c: `// Adjacency Matrix (simpler in C)
-#define V 4
-
-int adjacencyMatrix[V][V] = {
-    {0, 1, 1, 0},
-    {1, 0, 1, 1},
-    {1, 1, 0, 1},
-    {0, 1, 1, 0}
-};
-
-// Adjacency List using array of linked lists
-struct Node {
-    int vertex;
-    struct Node* next;
-};
-
-struct Graph {
-    int numVertices;
-    struct Node** adjLists;
-};`,
-    go: `// Adjacency List
+    go: `// Adjacency List Representation
 package main
 
 type Graph struct {
-    adjacencyList map[int][]int
+    adjList map[int][]int
 }
 
 func NewGraph() *Graph {
-    return &Graph{
-        adjacencyList: make(map[int][]int),
-    }
+    return &Graph{adjList: make(map[int][]int)}
 }
 
-func (g *Graph) AddVertex(vertex int) {
-    if _, exists := g.adjacencyList[vertex]; !exists {
-        g.adjacencyList[vertex] = []int{}
+func (g *Graph) AddVertex(v int) {
+    if _, exists := g.adjList[v]; !exists {
+        g.adjList[v] = []int{}
     }
 }
 
 func (g *Graph) AddEdge(v1, v2 int) {
-    g.adjacencyList[v1] = append(g.adjacencyList[v1], v2)
-    g.adjacencyList[v2] = append(g.adjacencyList[v2], v1)
-}
+    g.adjList[v1] = append(g.adjList[v1], v2)
+    g.adjList[v2] = append(g.adjList[v2], v1) // Undirected
+}`
+  };
 
-// Adjacency Matrix
-adjacencyMatrix := [][]int{
-    {0, 1, 1, 0},
-    {1, 0, 1, 1},
-    {1, 1, 0, 1},
-    {0, 1, 1, 0},
-}`,
+  const adjacencyMatrixCode = {
+    javascript: `// Adjacency Matrix
+// 1 = edge exists, 0 = no edge
+const matrix = [
+  [0, 1, 1, 0], // Node 0 -> 1, 2
+  [1, 0, 1, 1], // Node 1 -> 0, 2, 3
+  [1, 1, 0, 1], // Node 2 -> 0, 1, 3
+  [0, 1, 1, 0]  // Node 3 -> 1, 2
+];
+// Space: O(V²)`,
+    python: `# Adjacency Matrix
+# 1 = edge exists, 0 = no edge
+matrix = [
+    [0, 1, 1, 0], # Node 0 -> 1, 2
+    [1, 0, 1, 1], # Node 1 -> 0, 2, 3
+    [1, 1, 0, 1], # Node 2 -> 0, 1, 3
+    [0, 1, 1, 0]  # Node 3 -> 1, 2
+]
+# Space: O(V²)`,
+    java: `// Adjacency Matrix
+int[][] matrix = {
+    {0, 1, 1, 0}, // Node 0
+    {1, 0, 1, 1}, // Node 1
+    {1, 1, 0, 1}, // Node 2
+    {0, 1, 1, 0}  // Node 3
+};`,
+    cpp: `// Adjacency Matrix
+vector<vector<int>> matrix = {
+    {0, 1, 1, 0}, // Node 0
+    {1, 0, 1, 1}, // Node 1
+    {1, 1, 0, 1}, // Node 2
+    {0, 1, 1, 0}  // Node 3
+};`,
+    go: `// Adjacency Matrix
+matrix := [][]int{
+    {0, 1, 1, 0}, // Node 0
+    {1, 0, 1, 1}, // Node 1
+    {1, 1, 0, 1}, // Node 2
+    {0, 1, 1, 0}, // Node 3
+}`
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <h2 className="text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100">
-        📊 Graph Representation
-      </h2>
-
-      {/* Two Main Methods */}
-      <div className="mb-12">
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Adjacency Matrix */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800"
-          >
-            <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-4">
-              📋 Adjacency Matrix
-            </h3>
-            <p className="text-slate-700 dark:text-slate-300 mb-4">
-              2D array where cell [i][j] = 1 if edge exists between vertex i and j
-            </p>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg mb-4">
-              <table className="w-full text-center text-sm">
-                <thead>
-                  <tr>
-                    <th className="p-2"></th>
-                    <th className="p-2 font-bold">A</th>
-                    <th className="p-2 font-bold">B</th>
-                    <th className="p-2 font-bold">C</th>
-                    <th className="p-2 font-bold">D</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    ["A", 0, 1, 1, 0],
-                    ["B", 1, 0, 1, 1],
-                    ["C", 1, 1, 0, 1],
-                    ["D", 0, 1, 1, 0],
-                  ].map((row, idx) => (
-                    <tr key={idx}>
-                      <td className="p-2 font-bold">{row[0]}</td>
-                      {row.slice(1).map((cell, cellIdx) => (
-                        <td
-                          key={cellIdx}
-                          className={`p-2 ${
-                            cell === 1
-                              ? "bg-purple-200 dark:bg-purple-700 font-bold"
-                              : "bg-slate-100 dark:bg-slate-700"
-                          }`}
-                        >
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-start gap-2">
-                <span className="text-green-600">✓</span>
-                <span>O(1) edge lookup</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-green-600">✓</span>
-                <span>Simple implementation</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-red-600">✗</span>
-                <span>O(V²) space</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-red-600">✗</span>
-                <span>Sparse graphs waste space</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Adjacency List */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 p-6 rounded-xl border border-cyan-200 dark:border-cyan-800"
-          >
-            <h3 className="text-2xl font-bold text-cyan-700 dark:text-cyan-400 mb-4">
-              🔗 Adjacency List
-            </h3>
-            <p className="text-slate-700 dark:text-slate-300 mb-4">
-              Array/Map of lists where each vertex stores list of adjacent vertices
-            </p>
-            <div className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg mb-4 font-mono text-sm space-y-2">
-              <div>A → [B, C]</div>
-              <div>B → [A, C, D]</div>
-              <div>C → [A, B, D]</div>
-              <div>D → [B, C]</div>
-            </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-start gap-2">
-                <span className="text-green-600">✓</span>
-                <span>O(V + E) space</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-green-600">✓</span>
-                <span>Efficient for sparse graphs</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-green-600">✓</span>
-                <span>Easy to find neighbors</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-red-600">✗</span>
-                <span>O(V) edge lookup</span>
-              </div>
-            </div>
-          </motion.div>
+    <PerspectiveCard color="cyan">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
+          <Share2 size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Graph Representation</h2>
+          <p className="text-slate-400 font-medium">How to store graphs in memory.</p>
         </div>
       </div>
 
-      {/* Code Implementation */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          💻 Implementation
-        </h3>
-
-        <div className="flex flex-wrap gap-2 mb-4">
-          {Object.keys(languages).map((lang) => (
-            <button
-              key={lang}
-              onClick={() => setCurrentLanguage(lang)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                currentLanguage === lang
-                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg"
-                  : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
-              }`}
-            >
-              {lang.toUpperCase()}
-            </button>
-          ))}
+      <div className="grid md:grid-cols-2 gap-8 mb-12">
+        {/* Adjacency List */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <List size={24} className="text-cyan-400" />
+            <h3 className="text-2xl font-black text-white">1. Adjacency List</h3>
+          </div>
+          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
+            <p className="text-slate-300 text-sm mb-4">
+              Each vertex stores a list of connected neighbors. Ideally implemented with a Map or Array of Lists.
+            </p>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Efficient Space O(V+E)
+              </div>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Good for Sparse Graphs
+              </div>
+              <div className="flex items-center gap-2 text-rose-400">
+                <XCircle size={14} /> Slow Edge Lookup O(V)
+              </div>
+            </div>
+          </div>
+          <CodeImplementation 
+            languages={adjacencyListCode}
+            color="cyan"
+            initialLanguage={currentLanguage}
+          />
         </div>
 
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{languages[currentLanguage]}</code>
-          </pre>
+        {/* Adjacency Matrix */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <Grid size={24} className="text-blue-400" />
+            <h3 className="text-2xl font-black text-white">2. Adjacency Matrix</h3>
+          </div>
+          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
+            <p className="text-slate-300 text-sm mb-4">
+              A 2D array where <code>matrix[i][j]</code> represents an edge from i to j. 1 means connected, 0 means not.
+            </p>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Instant Edge Lookup O(1)
+              </div>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <CheckCircle2 size={14} /> Good for Dense Graphs
+              </div>
+              <div className="flex items-center gap-2 text-rose-400">
+                <XCircle size={14} /> High Space Cost O(V²)
+              </div>
+            </div>
+          </div>
+          <CodeImplementation 
+            languages={adjacencyMatrixCode}
+            color="blue"
+            initialLanguage={currentLanguage}
+          />
         </div>
       </div>
 
       {/* Comparison Table */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚖️ Comparison
-        </h3>
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50">
+        <div className="p-6 border-b border-white/10 flex items-center gap-3">
+          <ArrowRightLeft size={24} className="text-cyan-400" />
+          <h3 className="text-lg font-black text-white">Quick Comparison</h3>
+        </div>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-cyan-100 dark:bg-cyan-900/30">
-                <th className="border border-cyan-300 dark:border-cyan-700 p-4 text-left">Operation</th>
-                <th className="border border-cyan-300 dark:border-cyan-700 p-4 text-center">Adjacency Matrix</th>
-                <th className="border border-cyan-300 dark:border-cyan-700 p-4 text-center">Adjacency List</th>
+          <table className="w-full text-left text-sm text-slate-400">
+            <thead className="bg-white/5 text-slate-200 uppercase font-bold tracking-wider text-xs">
+              <tr>
+                <th className="px-6 py-4">Operation</th>
+                <th className="px-6 py-4">Adjacency List</th>
+                <th className="px-6 py-4">Adjacency Matrix</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/5">
               {[
-                { op: "Space", matrix: "O(V²)", list: "O(V + E)" },
-                { op: "Add Vertex", matrix: "O(V²)", list: "O(1)" },
-                { op: "Add Edge", matrix: "O(1)", list: "O(1)" },
-                { op: "Remove Edge", matrix: "O(1)", list: "O(E)" },
-                { op: "Check Edge", matrix: "O(1)", list: "O(V)" },
-                { op: "Find Neighbors", matrix: "O(V)", list: "O(1)" },
+                { op: "Space", list: "O(V + E)", matrix: "O(V²)" },
+                { op: "Add Vertex", list: "O(1)", matrix: "O(V²)" },
+                { op: "Add Edge", list: "O(1)", matrix: "O(1)" },
+                { op: "Check Edge (u, v)", list: "O(degree of u)", matrix: "O(1)" },
+                { op: "Iterate Neighbors", list: "O(degree of u)", matrix: "O(V)" },
               ].map((row, idx) => (
-                <tr key={idx} className="hover:bg-cyan-50 dark:hover:bg-cyan-900/10">
-                  <td className="border border-cyan-300 dark:border-cyan-700 p-4 font-semibold">
-                    {row.op}
-                  </td>
-                  <td className="border border-cyan-300 dark:border-cyan-700 p-4 text-center font-mono text-sm">
-                    {row.matrix}
-                  </td>
-                  <td className="border border-cyan-300 dark:border-cyan-700 p-4 text-center font-mono text-sm">
-                    {row.list}
-                  </td>
+                <tr key={idx} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 font-bold text-slate-200">{row.op}</td>
+                  <td className="px-6 py-4 text-cyan-300">{row.list}</td>
+                  <td className="px-6 py-4 text-blue-300">{row.matrix}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-    </div>
+    </PerspectiveCard>
   );
 }

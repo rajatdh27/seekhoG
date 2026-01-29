@@ -1,52 +1,50 @@
 "use client";
-import { motion } from "framer-motion";
+
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { FileText, Zap, HelpCircle, CheckCircle2 } from "lucide-react";
 
 export default function GraphCheatsheet() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <h2 className="text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100">
-        📋 Graph Algorithms Cheatsheet
-      </h2>
+    <PerspectiveCard color="cyan">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
+          <FileText size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Cheatsheet</h2>
+          <p className="text-slate-400 font-medium">Quick reference for algorithms and complexity.</p>
+        </div>
+      </div>
 
-      {/* Algorithm Complexity Table */}
+      {/* Time & Space Complexity */}
       <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚡ Time & Space Complexity
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <Zap size={24} className="text-amber-400" /> Complexity Analysis
         </h3>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="bg-cyan-100 dark:bg-cyan-900/30">
-                <th className="border border-cyan-300 dark:border-cyan-700 p-3 text-left">Algorithm</th>
-                <th className="border border-cyan-300 dark:border-cyan-700 p-3 text-center">Time</th>
-                <th className="border border-cyan-300 dark:border-cyan-700 p-3 text-center">Space</th>
-                <th className="border border-cyan-300 dark:border-cyan-700 p-3 text-left">Use Case</th>
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50">
+          <table className="w-full text-left text-sm text-slate-400">
+            <thead className="bg-white/5 text-slate-200 uppercase font-bold tracking-wider text-xs">
+              <tr>
+                <th className="px-6 py-4">Algorithm</th>
+                <th className="px-6 py-4 text-center">Time</th>
+                <th className="px-6 py-4 text-center">Space</th>
+                <th className="px-6 py-4">Use Case</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/5">
               {[
-                { algo: "DFS", time: "O(V + E)", space: "O(V)", use: "Cycle detection, topological sort" },
-                { algo: "BFS", time: "O(V + E)", space: "O(V)", use: "Shortest path (unweighted)" },
-                { algo: "Dijkstra", time: "O((V+E) log V)", space: "O(V)", use: "Shortest path (non-negative)" },
-                { algo: "Bellman-Ford", time: "O(V × E)", space: "O(V)", use: "Negative weights, detect cycles" },
-                { algo: "Floyd-Warshall", time: "O(V³)", space: "O(V²)", use: "All-pairs shortest path" },
-                { algo: "Kruskal's MST", time: "O(E log E)", space: "O(V)", use: "MST (sparse graphs)" },
-                { algo: "Prim's MST", time: "O((V+E) log V)", space: "O(V)", use: "MST (dense graphs)" },
-                { algo: "Topological Sort", time: "O(V + E)", space: "O(V)", use: "DAG ordering" },
+                { algo: "DFS / BFS", time: "O(V + E)", space: "O(V)", use: "Traversal, Cycles" },
+                { algo: "Dijkstra", time: "O((V+E)log V)", space: "O(V)", use: "Shortest Path (Pos)" },
+                { algo: "Bellman-Ford", time: "O(VE)", space: "O(V)", use: "Shortest Path (Neg)" },
+                { algo: "Floyd-Warshall", time: "O(V³)", space: "O(V²)", use: "All-Pairs Shortest Path" },
+                { algo: "Kruskal / Prim", time: "O(E log E)", space: "O(V)", use: "Min Spanning Tree" },
+                { algo: "Topological Sort", time: "O(V + E)", space: "O(V)", use: "Dependencies (DAG)" },
               ].map((row, idx) => (
-                <tr key={idx} className="hover:bg-cyan-50 dark:hover:bg-cyan-900/10">
-                  <td className="border border-cyan-300 dark:border-cyan-700 p-3 font-bold">
-                    {row.algo}
-                  </td>
-                  <td className="border border-cyan-300 dark:border-cyan-700 p-3 text-center font-mono">
-                    {row.time}
-                  </td>
-                  <td className="border border-cyan-300 dark:border-cyan-700 p-3 text-center font-mono">
-                    {row.space}
-                  </td>
-                  <td className="border border-cyan-300 dark:border-cyan-700 p-3">
-                    {row.use}
-                  </td>
+                <tr key={idx} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 font-bold text-slate-200">{row.algo}</td>
+                  <td className="px-6 py-4 text-center font-mono text-emerald-400">{row.time}</td>
+                  <td className="px-6 py-4 text-center font-mono text-indigo-400">{row.space}</td>
+                  <td className="px-6 py-4 text-slate-500 text-xs">{row.use}</td>
                 </tr>
               ))}
             </tbody>
@@ -54,228 +52,52 @@ export default function GraphCheatsheet() {
         </div>
       </div>
 
-      {/* When to Use Which Algorithm */}
+      {/* When to Use */}
       <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          🤔 Which Algorithm to Use?
-        </h3>
-        <div className="space-y-4">
-          {[
-            {
-              question: "Need shortest path in unweighted graph?",
-              answer: "Use BFS",
-              color: "teal",
-            },
-            {
-              question: "Need shortest path with positive weights?",
-              answer: "Use Dijkstra's Algorithm",
-              color: "amber",
-            },
-            {
-              question: "Graph has negative weights?",
-              answer: "Use Bellman-Ford",
-              color: "blue",
-            },
-            {
-              question: "Need all-pairs shortest paths?",
-              answer: "Use Floyd-Warshall (small graphs) or run Dijkstra V times",
-              color: "purple",
-            },
-            {
-              question: "Connect all nodes with minimum cost?",
-              answer: "Use MST (Kruskal for sparse, Prim for dense)",
-              color: "green",
-            },
-            {
-              question: "Need to order tasks with dependencies?",
-              answer: "Use Topological Sort",
-              color: "violet",
-            },
-            {
-              question: "Detect cycle in graph?",
-              answer: "Use DFS or Kahn's algorithm (for DAG)",
-              color: "red",
-            },
-            {
-              question: "Find connected components?",
-              answer: "Use DFS or BFS",
-              color: "cyan",
-            },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className={`bg-${item.color}-50 dark:bg-${item.color}-900/20 p-4 rounded-xl border-l-4 border-${item.color}-600`}
-            >
-              <div className="font-bold text-slate-900 dark:text-slate-100 mb-1">
-                {item.question}
-              </div>
-              <div className={`text-${item.color}-700 dark:text-${item.color}-300`}>
-                → {item.answer}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Common Graph Patterns */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          🎯 Common Graph Patterns
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          {[
-            {
-              pattern: "Clone Graph",
-              approach: "DFS/BFS with HashMap to track cloned nodes",
-            },
-            {
-              pattern: "Number of Islands",
-              approach: "DFS/BFS on 2D grid, mark visited",
-            },
-            {
-              pattern: "Course Schedule",
-              approach: "Topological sort with cycle detection",
-            },
-            {
-              pattern: "Word Ladder",
-              approach: "BFS for shortest transformation",
-            },
-            {
-              pattern: "Network Delay Time",
-              approach: "Dijkstra from source node",
-            },
-            {
-              pattern: "Cheapest Flights K Stops",
-              approach: "Modified Dijkstra/Bellman-Ford",
-            },
-            {
-              pattern: "Critical Connections",
-              approach: "Tarjan's algorithm (bridges)",
-            },
-            {
-              pattern: "Redundant Connection",
-              approach: "Union-Find to detect cycle",
-            },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-200 dark:border-slate-600"
-            >
-              <div className="font-bold text-cyan-700 dark:text-cyan-400 mb-2">
-                {item.pattern}
-              </div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">
-                {item.approach}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Graph Representations Comparison */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          📊 Representation Comparison
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
-            <h4 className="font-bold text-purple-900 dark:text-purple-100 mb-4 text-lg">
-              Adjacency Matrix
-            </h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <strong>Best For:</strong> Dense graphs, quick edge lookup
-              </div>
-              <div>
-                <strong>Space:</strong> O(V²)
-              </div>
-              <div>
-                <strong>Edge Check:</strong> O(1)
-              </div>
-              <div>
-                <strong>Get Neighbors:</strong> O(V)
-              </div>
-              <div className="text-green-600 dark:text-green-400">
-                ✓ Simple implementation<br/>
-                ✓ Fast edge existence check
-              </div>
-              <div className="text-red-600 dark:text-red-400">
-                ✗ Wastes space for sparse graphs<br/>
-                ✗ Slow to find all neighbors
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-cyan-50 dark:bg-cyan-900/20 p-6 rounded-xl border border-cyan-200 dark:border-cyan-800">
-            <h4 className="font-bold text-cyan-900 dark:text-cyan-100 mb-4 text-lg">
-              Adjacency List
-            </h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <strong>Best For:</strong> Sparse graphs, iterate neighbors
-              </div>
-              <div>
-                <strong>Space:</strong> O(V + E)
-              </div>
-              <div>
-                <strong>Edge Check:</strong> O(degree)
-              </div>
-              <div>
-                <strong>Get Neighbors:</strong> O(1)
-              </div>
-              <div className="text-green-600 dark:text-green-400">
-                ✓ Space efficient for sparse graphs<br/>
-                ✓ Fast neighbor iteration
-              </div>
-              <div className="text-red-600 dark:text-red-400">
-                ✗ Slower edge existence check<br/>
-                ✗ More complex implementation
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Key Takeaways */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          💡 Key Takeaways
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <HelpCircle size={24} className="text-blue-400" /> Which Algorithm?
         </h3>
         <div className="grid md:grid-cols-2 gap-4">
           {[
-            { icon: "🔍", tip: "DFS for depth, cycles, and backtracking problems" },
-            { icon: "📊", tip: "BFS for shortest path in unweighted graphs" },
-            { icon: "⚡", tip: "Dijkstra for shortest path with positive weights" },
-            { icon: "🌲", tip: "MST algorithms for minimum cost networks" },
-            { icon: "📋", tip: "Topological sort only works on DAGs" },
-            { icon: "🔄", tip: "Union-Find for cycle detection and connectivity" },
-            { icon: "⚖️", tip: "Choose representation based on graph density" },
-            { icon: "🎯", tip: "Most graph problems: O(V + E) time complexity" },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className="flex items-start gap-3 bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 p-4 rounded-xl border border-cyan-200 dark:border-cyan-800"
-            >
-              <span className="text-2xl">{item.icon}</span>
-              <p className="text-sm text-slate-700 dark:text-slate-300 pt-1">
-                {item.tip}
-              </p>
-            </motion.div>
+            { q: "Shortest path (unweighted)?", a: "BFS (Level Order)", color: "cyan" },
+            { q: "Shortest path (weighted)?", a: "Dijkstra (Greedy)", color: "amber" },
+            { q: "Negative weights?", a: "Bellman-Ford", color: "rose" },
+            { q: "Detect cycles?", a: "DFS (Recursion Stack)", color: "purple" },
+            { q: "Connect all nodes cheaply?", a: "Prim's or Kruskal's (MST)", color: "emerald" },
+            { q: "Order dependencies?", a: "Topological Sort", color: "violet" }
+          ].map((item, i) => (
+            <div key={i} className={`bg-${item.color}-500/5 border border-${item.color}-500/20 p-4 rounded-xl flex flex-col`}>
+               <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{item.q}</span>
+               <span className={`text-sm font-bold text-${item.color}-400`}>{item.a}</span>
+            </div>
           ))}
         </div>
       </div>
-    </div>
+
+      {/* Common Patterns */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <CheckCircle2 size={24} className="text-emerald-400" /> Common Patterns
+        </h3>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl">
+            <h4 className="text-lg font-bold text-white mb-2">Connected Components</h4>
+            <p className="text-sm text-slate-400">Use DFS or BFS to traverse the graph. Count how many times you start a new traversal.</p>
+          </div>
+          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl">
+            <h4 className="text-lg font-bold text-white mb-2">Bipartite Check</h4>
+            <p className="text-sm text-slate-400">Use BFS to color nodes with 2 colors. If adjacent nodes have same color, it's not bipartite.</p>
+          </div>
+          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl">
+            <h4 className="text-lg font-bold text-white mb-2">Grid Problems</h4>
+            <p className="text-sm text-slate-400">Treat grid as a graph. Cells are nodes, adjacent cells are edges. Use BFS for shortest path.</p>
+          </div>
+          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl">
+            <h4 className="text-lg font-bold text-white mb-2">Island Counting</h4>
+            <p className="text-sm text-slate-400">Iterate through grid. If '1' found, increment count and sink the island using DFS/BFS.</p>
+          </div>
+        </div>
+      </div>
+    </PerspectiveCard>
   );
 }
