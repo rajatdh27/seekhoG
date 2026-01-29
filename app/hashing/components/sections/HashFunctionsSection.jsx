@@ -1,49 +1,194 @@
 "use client";
+
+import { useState } from "react";
 import { motion } from "framer-motion";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  Settings, 
+  CheckCircle2, 
+  Zap, 
+  Hash, 
+  ShieldCheck, 
+  Divide, 
+  X, 
+  Type, 
+  Globe 
+} from "lucide-react";
 
 export default function HashFunctionsSection() {
+  const [currentLanguage, setCurrentLanguage] = useState("javascript");
+
+  const divisionCode = {
+    javascript: `function divisionHash(key, tableSize) {
+    // tableSize should preferably be prime
+    return key % tableSize;
+}
+
+// Example: tableSize = 11
+// divisionHash(25, 11) -> 3
+// divisionHash(36, 11) -> 3 (Collision!)`,
+    python: `def division_hash(key, table_size):
+    # table_size should preferably be prime
+    return key % table_size
+
+# Example: table_size = 11
+# division_hash(25, 11) -> 3`,
+    java: `public int divisionHash(int key, int tableSize) {
+    // tableSize should preferably be prime
+    return Math.abs(key) % tableSize;
+}
+// Note: Math.abs handles negative keys`,
+    cpp: `int divisionHash(int key, int tableSize) {
+    // tableSize should preferably be prime
+    return std::abs(key) % tableSize;
+}`,
+    go: `func divisionHash(key int, tableSize int) int {
+    // tableSize should preferably be prime
+    if key < 0 {
+        key = -key
+    }
+    return key % tableSize
+}`
+  };
+
+  const multiplicationCode = {
+    javascript: `function multiplicationHash(key, tableSize) {
+    const A = 0.6180339887; // (√5 - 1) / 2 (Golden Ratio)
+    const fractionalPart = (key * A) % 1;
+    return Math.floor(tableSize * fractionalPart);
+}`,
+    python: `import math
+
+def multiplication_hash(key, table_size):
+    A = 0.6180339887 # (√5 - 1) / 2
+    fractional_part = (key * A) % 1
+    return math.floor(table_size * fractional_part)`,
+    java: `public int multiplicationHash(int key, int tableSize) {
+    double A = 0.6180339887;
+    double fractionalPart = (key * A) % 1;
+    return (int) (tableSize * fractionalPart);
+}`,
+    cpp: `int multiplicationHash(int key, int tableSize) {
+    double A = 0.6180339887;
+    double fractionalPart = fmod(key * A, 1.0);
+    return (int)(tableSize * fractionalPart);
+}`,
+    go: `import "math"
+
+func multiplicationHash(key int, tableSize int) int {
+    A := 0.6180339887
+    fractionalPart := math.Mod(float64(key)*A, 1.0)
+    return int(float64(tableSize) * fractionalPart)
+}`
+  };
+
+  const polynomialCode = {
+    javascript: `function stringHash(str, tableSize) {
+    const p = 31; 
+    const m = 1e9 + 9; // Large prime
+    let hashValue = 0;
+    let pPow = 1;
+
+    for (let i = 0; i < str.length; i++) {
+        hashValue = (hashValue + (str.charCodeAt(i) - 96) * pPow) % m;
+        pPow = (pPow * p) % m;
+    }
+
+    return hashValue % tableSize;
+}`,
+    python: `def string_hash(s, table_size):
+    p = 31
+    m = 10**9 + 9
+    hash_value = 0
+    p_pow = 1
+    
+    for char in s:
+        # ord(char) - 96 gets 1-based index for lowercase
+        hash_value = (hash_value + (ord(char) - 96) * p_pow) % m
+        p_pow = (p_pow * p) % m
+        
+    return hash_value % table_size`,
+    java: `public int stringHash(String str, int tableSize) {
+    int p = 31;
+    int m = 1000000009;
+    long hashValue = 0;
+    long pPow = 1;
+
+    for (char c : str.toCharArray()) {
+        hashValue = (hashValue + (c - 'a' + 1) * pPow) % m;
+        pPow = (pPow * p) % m;
+    }
+    return (int) (hashValue % tableSize);
+}`,
+    cpp: `long long stringHash(string str, int tableSize) {
+    const int p = 31;
+    const int m = 1e9 + 9;
+    long long hashValue = 0;
+    long long pPow = 1;
+    
+    for (char c : str) {
+        hashValue = (hashValue + (c - 'a' + 1) * pPow) % m;
+        pPow = (pPow * p) % m;
+    }
+    return hashValue % tableSize;
+}`,
+    go: `func stringHash(str string, tableSize int) int {
+    p := 31
+    m := 1000000009
+    hashValue := 0
+    pPow := 1
+    
+    for _, c := range str {
+        hashValue = (hashValue + (int(c) - 'a' + 1) * pPow) % m
+        pPow = (pPow * p) % m
+    }
+    return hashValue % tableSize
+}`
+  };
+
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <PerspectiveCard color="purple">
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl">
-          <span className="text-4xl">⚙️</span>
+        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
+          <Settings size={28} />
         </div>
         <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Hash Functions
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Convert keys into array indexes efficiently
-          </p>
+          <h2 className="text-4xl font-black text-white tracking-tight">Hash Functions</h2>
+          <p className="text-slate-400 font-medium">The magic that converts keys into indexes.</p>
         </div>
       </div>
 
       {/* Properties of Good Hash Functions */}
       <div className="mb-12">
-        <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-6">
-          ✨ Properties of Good Hash Functions
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <ShieldCheck size={24} className="text-purple-400" /> Good Hash Function Properties
         </h3>
         <div className="grid md:grid-cols-2 gap-6">
           {[
             {
               property: "Deterministic",
-              desc: "Same input always produces same hash",
+              desc: "Same input always produces same hash.",
               example: "hash('apple') always = 42",
+              icon: <CheckCircle2 className="text-emerald-400" />
             },
             {
               property: "Uniform Distribution",
-              desc: "Evenly distributes keys across table",
+              desc: "Evenly distributes keys across table.",
               example: "Minimizes clustering",
+              icon: <Hash className="text-blue-400" />
             },
             {
               property: "Fast Computation",
-              desc: "Should compute quickly (O(1) or O(k))",
+              desc: "Should compute quickly (O(1) or O(k)).",
               example: "Simple arithmetic operations",
+              icon: <Zap className="text-amber-400" />
             },
             {
               property: "Minimize Collisions",
-              desc: "Different keys should produce different hashes",
+              desc: "Different keys should produce different hashes.",
               example: "Reduces conflict",
+              icon: <X className="text-rose-400" />
             },
           ].map((item, idx) => (
             <motion.div
@@ -52,224 +197,124 @@ export default function HashFunctionsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800"
+              className="p-6 bg-slate-900/50 border border-white/5 rounded-2xl flex flex-col gap-3 group hover:border-purple-500/30 transition-colors"
             >
-              <h4 className="font-bold text-purple-900 dark:text-purple-100 mb-2 text-lg">
-                {item.property}
-              </h4>
-              <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+              <div className="flex items-center gap-3 mb-1">
+                <div className="p-2 rounded-lg bg-white/5">{item.icon}</div>
+                <h4 className="font-black text-white text-lg tracking-tight">
+                  {item.property}
+                </h4>
+              </div>
+              <p className="text-slate-400 text-sm font-medium leading-relaxed pl-12">
                 {item.desc}
               </p>
-              <p className="text-xs font-mono text-purple-700 dark:text-purple-400 bg-white/50 dark:bg-slate-800/50 p-2 rounded">
-                {item.example}
-              </p>
+              <div className="pl-12">
+                <span className="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">
+                  {item.example}
+                </span>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
 
       {/* Common Hash Functions */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          🔧 Common Hash Functions
+      <div className="space-y-8 mb-12">
+        <h3 className="text-2xl font-black text-white flex items-center gap-3">
+          <Zap size={24} className="text-amber-400" /> Common Algorithms
         </h3>
 
         {/* Division Method */}
-        <div className="mb-8">
-          <h4 className="text-xl font-bold text-purple-700 dark:text-purple-400 mb-4">
-            1️⃣ Division Method (Modulo)
-          </h4>
-          <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800 mb-4">
-            <p className="text-lg text-purple-900 dark:text-purple-100 mb-3">
-              <strong>Formula:</strong> <code className="font-mono">h(key) = key % table_size</code>
-            </p>
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              Simple and fast. Choose table size as a prime number to reduce collisions.
-            </p>
+        <div className="bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-blue-500/10 rounded-lg text-blue-400"><Divide size={20} /></div>
+            <h4 className="text-xl font-bold text-blue-400">Division Method (Modulo)</h4>
           </div>
-          <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-            <pre className="text-sm text-slate-100">
-              <code>{`function divisionHash(key, tableSize) {
-    return key % tableSize;
-}
-
-// Example: tableSize = 11 (prime number)
-divisionHash(25, 11);  // → 3
-divisionHash(36, 11);  // → 3 (collision!)
-divisionHash(47, 11);  // → 3 (collision!)
-
-// Time: O(1)
-// Best for: Integer keys`}</code>
-            </pre>
-          </div>
+          <p className="text-slate-300 mb-6 font-medium">
+            Maps a key to one of <code className="text-blue-300">m</code> slots by taking the remainder of division.
+            Best when table size <code className="text-blue-300">m</code> is a prime number.
+          </p>
+          <CodeImplementation 
+            languages={divisionCode}
+            color="blue"
+            initialLanguage={currentLanguage}
+          />
         </div>
 
         {/* Multiplication Method */}
-        <div className="mb-8">
-          <h4 className="text-xl font-bold text-pink-700 dark:text-pink-400 mb-4">
-            2️⃣ Multiplication Method
-          </h4>
-          <div className="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-xl border border-pink-200 dark:border-pink-800 mb-4">
-            <p className="text-lg text-pink-900 dark:text-pink-100 mb-3">
-              <strong>Formula:</strong> <code className="font-mono">h(key) = floor(m * (key * A mod 1))</code>
-            </p>
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              Multiply key by constant A (0 &lt; A &lt; 1), extract fractional part, multiply by table size.
-              Knuth suggests A ≈ 0.618... (golden ratio - 1).
-            </p>
+        <div className="bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-pink-500/10 rounded-lg text-pink-400"><X size={20} /></div>
+            <h4 className="text-xl font-bold text-pink-400">Multiplication Method</h4>
           </div>
-          <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-            <pre className="text-sm text-slate-100">
-              <code>{`function multiplicationHash(key, tableSize) {
-    const A = 0.6180339887; // (√5 - 1) / 2 (golden ratio)
-    const fractionalPart = (key * A) % 1;
-    return Math.floor(tableSize * fractionalPart);
-}
-
-// Example: tableSize = 100
-multiplicationHash(123, 100);  // → 80
-multiplicationHash(456, 100);  // → 18
-
-// Time: O(1)
-// Best for: Any table size (power of 2 works well)`}</code>
-            </pre>
-          </div>
+          <p className="text-slate-300 mb-6 font-medium">
+            Multiplies key by a constant <code className="text-pink-300">A</code> (0 &lt; A &lt; 1), extracts the fractional part, 
+            and multiplies by table size <code className="text-pink-300">m</code>.
+          </p>
+          <CodeImplementation 
+            languages={multiplicationCode}
+            color="pink"
+            initialLanguage={currentLanguage}
+          />
         </div>
 
         {/* String Hashing */}
-        <div className="mb-8">
-          <h4 className="text-xl font-bold text-indigo-700 dark:text-indigo-400 mb-4">
-            3️⃣ String Hashing (Polynomial Rolling Hash)
-          </h4>
-          <div className="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl border border-indigo-200 dark:border-indigo-800 mb-4">
-            <p className="text-lg text-indigo-900 dark:text-indigo-100 mb-3">
-              <strong>Formula:</strong> <code className="font-mono">h(s) = (s[0]*p^0 + s[1]*p^1 + ... + s[n-1]*p^(n-1)) mod m</code>
-            </p>
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              Commonly used for strings. Choose prime p (31, 37, etc.) and large prime m.
-            </p>
+        <div className="bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400"><Type size={20} /></div>
+            <h4 className="text-xl font-bold text-emerald-400">Polynomial Rolling Hash</h4>
           </div>
-          <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-            <pre className="text-sm text-slate-100">
-              <code>{`function stringHash(str, tableSize) {
-    const p = 31; // Prime multiplier
-    const m = 1e9 + 9; // Large prime modulo
-    let hashValue = 0;
-    let pPow = 1;
-
-    for (let i = 0; i < str.length; i++) {
-        hashValue = (hashValue + (str.charCodeAt(i) - 'a'.charCodeAt(0) + 1) * pPow) % m;
-        pPow = (pPow * p) % m;
-    }
-
-    return hashValue % tableSize;
-}
-
-// Example:
-stringHash("hello", 100);  // → 85
-stringHash("world", 100);  // → 42
-
-// Time: O(n) where n = string length
-// Space: O(1)`}</code>
-            </pre>
-          </div>
-        </div>
-
-        {/* Universal Hashing */}
-        <div>
-          <h4 className="text-xl font-bold text-violet-700 dark:text-violet-400 mb-4">
-            4️⃣ Universal Hashing
-          </h4>
-          <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-200 dark:border-violet-800 mb-4">
-            <p className="text-lg text-violet-900 dark:text-violet-100 mb-3">
-              <strong>Formula:</strong> <code className="font-mono">h(key) = ((a * key + b) % p) % m</code>
-            </p>
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              Random selection of a and b from [1, p-1]. Guarantees low collision probability.
-              Used in real implementations (Java, Python).
-            </p>
-          </div>
-          <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-            <pre className="text-sm text-slate-100">
-              <code>{`function universalHash(key, tableSize, a, b, p) {
-    // a and b are random from [1, p-1]
-    // p is prime > tableSize
-    return ((a * key + b) % p) % tableSize;
-}
-
-// Example: p = 101 (prime), tableSize = 10
-const a = 7, b = 5; // Random choices
-universalHash(25, 10, a, b, 101);  // → variable
-universalHash(36, 10, a, b, 101);  // → variable
-
-// Average collision probability: 1/m
-// Time: O(1)`}</code>
-            </pre>
-          </div>
+          <p className="text-slate-300 mb-6 font-medium">
+            Standard way to hash strings. Treats string as a number in base <code className="text-emerald-300">p</code> (usually 31 or 53).
+          </p>
+          <CodeImplementation 
+            languages={polynomialCode}
+            color="emerald"
+            initialLanguage={currentLanguage}
+          />
         </div>
       </div>
 
       {/* Comparison Table */}
-      <div>
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚖️ Hash Function Comparison
-        </h3>
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50">
+        <div className="p-6 border-b border-white/10 flex items-center gap-3">
+          <Globe size={24} className="text-purple-400" />
+          <h3 className="text-lg font-black text-white">Method Comparison</h3>
+        </div>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-purple-100 dark:bg-purple-900/30">
-                <th className="border border-purple-300 dark:border-purple-700 p-4 text-left">Method</th>
-                <th className="border border-purple-300 dark:border-purple-700 p-4 text-center">Time</th>
-                <th className="border border-purple-300 dark:border-purple-700 p-4 text-center">Collision Rate</th>
-                <th className="border border-purple-300 dark:border-purple-700 p-4 text-left">Best For</th>
+          <table className="w-full text-left text-sm text-slate-400">
+            <thead className="bg-white/5 text-slate-200 uppercase font-bold tracking-wider text-xs">
+              <tr>
+                <th className="px-6 py-4">Method</th>
+                <th className="px-6 py-4">Time</th>
+                <th className="px-6 py-4">Collision Rate</th>
+                <th className="px-6 py-4">Best For</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/5">
               {[
-                {
-                  method: "Division",
-                  time: "O(1)",
-                  collision: "Medium",
-                  best: "Integer keys, prime table size",
-                },
-                {
-                  method: "Multiplication",
-                  time: "O(1)",
-                  collision: "Low",
-                  best: "Any key type, any table size",
-                },
-                {
-                  method: "String Polynomial",
-                  time: "O(n)",
-                  collision: "Low",
-                  best: "String keys, pattern matching",
-                },
-                {
-                  method: "Universal",
-                  time: "O(1)",
-                  collision: "Very Low",
-                  best: "Production systems, worst-case guarantees",
-                },
+                { method: "Division", time: "O(1)", rate: "Medium", best: "Integer keys" },
+                { method: "Multiplication", time: "O(1)", rate: "Low", best: "General purpose" },
+                { method: "Polynomial", time: "O(n)", rate: "Very Low", best: "Strings" },
+                { method: "Universal", time: "O(1)", rate: "Minimal", best: "Security / Production" },
               ].map((row, idx) => (
-                <tr key={idx} className="hover:bg-purple-50 dark:hover:bg-purple-900/10">
-                  <td className="border border-purple-300 dark:border-purple-700 p-4 font-bold">
-                    {row.method}
+                <tr key={idx} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 font-bold text-indigo-300">{row.method}</td>
+                  <td className="px-6 py-4 font-mono text-emerald-400">{row.time}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider ${
+                      row.rate === 'Medium' ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-emerald-400'
+                    }`}>
+                      {row.rate}
+                    </span>
                   </td>
-                  <td className="border border-purple-300 dark:border-purple-700 p-4 text-center font-mono text-sm">
-                    {row.time}
-                  </td>
-                  <td className="border border-purple-300 dark:border-purple-700 p-4 text-center">
-                    {row.collision}
-                  </td>
-                  <td className="border border-purple-300 dark:border-purple-700 p-4 text-sm">
-                    {row.best}
-                  </td>
+                  <td className="px-6 py-4 text-slate-300">{row.best}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-    </div>
+    </PerspectiveCard>
   );
 }

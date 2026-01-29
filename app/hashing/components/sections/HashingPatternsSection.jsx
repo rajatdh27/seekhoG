@@ -1,347 +1,142 @@
 "use client";
-import { motion } from "framer-motion";
+
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { 
+  Grid, 
+  Hash, 
+  Search, 
+  Repeat, 
+  Plus, 
+  List, 
+  Eye, 
+  ChevronRight,
+  Maximize2
+} from "lucide-react";
 
 export default function HashingPatternsSection() {
+  const patterns = [
+    {
+      title: "Frequency Counter",
+      difficulty: "Easy",
+      desc: "Count occurrences of each element.",
+      useWhen: ["Anagrams", "Majority Element", "Character counts"],
+      problems: ["Valid Anagram", "Top K Frequent"],
+      icon: <Hash size={24} />,
+      color: "blue"
+    },
+    {
+      title: "Two Sum (Complement)",
+      difficulty: "Easy-Medium",
+      desc: "Check if (target - current) exists in Map.",
+      useWhen: ["Find pair with sum", "Find difference"],
+      problems: ["Two Sum", "Pairs with Diff K"],
+      icon: <Plus size={24} />,
+      color: "emerald"
+    },
+    {
+      title: "Seen / Visited Set",
+      difficulty: "Easy",
+      desc: "Track processed elements using a Set.",
+      useWhen: ["Detect duplicates", "Cycle detection", "Intersection"],
+      problems: ["Contains Duplicate", "Linked List Cycle"],
+      icon: <Eye size={24} />,
+      color: "purple"
+    },
+    {
+      title: "Prefix Sum + Hash",
+      difficulty: "Medium",
+      desc: "Store cumulative sums to find subarrays.",
+      useWhen: ["Subarray sum = K", "Longest subarray with sum"],
+      problems: ["Subarray Sum Equals K", "Contiguous Array"],
+      icon: <Maximize2 size={24} />,
+      color: "amber"
+    },
+    {
+      title: "Group by Key",
+      difficulty: "Medium",
+      desc: "Map a derived key to a list of items.",
+      useWhen: ["Grouping anagrams", "Categorizing data"],
+      problems: ["Group Anagrams", "Group Shifted Strings"],
+      icon: <List size={24} />,
+      color: "rose"
+    },
+    {
+      title: "Sliding Window + Hash",
+      difficulty: "Medium-Hard",
+      desc: "Track counts within a moving window.",
+      useWhen: ["Longest substring", "Window constraints"],
+      problems: ["Longest Substring No Repeat", "Min Window Substring"],
+      icon: <Repeat size={24} />,
+      color: "cyan"
+    }
+  ];
+
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <PerspectiveCard color="emerald">
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl">
-          <span className="text-4xl">🎯</span>
+        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+          <Grid size={28} />
         </div>
         <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Common Hashing Patterns
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Master these patterns to solve 90% of hashing problems
-          </p>
+          <h2 className="text-4xl font-black text-white tracking-tight">Interview Patterns</h2>
+          <p className="text-slate-400 font-medium">Common strategies to solve hashing problems.</p>
         </div>
       </div>
 
-      {/* Pattern 1: Frequency Counter */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-6">
-          1️⃣ Frequency Counter Pattern
-        </h3>
-        <div className="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-xl border border-emerald-200 dark:border-emerald-800 mb-6">
-          <p className="text-lg text-emerald-900 dark:text-emerald-100 mb-4">
-            Count occurrences of elements using a HashMap. Map element → frequency.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>When to use:</strong> Anagrams, frequency comparison, most frequent element
-          </p>
-        </div>
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`// Problem: Check if two strings are anagrams
-function isAnagram(s, t) {
-    if (s.length !== t.length) return false;
+      <div className="grid md:grid-cols-3 gap-6 mb-12">
+        {patterns.map((pattern, i) => (
+          <div key={i} className={`bg-slate-900/60 p-6 rounded-[2rem] border border-${pattern.color}-500/20 hover:border-${pattern.color}-500/40 transition-all group relative overflow-hidden flex flex-col`}>
+            <div className={`absolute top-0 right-0 p-4 text-${pattern.color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}>
+              {pattern.icon}
+            </div>
+            
+            <div className="flex items-center justify-between mb-4">
+              <div className={`px-2 py-1 rounded-md bg-${pattern.color}-500/10 border border-${pattern.color}-500/20 text-[8px] font-black uppercase text-${pattern.color}-400`}>
+                {pattern.difficulty}
+              </div>
+            </div>
 
-    const freqMap = new Map();
+            <h3 className="text-lg font-black text-white mb-2">{pattern.title}</h3>
+            <p className="text-slate-500 text-[10px] font-bold leading-relaxed mb-4 flex-1">
+              {pattern.desc}
+            </p>
 
-    // Count frequency in first string
-    for (let char of s) {
-        freqMap.set(char, (freqMap.get(char) || 0) + 1);
-    }
-
-    // Decrease frequency for second string
-    for (let char of t) {
-        if (!freqMap.has(char)) return false;
-        freqMap.set(char, freqMap.get(char) - 1);
-        if (freqMap.get(char) === 0) {
-            freqMap.delete(char);
-        }
-    }
-
-    return freqMap.size === 0;
-}
-
-// Time: O(n + m)
-// Space: O(k) where k = unique characters
-
-// Other problems:
-// - Valid Anagram
-// - Group Anagrams
-// - Top K Frequent Elements
-// - First Unique Character`}</code>
-          </pre>
-        </div>
+            <div className="space-y-3">
+              <div className="flex flex-wrap gap-1.5">
+                {pattern.useWhen.map((tag, j) => (
+                  <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className={`flex items-center gap-2 text-[9px] font-black text-${pattern.color}-400 uppercase`}>
+                <ChevronRight size={10} /> {pattern.problems[0]}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Pattern 2: Two Sum Pattern */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-teal-700 dark:text-teal-400 mb-6">
-          2️⃣ Two Sum Pattern (Complement)
-        </h3>
-        <div className="bg-teal-50 dark:bg-teal-900/20 p-6 rounded-xl border border-teal-200 dark:border-teal-800 mb-6">
-          <p className="text-lg text-teal-900 dark:text-teal-100 mb-4">
-            Store seen elements in HashMap, check if complement exists. Map element → index/count.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>When to use:</strong> Find pairs with target sum, difference, product
-          </p>
-        </div>
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`// Problem: Find two numbers that add up to target
-function twoSum(nums, target) {
-    const map = new Map();  // value -> index
-
-    for (let i = 0; i < nums.length; i++) {
-        const complement = target - nums[i];
-
-        if (map.has(complement)) {
-            return [map.get(complement), i];
-        }
-
-        map.set(nums[i], i);
-    }
-
-    return [];
-}
-
-// Time: O(n)
-// Space: O(n)
-
-// Variations:
-// - Two Sum II (sorted array - use two pointers instead!)
-// - Three Sum (fix one, two sum on rest)
-// - Four Sum
-// - Subarray Sum Equals K
-// - Contiguous Array (0s and 1s)`}</code>
-          </pre>
+      {/* Decision Logic Card */}
+      <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
+        <h3 className="text-2xl font-black text-white mb-8">How to Choose?</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {[
+            { q: "Duplicates?", a: "HashSet (Seen Set)" },
+            { q: "Frequencies?", a: "HashMap (Counter)" },
+            { q: "Pair Sum?", a: "HashMap (Complement)" },
+            { q: "Subarray Sum?", a: "Prefix Sum + HashMap" },
+            { q: "Grouping?", a: "HashMap <Key, List>" },
+            { q: "Window Items?", a: "Sliding Window + Map" }
+          ].map((item, i) => (
+            <div key={i} className="bg-slate-900 p-4 rounded-xl border border-white/5">
+              <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">{item.q}</div>
+              <div className="text-xs font-bold text-emerald-400">{item.a}</div>
+            </div>
+          ))}
         </div>
       </div>
-
-      {/* Pattern 3: Seen/Visited Set */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-blue-700 dark:text-blue-400 mb-6">
-          3️⃣ Seen/Visited Set Pattern
-        </h3>
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800 mb-6">
-          <p className="text-lg text-blue-900 dark:text-blue-100 mb-4">
-            Use HashSet to track visited elements. Check existence in O(1).
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>When to use:</strong> Detect duplicates, cycles, unique elements
-          </p>
-        </div>
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`// Problem: Contains Duplicate
-function containsDuplicate(nums) {
-    const seen = new Set();
-
-    for (let num of nums) {
-        if (seen.has(num)) {
-            return true;  // Found duplicate
-        }
-        seen.add(num);
-    }
-
-    return false;
-}
-
-// Time: O(n)
-// Space: O(n)
-
-// Problem: Longest Consecutive Sequence
-function longestConsecutive(nums) {
-    const numSet = new Set(nums);
-    let longest = 0;
-
-    for (let num of nums) {
-        // Only start counting if num is start of sequence
-        if (!numSet.has(num - 1)) {
-            let currentNum = num;
-            let currentStreak = 1;
-
-            while (numSet.has(currentNum + 1)) {
-                currentNum++;
-                currentStreak++;
-            }
-
-            longest = Math.max(longest, currentStreak);
-        }
-    }
-
-    return longest;
-}
-
-// Other problems:
-// - Happy Number
-// - Linked List Cycle (fast/slow also works)
-// - Remove Duplicates from Array`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Pattern 4: Running Sum/Prefix Sum with HashMap */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-6">
-          4️⃣ Prefix Sum + HashMap Pattern
-        </h3>
-        <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800 mb-6">
-          <p className="text-lg text-purple-900 dark:text-purple-100 mb-4">
-            Store running sum → frequency. Check if (current_sum - target) exists.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>When to use:</strong> Subarray sum problems, continuous subarray
-          </p>
-        </div>
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`// Problem: Subarray Sum Equals K
-function subarraySum(nums, k) {
-    const map = new Map();
-    map.set(0, 1);  // Base case: sum 0 seen once
-
-    let sum = 0;
-    let count = 0;
-
-    for (let num of nums) {
-        sum += num;
-
-        // Check if (sum - k) exists
-        if (map.has(sum - k)) {
-            count += map.get(sum - k);
-        }
-
-        // Store current sum
-        map.set(sum, (map.get(sum) || 0) + 1);
-    }
-
-    return count;
-}
-
-// Time: O(n)
-// Space: O(n)
-
-// Key insight:
-// If sum[0...j] - sum[0...i] = k
-// Then sum[i+1...j] = k
-
-// Other problems:
-// - Continuous Subarray Sum
-// - Contiguous Array (0s and 1s equal)
-// - Maximum Size Subarray Sum Equals K`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Pattern 5: Group by Key */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-pink-700 dark:text-pink-400 mb-6">
-          5️⃣ Group by Key Pattern
-        </h3>
-        <div className="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-xl border border-pink-200 dark:border-pink-800 mb-6">
-          <p className="text-lg text-pink-900 dark:text-pink-100 mb-4">
-            Group items with same property using HashMap. Map key → array of items.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>When to use:</strong> Group anagrams, group by property, categorize
-          </p>
-        </div>
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`// Problem: Group Anagrams
-function groupAnagrams(strs) {
-    const map = new Map();
-
-    for (let str of strs) {
-        // Create key by sorting characters
-        const key = str.split('').sort().join('');
-
-        if (!map.has(key)) {
-            map.set(key, []);
-        }
-        map.get(key).push(str);
-    }
-
-    return Array.from(map.values());
-}
-
-// Time: O(n * k log k) where k = average string length
-// Space: O(n * k)
-
-// Alternative: Use character frequency as key
-function groupAnagrams2(strs) {
-    const map = new Map();
-
-    for (let str of strs) {
-        const count = new Array(26).fill(0);
-
-        for (let char of str) {
-            count[char.charCodeAt(0) - 'a'.charCodeAt(0)]++;
-        }
-
-        const key = count.join('#');
-
-        if (!map.has(key)) {
-            map.set(key, []);
-        }
-        map.get(key).push(str);
-    }
-
-    return Array.from(map.values());
-}
-
-// Time: O(n * k)
-// Space: O(n * k)
-
-// Other problems:
-// - Group Shifted Strings
-// - Find Duplicate Subtrees`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Pattern 6: Index Mapping */}
-      <div>
-        <h3 className="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">
-          6️⃣ Index Mapping Pattern
-        </h3>
-        <div className="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl border border-indigo-200 dark:border-indigo-800 mb-6">
-          <p className="text-lg text-indigo-900 dark:text-indigo-100 mb-4">
-            Map element → last seen index. Useful for position-based problems.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>When to use:</strong> Longest substring without repeating, intervals
-          </p>
-        </div>
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`// Problem: Longest Substring Without Repeating Characters
-function lengthOfLongestSubstring(s) {
-    const map = new Map();  // char -> last index
-    let maxLen = 0;
-    let start = 0;
-
-    for (let end = 0; end < s.length; end++) {
-        const char = s[end];
-
-        // If char seen and in current window, move start
-        if (map.has(char) && map.get(char) >= start) {
-            start = map.get(char) + 1;
-        }
-
-        map.set(char, end);
-        maxLen = Math.max(maxLen, end - start + 1);
-    }
-
-    return maxLen;
-}
-
-// Time: O(n)
-// Space: O(min(n, m)) where m = charset size
-
-// Other problems:
-// - Minimum Window Substring
-// - Longest Substring with At Most K Distinct Characters
-// - Fruit Into Baskets`}</code>
-          </pre>
-        </div>
-      </div>
-    </div>
+    </PerspectiveCard>
   );
 }
