@@ -449,6 +449,13 @@ func main() {
             </li>
           ))}
         </ul>
+        {/* Next Topic Transition */}
+        <div className="mt-12 pt-8 border-t border-white/5">
+          <div className="flex items-center gap-3 text-emerald-400 font-black uppercase tracking-widest text-[10px]">
+            <div className="w-8 h-px bg-emerald-500/20" />
+            Coming Up Next: Time & Space Complexity
+          </div>
+        </div>
       </div>
     </PerspectiveCard>
   );

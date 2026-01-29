@@ -104,6 +104,13 @@ export default function CommonComplexities() {
         <p className="text-slate-300 text-sm font-bold leading-relaxed">
           Pro Tip: Always try to identify the <span className="text-white">Dominant Term</span>. In a loop that does O(n) work and then O(n²) work, the entire algorithm is considered <span className="text-white">O(n²)</span> because at scale, the linear part becomes negligible.
         </p>
+        {/* Next Topic Transition */}
+        <div className="mt-12 pt-8 border-t border-white/5">
+          <div className="flex items-center gap-3 text-emerald-400 font-black uppercase tracking-widest text-[10px]">
+            <div className="w-8 h-px bg-emerald-500/20" />
+            Coming Up Next: Foundations Cheatsheet
+          </div>
+        </div>
       </div>
     </PerspectiveCard>
   );

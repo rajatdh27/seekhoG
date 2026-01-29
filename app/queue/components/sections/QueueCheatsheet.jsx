@@ -3,12 +3,14 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import CodeBlock from "@/app/components/common/CodeBlock";
+import { ModuleComplete } from "@/app/components/common/algorithm";
 import { FileText, Plus, Minus, Check, X, RefreshCcwDot, Lightbulb, TrendingUp, Code2, HelpCircle } from "lucide-react";
 
 export default function QueueCheatsheet() {
   return (
     <PerspectiveCard color="green">
-       <div className="mb-10 text-center">
+      {/* ... previous content ... */}
+      <div className="mb-10 text-center">
         <h3 className="text-sm font-black text-green-400 uppercase tracking-widest mb-3">Quick Reference</h3>
         <p className="text-3xl md:text-4xl font-black text-white">Queue Cheatsheet</p>
       </div>
@@ -101,8 +103,8 @@ export default function QueueCheatsheet() {
              <div>
                 <h4 className="font-bold text-green-400 mb-3">While Coding:</h4>
                 <ul className="space-y-2 text-sm text-slate-300">
-                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Always check `isEmpty` before dequeue/peek.</li>
-                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Use a proper `deque` for O(1) front removal.</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Always check \`isEmpty\` before dequeue/peek.</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Use a proper \`deque\` for O(1) front removal.</li>
                     <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Handle circular queue pointer arithmetic carefully.</li>
                 </ul>
             </div>
@@ -125,7 +127,7 @@ export default function QueueCheatsheet() {
         </div>
       </div>
       
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mb-12">
         <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">Complexity Comparison</h3>
         <table className="w-full text-sm text-left border-collapse">
             <thead className="text-[10px] font-black uppercase tracking-widest text-slate-500">
@@ -153,6 +155,14 @@ export default function QueueCheatsheet() {
             </tbody>
         </table>
       </div>
+
+      <ModuleComplete 
+        title="Queues Mastery Complete" 
+        description="You've mastered FIFO dynamics, Deques, and BFS basics. Next up: Trees."
+        nextModuleText="Start Trees" 
+        nextModuleLink="/tree" 
+        color="green" 
+      />
     </PerspectiveCard>
   );
 }

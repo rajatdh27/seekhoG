@@ -594,6 +594,13 @@ func bubbleSort(arr []int) {
             <p className="text-[11px] font-black text-slate-300 uppercase tracking-tighter leading-snug">{item.text}</p>
           </div>
         ))}
+        {/* Next Topic Transition */}
+        <div className="mt-12 pt-8 border-t border-white/5">
+          <div className="flex items-center gap-3 text-emerald-400 font-black uppercase tracking-widest text-[10px]">
+            <div className="w-8 h-px bg-emerald-500/20" />
+            Coming Up Next: Big-O, Theta & Omega
+          </div>
+        </div>
       </div>
     </PerspectiveCard>
   );

@@ -78,6 +78,13 @@ export default function BigONotation() {
         <p className="text-slate-300 text-sm font-bold leading-relaxed italic">
           &quot;In software interviews and performance reviews, when people say &apos;Complexity&apos;, they almost always mean <span className="text-white underline decoration-rose-500 decoration-2 underline-offset-4">Big-O (Worst Case)</span>. It represents the safety guarantee of your algorithm.&quot;
         </p>
+        {/* Next Topic Transition */}
+        <div className="mt-12 pt-8 border-t border-white/5">
+          <div className="flex items-center gap-3 text-emerald-400 font-black uppercase tracking-widest text-[10px]">
+            <div className="w-8 h-px bg-emerald-500/20" />
+            Coming Up Next: Common Complexities
+          </div>
+        </div>
       </div>
     </PerspectiveCard>
   );
