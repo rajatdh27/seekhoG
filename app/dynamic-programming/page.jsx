@@ -209,9 +209,9 @@ export default function DynamicProgrammingPage() {
             >
               <ModuleComplete 
                 title="DP Mastered"
-                description="You've conquered optimization! Now, let's explore decision trees and recursive searching."
-                nextModuleText="Start Backtracking"
-                nextModuleLink="/backtracking"
+                description="You've conquered optimization! Now, let's learn how to make the best immediate choices with Greedy Algorithms."
+                nextModuleText="Start Greedy Algorithms"
+                nextModuleLink="/greedy"
                 color="pink"
               />
             </motion.div>

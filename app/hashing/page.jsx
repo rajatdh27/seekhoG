@@ -211,7 +211,7 @@ export default function HashingPage() {
             >
               <ModuleComplete 
                 title="Hashing Mastered"
-                description="You've unlocked the power of O(1) lookups. Now, let's tackle complex optimization problems."
+                description="You've unlocked the power of O(1) lookups. Now, let's tackle complex optimization problems with Dynamic Programming."
                 nextModuleText="Start Dynamic Programming"
                 nextModuleLink="/dynamic-programming"
                 color="indigo"

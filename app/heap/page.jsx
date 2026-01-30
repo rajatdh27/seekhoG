@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
+import ModuleComplete from "@/app/components/common/algorithm/ModuleComplete";
 import { 
   Layers, 
   Code2, 
@@ -195,6 +196,22 @@ export default function HeapPage() {
                 </motion.section>
               );
             })}
+
+            {/* Next Section Pointer */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="pt-12 pb-24"
+            >
+              <ModuleComplete 
+                title="Heap Mastered"
+                description="You've conquered priority queues and efficient sorting! Next, let's master string searching with Tries."
+                nextModuleText="Start Trie"
+                nextModuleLink="/trie"
+                color="rose"
+              />
+            </motion.div>
           </main>
         </div>
       </div>

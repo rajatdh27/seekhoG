@@ -206,10 +206,10 @@ export default function BacktrackingPage() {
               className="pt-12 pb-24"
             >
               <ModuleComplete 
-                title="Backtracking Mastered"
-                description="You can now navigate complex decision trees! Next, let's learn how to model relationships with Graphs."
-                nextModuleText="Start Graph Algorithms"
-                nextModuleLink="/graph"
+                title="Curriculum Completed!"
+                description="Congratulations! You've mastered the core Data Structures & Algorithms. Now go forth and build amazing things!"
+                nextModuleText="Return Home"
+                nextModuleLink="/"
                 color="fuchsia"
               />
             </motion.div>

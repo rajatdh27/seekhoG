@@ -207,9 +207,9 @@ export default function TriePage() {
             >
               <ModuleComplete 
                 title="Trie Mastered"
-                description="You can now efficiently search and store strings! Next, let's dive into Priority Queues."
-                nextModuleText="Start Heaps"
-                nextModuleLink="/heap"
+                description="You've mastered string searching and storage! Next, let's learn how to model relationships with Graphs."
+                nextModuleText="Start Graph Algorithms"
+                nextModuleLink="/graph"
                 color="orange"
               />
             </motion.div>

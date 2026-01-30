@@ -212,9 +212,9 @@ export default function GraphPage() {
             >
               <ModuleComplete 
                 title="Graph Theory Mastered"
-                description="You've connected the dots! Now, let's learn efficient decision making with Greedy Algorithms."
-                nextModuleText="Start Greedy Algorithms"
-                nextModuleLink="/greedy"
+                description="You've connected the dots! Now, let's learn how to achieve instant O(1) lookups with Hashing."
+                nextModuleText="Start Hashing & Maps"
+                nextModuleLink="/hashing"
                 color="cyan"
               />
             </motion.div>

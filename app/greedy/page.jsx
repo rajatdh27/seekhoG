@@ -205,10 +205,10 @@ export default function GreedyPage() {
               className="pt-12 pb-24"
             >
               <ModuleComplete 
-                title="Curriculum Completed!"
-                description="You've mastered the core Data Structures & Algorithms. Keep practicing and building!"
-                nextModuleText="Return Home"
-                nextModuleLink="/"
+                title="Greedy Mastered"
+                description="You've mastered optimal choices! Now, let's learn how to explore all possibilities with Backtracking."
+                nextModuleText="Start Backtracking"
+                nextModuleLink="/backtracking"
                 color="violet"
               />
             </motion.div>
