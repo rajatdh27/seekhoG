@@ -97,7 +97,7 @@ export default function FoundationsIntro() {
             Coming Up Next: Mathematics for DSA
           </div>
         </div>
-      </div>
-    </PerspectiveCard>
-  );
+              </div>
+            </div>
+          </PerspectiveCard>  );
 }
