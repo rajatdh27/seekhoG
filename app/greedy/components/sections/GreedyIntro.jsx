@@ -1,355 +1,261 @@
 "use client";
-import { motion } from "framer-motion";
+
 import { useState } from "react";
+import { motion } from "framer-motion";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  Gem, 
+  Zap, 
+  TrendingUp, 
+  CheckCircle2, 
+  XCircle,
+  Coins,
+  ArrowRight,
+  Target
+} from "lucide-react";
 
 export default function GreedyIntro() {
-  const [coinAmount, setCoinAmount] = useState(63);
-  const [selectedCoins, setSelectedCoins] = useState([]);
+  const [amount, setAmount] = useState(63);
+  const [coinsUsed, setCoinsUsed] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState("javascript");
 
-  const coins = [25, 10, 5, 1]; // Quarter, Dime, Nickel, Penny
+  const coins = [25, 10, 5, 1];
 
-  const makeChange = () => {
+  const simulateGreedy = async () => {
     setIsAnimating(true);
-    let remaining = coinAmount;
+    setCoinsUsed([]);
+    let remaining = amount;
     const result = [];
 
-    for (const coin of coins) {
+    for (let coin of coins) {
       while (remaining >= coin) {
-        result.push(coin);
+        await new Promise(r => setTimeout(r, 400));
         remaining -= coin;
+        result.push(coin);
+        setCoinsUsed([...result]);
       }
     }
-
-    setSelectedCoins(result);
-    setTimeout(() => setIsAnimating(false), 1000);
+    setIsAnimating(false);
   };
 
-  const resetChange = () => {
-    setSelectedCoins([]);
+  const greedyTemplateCode = {
+    javascript: `// General Greedy Template
+function greedyAlgorithm(items) {
+    // 1. Sort items by some criteria (value, cost, ratio, etc.)
+    items.sort(criteriaComparator);
+    
+    const solution = [];
+    
+    for (let item of items) {
+        // 2. Make locally optimal choice
+        if (isFeasible(solution, item)) {
+            // 3. Add to solution (never backtrack)
+            solution.push(item);
+        }
+    }
+    
+    return solution;
+}`,
+    python: `# General Greedy Template
+def greedy_algorithm(items):
+    # 1. Sort items by criteria
+    items.sort(key=criteria_key)
+    
+    solution = []
+    
+    for item in items:
+        # 2. Make locally optimal choice
+        if is_feasible(solution, item):
+            # 3. Add to solution (never backtrack)
+            solution.append(item)
+            
+    return solution`,
+    java: `// General Greedy Template
+public List<Item> greedyAlgorithm(List<Item> items) {
+    // 1. Sort items
+    Collections.sort(items, comparator);
+    
+    List<Item> solution = new ArrayList<>();
+    
+    for (Item item : items) {
+        // 2. Make locally optimal choice
+        if (isFeasible(solution, item)) {
+            // 3. Add to solution
+            solution.add(item);
+        }
+    }
+    return solution;
+}`,
+    cpp: `// General Greedy Template
+vector<Item> greedyAlgorithm(vector<Item>& items) {
+    // 1. Sort items
+    sort(items.begin(), items.end(), comparator);
+    
+    vector<Item> solution;
+    
+    for (const auto& item : items) {
+        // 2. Make locally optimal choice
+        if (isFeasible(solution, item)) {
+            // 3. Add to solution
+            solution.push_back(item);
+        }
+    }
+    return solution;
+}`,
+    go: `// General Greedy Template
+func greedyAlgorithm(items []Item) []Item {
+    // 1. Sort items
+    sort.Slice(items, func(i, j int) bool {
+        return items[i].Val > items[j].Val
+    })
+    
+    solution := []Item{}
+    
+    for _, item := range items {
+        // 2. Make locally optimal choice
+        if isFeasible(solution, item) {
+            // 3. Add to solution
+            solution = append(solution, item)
+        }
+    }
+    return solution
+}`
   };
-
-  const coinCount = (value) => selectedCoins.filter((c) => c === value).length;
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <motion.h2
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold mb-6 text-slate-900 dark:text-slate-100"
-      >
-        💎 Introduction to Greedy Algorithms
-      </motion.h2>
+    <PerspectiveCard color="violet">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 border border-violet-500/20">
+          <Gem size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Introduction</h2>
+          <p className="text-slate-400 font-medium">Make the best choice right now.</p>
+        </div>
+      </div>
 
-      <div className="space-y-8">
-        {/* Definition */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="prose dark:prose-invert max-w-none"
-        >
-          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            A <strong>greedy algorithm</strong> makes the{" "}
-            <span className="text-violet-600 dark:text-violet-400 font-semibold">
-              locally optimal choice
-            </span>{" "}
-            at each step with the hope of finding a{" "}
-            <span className="text-violet-600 dark:text-violet-400 font-semibold">global optimum</span>.
-            It builds up a solution piece by piece, always choosing the next piece that offers the most
-            immediate benefit.
+      <div className="space-y-12">
+        <div className="bg-slate-900/50 border border-white/5 rounded-[2.5rem] p-8">
+          <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">
+            <Zap size={20} className="text-violet-400" /> The Greedy Philosophy
+          </h3>
+          <p className="text-slate-400 text-sm leading-relaxed mb-6">
+            A greedy algorithm builds a solution piece by piece, always choosing the next piece that offers the most immediate benefit. It never looks back and never changes its mind.
           </p>
-        </motion.div>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="p-4 bg-slate-950 rounded-xl border border-white/5">
+              <div className="text-violet-400 font-bold mb-1">Locally Optimal</div>
+              <div className="text-slate-500 text-xs">Pick best option at current step</div>
+            </div>
+            <div className="p-4 bg-slate-950 rounded-xl border border-white/5">
+              <div className="text-purple-400 font-bold mb-1">Globally Optimal?</div>
+              <div className="text-slate-500 text-xs">Hopefully! (Not guaranteed)</div>
+            </div>
+          </div>
+        </div>
 
-        {/* Interactive Coin Change Demo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-gradient-to-br from-violet-50 to-purple-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl"
-        >
-          <h3 className="text-xl font-semibold mb-6 text-slate-900 dark:text-slate-100">
-            Interactive Coin Change Problem (Greedy Approach)
+        {/* Interactive Visualizer */}
+        <div className="bg-gradient-to-br from-violet-500/10 to-purple-500/10 border border-violet-500/20 rounded-[2.5rem] p-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-10">
+            <Coins size={120} />
+          </div>
+          
+          <h3 className="text-xl font-black text-white mb-6 relative z-10">
+            Greedy in Action: Coin Change
           </h3>
 
-          {/* Amount Input */}
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-              Amount to make change for: ${coinAmount}
-            </label>
-            <input
-              type="range"
-              min="1"
-              max="99"
-              value={coinAmount}
-              onChange={(e) => {
-                setCoinAmount(parseInt(e.target.value));
-                resetChange();
-              }}
-              className="w-full h-2 bg-violet-200 rounded-lg appearance-none cursor-pointer dark:bg-violet-700"
-            />
-          </div>
-
-          {/* Coin Display */}
-          <div className="grid grid-cols-4 gap-4 mb-6">
-            {coins.map((coin, idx) => (
-              <motion.div
-                key={coin}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * idx }}
-                className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-lg border-2 border-violet-200 dark:border-violet-700"
-              >
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-violet-600 dark:text-violet-400 mb-2">
-                    {coin}¢
-                  </div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-2">
-                    {coin === 25 ? "Quarter" : coin === 10 ? "Dime" : coin === 5 ? "Nickel" : "Penny"}
-                  </div>
-                  {selectedCoins.length > 0 && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="text-lg font-bold text-green-600 dark:text-green-400"
-                    >
-                      × {coinCount(coin)}
-                    </motion.div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Controls */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <button
-              onClick={makeChange}
-              disabled={isAnimating}
-              className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 disabled:from-violet-300 disabled:to-purple-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg"
-            >
-              Make Change (Greedy)
-            </button>
-            <button
-              onClick={resetChange}
-              className="px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg"
-            >
-              Reset
-            </button>
-          </div>
-
-          {/* Result Display */}
-          {selectedCoins.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-violet-200 dark:border-violet-700"
-            >
-              <div className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                Greedy Solution:
+          <div className="flex flex-col md:flex-row gap-8 relative z-10">
+            <div className="flex-1 space-y-6">
+              <div>
+                <label className="text-xs font-bold text-violet-300 uppercase tracking-widest mb-2 block">
+                  Target Amount: {amount}¢
+                </label>
+                <input 
+                  type="range" 
+                  min="1" 
+                  max="99" 
+                  value={amount} 
+                  onChange={(e) => { setAmount(parseInt(e.target.value)); setCoinsUsed([]); }}
+                  disabled={isAnimating}
+                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-violet-500"
+                />
               </div>
-              <div className="flex flex-wrap gap-2 mb-3">
-                {selectedCoins.map((coin, idx) => (
+              
+              <button 
+                onClick={simulateGreedy}
+                disabled={isAnimating}
+                className="px-6 py-3 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-violet-600/20 active:scale-95 disabled:opacity-50"
+              >
+                {isAnimating ? "Thinking..." : "Make Change Greedily"}
+              </button>
+            </div>
+
+            <div className="flex-1 bg-slate-950/80 p-6 rounded-2xl border border-white/10 min-h-[160px]">
+              <div className="flex flex-wrap gap-2 content-start">
+                {coinsUsed.map((coin, i) => (
                   <motion.div
-                    key={idx}
+                    key={i}
                     initial={{ scale: 0, rotate: 180 }}
                     animate={{ scale: 1, rotate: 0 }}
-                    transition={{ delay: idx * 0.05 }}
-                    className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 text-white flex items-center justify-center font-bold text-sm shadow-lg"
+                    className="w-10 h-10 rounded-full bg-yellow-500 text-yellow-900 font-bold flex items-center justify-center shadow-md border-2 border-yellow-300"
                   >
-                    {coin}¢
+                    {coin}
                   </motion.div>
                 ))}
+                {coinsUsed.length === 0 && !isAnimating && (
+                  <span className="text-slate-500 text-sm italic">Coins will appear here...</span>
+                )}
               </div>
-              <div className="text-sm text-violet-600 dark:text-violet-400 font-semibold">
-                Total coins used: {selectedCoins.length}
-              </div>
-            </motion.div>
-          )}
-
-          {/* Key Insight */}
-          <div className="mt-4 bg-violet-100 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800 rounded-lg p-4">
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              <strong className="text-violet-900 dark:text-violet-200">Greedy Choice:</strong> Always pick
-              the largest coin that doesn't exceed the remaining amount. This greedy approach works for
-              standard US coins and gives the optimal solution!
-            </p>
+              {coinsUsed.length > 0 && (
+                <div className="mt-4 pt-4 border-t border-white/10 text-xs text-slate-400 flex justify-between">
+                  <span>Count: {coinsUsed.length}</span>
+                  <span>Total: {coinsUsed.reduce((a,b)=>a+b,0)}¢</span>
+                </div>
+              )}
+            </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Greedy Properties */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-gradient-to-br from-indigo-50 to-violet-50 dark:from-indigo-900/20 dark:to-violet-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
-            <span>📖</span> Key Properties of Greedy Algorithms
+        {/* Code Template */}
+        <div>
+          <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">
+            <Target size={20} className="text-purple-400" /> The Blueprint
           </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <PropertyCard
-              title="Greedy Choice Property"
-              description="A global optimum can be arrived at by selecting a local optimum"
-              example="Choose the largest coin first"
-            />
-            <PropertyCard
-              title="Optimal Substructure"
-              description="An optimal solution contains optimal solutions to subproblems"
-              example="Optimal change uses optimal subchanges"
-            />
-            <PropertyCard
-              title="No Backtracking"
-              description="Once a choice is made, it is never reconsidered"
-              example="Never un-select a chosen coin"
-            />
-            <PropertyCard
-              title="Efficient"
-              description="Usually faster than dynamic programming (O(n) or O(n log n))"
-              example="Single pass through coins"
-            />
-          </div>
-        </motion.div>
+          <CodeImplementation 
+            languages={greedyTemplateCode}
+            color="violet"
+            initialLanguage={currentLanguage}
+          />
+        </div>
 
-        {/* When to Use Greedy */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="grid md:grid-cols-2 gap-6"
-        >
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6">
-            <h3 className="text-xl font-semibold mb-4 text-green-900 dark:text-green-200 flex items-center gap-2">
-              <span>✅</span> When Greedy Works
-            </h3>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">•</span>
-                <span>Activity selection problem</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">•</span>
-                <span>Fractional knapsack</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">•</span>
-                <span>Huffman coding</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">•</span>
-                <span>Minimum spanning tree (Prim's, Kruskal's)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 dark:text-green-400">•</span>
-                <span>Dijkstra's shortest path</span>
-              </li>
+        {/* When to Use */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl">
+            <h4 className="font-bold text-emerald-400 mb-3 flex items-center gap-2">
+              <CheckCircle2 size={18} /> When it Works
+            </h4>
+            <ul className="space-y-2 text-xs text-slate-300">
+              <li>• Problem has <strong>optimal substructure</strong></li>
+              <li>• Has <strong>greedy choice property</strong></li>
+              <li>• E.g., Activity Selection, Fractional Knapsack</li>
             </ul>
           </div>
-
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6">
-            <h3 className="text-xl font-semibold mb-4 text-red-900 dark:text-red-200 flex items-center gap-2">
-              <span>❌</span> When Greedy Fails
-            </h3>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">•</span>
-                <span>0/1 Knapsack problem</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">•</span>
-                <span>Longest path in a graph</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">•</span>
-                <span>TSP (Traveling Salesman)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">•</span>
-                <span>Coin change with arbitrary denominations</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400">•</span>
-                <span>Maximum independent set</span>
-              </li>
+          
+          <div className="p-6 bg-rose-500/5 border border-rose-500/20 rounded-2xl">
+            <h4 className="font-bold text-rose-400 mb-3 flex items-center gap-2">
+              <XCircle size={18} /> When it Fails
+            </h4>
+            <ul className="space-y-2 text-xs text-slate-300">
+              <li>• Requires considering future consequences</li>
+              <li>• Greedy choice leads to dead end</li>
+              <li>• E.g., 0/1 Knapsack, Longest Path</li>
             </ul>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Classic Greedy Problems */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-amber-900 dark:text-amber-200 flex items-center gap-2">
-            <span>🎯</span> Classic Greedy Problems
-          </h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            <ProblemCard
-              icon="📅"
-              title="Activity Selection"
-              description="Select maximum number of non-overlapping activities"
-              strategy="Sort by finish time, pick earliest"
-            />
-            <ProblemCard
-              icon="🎒"
-              title="Fractional Knapsack"
-              description="Maximize value with weight constraint"
-              strategy="Sort by value/weight ratio"
-            />
-            <ProblemCard
-              icon="🌳"
-              title="Huffman Coding"
-              description="Optimal prefix-free encoding"
-              strategy="Build tree from min frequencies"
-            />
-            <ProblemCard
-              icon="💰"
-              title="Coin Change"
-              description="Make change with minimum coins"
-              strategy="Pick largest coin first"
-            />
-            <ProblemCard
-              icon="⛽"
-              title="Gas Station"
-              description="Complete circular route"
-              strategy="Start from feasible station"
-            />
-            <ProblemCard
-              icon="🔗"
-              title="Job Sequencing"
-              description="Maximize profit with deadlines"
-              strategy="Sort by profit, fill slots"
-            />
-          </div>
-        </motion.div>
       </div>
-    </div>
-  );
-}
-
-// Helper Components
-function PropertyCard({ title, description, example }) {
-  return (
-    <div className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-200 dark:border-slate-600 hover:border-violet-400 dark:hover:border-violet-500 transition-all">
-      <h4 className="text-base font-bold text-violet-700 dark:text-violet-400 mb-2">{title}</h4>
-      <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">{description}</p>
-      <p className="text-xs text-violet-600 dark:text-violet-400 italic">💡 {example}</p>
-    </div>
-  );
-}
-
-function ProblemCard({ icon, title, description, strategy }) {
-  return (
-    <div className="bg-white dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600 shadow-lg hover:shadow-xl transition-all">
-      <div className="text-3xl mb-3">{icon}</div>
-      <h4 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2">{title}</h4>
-      <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{description}</p>
-      <div className="text-xs text-violet-600 dark:text-violet-400 flex items-center gap-2">
-        <span>→</span>
-        <span>{strategy}</span>
-      </div>
-    </div>
+    </PerspectiveCard>
   );
 }

@@ -1,264 +1,109 @@
 "use client";
-import { motion } from "framer-motion";
+
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import { FileText, Zap, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 export default function GreedyCheatsheet() {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <h2 className="text-4xl font-bold mb-8 text-slate-900 dark:text-slate-100">
-        📚 Greedy Algorithms Cheatsheet
-      </h2>
-
-      {/* Quick Reference */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚡ Quick Reference
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 p-6 rounded-xl border border-violet-200 dark:border-violet-800">
-            <h4 className="text-xl font-bold text-violet-900 dark:text-violet-100 mb-4">
-              Classic Problems
-            </h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-slate-700 dark:text-slate-300">Activity Selection</span>
-                <span className="font-mono text-green-600 dark:text-green-400">O(n log n)</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-700 dark:text-slate-300">Fractional Knapsack</span>
-                <span className="font-mono text-green-600 dark:text-green-400">O(n log n)</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-700 dark:text-slate-300">Huffman Coding</span>
-                <span className="font-mono text-green-600 dark:text-green-400">O(n log n)</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-700 dark:text-slate-300">Job Sequencing</span>
-                <span className="font-mono text-green-600 dark:text-green-400">O(n²)</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-700 dark:text-slate-300">Dijkstra's Algorithm</span>
-                <span className="font-mono text-green-600 dark:text-green-400">O(E log V)</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-            <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-4">
-              Key Properties
-            </h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <div className="font-bold text-blue-700 dark:text-blue-300 mb-1">
-                  Greedy Choice Property
-                </div>
-                <div className="text-slate-700 dark:text-slate-300">
-                  Local optimum leads to global optimum
-                </div>
-              </div>
-              <div>
-                <div className="font-bold text-blue-700 dark:text-blue-300 mb-1">
-                  Optimal Substructure
-                </div>
-                <div className="text-slate-700 dark:text-slate-300">
-                  Problem has optimal subproblems
-                </div>
-              </div>
-              <div>
-                <div className="font-bold text-blue-700 dark:text-blue-300 mb-1">
-                  No Backtracking
-                </div>
-                <div className="text-slate-700 dark:text-slate-300">
-                  Choices are never reconsidered
-                </div>
-              </div>
-            </div>
-          </div>
+    <PerspectiveCard color="violet">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 border border-violet-500/20">
+          <FileText size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Cheatsheet</h2>
+          <p className="text-slate-400 font-medium">Quick reference for complexity and strategies.</p>
         </div>
       </div>
 
-      {/* Common Greedy Strategies */}
+      {/* Time & Space Complexity */}
       <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          🔑 Common Greedy Strategies
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <Zap size={24} className="text-amber-400" /> Complexity Analysis
         </h3>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            {
-              strategy: "Sort First",
-              desc: "Sort by key criterion, then select greedily",
-              when: "Activity selection, interval problems",
-            },
-            {
-              strategy: "Max/Min Selection",
-              desc: "Always pick maximum or minimum element",
-              when: "Coin change, knapsack with fractions",
-            },
-            {
-              strategy: "Earliest Deadline",
-              desc: "Process items with earliest deadline first",
-              when: "Job scheduling, minimize lateness",
-            },
-            {
-              strategy: "Highest Ratio",
-              desc: "Pick item with best value/cost ratio",
-              when: "Fractional knapsack, gas station",
-            },
-            {
-              strategy: "Two Pointers",
-              desc: "Greedy choices from both ends",
-              when: "Container with water, boats problem",
-            },
-            {
-              strategy: "Priority Queue",
-              desc: "Use heap for dynamic greedy selection",
-              when: "Huffman coding, merge k lists",
-            },
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-200 dark:border-slate-600"
-            >
-              <h4 className="font-bold text-violet-700 dark:text-violet-400 mb-2">
-                {item.strategy}
-              </h4>
-              <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">{item.desc}</p>
-              <p className="text-xs text-green-600 dark:text-green-400 italic">
-                When: {item.when}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Greedy vs DP */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-          ⚖️ Greedy vs Dynamic Programming
-        </h3>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-violet-50 dark:bg-violet-900/20">
-                <th className="border border-violet-200 dark:border-violet-800 px-4 py-3 text-left">
-                  Aspect
-                </th>
-                <th className="border border-violet-200 dark:border-violet-800 px-4 py-3 text-left">
-                  Greedy
-                </th>
-                <th className="border border-violet-200 dark:border-violet-800 px-4 py-3 text-left">
-                  Dynamic Programming
-                </th>
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50">
+          <table className="w-full text-left text-sm text-slate-400">
+            <thead className="bg-white/5 text-slate-200 uppercase font-bold tracking-wider text-xs">
+              <tr>
+                <th className="px-6 py-4">Problem</th>
+                <th className="px-6 py-4 text-center">Time</th>
+                <th className="px-6 py-4 text-center">Space</th>
+                <th className="px-6 py-4">Constraint</th>
               </tr>
             </thead>
-            <tbody className="text-sm">
-              <tr className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3 font-semibold">
-                  Approach
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  Make locally optimal choice
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  Explore all possibilities
-                </td>
-              </tr>
-              <tr className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3 font-semibold">
-                  Backtracking
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  No backtracking
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  Considers all subproblems
-                </td>
-              </tr>
-              <tr className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3 font-semibold">
-                  Optimal Solution
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  Not always guaranteed
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  Always finds optimal
-                </td>
-              </tr>
-              <tr className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3 font-semibold">
-                  Time Complexity
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  Usually O(n log n) or O(n)
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  Usually O(n²) or higher
-                </td>
-              </tr>
-              <tr className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3 font-semibold">
-                  Example
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  Fractional Knapsack
-                </td>
-                <td className="border border-slate-200 dark:border-slate-700 px-4 py-3">
-                  0/1 Knapsack
-                </td>
-              </tr>
+            <tbody className="divide-y divide-white/5">
+              {[
+                { prob: "Activity Selection", time: "O(n log n)", space: "O(1)", const: "Sort by finish time" },
+                { prob: "Fractional Knapsack", time: "O(n log n)", space: "O(1)", const: "Sort by ratio" },
+                { prob: "Huffman Coding", time: "O(n log n)", space: "O(n)", const: "Min-Heap" },
+                { prob: "Job Sequencing", time: "O(n²)", space: "O(n)", const: "Disjoint Set (Opt: O(n log n))" },
+                { prob: "Coin Change (Greedy)", time: "O(n)", space: "O(1)", const: "Canonical systems only" },
+                { prob: "Dijkstra", time: "O(E log V)", space: "O(V)", const: "Non-negative weights" },
+              ].map((row, idx) => (
+                <tr key={idx} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 font-bold text-slate-200">{row.prob}</td>
+                  <td className="px-6 py-4 text-center font-mono text-emerald-400">{row.time}</td>
+                  <td className="px-6 py-4 text-center font-mono text-indigo-400">{row.space}</td>
+                  <td className="px-6 py-4 text-slate-500 text-xs">{row.const}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Key Takeaways */}
-      <div className="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 p-8 rounded-2xl border-2 border-violet-300 dark:border-violet-700">
-        <h3 className="text-2xl font-bold text-violet-900 dark:text-violet-100 mb-6">
-          ✨ Key Takeaways
+      {/* Common Pitfalls */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <AlertTriangle size={24} className="text-rose-400" /> Common Pitfalls
         </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>Fast & Efficient:</strong> Greedy algorithms are usually faster than DP
-              </p>
+        <div className="grid md:grid-cols-2 gap-4">
+          {[
+            { q: "Wrong Sorting Order?", a: "Always double check criterion (Start vs Finish time).", color: "rose" },
+            { q: "Non-Canonical Coins?", a: "Greedy fails for random coin systems. Use DP.", color: "orange" },
+            { q: "0/1 Knapsack?", a: "Greedy fails if items can't be broken. Use DP.", color: "red" },
+            { q: "Negative Edges?", a: "Dijkstra (Greedy) fails. Use Bellman-Ford.", color: "purple" },
+            { q: "Longest Path?", a: "Greedy doesn't work for Longest Path in general.", color: "blue" }
+          ].map((item, i) => (
+            <div key={i} className={`bg-${item.color}-500/5 border border-${item.color}-500/20 p-4 rounded-xl flex flex-col`}>
+               <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{item.q}</span>
+               <span className={`text-sm font-bold text-${item.color}-400`}>{item.a}</span>
             </div>
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>Proof Required:</strong> Must prove greedy choice property for correctness
-              </p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>Sorting Common:</strong> Many greedy problems start with sorting
-              </p>
-            </div>
-          </div>
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>No Backtrack:</strong> Once a choice is made, it's never reconsidered
-              </p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>Not Always Optimal:</strong> Greedy doesn't guarantee optimal for all problems
-              </p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>Test with Examples:</strong> Verify greedy works with small test cases
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </div>
+
+      {/* Greedy vs DP Comparison */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+          <CheckCircle2 size={24} className="text-emerald-400" /> Greedy vs Dynamic Programming
+        </h3>
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50">
+           <table className="w-full text-left text-sm text-slate-400">
+            <thead className="bg-white/5 text-slate-200 uppercase font-bold tracking-wider text-xs">
+              <tr>
+                <th className="px-6 py-4">Feature</th>
+                <th className="px-6 py-4">Greedy Approach</th>
+                <th className="px-6 py-4">Dynamic Programming</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/5">
+              {[
+                { feat: "Choice", greedy: "Local Optimal", dp: "Exhaustive / All Cases" },
+                { feat: "Backtracking", greedy: "Never", dp: "Allowed (implicitly)" },
+                { feat: "Correctness", greedy: "Harder to prove", dp: "Generally guaranteed" },
+                { feat: "Efficiency", greedy: "Faster (often O(n log n))", dp: "Slower (often O(n²))" },
+              ].map((row, idx) => (
+                <tr key={idx} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 font-bold text-slate-200">{row.feat}</td>
+                  <td className="px-6 py-4 text-violet-300">{row.greedy}</td>
+                  <td className="px-6 py-4 text-pink-300">{row.dp}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </PerspectiveCard>
   );
 }
