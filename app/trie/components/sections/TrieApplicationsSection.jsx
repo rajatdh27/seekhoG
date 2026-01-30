@@ -1,400 +1,347 @@
 "use client";
-import { motion } from "framer-motion";
+
+import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import CodeImplementation from "@/app/components/common/CodeImplementation";
+import { 
+  Search, 
+  Type, 
+  Maximize2, 
+  Grid, 
+  Replace, 
+  ArrowRight
+} from "lucide-react";
 
 export default function TrieApplicationsSection() {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="p-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl">
-          <span className="text-4xl">🎯</span>
-        </div>
-        <div>
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Trie Applications
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-            Real-world use cases and implementations
-          </p>
-        </div>
-      </div>
+  const [currentLanguage, setCurrentLanguage] = useState("javascript");
 
-      {/* Application 1: Autocomplete System */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-6">
-          1️⃣ Autocomplete System
-        </h3>
-        <div className="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-xl border border-emerald-200 dark:border-emerald-800 mb-6">
-          <p className="text-lg text-emerald-900 dark:text-emerald-100 mb-4">
-            Find all words that start with a given prefix. Used in search engines, IDEs, and text editors.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Approach:</strong> Navigate to prefix node, then DFS to collect all complete words
-          </p>
-        </div>
+  const autocompleteCode = {
+    javascript: `class AutocompleteTrie {
+    // Standard Trie insert...
+    insert(word) { /* ... */ }
 
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`class AutocompleteTrie {
-    constructor() {
-        this.root = new TrieNode();
-    }
-
-    insert(word) {
-        let node = this.root;
-        for (let char of word) {
-            if (!node.children[char]) {
-                node.children[char] = new TrieNode();
-            }
-            node = node.children[char];
-        }
-        node.isEndOfWord = true;
-    }
-
-    // Find all words with given prefix
+    // Find all words starting with prefix
     autocomplete(prefix) {
         let node = this.root;
-
-        // Navigate to prefix node
+        // 1. Navigate to end of prefix
         for (let char of prefix) {
-            if (!node.children[char]) {
-                return [];  // No words with this prefix
-            }
+            if (!node.children[char]) return [];
             node = node.children[char];
         }
-
-        // DFS from prefix node to find all words
+        
+        // 2. DFS to collect all words
         const results = [];
         this.dfs(node, prefix, results);
         return results;
     }
 
     dfs(node, currentWord, results) {
-        if (node.isEndOfWord) {
-            results.push(currentWord);
-        }
-
+        if (node.isEndOfWord) results.push(currentWord);
+        
         for (let char in node.children) {
             this.dfs(node.children[char], currentWord + char, results);
         }
     }
+}`,
+    python: `class AutocompleteTrie:
+    # Standard insert...
+    def insert(self, word): pass
+
+    def autocomplete(self, prefix):
+        node = self.root
+        # 1. Navigate to end of prefix
+        for char in prefix:
+            if char not in node.children: return []
+            node = node.children[char]
+            
+        # 2. DFS to collect words
+        results = []
+        self.dfs(node, prefix, results)
+        return results
+    
+    def dfs(self, node, current_word, results):
+        if node.is_end_of_word:
+            results.append(current_word)
+            
+        for char, child in node.children.items():
+            self.dfs(child, current_word + char, results)`,
+    java: `class AutocompleteTrie {
+    // Standard insert...
+    
+    public List<String> autocomplete(String prefix) {
+        TrieNode node = root;
+        // 1. Navigate to prefix
+        for (char c : prefix.toCharArray()) {
+            if (!node.children.containsKey(c)) return new ArrayList<>();
+            node = node.children.get(c);
+        }
+        
+        // 2. DFS
+        List<String> results = new ArrayList<>();
+        dfs(node, prefix, results);
+        return results;
+    }
+    
+    private void dfs(TrieNode node, String current, List<String> res) {
+        if (node.isEndOfWord) res.add(current);
+        
+        for (Character c : node.children.keySet()) {
+            dfs(node.children.get(c), current + c, res);
+        }
+    }
+}`,
+    cpp: `// C++ Autocomplete
+vector<string> autocomplete(string prefix) {
+    TrieNode* node = root;
+    for (char c : prefix) {
+        if (node->children.find(c) == node->children.end()) return {};
+        node = node->children[c];
+    }
+    
+    vector<string> results;
+    dfs(node, prefix, results);
+    return results;
 }
 
-// Example Usage
-const trie = new AutocompleteTrie();
-const words = ["apple", "app", "application", "apply", "banana", "band"];
-
-words.forEach(word => trie.insert(word));
-
-console.log(trie.autocomplete("app"));
-// Output: ["app", "apple", "application", "apply"]
-
-console.log(trie.autocomplete("ban"));
-// Output: ["banana", "band"]
-
-// Time: O(p + n) where p = prefix length, n = number of nodes in subtree
-// Space: O(n) for recursion stack`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Application 2: Word Dictionary (Add & Search with Wildcards) */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-teal-700 dark:text-teal-400 mb-6">
-          2️⃣ Word Dictionary with Wildcards
-        </h3>
-        <div className="bg-teal-50 dark:bg-teal-900/20 p-6 rounded-xl border border-teal-200 dark:border-teal-800 mb-6">
-          <p className="text-lg text-teal-900 dark:text-teal-100 mb-4">
-            Support searching with wildcard '.' that matches any character. LeetCode Problem #211.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Example:</strong> search("b.d") matches "bad", "bed", "bid"
-          </p>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`class WordDictionary {
-    constructor() {
-        this.root = new TrieNode();
+void dfs(TrieNode* node, string current, vector<string>& results) {
+    if (node->isEndOfWord) results.push_back(current);
+    
+    for (auto const& [key, val] : node->children) {
+        dfs(val, current + key, results);
     }
-
-    addWord(word) {
-        let node = this.root;
-
-        for (let char of word) {
-            if (!node.children[char]) {
-                node.children[char] = new TrieNode();
-            }
-            node = node.children[char];
+}`,
+    go: `func (t *Trie) Autocomplete(prefix string) []string {
+    node := t.root
+    for _, char := range prefix {
+        if _, exists := node.children[char]; !exists {
+            return []string{}
         }
-
-        node.isEndOfWord = true;
+        node = node.children[char]
     }
-
-    search(word) {
-        return this.searchHelper(word, 0, this.root);
-    }
-
-    searchHelper(word, index, node) {
-        // Base case: reached end of word
-        if (index === word.length) {
-            return node.isEndOfWord;
+    
+    var results []string
+    var dfs func(*TrieNode, string)
+    dfs = func(n *TrieNode, curr string) {
+        if n.isEndOfWord {
+            results = append(results, curr)
         }
-
-        const char = word[index];
-
-        if (char === '.') {
-            // Wildcard: try all children
-            for (let childChar in node.children) {
-                if (this.searchHelper(word, index + 1, node.children[childChar])) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            // Regular character
-            if (!node.children[char]) {
-                return false;
-            }
-            return this.searchHelper(word, index + 1, node.children[char]);
+        for char, child := range n.children {
+            dfs(child, curr + string(char))
         }
     }
-}
+    
+    dfs(node, prefix)
+    return results
+}`
+  };
 
-// Example Usage
-const dict = new WordDictionary();
-dict.addWord("bad");
-dict.addWord("dad");
-dict.addWord("mad");
-
-console.log(dict.search("pad"));    // false
-console.log(dict.search("bad"));    // true
-console.log(dict.search(".ad"));    // true (matches bad, dad, mad)
-console.log(dict.search("b.."));    // true (matches bad)
-console.log(dict.search("b.d"));    // true (matches bad)
-
-// Time: O(m) for addWord, O(26^m) worst case for search with wildcards
-// Space: O(m) for recursion stack`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Application 3: Longest Word with All Prefixes */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">
-          3️⃣ Longest Word with All Prefixes
-        </h3>
-        <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800 mb-6">
-          <p className="text-lg text-green-900 dark:text-green-100 mb-4">
-            Find longest word where all its prefixes exist in trie. LeetCode Problem #720.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Example:</strong> ["w", "wo", "wor", "worl", "world"] → "world" (all prefixes exist)
-          </p>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function longestWord(words) {
+  const wordSearchCode = {
+    javascript: `// Word Search II (Backtracking + Trie)
+function findWords(board, words) {
     const trie = new Trie();
-
-    // Insert all words
-    for (let word of words) {
-        trie.insert(word);
-    }
-
-    let longest = "";
-
-    // DFS to find longest word with all prefixes
-    function dfs(node, currentWord) {
-        // Update longest if current word is valid and longer
-        if (currentWord.length > longest.length ||
-            (currentWord.length === longest.length && currentWord < longest)) {
-            longest = currentWord;
-        }
-
-        // Explore children (only if they form complete words)
-        for (let char in node.children) {
-            const childNode = node.children[char];
-
-            // Only continue if child is end of word (prefix exists)
-            if (childNode.isEndOfWord) {
-                dfs(childNode, currentWord + char);
-            }
-        }
-    }
-
-    dfs(trie.root, "");
-    return longest;
-}
-
-// Example
-const words = ["w", "wo", "wor", "worl", "world", "a", "banana"];
-console.log(longestWord(words));  // "world"
-
-// Explanation:
-// "world" has all prefixes: w, wo, wor, worl
-// "banana" is longer but missing prefixes: b, ba, ban, bana
-
-// Time: O(n * m) where n = words, m = avg length
-// Space: O(n * m) for trie`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Application 4: Word Search II (2D Grid) */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-lime-700 dark:text-lime-400 mb-6">
-          4️⃣ Word Search II (2D Grid)
-        </h3>
-        <div className="bg-lime-50 dark:bg-lime-900/20 p-6 rounded-xl border border-lime-200 dark:border-lime-800 mb-6">
-          <p className="text-lg text-lime-900 dark:text-lime-100 mb-4">
-            Find all words from dictionary in 2D board. LeetCode Problem #212.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Approach:</strong> Build trie from dictionary, then DFS from each cell
-          </p>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function findWords(board, words) {
-    // Build trie from dictionary
-    const trie = new Trie();
-    for (let word of words) {
-        trie.insert(word);
-    }
-
+    words.forEach(w => trie.insert(w));
+    
+    const rows = board.length, cols = board[0].length;
     const result = new Set();
-    const rows = board.length;
-    const cols = board[0].length;
-
-    function dfs(row, col, node, path) {
-        // Out of bounds or already visited
-        if (row < 0 || row >= rows || col < 0 || col >= cols) {
-            return;
-        }
-
-        const char = board[row][col];
-
-        if (char === '#' || !node.children[char]) {
-            return;
-        }
-
-        // Move to child node
+    
+    function dfs(r, c, node, path) {
+        if (r < 0 || r >= rows || c < 0 || c >= cols) return;
+        
+        const char = board[r][c];
+        if (char === '#' || !node.children[char]) return;
+        
         node = node.children[char];
         path += char;
-
-        // Found a word
-        if (node.isEndOfWord) {
-            result.add(path);
-        }
-
-        // Mark as visited
-        board[row][col] = '#';
-
-        // Explore 4 directions
-        dfs(row + 1, col, node, path);
-        dfs(row - 1, col, node, path);
-        dfs(row, col + 1, node, path);
-        dfs(row, col - 1, node, path);
-
-        // Unmark
-        board[row][col] = char;
+        if (node.isEndOfWord) result.add(path);
+        
+        board[r][c] = '#'; // Visit
+        
+        // Explore neighbors
+        dfs(r+1, c, node, path); dfs(r-1, c, node, path);
+        dfs(r, c+1, node, path); dfs(r, c-1, node, path);
+        
+        board[r][c] = char; // Backtrack
     }
-
-    // Start DFS from each cell
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            dfs(i, j, trie.root, "");
+    
+    for(let r=0; r<rows; r++) {
+        for(let c=0; c<cols; c++) {
+            dfs(r, c, trie.root, "");
         }
     }
-
     return Array.from(result);
-}
-
-// Example
-const board = [
-    ['o','a','a','n'],
-    ['e','t','a','e'],
-    ['i','h','k','r'],
-    ['i','f','l','v']
-];
-const words = ["oath","pea","eat","rain"];
-
-console.log(findWords(board, words));
-// Output: ["oath", "eat"]
-
-// Time: O(m * n * 4^L) where L = max word length
-// Space: O(w * L) where w = number of words`}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Application 5: Replace Words (Word Root) */}
-      <div>
-        <h3 className="text-2xl font-bold text-cyan-700 dark:text-cyan-400 mb-6">
-          5️⃣ Replace Words with Roots
-        </h3>
-        <div className="bg-cyan-50 dark:bg-cyan-900/20 p-6 rounded-xl border border-cyan-200 dark:border-cyan-800 mb-6">
-          <p className="text-lg text-cyan-900 dark:text-cyan-100 mb-4">
-            Replace words with shortest root from dictionary. LeetCode Problem #648.
-          </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <strong>Example:</strong> roots=["cat","bat"], sentence="the cattle was rattled" → "the cat was rattled"
-          </p>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-black rounded-xl p-6 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{`function replaceWords(dictionary, sentence) {
-    // Build trie from roots
-    const trie = new Trie();
-    for (let root of dictionary) {
-        trie.insert(root);
-    }
-
-    // Find shortest root for a word
-    function findRoot(word) {
-        let node = trie.root;
-        let prefix = "";
-
-        for (let char of word) {
-            if (!node.children[char]) {
-                return word;  // No root found, return original
-            }
-
-            prefix += char;
-            node = node.children[char];
-
-            // Found a root
-            if (node.isEndOfWord) {
-                return prefix;
-            }
+}`,
+    python: `# Word Search II
+def findWords(board, words):
+    trie = Trie()
+    for w in words: trie.insert(w)
+    
+    res = set()
+    rows, cols = len(board), len(board[0])
+    
+    def dfs(r, c, node, path):
+        if r < 0 or r >= rows or c < 0 or c >= cols: return
+        char = board[r][c]
+        if char == '#' or char not in node.children: return
+        
+        node = node.children[char]
+        path += char
+        if node.is_end_of_word: res.add(path)
+        
+        board[r][c] = '#' # Visit
+        for dr, dc in [(0,1), (0,-1), (1,0), (-1,0)]:
+            dfs(r+dr, c+dc, node, path)
+        board[r][c] = char # Backtrack
+        
+    for r in range(rows):
+        for c in range(cols):
+            dfs(r, c, trie.root, "")
+    return list(res)`,
+    java: `// Word Search II
+public List<String> findWords(char[][] board, String[] words) {
+    Trie trie = new Trie();
+    for (String w : words) trie.insert(w);
+    
+    Set<String> res = new HashSet<>();
+    for (int r = 0; r < board.length; r++) {
+        for (int c = 0; c < board[0].length; c++) {
+            dfs(board, r, c, trie.root, "", res);
         }
-
-        return word;  // No root found
     }
-
-    // Replace each word with its root
-    const words = sentence.split(' ');
-    const result = words.map(word => findRoot(word));
-
-    return result.join(' ');
+    return new ArrayList<>(res);
 }
 
-// Example
-const dictionary = ["cat", "bat", "rat"];
-const sentence = "the cattle was rattled by the battery";
+void dfs(char[][] board, int r, int c, TrieNode node, String path, Set<String> res) {
+    if (r < 0 || r >= board.length || c < 0 || c >= board[0].length) return;
+    char ch = board[r][c];
+    if (ch == '#' || !node.children.containsKey(ch)) return;
+    
+    node = node.children.get(ch);
+    path += ch;
+    if (node.isEndOfWord) res.add(path);
+    
+    board[r][c] = '#'; // Visit
+    dfs(board, r+1, c, node, path, res); dfs(board, r-1, c, node, path, res);
+    dfs(board, r, c+1, node, path, res); dfs(board, r, c-1, node, path, res);
+    board[r][c] = ch; // Backtrack
+}`,
+    cpp: `// Word Search II
+void dfs(vector<vector<char>>& board, int r, int c, TrieNode* node, string path, set<string>& res) {
+    if (r < 0 || r >= board.size() || c < 0 || c >= board[0].size()) return;
+    char ch = board[r][c];
+    if (ch == '#' || node->children.find(ch) == node->children.end()) return;
+    
+    node = node->children[ch];
+    path += ch;
+    if (node->isEndOfWord) res.insert(path);
+    
+    board[r][c] = '#';
+    int dirs[] = {0, 1, 0, -1, 0};
+    for(int i=0; i<4; i++) dfs(board, r+dirs[i], c+dirs[i+1], node, path, res);
+    board[r][c] = ch;
+}`,
+    go: `// Word Search II
+func findWords(board [][]byte, words []string) []string {
+    trie := NewTrie()
+    for _, w := range words { trie.Insert(w) }
+    
+    res := make(map[string]bool)
+    rows, cols := len(board), len(board[0])
+    
+    var dfs func(int, int, *TrieNode, string)
+    dfs = func(r, c int, node *TrieNode, path string) {
+        if r < 0 || r >= rows || c < 0 || c >= cols { return }
+        char := board[r][c]
+        if char == '#' { return }
+        if _, ok := node.children[rune(char)]; !ok { return }
+        
+        node = node.children[rune(char)]
+        path += string(char)
+        if node.isEndOfWord { res[path] = true }
+        
+        board[r][c] = '#'
+        dfs(r+1, c, node, path); dfs(r-1, c, node, path)
+        dfs(r, c+1, node, path); dfs(r, c-1, node, path)
+        board[r][c] = char
+    }
+    
+    for r := 0; r < rows; r++ {
+        for c := 0; c < cols; c++ {
+            dfs(r, c, trie.root, "")
+        }
+    }
+    // convert map keys to slice...
+}`
+  };
 
-console.log(replaceWords(dictionary, sentence));
-// Output: "the cat was rat by the bat"
-
-// Time: O(d + n * m) where d = dictionary size, n = words, m = avg length
-// Space: O(d) for trie`}</code>
-          </pre>
+  return (
+    <PerspectiveCard color="orange">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20">
+          <Search size={28} />
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-white tracking-tight">Real-World Applications</h2>
+          <p className="text-slate-400 font-medium">From search engines to spell checkers.</p>
         </div>
       </div>
-    </div>
+
+      <div className="space-y-12">
+        {/* Application 1: Autocomplete */}
+        <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] p-8">
+          <div className="flex items-center gap-3 mb-6">
+            <Type size={24} className="text-orange-400" />
+            <h3 className="text-2xl font-black text-white">1. Autocomplete System</h3>
+          </div>
+          <p className="text-slate-400 text-sm leading-relaxed mb-6">
+            The most common use of Trie. When a user types a prefix, we traverse to that node and perform a DFS to find all complete words in that subtree.
+          </p>
+          <CodeImplementation 
+            languages={autocompleteCode}
+            color="orange"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+
+        {/* Application 2: Word Search II */}
+        <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] p-8">
+          <div className="flex items-center gap-3 mb-6">
+            <Grid size={24} className="text-amber-400" />
+            <h3 className="text-2xl font-black text-white">2. Boggle / Word Search II</h3>
+          </div>
+          <p className="text-slate-400 text-sm leading-relaxed mb-6">
+            Finding valid dictionary words in a grid of characters. We use a Trie to prune the DFS search space—if a prefix doesn't exist in the Trie, we stop searching that path immediately.
+          </p>
+          <CodeImplementation 
+            languages={wordSearchCode}
+            color="amber"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+
+        {/* Other Applications Grid */}
+        <div>
+          <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2">
+            <ArrowRight size={20} className="text-orange-400" /> More Use Cases
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl hover:border-orange-500/30 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-yellow-500/10 rounded-lg text-yellow-400"><Maximize2 size={18} /></div>
+                <h4 className="font-bold text-white">Longest Prefix Matching</h4>
+              </div>
+              <p className="text-xs text-slate-400">Used in IP routing (routers) to forward packets to the most specific network prefix.</p>
+            </div>
+
+            <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl hover:border-orange-500/30 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-red-500/10 rounded-lg text-red-400"><Replace size={18} /></div>
+                <h4 className="font-bold text-white">Spell Checker</h4>
+              </div>
+              <p className="text-xs text-slate-400">Store valid dictionary words. If a word isn't in the Trie, search for words with small edit distance (1-2 chars diff).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </PerspectiveCard>
   );
 }
