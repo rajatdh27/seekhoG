@@ -3,19 +3,16 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import { ModuleComplete } from "@/app/components/common/algorithm";
 import { FileText, Check, Lightbulb, TrendingUp, Code2, HelpCircle, RefreshCcwDot } from "lucide-react";
 
 export default function TreeCheatsheet() {
   return (
     <PerspectiveCard color="teal">
-       {/* ... existing content ... */}
        <div className="mb-10 text-center">
         <h3 className="text-sm font-black text-teal-400 uppercase tracking-widest mb-3">Quick Reference</h3>
         <p className="text-3xl md:text-4xl font-black text-white">Tree Cheatsheet</p>
       </div>
 
-      {/* ... keeping all content ... */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <CheatCard
           title="Pattern Recognition"
@@ -137,14 +134,6 @@ export default function TreeCheatsheet() {
             </tbody>
         </table>
       </div>
-
-      <ModuleComplete 
-        title="Trees Mastery Complete" 
-        description="You've mastered hierarchical structures and traversal patterns. Next up: Heaps."
-        nextModuleText="Start Heaps" 
-        nextModuleLink="/heap" 
-        color="teal" 
-      />
     </PerspectiveCard>
   );
 }

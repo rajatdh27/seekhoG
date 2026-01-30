@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   Layers, 
   Cpu, 
@@ -202,6 +203,14 @@ export default function StackPage() {
                 </motion.section>
               );
             })}
+            {/* Next Section Pointer */}
+            <NextModuleCard 
+              title="Stack Mastered"
+              description="You've mastered LIFO! Now let's explore FIFO data management with Queues."
+              nextModuleText="Start Queues"
+              nextModuleLink="/queue"
+              color="purple"
+            />
           </main>
         </div>
       </div>

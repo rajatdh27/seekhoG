@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   Database, 
   Cpu, 
@@ -201,6 +202,14 @@ export default function ArrayPage() {
                 </motion.section>
               );
             })}
+            {/* Next Section Pointer */}
+            <NextModuleCard 
+              title="Arrays Mastered"
+              description="You've learned the basics of contiguous memory. Now let's explore dynamic data structures with Linked Lists."
+              nextModuleText="Start Linked Lists"
+              nextModuleLink="/linked-list"
+              color="blue"
+            />
           </main>
         </div>
       </div>

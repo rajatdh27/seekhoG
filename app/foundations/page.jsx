@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense, useEffect, useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { Zap, BookOpen, Clock, Calculator, BarChart3, ChevronDown } from "lucide-react";
 
 // Eager load the first section
@@ -187,12 +188,19 @@ export default function FoundationsPage() {
                 </motion.section>
               );
             })}
+
+            {/* Next Section Pointer */}
+            <NextModuleCard 
+              title="Foundations Mastered"
+              description="You've built a solid base. Now it's time to dive into the most fundamental data structure: Arrays."
+              nextModuleText="Start Arrays"
+              nextModuleLink="/array"
+              color="emerald"
+            />
           </main>
         </div>
       </div>
 
-      {/* Floating Progress Bubble - Removed as per request */}
-      
       <style jsx global>{`
         :root {
           --mouse-x: 0px;

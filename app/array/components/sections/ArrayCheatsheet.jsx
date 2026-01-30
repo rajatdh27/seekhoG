@@ -1,7 +1,6 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
-import { ModuleComplete } from "@/app/components/common/algorithm";
 import { FileText, Code2, Zap, AlertTriangle, Lightbulb, Target, ArrowRight } from "lucide-react";
 
 export default function ArrayCheatsheet() {
@@ -62,7 +61,6 @@ export default function ArrayCheatsheet() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* Pattern Recognition */}
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
           <h3 className="text-xl font-black text-blue-400 mb-6 flex items-center gap-3">
             <Target size={20} /> Pattern Recognition
@@ -84,7 +82,6 @@ export default function ArrayCheatsheet() {
           </ul>
         </div>
 
-        {/* Complexity Guide */}
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
           <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-3">
             <Zap size={20} /> Common Complexities
@@ -106,7 +103,6 @@ export default function ArrayCheatsheet() {
           </div>
         </div>
 
-        {/* Edge Cases */}
         <div className="bg-rose-500/5 border border-rose-500/20 p-8 rounded-[2rem]">
           <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-3">
             <AlertTriangle size={20} /> Edge Cases to Check
@@ -121,7 +117,6 @@ export default function ArrayCheatsheet() {
           </div>
         </div>
 
-        {/* Interview Tips */}
         <div className="bg-emerald-500/5 border border-emerald-500/20 p-8 rounded-[2rem]">
           <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-3">
             <Lightbulb size={20} /> Interview Tips
@@ -143,7 +138,6 @@ export default function ArrayCheatsheet() {
         </div>
       </div>
 
-      {/* Code Snippets */}
       <div className="mb-12">
         <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
           <Code2 size={24} className="text-indigo-400" /> Essential Code Snippets
@@ -161,14 +155,6 @@ export default function ArrayCheatsheet() {
           ))}
         </div>
       </div>
-
-      <ModuleComplete 
-        title="Arrays Mastery Complete" 
-        description="You've mastered contiguous memory, O(1) access, and the 9 critical interview patterns. You are now ready for Linked Lists."
-        nextModuleText="Start Linked Lists" 
-        nextModuleLink="/linked-list" 
-        color="emerald" 
-      />
     </PerspectiveCard>
   );
 }

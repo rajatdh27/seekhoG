@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   Link as LinkIcon, 
   Cpu, 
@@ -201,6 +202,14 @@ export default function LinkedListPage() {
                 </motion.section>
               );
             })}
+            {/* Next Section Pointer */}
+            <NextModuleCard 
+              title="Linked Lists Mastered"
+              description="You've mastered node-based connectivity. Now let's explore LIFO data management with Stacks."
+              nextModuleText="Start Stacks"
+              nextModuleLink="/stack"
+              color="emerald"
+            />
           </main>
         </div>
       </div>

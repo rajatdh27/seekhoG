@@ -3,7 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
-import ModuleComplete from "@/app/components/common/algorithm/ModuleComplete";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   Gem, 
   CalendarClock, 
@@ -198,20 +198,13 @@ export default function GreedyPage() {
             })}
 
              {/* Next Section Pointer */}
-             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="pt-12 pb-24"
-            >
-              <ModuleComplete 
+             <NextModuleCard 
                 title="Greedy Mastered"
                 description="You've mastered optimal choices! Now, let's learn how to explore all possibilities with Backtracking."
                 nextModuleText="Start Backtracking"
                 nextModuleLink="/backtracking"
                 color="violet"
               />
-            </motion.div>
           </main>
         </div>
       </div>

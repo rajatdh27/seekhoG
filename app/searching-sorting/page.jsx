@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   Search, 
   ArrowRight, 
@@ -208,6 +209,14 @@ export default function SearchingSortingPage() {
                 </motion.section>
               );
             })}
+            {/* Next Section Pointer */}
+            <NextModuleCard 
+              title="Searching & Sorting Mastered"
+              description="You've mastered the core algorithms! Now let's explore hierarchical data with Trees."
+              nextModuleText="Start Trees"
+              nextModuleLink="/tree"
+              color="orange"
+            />
           </main>
         </div>
       </div>

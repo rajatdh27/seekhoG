@@ -1,7 +1,6 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
-import { ModuleComplete } from "@/app/components/common/algorithm";
 import { 
   FileText, 
   Zap, 
@@ -10,36 +9,31 @@ import {
   Code2, 
   Target, 
   CheckCircle2, 
-  Trash2, 
-  List, 
-  Share2, 
   ArrowRight,
-  MousePointer2,
   Brackets,
-  IterationCcw,
-  ZapOff,
   BarChart3,
   ChevronRight,
-  GitMerge
+  GitMerge,
+  ZapOff
 } from "lucide-react";
 
 export default function LinkedListCheatsheet() {
   const snippets = [
-    { 
-      title: "Reverse List", 
-      code: "let prev = null, curr = head;\nwhile (curr) {\n  let next = curr.next;\n  curr.next = prev;\n  prev = curr; curr = next;\n}\nreturn prev;" 
+    {
+      title: "Reverse List",
+      code: "let prev = null, curr = head;\nwhile (curr) {\n  let next = curr.next;\n  curr.next = prev;\n  prev = curr; curr = next;\n}\nreturn prev;"
     },
-    { 
-      title: "Cycle Detection (Floyd's)", 
-      code: "let slow = head, fast = head;\nwhile (fast && fast.next) {\n  slow = slow.next;\n  fast = fast.next.next;\n  if (slow === fast) return true;\n}\nreturn false;" 
+    {
+      title: "Cycle Detection (Floyd's)",
+      code: "let slow = head, fast = head;\nwhile (fast && fast.next) {\n  slow = slow.next;\n  fast = fast.next.next;\n  if (slow === fast) return true;\n}\nreturn false;"
     },
-    { 
-      title: "Merge Sorted Lists", 
-      code: "const dummy = new Node(0);\nlet curr = dummy;\nwhile (l1 && l2) {\n  if (l1.val <= l2.val) { curr.next = l1; l1 = l1.next; }\n  else { curr.next = l2; l2 = l2.next; }\n  curr = curr.next;\n}\ncurr.next = l1 || l2;" 
+    {
+      title: "Merge Sorted Lists",
+      code: "const dummy = new Node(0);\nlet curr = dummy;\nwhile (l1 && l2) {\n  if (l1.val <= l2.val) { curr.next = l1; l1 = l1.next; }\n  else { curr.next = l2; l2 = l2.next; }\n  curr = curr.next;\n}\ncurr.next = l1 || l2;"
     },
-    { 
-      title: "Find Middle", 
-      code: "let slow = head, fast = head;\nwhile (fast && fast.next) {\n  slow = slow.next;\n  fast = fast.next.next;\n}\nreturn slow;" 
+    {
+      title: "Find Middle",
+      code: "let slow = head, fast = head;\nwhile (fast && fast.next) {\n  slow = slow.next;\n  fast = fast.next.next;\n}\nreturn slow;"
     }
   ];
 
@@ -56,7 +50,6 @@ export default function LinkedListCheatsheet() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* Pattern Recognition */}
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
           <h3 className="text-xl font-black text-blue-400 mb-6 flex items-center gap-3">
             <Compass size={20} /> Pattern Recognition
@@ -78,7 +71,6 @@ export default function LinkedListCheatsheet() {
           </ul>
         </div>
 
-        {/* Complexity Guide */}
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
           <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-3">
             <Zap size={20} /> Time Complexities
@@ -101,7 +93,6 @@ export default function LinkedListCheatsheet() {
           <p className="mt-4 text-[8px] text-slate-600 font-bold uppercase text-center">* O(1) if tail pointer is maintained</p>
         </div>
 
-        {/* Edge Cases */}
         <div className="bg-rose-500/5 border border-rose-500/20 p-8 rounded-[2rem]">
           <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-3">
             <AlertTriangle size={20} /> Edge Cases to Check
@@ -116,7 +107,6 @@ export default function LinkedListCheatsheet() {
           </div>
         </div>
 
-        {/* Interview Tips */}
         <div className="bg-emerald-500/5 border border-emerald-500/20 p-8 rounded-[2rem]">
           <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-3">
             <CheckCircle2 size={20} /> Interview Tips
@@ -138,7 +128,6 @@ export default function LinkedListCheatsheet() {
         </div>
       </div>
 
-      {/* Language Quick Reference */}
       <div className="mb-12 bg-slate-900/50 border border-white/5 rounded-[2.5rem] p-10">
         <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
           <Brackets size={24} className="text-blue-400" /> Language Quick Ref
@@ -165,7 +154,6 @@ export default function LinkedListCheatsheet() {
         </div>
       </div>
 
-      {/* Complexity Comparison Table */}
       <div className="mb-12 bg-slate-950 border border-white/5 rounded-[2.5rem] p-8 overflow-hidden shadow-2xl relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] pointer-events-none" />
         <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3 relative z-10">
@@ -183,7 +171,7 @@ export default function LinkedListCheatsheet() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              {[
+              {[ 
                 { op: "Insert at Head", s: "O(1)", d: "O(1)", a: "O(n)" },
                 { op: "Insert at Tail", s: "O(n)*", d: "O(1)", a: "O(1)" },
                 { op: "Delete at Head", s: "O(1)", d: "O(1)", a: "O(n)" },
@@ -204,7 +192,6 @@ export default function LinkedListCheatsheet() {
         <p className="mt-6 text-[9px] text-slate-600 font-bold uppercase text-center">* O(1) if tail pointer is maintained</p>
       </div>
 
-      {/* Templates & Decision Tree */}
       <div className="grid md:grid-cols-2 gap-8 mb-12">
         <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem]">
           <h3 className="text-xl font-black text-white mb-6 flex items-center gap-3">
@@ -250,7 +237,6 @@ export default function LinkedListCheatsheet() {
         </div>
       </div>
 
-      {/* Code Snippets */}
       <div className="mb-12">
         <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
           <Code2 size={24} className="text-indigo-400" /> Essential Code Snippets
@@ -268,14 +254,6 @@ export default function LinkedListCheatsheet() {
           ))}
         </div>
       </div>
-
-      <ModuleComplete 
-        title="Linked List Mastery" 
-        description="You've mastered nodes, dynamic allocation, and the Tortoise & Hare patterns. You are now ready for Stacks."
-        nextModuleText="Start Stacks" 
-        nextModuleLink="/stack" 
-        color="emerald" 
-      />
     </PerspectiveCard>
   );
 }

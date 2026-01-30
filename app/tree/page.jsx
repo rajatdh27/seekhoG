@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   GitMerge,
   Binary,
@@ -197,6 +198,14 @@ export default function TreePage() {
                 </motion.section>
               );
             })}
+            {/* Next Section Pointer */}
+            <NextModuleCard 
+              title="Trees Mastered"
+              description="You've mastered hierarchical structures! Now let's explore Heap data structures and Priority Queues."
+              nextModuleText="Start Heaps"
+              nextModuleLink="/heap"
+              color="teal"
+            />
           </main>
         </div>
       </div>

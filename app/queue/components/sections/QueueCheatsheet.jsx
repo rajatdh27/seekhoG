@@ -3,13 +3,11 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import { ModuleComplete } from "@/app/components/common/algorithm";
 import { FileText, Plus, Minus, Check, X, RefreshCcwDot, Lightbulb, TrendingUp, Code2, HelpCircle } from "lucide-react";
 
 export default function QueueCheatsheet() {
   return (
     <PerspectiveCard color="green">
-      {/* ... previous content ... */}
       <div className="mb-10 text-center">
         <h3 className="text-sm font-black text-green-400 uppercase tracking-widest mb-3">Quick Reference</h3>
         <p className="text-3xl md:text-4xl font-black text-white">Queue Cheatsheet</p>
@@ -155,14 +153,6 @@ export default function QueueCheatsheet() {
             </tbody>
         </table>
       </div>
-
-      <ModuleComplete 
-        title="Queues Mastery Complete" 
-        description="You've mastered FIFO dynamics, Deques, and BFS basics. Next up: Trees."
-        nextModuleText="Start Trees" 
-        nextModuleLink="/tree" 
-        color="green" 
-      />
     </PerspectiveCard>
   );
 }

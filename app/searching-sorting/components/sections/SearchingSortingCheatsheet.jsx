@@ -2,13 +2,11 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
-import { ModuleComplete } from "@/app/components/common/algorithm";
 import { FileText, Search, BarChart3, HelpCircle, Zap, BookOpen } from "lucide-react";
 
 export default function SearchingSortingCheatsheet() {
   return (
     <PerspectiveCard color="orange">
-      {/* Header */}
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
           <FileText size={28} />
@@ -19,7 +17,7 @@ export default function SearchingSortingCheatsheet() {
         </div>
       </div>
 
-      {/* Searching Algorithms */}
+      {/* ... keeping existing content tables ... */}
       <div className="mb-12">
         <h3 className="text-2xl font-black text-blue-400 mb-6 flex items-center gap-3">
           <Search size={24} /> Searching Algorithms
@@ -69,7 +67,6 @@ export default function SearchingSortingCheatsheet() {
         </div>
       </div>
 
-      {/* Sorting Algorithms */}
       <div className="mb-12">
         <h3 className="text-2xl font-black text-orange-400 mb-6 flex items-center gap-3">
           <BarChart3 size={24} /> Sorting Algorithms
@@ -89,7 +86,6 @@ export default function SearchingSortingCheatsheet() {
               </tr>
             </thead>
             <tbody className="text-sm font-medium text-slate-300">
-              {/* Bubble Sort */}
               <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
                 <td className="p-5">
                   <strong className="text-orange-400 text-base">Bubble Sort</strong>
@@ -101,7 +97,6 @@ export default function SearchingSortingCheatsheet() {
                 <td className="p-5 text-center"><span className="text-emerald-400 font-black">✓</span></td>
                 <td className="p-5 text-xs font-bold text-slate-400">Learning, tiny datasets</td>
               </tr>
-              {/* Selection Sort */}
               <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
                 <td className="p-5">
                   <strong className="text-orange-400 text-base">Selection Sort</strong>
@@ -113,7 +108,6 @@ export default function SearchingSortingCheatsheet() {
                 <td className="p-5 text-center"><span className="text-rose-400 font-black">✗</span></td>
                 <td className="p-5 text-xs font-bold text-slate-400">Minimizing memory writes</td>
               </tr>
-              {/* Insertion Sort */}
               <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
                 <td className="p-5">
                   <strong className="text-orange-400 text-base">Insertion Sort</strong>
@@ -125,7 +119,6 @@ export default function SearchingSortingCheatsheet() {
                 <td className="p-5 text-center"><span className="text-emerald-400 font-black">✓</span></td>
                 <td className="p-5 text-xs font-bold text-slate-400"><span className="text-white">Nearly sorted</span>, small data</td>
               </tr>
-              {/* Merge Sort */}
               <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
                 <td className="p-5">
                   <strong className="text-orange-400 text-base">Merge Sort</strong>
@@ -137,7 +130,6 @@ export default function SearchingSortingCheatsheet() {
                 <td className="p-5 text-center"><span className="text-emerald-400 font-black">✓</span></td>
                 <td className="p-5 text-xs font-bold text-slate-400"><span className="text-white">Guaranteed speed</span>, stable</td>
               </tr>
-              {/* Quick Sort */}
               <tr className="hover:bg-white/5 transition-colors">
                 <td className="p-5">
                   <strong className="text-orange-400 text-base">Quick Sort</strong>
@@ -154,7 +146,6 @@ export default function SearchingSortingCheatsheet() {
         </div>
       </div>
 
-      {/* Quick Decision Guide */}
       <div className="mb-12">
         <h3 className="text-2xl font-black text-purple-400 mb-6 flex items-center gap-3">
           <HelpCircle size={24} /> Quick Decision Guide
@@ -205,43 +196,6 @@ export default function SearchingSortingCheatsheet() {
           </div>
         </div>
       </div>
-
-      {/* Complexity Reference */}
-      <div>
-        <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-          <Zap size={24} className="text-yellow-400" /> Complexity Reference
-        </h3>
-        
-        <div className="bg-slate-950 p-6 rounded-[2rem] border border-white/10">
-          <div className="grid gap-3">
-            {[
-              { val: "O(1)", name: "Constant", desc: "Instant access (Hash Map, Array Index)", color: "emerald" },
-              { val: "O(log n)", name: "Logarithmic", desc: "Divide & Conquer (Binary Search)", color: "teal" },
-              { val: "O(n)", name: "Linear", desc: "Looping through elements (Linear Search)", color: "yellow" },
-              { val: "O(n log n)", name: "Linearithmic", desc: "Efficient Sorting (Merge/Quick Sort)", color: "orange" },
-              { val: "O(n²)", name: "Quadratic", desc: "Nested Loops (Bubble/Insertion Sort)", color: "rose" }
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-slate-900/50 border border-white/5">
-                <div className={`w-20 text-center font-black text-${item.color}-400 text-lg`}>{item.val}</div>
-                <div className="h-8 w-px bg-white/10" />
-                <div>
-                  <div className={`font-bold text-${item.color}-400 text-sm uppercase tracking-wider`}>{item.name}</div>
-                  <div className="text-slate-500 text-xs font-medium">{item.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <ModuleComplete 
-        title="Searching & Sorting Complete" 
-        description="You have mastered the fundamental algorithms. You are now ready to dive into Arrays."
-        nextModuleText="Start Arrays Module" 
-        nextModuleLink="/array" 
-        color="orange" 
-      />
-
     </PerspectiveCard>
   );
 }

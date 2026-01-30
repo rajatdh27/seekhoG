@@ -1,12 +1,10 @@
 "use client";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
-import { ModuleComplete } from "@/app/components/common/algorithm";
 import { FileText, Zap, Terminal } from "lucide-react";
 
 export default function HeapCheatsheet() {
   return (
     <PerspectiveCard color="rose">
-      {/* ... keeping existing content ... */}
       <div className="flex items-center gap-4 mb-8">
         <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
           <FileText size={28} />
@@ -56,14 +54,6 @@ export default function HeapCheatsheet() {
           </div>
         </div>
       </div>
-
-      <ModuleComplete 
-        title="Heaps Mastery Complete" 
-        description="You've mastered priority dynamics and heap sort logic. Next up: Hashing."
-        nextModuleText="Start Hashing" 
-        nextModuleLink="/hashing" 
-        color="rose" 
-      />
     </PerspectiveCard>
   );
 }

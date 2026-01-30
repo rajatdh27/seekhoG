@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   ChevronsRight,
   CircuitBoard,
@@ -195,6 +196,14 @@ export default function QueuePage() {
                 </motion.section>
               );
             })}
+            {/* Next Section Pointer */}
+            <NextModuleCard 
+              title="Queue Mastered"
+              description="You've mastered FIFO! Now let's explore fundamental algorithms for Searching & Sorting."
+              nextModuleText="Start Searching & Sorting"
+              nextModuleLink="/searching-sorting"
+              color="green"
+            />
           </main>
         </div>
       </div>

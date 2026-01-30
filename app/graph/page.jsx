@@ -3,7 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
-import ModuleComplete from "@/app/components/common/algorithm/ModuleComplete";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   Network, 
   Share2, 
@@ -204,20 +204,13 @@ export default function GraphPage() {
             })}
 
              {/* Next Section Pointer */}
-             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="pt-12 pb-24"
-            >
-              <ModuleComplete 
+             <NextModuleCard 
                 title="Graph Theory Mastered"
                 description="You've connected the dots! Now, let's learn how to achieve instant O(1) lookups with Hashing."
                 nextModuleText="Start Hashing & Maps"
                 nextModuleLink="/hashing"
                 color="cyan"
               />
-            </motion.div>
           </main>
         </div>
       </div>

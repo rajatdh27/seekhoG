@@ -3,19 +3,16 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import { ModuleComplete } from "@/app/components/common/algorithm";
 import { FileText, Plus, Minus, Check, X, RefreshCcwDot, Lightbulb, TrendingUp, Code2, HelpCircle } from "lucide-react";
 
 export default function StackCheatsheet() {
   return (
     <PerspectiveCard color="purple">
-       {/* ... existing content ... */}
        <div className="mb-10 text-center">
         <h3 className="text-sm font-black text-purple-400 uppercase tracking-widest mb-3">Quick Reference</h3>
         <p className="text-3xl md:text-4xl font-black text-white">Stack Cheatsheet</p>
       </div>
       
-      {/* ... keeping all tables and cards ... */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <CheatCard
           title="Pattern Recognition"
@@ -93,7 +90,7 @@ export default function StackCheatsheet() {
              <div>
                 <h4 className="font-bold text-purple-400 mb-3">While Coding:</h4>
                 <ul className="space-y-2 text-sm text-slate-300">
-                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Always check \`isEmpty\` before pop/peek</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Always check `isEmpty` before pop/peek</li>
                     <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Consider using indices instead of values</li>
                     <li className="flex items-start gap-2"><Check size={14} className="mt-1 text-green-500"/>Test with edge cases (empty, single)</li>
                 </ul>
@@ -129,7 +126,7 @@ export default function StackCheatsheet() {
                 </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-                {[
+                {[ 
                     { op: "Insert at end", stack: "O(1)", queue: "O(1)", array: "O(1)" },
                     { op: "Remove from end", stack: "O(1)", queue: "O(n)", array: "O(1)" },
                     { op: "Access by index", stack: "O(n)", queue: "O(n)", array: "O(1)" },
@@ -145,14 +142,6 @@ export default function StackCheatsheet() {
             </tbody>
         </table>
       </div>
-
-      <ModuleComplete 
-        title="Stacks Mastery Complete" 
-        description="You've mastered LIFO dynamics and monotonic patterns. Next up: Queues."
-        nextModuleText="Start Queues" 
-        nextModuleLink="/queue" 
-        color="purple" 
-      />
     </PerspectiveCard>
   );
 }

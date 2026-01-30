@@ -3,7 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
-import ModuleComplete from "@/app/components/common/algorithm/ModuleComplete";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   Library, 
   GitBranch, 
@@ -199,20 +199,13 @@ export default function TriePage() {
             })}
 
              {/* Next Section Pointer */}
-             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="pt-12 pb-24"
-            >
-              <ModuleComplete 
+             <NextModuleCard 
                 title="Trie Mastered"
                 description="You've mastered string searching and storage! Next, let's learn how to model relationships with Graphs."
                 nextModuleText="Start Graph Algorithms"
                 nextModuleLink="/graph"
                 color="orange"
               />
-            </motion.div>
           </main>
         </div>
       </div>

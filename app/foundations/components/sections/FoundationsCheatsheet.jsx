@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
-import { ModuleComplete } from "@/app/components/common/algorithm";
 import { ListChecks, ArrowRight, BookOpen, Calculator, Clock, Zap } from "lucide-react";
 import Link from "next/link";
 
@@ -17,7 +16,6 @@ export default function FoundationsCheatsheet() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mb-12">
-        {/* Time Complexities Card */}
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
             <Clock size={60} />
@@ -42,7 +40,6 @@ export default function FoundationsCheatsheet() {
           </div>
         </div>
 
-        {/* Mathematics Card */}
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
             <Calculator size={60} />
@@ -66,7 +63,6 @@ export default function FoundationsCheatsheet() {
           </div>
         </div>
 
-        {/* Rules Card */}
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
             <Zap size={60} />
@@ -92,7 +88,6 @@ export default function FoundationsCheatsheet() {
           </ul>
         </div>
 
-        {/* Impact Card */}
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
             <Zap size={60} />
@@ -118,14 +113,6 @@ export default function FoundationsCheatsheet() {
           </ul>
         </div>
       </div>
-
-      <ModuleComplete 
-        title="Foundations Complete" 
-        description="You have mastered the complexity analysis and mathematical foundations. Next up: Searching & Sorting."
-        nextModuleText="Start Searching & Sorting" 
-        nextModuleLink="/searching-sorting" 
-        color="indigo" 
-      />
     </PerspectiveCard>
   );
 }

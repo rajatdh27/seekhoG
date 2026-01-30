@@ -3,7 +3,7 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
-import ModuleComplete from "@/app/components/common/algorithm/ModuleComplete";
+import NextModuleCard from "@/app/components/common/NextModuleCard";
 import { 
   Database, 
   Cpu, 
@@ -203,20 +203,13 @@ export default function HashingPage() {
             })}
 
             {/* Next Section Pointer */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="pt-12 pb-24"
-            >
-              <ModuleComplete 
-                title="Hashing Mastered"
-                description="You've unlocked the power of O(1) lookups. Now, let's tackle complex optimization problems with Dynamic Programming."
-                nextModuleText="Start Dynamic Programming"
-                nextModuleLink="/dynamic-programming"
-                color="indigo"
-              />
-            </motion.div>
+            <NextModuleCard 
+              title="Hashing Mastered"
+              description="You've unlocked the power of O(1) lookups. Now, let's tackle complex optimization problems with Dynamic Programming."
+              nextModuleText="Start Dynamic Programming"
+              nextModuleLink="/dynamic-programming"
+              color="indigo"
+            />
           </main>
         </div>
       </div>
