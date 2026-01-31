@@ -2,90 +2,181 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { Grid, ArrowRightLeft, Maximize2, Hash, Zap, Search, Layers, Briefcase, RefreshCw, ChevronRight } from "lucide-react";
 
 export default function ArrayPatterns() {
   const patterns = [
     {
       title: "Two Pointers",
-      difficulty: "Easy-Medium",
-      desc: "Traverse array from different positions (ends or same direction).",
-      useWhen: ["Sorted arrays", "Pair sums", "Palindromes", "In-place removal"],
-      problems: ["3Sum", "Container With Most Water"],
-      icon: <ArrowRightLeft size={24} />,
-      color: "blue"
+      description: "Traverse array from different positions (ends or same direction).",
+      icon: ArrowRightLeft,
+      color: "blue",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-black uppercase text-blue-400 mb-2">Easy-Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Sorted arrays", "Pair sums", "Palindromes", "In-place removal"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase">
+            <ChevronRight size={10} /> 3Sum
+          </div>
+        </div>
+      )
     },
     {
       title: "Sliding Window",
-      difficulty: "Medium",
-      desc: "Maintain sub-range that satisfies a condition.",
-      useWhen: ["Subarrays", "Substrings", "Contiguous data"],
-      problems: ["Max Sum Subarray", "Longest Substring"],
-      icon: <Maximize2 size={24} />,
-      color: "emerald"
+      description: "Maintain sub-range that satisfies a condition.",
+      icon: Maximize2,
+      color: "emerald",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[8px] font-black uppercase text-emerald-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Subarrays", "Substrings", "Contiguous data"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-emerald-400 uppercase">
+            <ChevronRight size={10} /> Max Sum Subarray
+          </div>
+        </div>
+      )
     },
     {
       title: "Prefix Sum",
-      difficulty: "Easy-Medium",
-      desc: "Precompute cumulative sums for O(1) range queries.",
-      useWhen: ["Range sum queries", "Subarray sum equals K"],
-      problems: ["Range Sum Query", "Subarray Sums"],
-      icon: <Hash size={24} />,
-      color: "purple"
+      description: "Precompute cumulative sums for O(1) range queries.",
+      icon: Hash,
+      color: "purple",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-purple-500/10 border border-purple-500/20 text-[8px] font-black uppercase text-purple-400 mb-2">Easy-Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Range sum queries", "Subarray sum equals K"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-purple-400 uppercase">
+            <ChevronRight size={10} /> Range Sum Query
+          </div>
+        </div>
+      )
     },
     {
       title: "Kadane's Algo",
-      difficulty: "Medium",
-      desc: "Iterative dynamic programming for subarray sums.",
-      useWhen: ["Maximum subarray sum", "Maximum product"],
-      problems: ["Maximum Subarray"],
-      icon: <Zap size={24} />,
-      color: "amber"
+      description: "Iterative dynamic programming for subarray sums.",
+      icon: Zap,
+      color: "amber",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-amber-500/10 border border-amber-500/20 text-[8px] font-black uppercase text-amber-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Maximum subarray sum", "Maximum product"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-amber-400 uppercase">
+            <ChevronRight size={10} /> Maximum Subarray
+          </div>
+        </div>
+      )
     },
     {
       title: "Binary Search",
-      difficulty: "Medium-Hard",
-      desc: "Halve search space each step.",
-      useWhen: ["Sorted data", "Optimization (Min/Max of Max/Min)"],
-      problems: ["Search in Rotated Array", "Peak Element"],
-      icon: <Search size={24} />,
-      color: "cyan"
+      description: "Halve search space each step.",
+      icon: Search,
+      color: "cyan",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-cyan-500/10 border border-cyan-500/20 text-[8px] font-black uppercase text-cyan-400 mb-2">Medium-Hard</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Sorted data", "Optimization (Min/Max of Max/Min)"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-cyan-400 uppercase">
+            <ChevronRight size={10} /> Search in Rotated Array
+          </div>
+        </div>
+      )
     },
     {
       title: "HashMap/Freq",
-      difficulty: "Easy-Medium",
-      desc: "Trade space for time using frequency counters.",
-      useWhen: ["Element frequency", "Finding pairs (O(1) lookup)"],
-      problems: ["Two Sum", "Majority Element"],
-      icon: <Briefcase size={24} />,
-      color: "indigo"
+      description: "Trade space for time using frequency counters.",
+      icon: Briefcase,
+      color: "indigo",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-indigo-500/10 border border-indigo-500/20 text-[8px] font-black uppercase text-indigo-400 mb-2">Easy-Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Element frequency", "Finding pairs (O(1) lookup)"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-indigo-400 uppercase">
+            <ChevronRight size={10} /> Two Sum
+          </div>
+        </div>
+      )
     },
     {
       title: "Merge Intervals",
-      difficulty: "Medium",
-      desc: "Sort and compare interval boundaries.",
-      useWhen: ["Time scheduling", "Overlapping ranges"],
-      problems: ["Merge Intervals", "Insert Interval"],
-      icon: <Layers size={24} />,
-      color: "rose"
+      description: "Sort and compare interval boundaries.",
+      icon: Layers,
+      color: "rose",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-rose-500/10 border border-rose-500/20 text-[8px] font-black uppercase text-rose-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Time scheduling", "Overlapping ranges"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-rose-400 uppercase">
+            <ChevronRight size={10} /> Merge Intervals
+          </div>
+        </div>
+      )
     },
     {
       title: "Monotonic Stack",
-      difficulty: "Hard",
-      desc: "Stack that maintains elements in increasing/decreasing order.",
-      useWhen: ["Next greater element", "Nearest smaller"],
-      problems: ["Daily Temperatures", "Next Greater Element"],
-      icon: <Layers size={24} />,
-      color: "orange"
+      description: "Stack that maintains elements in increasing/decreasing order.",
+      icon: Layers,
+      color: "orange",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-orange-500/10 border border-orange-500/20 text-[8px] font-black uppercase text-orange-400 mb-2">Hard</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Next greater element", "Nearest smaller"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-orange-400 uppercase">
+            <ChevronRight size={10} /> Daily Temperatures
+          </div>
+        </div>
+      )
     },
     {
       title: "Sorting + Greedy",
-      difficulty: "Medium",
-      desc: "Sort first to simplify decision making.",
-      useWhen: ["Minimizing/Maximizing costs", "Meeting scheduling"],
-      problems: ["Meeting Rooms", "Interval List Intersection"],
-      icon: <RefreshCw size={24} />,
-      color: "blue"
+      description: "Sort first to simplify decision making.",
+      icon: RefreshCw,
+      color: "blue",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-black uppercase text-blue-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Minimizing/Maximizing costs", "Meeting scheduling"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase">
+            <ChevronRight size={10} /> Meeting Rooms
+          </div>
+        </div>
+      )
     }
   ];
 
@@ -98,39 +189,7 @@ export default function ArrayPatterns() {
         color="purple" 
       />
 
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        {patterns.map((pattern, i) => (
-          <div key={i} className={`bg-slate-900/60 p-6 rounded-[2rem] border border-${pattern.color}-500/20 hover:border-${pattern.color}-500/40 transition-all group relative overflow-hidden flex flex-col`}>
-            <div className={`absolute top-0 right-0 p-4 text-${pattern.color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}>
-              {pattern.icon}
-            </div>
-            
-            <div className="flex items-center justify-between mb-4">
-              <div className={`px-2 py-1 rounded-md bg-${pattern.color}-500/10 border border-${pattern.color}-500/20 text-[8px] font-black uppercase text-${pattern.color}-400`}>
-                {pattern.difficulty}
-              </div>
-            </div>
-
-            <h3 className="text-lg font-black text-white mb-2">{pattern.title}</h3>
-            <p className="text-slate-500 text-[10px] font-bold leading-relaxed mb-4 flex-1">
-              {pattern.desc}
-            </p>
-
-            <div className="space-y-3">
-              <div className="flex flex-wrap gap-1.5">
-                {pattern.useWhen.map((tag, j) => (
-                  <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className={`flex items-center gap-2 text-[9px] font-black text-${pattern.color}-400 uppercase`}>
-                <ChevronRight size={10} /> {pattern.problems[0]}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConceptGrid items={patterns} columns={3} />
 
       {/* Decision Logic Card */}
       <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Layers, 
   CheckCircle2, 
@@ -51,10 +52,77 @@ export default function StackIntro() {
   };
 
   const operations = [
-    { title: "Push", icon: <Plus size={18} />, color: "purple", items: ["Adds to top - O(1)"] },
-    { title: "Pop", icon: <Minus size={18} />, color: "pink", items: ["Removes from top - O(1)"] },
-    { title: "Peek / Top", icon: <Search size={18} />, color: "blue", items: ["Views top - O(1)"] },
-    { title: "isEmpty", icon: <RotateCcw size={18} />, color: "rose", items: ["Checks if empty - O(1)"] }
+    { title: "Push", icon: Plus, color: "purple", description: "Adds to top - O(1)" },
+    { title: "Pop", icon: Minus, color: "pink", description: "Removes from top - O(1)" },
+    { title: "Peek / Top", icon: Search, color: "blue", description: "Views top - O(1)" },
+    { title: "isEmpty", icon: RotateCcw, color: "rose", description: "Checks if empty - O(1)" }
+  ];
+
+  const analogies = [
+    { title: "Stack of Plates", description: "You add or remove plates only from the top of the pile.", icon: Layers, color: "blue" },
+    { title: "Book Pile", description: "The last book placed on the pile is the first one you'll pick up.", icon: BookCopy, color: "emerald" },
+    { title: "Undo/Redo", description: "Actions are pushed onto a stack; undo 'pops' the last action.", icon: Undo, color: "rose" },
+    { title: "Browser History", description: "Each visited page is pushed. The back button 'pops' the last page.", icon: Globe, color: "purple" },
+    { title: "Function Calls", description: "The 'call stack' manages active functions in a LIFO manner.", icon: Zap, color: "amber" }
+  ];
+
+  const stackTypes = [
+    {
+      title: "Fixed-Size / Array",
+      description: "Uses a static array. Simple and cache-friendly, but has a fixed capacity.",
+      icon: Box,
+      color: "emerald",
+      footer: (
+        <ul className="space-y-2 relative z-10 text-xs font-bold">
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Fast, O(1) operations.</li>
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Excellent cache locality.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Stack overflow possible.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Wasted space if underutilized.</li>
+        </ul>
+      )
+    },
+    {
+      title: "Dynamic / Resizable",
+      description: "Uses a dynamic array (like std::vector or ArrayList) that grows as needed.",
+      icon: Layers,
+      color: "rose",
+      footer: (
+        <ul className="space-y-2 relative z-10 text-xs font-bold">
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Flexible, no size limit.</li>
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Easy to use.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Occasional O(n) resize cost.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Slight memory overhead.</li>
+        </ul>
+      )
+    },
+    {
+      title: "Linked-List-Based",
+      description: "Each element is a node pointing to the next. Push/Pop operations affect the head of the list.",
+      icon: Layers,
+      color: "cyan",
+      footer: (
+        <ul className="space-y-2 relative z-10 text-xs font-bold">
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Truly dynamic, no overflow.</li>
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> No resizing overhead.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Uses extra memory for pointers.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Poor cache locality.</li>
+        </ul>
+      )
+    },
+    {
+      title: "Min/Max Stack",
+      description: "An augmented stack that also tracks the minimum or maximum element in O(1) time.",
+      icon: Layers,
+      color: "amber",
+      footer: (
+        <ul className="space-y-2 relative z-10 text-xs font-bold">
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> O(1) getMin/getMax.</li>
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> All other stack ops are O(1).</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Extra O(n) space required.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> More complex implementation.</li>
+        </ul>
+      )
+    }
   ];
 
   return (
@@ -128,23 +196,7 @@ export default function StackIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <Target size={24} className="text-rose-400" /> Core Operations
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {operations.map((op, i) => (
-              <div key={i} className={`p-6 bg-slate-900 border border-${op.color}-500/20 rounded-2xl`}>
-                <div className={`w-10 h-10 rounded-xl bg-${op.color}-500/10 text-${op.color}-400 flex items-center justify-center mb-4`}>
-                  {op.icon}
-                </div>
-                <h4 className="text-sm font-black text-white uppercase mb-4">{op.title}</h4>
-                <ul className="space-y-2">
-                  {op.items.map((item, j) => (
-                    <li key={j} className="text-xs text-slate-400 font-bold flex items-center gap-2">
-                      <div className={`w-1 h-1 rounded-full bg-${op.color}-500`} /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={operations} columns={4} />
         </div>
         
         {/* Real-World Analogies */}
@@ -152,23 +204,7 @@ export default function StackIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <HelpCircle size={24} className="text-purple-400" /> Real-World Analogies
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { title: "Stack of Plates", desc: "You add or remove plates only from the top of the pile.", icon: <Layers className="text-blue-400" /> },
-              { title: "Book Pile", desc: "The last book placed on the pile is the first one you'll pick up.", icon: <BookCopy className="text-emerald-400" /> },
-              { title: "Undo/Redo", desc: "Actions are pushed onto a stack; undo 'pops' the last action.", icon: <Undo className="text-rose-400" /> },
-              { title: "Browser History", desc: "Each visited page is pushed. The back button 'pops' the last page.", icon: <Globe className="text-purple-400" /> },
-              { title: "Function Calls", desc: "The 'call stack' manages active functions in a LIFO manner.", icon: <Zap className="text-amber-400" /> }
-            ].map((item, i) => (
-              <div key={i} className="p-6 bg-slate-900 border border-white/5 rounded-2xl flex gap-4 group hover:border-white/10 transition-colors">
-                <div className="shrink-0 group-hover:scale-110 transition-transform">{item.icon}</div>
-                <div>
-                  <div className="text-sm font-black text-white uppercase tracking-tight mb-1">{item.title}</div>
-                  <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={analogies} columns={3} />
         </div>
 
         {/* When to Use */}
@@ -222,60 +258,7 @@ export default function StackIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <BarChart3 size={24} className="text-blue-400" /> Types of Stacks
           </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Box size={100} className="text-emerald-500" /></div>
-              <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-2">
-                Fixed-Size / Array
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">Uses a static array. Simple and cache-friendly, but has a fixed capacity.</p>
-              <ul className="space-y-2 relative z-10 text-xs font-bold">
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Fast, O(1) operations.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Excellent cache locality.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Stack overflow possible.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Wasted space if underutilized.</li>
-              </ul>
-            </div>
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-rose-500"/></div>
-              <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-2">
-                Dynamic / Resizable
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">Uses a dynamic array (like std::vector or ArrayList) that grows as needed.</p>
-              <ul className="space-y-2 relative z-10 text-xs font-bold">
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Flexible, no size limit.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Easy to use.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Occasional O(n) resize cost.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Slight memory overhead.</li>
-              </ul>
-            </div>
-             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-cyan-500"/></div>
-              <h3 className="text-xl font-black text-cyan-400 mb-6 flex items-center gap-2">
-                Linked-List-Based
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">Each element is a node pointing to the next. Push/Pop operations affect the head of the list.</p>
-              <ul className="space-y-2 relative z-10 text-xs font-bold">
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Truly dynamic, no overflow.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> No resizing overhead.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Uses extra memory for pointers.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Poor cache locality.</li>
-              </ul>
-            </div>
-             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-amber-500"/></div>
-              <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-2">
-                Min/Max Stack
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">An augmented stack that also tracks the minimum or maximum element in O(1) time.</p>
-              <ul className="space-y-2 relative z-10 text-xs font-bold">
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> O(1) getMin/getMax.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> All other stack ops are O(1).</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Extra O(n) space required.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> More complex implementation.</li>
-              </ul>
-            </div>
-          </div>
+          <ConceptGrid items={stackTypes} columns={2} />
         </div>
       </div>
     </PerspectiveCard>

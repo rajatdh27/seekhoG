@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Link as LinkIcon, 
   CheckCircle2, 
@@ -95,10 +96,18 @@ export default function LinkedListIntro() {
   ];
 
   const operations = [
-    { title: "Insert", icon: <Plus size={18} />, color: "emerald", items: ["At Head - O(1)", "At Tail - O(n)", "At Position - O(n)"] },
-    { title: "Delete", icon: <Minus size={18} />, color: "rose", items: ["At Head - O(1)", "At Tail - O(n)", "By Value - O(n)"] },
-    { title: "Search", icon: <Search size={18} />, color: "blue", items: ["By Value - O(n)", "By Index - O(n)", "No Binary Search"] },
-    { title: "Reverse", icon: <RotateCcw size={18} />, color: "purple", items: ["Iterative - O(n)", "Recursive - O(n)", "In-place - O(1) space"] }
+    { title: "Insert", icon: Plus, color: "emerald", description: "At Head - O(1), At Tail - O(n), At Position - O(n)" },
+    { title: "Delete", icon: Minus, color: "rose", description: "At Head - O(1), At Tail - O(n), By Value - O(n)" },
+    { title: "Search", icon: Search, color: "blue", description: "By Value - O(n), By Index - O(n), No Binary Search" },
+    { title: "Reverse", icon: RotateCcw, color: "purple", description: "Iterative - O(n), Recursive - O(n), In-place - O(1) space" }
+  ];
+
+  const analogies = [
+    { title: "Train Cars", description: "Connected by couplings (pointers). Add/remove cars without moving others.", icon: TrainFront, color: "blue" },
+    { title: "Conga Line", description: "Each person holds the shoulder of the next. Easy to join or leave.", icon: Users, color: "emerald" },
+    { title: "Paper Clips", description: "Links connect to the next clip. Insert anywhere in the sequence.", icon: Paperclip, color: "rose" },
+    { title: "Playlist", description: "Sequential songs pointing to the next. Rearrange without copying data.", icon: Music, color: "purple" },
+    { title: "Blockchain", description: "Immutable chain where each block references the hash of the previous.", icon: Blocks, color: "amber" }
   ];
 
   return (
@@ -251,23 +260,7 @@ export default function LinkedListIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <Target size={24} className="text-rose-400" /> Operation Complexity
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {operations.map((op, i) => (
-              <div key={i} className={`p-6 bg-slate-900 border border-${op.color}-500/20 rounded-2xl`}>
-                <div className={`w-10 h-10 rounded-xl bg-${op.color}-500/10 text-${op.color}-400 flex items-center justify-center mb-4`}>
-                  {op.icon}
-                </div>
-                <h4 className="text-sm font-black text-white uppercase mb-4">{op.title}</h4>
-                <ul className="space-y-2">
-                  {op.items.map((item, j) => (
-                    <li key={j} className="text-[10px] text-slate-400 font-bold flex items-center gap-2">
-                      <div className={`w-1 h-1 rounded-full bg-${op.color}-500`} /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={operations} columns={4} />
         </div>
 
         {/* Real-World Analogies */}
@@ -275,23 +268,7 @@ export default function LinkedListIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <HelpCircle size={24} className="text-emerald-400" /> Real-World Analogies
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { title: "Train Cars", desc: "Connected by couplings (pointers). Add/remove cars without moving others.", icon: <TrainFront className="text-blue-400" /> },
-              { title: "Conga Line", desc: "Each person holds the shoulder of the next. Easy to join or leave.", icon: <Users className="text-emerald-400" /> },
-              { title: "Paper Clips", desc: "Links connect to the next clip. Insert anywhere in the sequence.", icon: <Paperclip className="text-rose-400" /> },
-              { title: "Playlist", desc: "Sequential songs pointing to the next. Rearrange without copying data.", icon: <Music className="text-purple-400" /> },
-              { title: "Blockchain", desc: "Immutable chain where each block references the hash of the previous.", icon: <Blocks className="text-amber-400" /> }
-            ].map((item, i) => (
-              <div key={i} className="p-6 bg-slate-900 border border-white/5 rounded-2xl flex gap-4 group hover:border-white/10 transition-colors">
-                <div className="shrink-0 group-hover:scale-110 transition-transform">{item.icon}</div>
-                <div>
-                  <div className="text-sm font-black text-white uppercase tracking-tight mb-1">{item.title}</div>
-                  <p className="text-[10px] text-slate-500 font-bold leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={analogies} columns={3} />
         </div>
 
         {/* Choose the right structure */}

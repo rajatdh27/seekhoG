@@ -1,18 +1,72 @@
 "use client";
 
-import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { BarChart3, TrendingUp, TrendingDown, Layers, Zap, CheckCircle2 } from "lucide-react";
 
 export default function CommonComplexities() {
-  const complexities = [
-    { name: "O(1)", color: "emerald", desc: "Constant", examples: ["Array access", "Hash table lookup", "Push/Pop stack"], icon: <TrendingDown size={24} /> },
-    { name: "O(log n)", color: "cyan", desc: "Logarithmic", examples: ["Binary search", "Balanced BST search"], icon: <Zap size={24} /> },
-    { name: "O(n)", color: "blue", desc: "Linear", examples: ["Array traversal", "Linear search"], icon: <Layers size={24} /> },
-    { name: "O(n log n)", color: "indigo", desc: "Linearithmic", examples: ["Merge sort", "Quick sort (avg)"], icon: <BarChart3 size={24} /> },
-    { name: "O(n²)", color: "rose", desc: "Quadratic", examples: ["Bubble sort", "Nested loops"], icon: <TrendingUp size={24} /> },
-    { name: "O(2ⁿ)", color: "purple", desc: "Exponential", examples: ["Recursive fibonacci", "Subsets"], icon: <TrendingUp size={24} /> },
+  const complexityItems = [
+    { title: "O(1)", description: "Constant Pattern", icon: TrendingDown, color: "emerald", footer: (
+      <div className="space-y-3">
+        <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Common Examples</div>
+        <div className="flex flex-wrap gap-2">
+          {["Array access", "Hash table lookup", "Push/Pop stack"].map((ex, i) => (
+            <span key={i} className="px-3 py-1.5 bg-white/5 rounded-lg text-[10px] font-bold text-slate-300 border border-white/5">{ex}</span>
+          ))}
+        </div>
+      </div>
+    )},
+    { title: "O(log n)", description: "Logarithmic Pattern", icon: Zap, color: "cyan", footer: (
+      <div className="space-y-3">
+        <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Common Examples</div>
+        <div className="flex flex-wrap gap-2">
+          {["Binary search", "Balanced BST search"].map((ex, i) => (
+            <span key={i} className="px-3 py-1.5 bg-white/5 rounded-lg text-[10px] font-bold text-slate-300 border border-white/5">{ex}</span>
+          ))}
+        </div>
+      </div>
+    )},
+    { title: "O(n)", description: "Linear Pattern", icon: Layers, color: "blue", footer: (
+      <div className="space-y-3">
+        <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Common Examples</div>
+        <div className="flex flex-wrap gap-2">
+          {["Array traversal", "Linear search"].map((ex, i) => (
+            <span key={i} className="px-3 py-1.5 bg-white/5 rounded-lg text-[10px] font-bold text-slate-300 border border-white/5">{ex}</span>
+          ))}
+        </div>
+      </div>
+    )},
+    { title: "O(n log n)", description: "Linearithmic Pattern", icon: BarChart3, color: "indigo", footer: (
+      <div className="space-y-3">
+        <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Common Examples</div>
+        <div className="flex flex-wrap gap-2">
+          {["Merge sort", "Quick sort (avg)"].map((ex, i) => (
+            <span key={i} className="px-3 py-1.5 bg-white/5 rounded-lg text-[10px] font-bold text-slate-300 border border-white/5">{ex}</span>
+          ))}
+        </div>
+      </div>
+    )},
+    { title: "O(n²)", description: "Quadratic Pattern", icon: TrendingUp, color: "rose", footer: (
+      <div className="space-y-3">
+        <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Common Examples</div>
+        <div className="flex flex-wrap gap-2">
+          {["Bubble sort", "Nested loops"].map((ex, i) => (
+            <span key={i} className="px-3 py-1.5 bg-white/5 rounded-lg text-[10px] font-bold text-slate-300 border border-white/5">{ex}</span>
+          ))}
+        </div>
+      </div>
+    )},
+    { title: "O(2ⁿ)", description: "Exponential Pattern", icon: TrendingUp, color: "purple", footer: (
+      <div className="space-y-3">
+        <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Common Examples</div>
+        <div className="flex flex-wrap gap-2">
+          {["Recursive fibonacci", "Subsets"].map((ex, i) => (
+            <span key={i} className="px-3 py-1.5 bg-white/5 rounded-lg text-[10px] font-bold text-slate-300 border border-white/5">{ex}</span>
+          ))}
+        </div>
+      </div>
+    )},
   ];
 
   return (
@@ -28,38 +82,7 @@ export default function CommonComplexities() {
       </p>
 
       {/* Grid of Complexities */}
-      <div className="grid md:grid-cols-2 gap-6 mb-12">
-        {complexities.map((c, idx) => (
-          <motion.div
-            key={idx}
-            whileHover={{ y: -5, borderColor: "rgba(255,255,255,0.2)" }}
-            className={`p-8 bg-slate-950 border border-white/5 rounded-[2.5rem] relative overflow-hidden group transition-colors`}
-          >
-            {/* Corner Accent */}
-            <div className={`absolute top-0 right-0 p-6 text-${c.color}-500 opacity-10 group-hover:opacity-30 transition-opacity`}>
-              {c.icon}
-            </div>
-
-            <h3 className={`text-3xl font-black text-${c.color}-400 mb-1`}>
-              {c.name}
-            </h3>
-            <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-6">
-              {c.desc} Pattern
-            </div>
-            
-            <div className="space-y-3">
-              <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Common Examples</div>
-              <div className="flex flex-wrap gap-2">
-                {c.examples.map((ex, i) => (
-                  <span key={i} className="px-3 py-1.5 bg-white/5 rounded-lg text-[10px] font-bold text-slate-300 border border-white/5">
-                    {ex}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      <ConceptGrid items={complexityItems} columns={2} className="mb-12" />
 
       {/* The Hierarchy - Terminal Style */}
       <div className="bg-slate-900 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">

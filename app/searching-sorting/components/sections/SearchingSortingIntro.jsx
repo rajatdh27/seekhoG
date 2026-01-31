@@ -3,9 +3,17 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { Search, ArrowUpDown, Zap, CheckCircle2, Layout, GitMerge, MousePointerClick } from "lucide-react";
 
 export default function SearchingSortingIntro() {
+  const goals = [
+    { title: "Animations", description: "Watch algorithms work step-by-step with animations", icon: Layout, color: "emerald" },
+    { title: "Logic", description: "Understand the logic & trade-offs", icon: GitMerge, color: "emerald" },
+    { title: "Languages", description: "Implement in 6 different languages", icon: MousePointerClick, color: "emerald" },
+    { title: "Strategy", description: "Know when to use which algorithm", icon: CheckCircle2, color: "emerald" }
+  ];
+
   return (
     <PerspectiveCard color="orange">
       <SectionHeader 
@@ -116,21 +124,7 @@ export default function SearchingSortingIntro() {
         </div>
 
         {/* Learning Goals */}
-        <div className="grid md:grid-cols-2 gap-4">
-          {[
-            { text: "Watch algorithms work step-by-step with animations", icon: Layout },
-            { text: "Understand the logic & trade-offs", icon: GitMerge },
-            { text: "Implement in 6 different languages", icon: MousePointerClick },
-            { text: "Know when to use which algorithm", icon: CheckCircle2 }
-          ].map((item, i) => (
-            <div key={i} className="flex items-center gap-4 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-2xl">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
-                <item.icon size={20} />
-              </div>
-              <p className="text-slate-300 font-bold text-sm">{item.text}</p>
-            </div>
-          ))}
-        </div>
+        <ConceptGrid items={goals} columns={2} variant="horizontal" />
       </div>
     </PerspectiveCard>
   );

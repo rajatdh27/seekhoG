@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Trophy, Tag } from "lucide-react";
 
 const problemsByPattern = {
@@ -166,10 +167,13 @@ export default function StackProblems() {
 
   return (
     <PerspectiveCard color="purple">
-      <div className="mb-10 text-center">
-        <h3 className="text-sm font-black text-purple-400 uppercase tracking-widest mb-3">Problem Bank</h3>
-        <p className="text-3xl md:text-4xl font-black text-white">Must-Know Problems</p>
-      </div>
+      <SectionHeader 
+        title="Must-Know Problems" 
+        description="Problem Bank"
+        icon={Trophy} 
+        color="purple" 
+        className="mb-10"
+      />
 
       <div className="mb-6">
         <div className="flex flex-wrap justify-center gap-2 p-1.5 bg-slate-800/80 rounded-2xl border border-slate-700">

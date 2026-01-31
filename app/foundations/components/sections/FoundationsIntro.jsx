@@ -3,9 +3,24 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { Sparkles, CheckCircle2, Layout, Zap, Target, BookOpen } from "lucide-react";
 
 export default function FoundationsIntro() {
+  const journeyItems = [
+    { title: "Data Structures", description: "Ways to organize data: Lists, Trees, Graphs, Hash Tables", icon: () => <span className="text-3xl">📊</span>, color: "blue" },
+    { title: "Algorithms", description: "Procedures: Searching, Sorting, DP, Greedy", icon: () => <span className="text-3xl">⚡</span>, color: "purple" },
+    { title: "Complexity", description: "Understanding performance: Big-O, Time & Space", icon: () => <span className="text-3xl">🎯</span>, color: "amber" },
+    { title: "Patterns", description: "Mastering logic: Two pointers, Sliding window, Recursion", icon: () => <span className="text-3xl">🧩</span>, color: "pink" }
+  ];
+
+  const whyLearn = [
+    { title: "Interview Ready", description: "Ace top tech company (FAANG) interviews", icon: CheckCircle2, color: "emerald" },
+    { title: "Efficient Code", description: "Optimize performance and reduce resource use", icon: CheckCircle2, color: "emerald" },
+    { title: "Problem Solving", description: "Develop structured logical thinking", icon: CheckCircle2, color: "emerald" },
+    { title: "Scalability", description: "Design systems for millions of users", icon: CheckCircle2, color: "emerald" }
+  ];
+
   return (
     <PerspectiveCard color="emerald">
       <SectionHeader 
@@ -27,22 +42,7 @@ export default function FoundationsIntro() {
           <h3 className="text-2xl font-black text-emerald-400 mb-6 flex items-center gap-3">
             <Target size={24} /> Why Learn DSA?
           </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { title: "Interview Ready", text: "Ace top tech company (FAANG) interviews" },
-              { title: "Efficient Code", text: "Optimize performance and reduce resource use" },
-              { title: "Problem Solving", text: "Develop structured logical thinking" },
-              { title: "Scalability", text: "Design systems for millions of users" }
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-3">
-                <CheckCircle2 size={18} className="text-emerald-500 shrink-0 mt-1" />
-                <div>
-                  <div className="font-black text-white text-sm uppercase tracking-tighter">{item.title}</div>
-                  <p className="text-slate-400 text-xs font-medium">{item.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={whyLearn} columns={2} variant="horizontal" />
         </div>
 
         {/* The DSA Learning Journey - Split Cards */}
@@ -50,22 +50,7 @@ export default function FoundationsIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <Layout size={24} className="text-blue-400" /> The Learning Journey
           </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            {[
-              { title: "Data Structures", text: "Ways to organize data: Lists, Trees, Graphs, Hash Tables", icon: "📊", color: "blue" },
-              { title: "Algorithms", text: "Procedures: Searching, Sorting, DP, Greedy", icon: "⚡", color: "purple" },
-              { title: "Complexity", text: "Understanding performance: Big-O, Time & Space", icon: "🎯", color: "amber" },
-              { title: "Patterns", text: "Mastering logic: Two pointers, Sliding window, Recursion", icon: "🧩", color: "pink" }
-            ].map((item, i) => (
-              <div key={i} className={`p-6 bg-slate-900 border border-white/5 rounded-2xl flex items-center gap-5 hover:border-${item.color}-500/30 transition-all group`}>
-                <div className="text-3xl group-hover:scale-110 transition-transform">{item.icon}</div>
-                <div>
-                  <div className={`font-black text-${item.color}-400 text-sm uppercase tracking-widest mb-1`}>{item.title}</div>
-                  <p className="text-slate-400 text-xs font-medium leading-relaxed">{item.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={journeyItems} columns={2} variant="horizontal" />
         </div>
 
         {/* Learning Path - Timeline Style */}

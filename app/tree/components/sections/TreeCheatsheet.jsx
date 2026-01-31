@@ -1,57 +1,92 @@
 "use client";
 
-import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { FileText, Check, Lightbulb, TrendingUp, Code2, HelpCircle, RefreshCcwDot } from "lucide-react";
 
 export default function TreeCheatsheet() {
-  return (
-    <PerspectiveCard color="teal">
-       <div className="mb-10 text-center">
-        <h3 className="text-sm font-black text-teal-400 uppercase tracking-widest mb-3">Quick Reference</h3>
-        <p className="text-3xl md:text-4xl font-black text-white">Tree Cheatsheet</p>
-      </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <CheatCard
-          title="Pattern Recognition"
-          items={[
+  const cheatItems = [
+    {
+      title: "Pattern Recognition",
+      description: "Recognize common tree problem patterns.",
+      icon: Lightbulb,
+      color: "teal",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
             "Level-by-level traversal → BFS (Queue)",
             "Path from root to leaf → DFS (Stack/Recursion)",
             "Sorted order required → Inorder (BST)",
             "Copying a tree → Preorder",
             "Deleting a tree → Postorder",
             "Kth Smallest/Largest → Inorder",
-          ]}
-          color="teal"
-          icon={<Lightbulb />}
-        />
-        <CheatCard
-          title="Time Complexities (BST)"
-          items={[
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-teal-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    },
+    {
+      title: "Time Complexities (BST)",
+      description: "Average and worst-case performance metrics.",
+      icon: TrendingUp,
+      color: "emerald",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
             "Search: O(log n) avg, O(n) worst",
             "Insert: O(log n) avg, O(n) worst",
             "Delete: O(log n) avg, O(n) worst",
             "Traversal: O(n)",
             "Height: O(n) skew, O(log n) balanced",
-          ]}
-          color="emerald"
-          icon={<TrendingUp />}
-        />
-        <CheatCard
-          title="Edge Cases"
-          items={[
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    },
+    {
+      title: "Edge Cases",
+      description: "Special scenarios to consider during coding.",
+      icon: RefreshCcwDot,
+      color: "cyan",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
             "Empty tree (root is null)",
             "Single node (root has no children)",
             "Skewed tree (acts like linked list)",
             "Duplicate values (if allowed)",
             "Unbalanced tree",
-          ]}
-          color="cyan"
-          icon={<RefreshCcwDot />}
-        />
-      </div>
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  ];
+
+  return (
+    <PerspectiveCard color="teal">
+      <SectionHeader 
+        title="Tree Cheatsheet" 
+        description="Quick reference for complexity and use cases."
+        icon={FileText} 
+        color="teal" 
+      />
+
+      <ConceptGrid items={cheatItems} columns={3} className="mb-12" />
 
       <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
         <Code2 size={24} className="text-teal-400" /> Essential Snippets
@@ -135,40 +170,5 @@ export default function TreeCheatsheet() {
         </table>
       </div>
     </PerspectiveCard>
-  );
-}
-
-function CheatCard({ title, items, color, icon }) {
-  const colors = {
-    teal: "from-teal-500/10 to-teal-500/10 border-teal-500/20",
-    emerald: "from-emerald-500/10 to-emerald-500/10 border-emerald-500/20",
-    cyan: "from-cyan-500/10 to-cyan-500/10 border-cyan-500/20",
-  };
-  const iconColors = {
-    teal: "text-teal-400",
-    emerald: "text-emerald-400",
-    cyan: "text-cyan-400",
-  }
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5 }}
-      className={`p-6 bg-slate-900/70 border ${colors[color]} rounded-2xl shadow-lg group relative overflow-hidden`}
-    >
-      <div className={`absolute -top-4 -right-4 text-7xl opacity-5 group-hover:opacity-10 transition-opacity ${iconColors[color]}`}>
-        {icon}
-      </div>
-      <h3 className="font-black text-lg text-white mb-4 relative z-10">{title}</h3>
-      <ul className="space-y-2 relative z-10">
-        {items.map((item) => (
-          <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-teal-500 mt-1.5" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </motion.div>
   );
 }

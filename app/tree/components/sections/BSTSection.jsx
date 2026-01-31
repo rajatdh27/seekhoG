@@ -3,8 +3,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import { GitBranch } from "lucide-react";
+import { GitBranch, Search, PlusCircle } from "lucide-react";
 
 const languages = [
   { id: "c", name: "C" },
@@ -18,6 +19,7 @@ const languages = [
 const syntaxData = {
   search: {
     title: "BST Search",
+    icon: Search,
     c: `struct Node* search(struct Node* root, int key) {
     if (root == NULL || root->data == key) return root;
     if (key < root->data) return search(root->left, key);
@@ -50,6 +52,7 @@ const syntaxData = {
   },
   insert: {
     title: "BST Insert",
+    icon: PlusCircle,
     c: `struct Node* insert(struct Node* root, int key) {
     if (root == NULL) return newNode(key);
     if (key < root->data) root->left = insert(root->left, key);
@@ -94,6 +97,13 @@ export default function BSTSection() {
 
   return (
     <PerspectiveCard color="teal">
+      <SectionHeader 
+        title="BST Operations" 
+        description="Search and Insertion logic."
+        icon={GitBranch} 
+        color="teal" 
+      />
+
       <div className="flex flex-col lg:flex-row gap-8">
         <aside className="lg:w-1/3 xl:w-1/4">
           <div className="sticky top-24 space-y-6">

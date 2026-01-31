@@ -2,6 +2,7 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Layers, 
   Repeat, 
@@ -17,57 +18,117 @@ export default function DPPatternsSection() {
   const patterns = [
     {
       title: "Fibonacci Style (1D)",
-      difficulty: "Easy",
-      desc: "State depends on previous k states.",
-      useWhen: ["Count ways to reach", "Jump games"],
-      problems: ["Climbing Stairs", "House Robber"],
-      icon: <Repeat size={24} />,
-      color: "blue"
+      description: "State depends on previous k states.",
+      icon: Repeat,
+      color: "blue",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-black uppercase text-blue-400 mb-2">Easy</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Count ways to reach", "Jump games"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase`}>
+            <ChevronRight size={10} /> Climbing Stairs
+          </div>
+        </div>
+      )
     },
     {
       title: "0/1 Knapsack",
-      difficulty: "Medium",
-      desc: "Choose items with weight/value constraints.",
-      useWhen: ["Subset sum", "Partition equal subset"],
-      problems: ["0/1 Knapsack", "Target Sum"],
-      icon: <Box size={24} />,
-      color: "emerald"
+      description: "Choose items with weight/value constraints.",
+      icon: Box,
+      color: "emerald",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[8px] font-black uppercase text-emerald-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Subset sum", "Partition equal subset"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-emerald-400 uppercase`}>
+            <ChevronRight size={10} /> 0/1 Knapsack
+          </div>
+        </div>
+      )
     },
     {
       title: "Unbounded Knapsack",
-      difficulty: "Medium",
-      desc: "Infinite supply of items.",
-      useWhen: ["Coin change", "Rod cutting"],
-      problems: ["Coin Change", "Rod Cutting"],
-      icon: <Layers size={24} />,
-      color: "purple"
+      description: "Infinite supply of items.",
+      icon: Layers,
+      color: "purple",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-purple-500/10 border border-purple-500/20 text-[8px] font-black uppercase text-purple-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Coin change", "Rod cutting"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-purple-400 uppercase`}>
+            <ChevronRight size={10} /> Coin Change
+          </div>
+        </div>
+      )
     },
     {
       title: "Longest Common Subseq.",
-      difficulty: "Medium",
-      desc: "Compare two strings/sequences.",
-      useWhen: ["String editing", "Diff utility"],
-      problems: ["LCS", "Edit Distance"],
-      icon: <ArrowRightLeft size={24} />,
-      color: "amber"
+      description: "Compare two strings/sequences.",
+      icon: ArrowRightLeft,
+      color: "amber",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-amber-500/10 border border-amber-500/20 text-[8px] font-black uppercase text-amber-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["String editing", "Diff utility"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-amber-400 uppercase`}>
+            <ChevronRight size={10} /> LCS
+          </div>
+        </div>
+      )
     },
     {
       title: "Longest Increasing Subseq.",
-      difficulty: "Medium",
-      desc: "Find longest subsequence with property.",
-      useWhen: ["Sequence order", "Building bridges"],
-      problems: ["LIS", "Russian Doll Envelopes"],
-      icon: <Maximize2 size={24} />,
-      color: "rose"
+      description: "Find longest subsequence with property.",
+      icon: Maximize2,
+      color: "rose",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-rose-500/10 border border-rose-500/20 text-[8px] font-black uppercase text-rose-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Sequence order", "Building bridges"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-rose-400 uppercase`}>
+            <ChevronRight size={10} /> LIS
+          </div>
+        </div>
+      )
     },
     {
       title: "Grid Paths (2D)",
-      difficulty: "Medium",
-      desc: "Move through a grid with constraints.",
-      useWhen: ["Robot paths", "Min path sum"],
-      problems: ["Unique Paths", "Min Path Sum"],
-      icon: <Grid size={24} />,
-      color: "cyan"
+      description: "Move through a grid with constraints.",
+      icon: Grid,
+      color: "cyan",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-cyan-500/10 border border-cyan-500/20 text-[8px] font-black uppercase text-cyan-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Robot paths", "Min path sum"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-cyan-400 uppercase`}>
+            <ChevronRight size={10} /> Unique Paths
+          </div>
+        </div>
+      )
     }
   ];
 
@@ -80,39 +141,7 @@ export default function DPPatternsSection() {
         color="emerald" 
       />
 
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        {patterns.map((pattern, i) => (
-          <div key={i} className={`bg-slate-900/60 p-6 rounded-[2rem] border border-${pattern.color}-500/20 hover:border-${pattern.color}-500/40 transition-all group relative overflow-hidden flex flex-col`}>
-            <div className={`absolute top-0 right-0 p-4 text-${pattern.color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}>
-              {pattern.icon}
-            </div>
-            
-            <div className="flex items-center justify-between mb-4">
-              <div className={`px-2 py-1 rounded-md bg-${pattern.color}-500/10 border border-${pattern.color}-500/20 text-[8px] font-black uppercase text-${pattern.color}-400`}>
-                {pattern.difficulty}
-              </div>
-            </div>
-
-            <h3 className="text-lg font-black text-white mb-2">{pattern.title}</h3>
-            <p className="text-slate-500 text-[10px] font-bold leading-relaxed mb-4 flex-1">
-              {pattern.desc}
-            </p>
-
-            <div className="space-y-3">
-              <div className="flex flex-wrap gap-1.5">
-                {pattern.useWhen.map((tag, j) => (
-                  <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className={`flex items-center gap-2 text-[9px] font-black text-${pattern.color}-400 uppercase`}>
-                <ChevronRight size={10} /> {pattern.problems[0]}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConceptGrid items={patterns} columns={3} />
 
       {/* Decision Logic Card */}
       <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">

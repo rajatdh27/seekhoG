@@ -1,33 +1,66 @@
 "use client";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { Settings, Zap, ArrowUp, ArrowDown, Trash2, PlusCircle } from "lucide-react";
 
 export default function HeapOperations() {
-  const operations = [
+  const heapOps = [
     {
       title: "Heapify Up (Bubble Up)",
-      icon: <ArrowUp className="text-emerald-400" />,
-      desc: "Used during insertion to maintain the heap property by moving a node up the tree.",
-      steps: [
-        "Add the new element at the end of the array (last leaf).",
-        "Compare the element with its parent.",
-        "If it violates the heap property, swap it with the parent.",
-        "Repeat until the property is satisfied or the root is reached."
-      ],
-      complexity: "O(log n)"
+      icon: ArrowUp,
+      color: "emerald",
+      description: "Used during insertion to maintain the heap property by moving a node up the tree.",
+      footer: (
+        <div className="space-y-6">
+          <div className="px-3 py-1 bg-rose-500/10 border border-rose-500/20 rounded-full text-[10px] font-black text-rose-400 uppercase tracking-widest inline-block">
+            O(log n)
+          </div>
+          <div className="space-y-4">
+            {[
+              "Add the new element at the end of the array (last leaf).",
+              "Compare the element with its parent.",
+              "If it violates the heap property, swap it with the parent.",
+              "Repeat until the property is satisfied or the root is reached."
+            ].map((step, si) => (
+              <div key={si} className="flex gap-4 items-start">
+                <div className="w-6 h-6 rounded-lg bg-slate-800 flex-shrink-0 flex items-center justify-center text-[10px] font-black text-slate-500 border border-white/5">
+                  {si + 1}
+                </div>
+                <p className="text-xs text-slate-300 font-medium leading-relaxed pt-1">{step}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
     },
     {
       title: "Heapify Down (Sift Down)",
-      icon: <ArrowDown className="text-rose-400" />,
-      desc: "Used during deletion (extract root) to restore the heap property by moving a node down.",
-      steps: [
-        "Replace the root with the last element in the array.",
-        "Compare the new root with its children.",
-        "Swap with the larger child (Max Heap) or smaller child (Min Heap).",
-        "Repeat until the node is in its correct position."
-      ],
-      complexity: "O(log n)"
+      icon: ArrowDown,
+      color: "rose",
+      description: "Used during deletion (extract root) to restore the heap property by moving a node down.",
+      footer: (
+        <div className="space-y-6">
+          <div className="px-3 py-1 bg-rose-500/10 border border-rose-500/20 rounded-full text-[10px] font-black text-rose-400 uppercase tracking-widest inline-block">
+            O(log n)
+          </div>
+          <div className="space-y-4">
+            {[
+              "Replace the root with the last element in the array.",
+              "Compare the new root with its children.",
+              "Swap with the larger child (Max Heap) or smaller child (Min Heap).",
+              "Repeat until the node is in its correct position."
+            ].map((step, si) => (
+              <div key={si} className="flex gap-4 items-start">
+                <div className="w-6 h-6 rounded-lg bg-slate-800 flex-shrink-0 flex items-center justify-center text-[10px] font-black text-slate-500 border border-white/5">
+                  {si + 1}
+                </div>
+                <p className="text-xs text-slate-300 font-medium leading-relaxed pt-1">{step}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
     }
   ];
 
@@ -40,34 +73,7 @@ export default function HeapOperations() {
       />
 
       <div className="space-y-12">
-        <div className="grid lg:grid-cols-2 gap-8">
-          {operations.map((op, i) => (
-            <div key={i} className="bg-slate-900/50 border border-white/5 rounded-3xl p-8 relative overflow-hidden group hover:border-rose-500/30 transition-all">
-              <div className="flex items-start justify-between mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform">
-                  {op.icon}
-                </div>
-                <div className="px-3 py-1 bg-rose-500/10 border border-rose-500/20 rounded-full text-[10px] font-black text-rose-400 uppercase tracking-widest">
-                  {op.complexity}
-                </div>
-              </div>
-              
-              <h3 className="text-2xl font-black text-white mb-4">{op.title}</h3>
-              <p className="text-slate-400 text-sm font-medium mb-8 leading-relaxed">{op.desc}</p>
-              
-              <div className="space-y-4">
-                {op.steps.map((step, si) => (
-                  <div key={si} className="flex gap-4 items-start">
-                    <div className="w-6 h-6 rounded-lg bg-slate-800 flex-shrink-0 flex items-center justify-center text-[10px] font-black text-slate-500 border border-white/5">
-                      {si + 1}
-                    </div>
-                    <p className="text-xs text-slate-300 font-medium leading-relaxed pt-1">{step}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <ConceptGrid items={heapOps} columns={2} />
 
         {/* Insertion vs Deletion Highlight */}
         <div className="grid md:grid-cols-2 gap-6">

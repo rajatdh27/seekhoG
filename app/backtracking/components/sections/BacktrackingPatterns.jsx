@@ -2,6 +2,7 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   GitBranch, 
   Copy, 
@@ -16,57 +17,117 @@ export default function BacktrackingPatterns() {
   const patterns = [
     {
       title: "Decision Tree",
-      difficulty: "Basic",
-      desc: "Make a series of choices to reach a goal.",
-      useWhen: ["Explore all options", "Simple branching"],
-      problems: ["Letter Combinations", "Generate Parentheses"],
-      icon: <GitBranch size={24} />,
-      color: "blue"
+      description: "Make a series of choices to reach a goal.",
+      icon: GitBranch,
+      color: "blue",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-black uppercase text-blue-400 mb-2">Basic</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Explore all options", "Simple branching"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase`}>
+            <ChevronRight size={10} /> Letter Combinations
+          </div>
+        </div>
+      )
     },
     {
       title: "Subset Generation",
-      difficulty: "Medium",
-      desc: "Include or exclude each element.",
-      useWhen: ["Combinations", "Subsequences", "Power Set"],
-      problems: ["Subsets", "Combination Sum"],
-      icon: <Copy size={24} />,
-      color: "emerald"
+      description: "Include or exclude each element.",
+      icon: Copy,
+      color: "emerald",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[8px] font-black uppercase text-emerald-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Combinations", "Subsequences", "Power Set"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-emerald-400 uppercase`}>
+            <ChevronRight size={10} /> Subsets
+          </div>
+        </div>
+      )
     },
     {
       title: "Permutations",
-      difficulty: "Medium",
-      desc: "Arranging elements where order matters.",
-      useWhen: ["Ordering", "Anagrams", "Factorial complexity"],
-      problems: ["Permutations", "N-Queens"],
-      icon: <RotateCw size={24} />,
-      color: "purple"
+      description: "Arranging elements where order matters.",
+      icon: RotateCw,
+      color: "purple",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-purple-500/10 border border-purple-500/20 text-[8px] font-black uppercase text-purple-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Ordering", "Anagrams", "Factorial complexity"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-purple-400 uppercase`}>
+            <ChevronRight size={10} /> Permutations
+          </div>
+        </div>
+      )
     },
     {
       title: "Grid/Maze Paths",
-      difficulty: "Medium",
-      desc: "Moving through 2D grids with backtracking.",
-      useWhen: ["Maze solver", "Word Search", "Island constraints"],
-      problems: ["Word Search", "Rat in Maze"],
-      icon: <Map size={24} />,
-      color: "amber"
+      description: "Moving through 2D grids with backtracking.",
+      icon: Map,
+      color: "amber",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-amber-500/10 border border-amber-500/20 text-[8px] font-black uppercase text-amber-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Maze solver", "Word Search", "Island constraints"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-amber-400 uppercase`}>
+            <ChevronRight size={10} /> Word Search
+          </div>
+        </div>
+      )
     },
     {
       title: "Constraint Satisfaction",
-      difficulty: "Hard",
-      desc: "Filling blanks while following strict rules.",
-      useWhen: ["Validating state", "Puzzles", "Coloring"],
-      problems: ["Sudoku Solver", "Graph Coloring"],
-      icon: <CheckSquare size={24} />,
-      color: "rose"
+      description: "Filling blanks while following strict rules.",
+      icon: CheckSquare,
+      color: "rose",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-rose-500/10 border border-rose-500/20 text-[8px] font-black uppercase text-rose-400 mb-2">Hard</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Validating state", "Puzzles", "Coloring"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-rose-400 uppercase`}>
+            <ChevronRight size={10} /> Sudoku Solver
+          </div>
+        </div>
+      )
     },
     {
       title: "Optimization (Pruning)",
-      difficulty: "Hard",
-      desc: "Find best solution, cut bad branches early.",
-      useWhen: ["Max/Min value", "TSP", "Knapsack (small N)"],
-      problems: ["TSP", "Maximum Gold"],
-      icon: <TrendingUp size={24} />,
-      color: "cyan"
+      description: "Find best solution, cut bad branches early.",
+      icon: TrendingUp,
+      color: "cyan",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-cyan-500/10 border border-cyan-500/20 text-[8px] font-black uppercase text-cyan-400 mb-2">Hard</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Max/Min value", "TSP", "Knapsack (small N)"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-cyan-400 uppercase`}>
+            <ChevronRight size={10} /> TSP
+          </div>
+        </div>
+      )
     }
   ];
 
@@ -79,39 +140,7 @@ export default function BacktrackingPatterns() {
         color="fuchsia" 
       />
 
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        {patterns.map((pattern, i) => (
-          <div key={i} className={`bg-slate-900/60 p-6 rounded-[2rem] border border-${pattern.color}-500/20 hover:border-${pattern.color}-500/40 transition-all group relative overflow-hidden flex flex-col`}>
-            <div className={`absolute top-0 right-0 p-4 text-${pattern.color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}>
-              {pattern.icon}
-            </div>
-            
-            <div className="flex items-center justify-between mb-4">
-              <div className={`px-2 py-1 rounded-md bg-${pattern.color}-500/10 border border-${pattern.color}-500/20 text-[8px] font-black uppercase text-${pattern.color}-400`}>
-                {pattern.difficulty}
-              </div>
-            </div>
-
-            <h3 className="text-lg font-black text-white mb-2">{pattern.title}</h3>
-            <p className="text-slate-500 text-[10px] font-bold leading-relaxed mb-4 flex-1">
-              {pattern.desc}
-            </p>
-
-            <div className="space-y-3">
-              <div className="flex flex-wrap gap-1.5">
-                {pattern.useWhen.map((tag, j) => (
-                  <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className={`flex items-center gap-2 text-[9px] font-black text-${pattern.color}-400 uppercase`}>
-                <ChevronRight size={10} /> {pattern.problems[0]}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConceptGrid items={patterns} columns={3} />
 
       {/* Decision Logic Card */}
       <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">

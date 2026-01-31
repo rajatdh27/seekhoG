@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { Cpu, Share2, MousePointer2, Zap, ArrowRightLeft, Repeat, Link as LinkIcon, Code2, Plus, Minus } from "lucide-react";
 
 export default function LinkedListMemoryLayout() {
@@ -12,59 +13,137 @@ export default function LinkedListMemoryLayout() {
     { addr: "0x1500", data: 30, next: "NULL", pos: { x: 65, y: 15 } },
   ];
 
-  const types = [
+  const listTypes = [
     {
       title: "Singly Linked List",
-      icon: <LinkIcon size={20} />,
+      icon: LinkIcon,
       color: "emerald",
-      visual: (
-        <div className="flex items-center gap-2 py-4">
-          <div className="flex border border-emerald-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
-            <div className="px-2 py-1 text-[10px] font-bold border-r border-emerald-500/30">Data</div>
-            <div className="px-2 py-1 text-[10px] font-bold text-emerald-400">Next</div>
+      footer: (
+        <div className="space-y-4">
+          <div className="bg-black/20 rounded-xl flex items-center justify-center border border-white/5 h-20 overflow-hidden">
+            <div className="flex items-center gap-2 py-4">
+              <div className="flex border border-emerald-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
+                <div className="px-2 py-1 text-[10px] font-bold border-r border-emerald-500/30">Data</div>
+                <div className="px-2 py-1 text-[10px] font-bold text-emerald-400">Next</div>
+              </div>
+              <ArrowRightLeft size={12} className="text-slate-600" />
+              <div className="w-4 h-4 rounded-full border border-slate-700" />
+            </div>
           </div>
-          <ArrowRightLeft size={12} className="text-slate-600" />
-          <div className="w-4 h-4 rounded-full border border-slate-700" />
+          <div>
+            <div className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+              <Plus size={10} /> Advantages
+            </div>
+            <ul className="space-y-1.5">
+              {["Simple logic", "Minimal memory overhead", "O(1) head insertion"].map((pro, j) => (
+                <li key={j} className="text-[9px] text-slate-400 font-bold flex items-start gap-2">
+                  <div className="w-1 h-1 rounded-full bg-emerald-500 mt-1 shrink-0" /> {pro}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="pt-2 border-t border-white/5">
+            <div className="text-[9px] font-black text-rose-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+              <Minus size={10} /> Disadvantages
+            </div>
+            <ul className="space-y-1.5">
+              {["One-way traversal", "Search is O(n)", "Delete needs prev node"].map((con, j) => (
+                <li key={j} className="text-[9px] text-slate-500 font-bold flex items-start gap-2">
+                  <div className="w-1 h-1 rounded-full bg-rose-500 mt-1 shrink-0" /> {con}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      ),
-      pros: ["Simple logic", "Minimal memory overhead", "O(1) head insertion"],
-      cons: ["One-way traversal", "Search is O(n)", "Delete needs prev node"]
+      )
     },
     {
       title: "Doubly Linked List",
-      icon: <ArrowRightLeft size={20} />,
+      icon: ArrowRightLeft,
       color: "blue",
-      visual: (
-        <div className="flex items-center gap-2 py-4">
-          <div className="w-4 h-4 rounded-full border border-slate-700" />
-          <ArrowRightLeft size={12} className="text-slate-600" />
-          <div className="flex border border-blue-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
-            <div className="px-2 py-1 text-[10px] font-bold border-r border-blue-500/30 text-blue-400">Prev</div>
-            <div className="px-2 py-1 text-[10px] font-bold border-r border-blue-500/30">Data</div>
-            <div className="px-2 py-1 text-[10px] font-bold text-blue-400">Next</div>
+      footer: (
+        <div className="space-y-4">
+          <div className="bg-black/20 rounded-xl flex items-center justify-center border border-white/5 h-20 overflow-hidden">
+            <div className="flex items-center gap-2 py-4">
+              <div className="w-4 h-4 rounded-full border border-slate-700" />
+              <ArrowRightLeft size={12} className="text-slate-600" />
+              <div className="flex border border-blue-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
+                <div className="px-2 py-1 text-[10px] font-bold border-r border-blue-500/30 text-blue-400">Prev</div>
+                <div className="px-2 py-1 text-[10px] font-bold border-r border-blue-500/30">Data</div>
+                <div className="px-2 py-1 text-[10px] font-bold text-blue-400">Next</div>
+              </div>
+              <ArrowRightLeft size={12} className="text-slate-600" />
+            </div>
           </div>
-          <ArrowRightLeft size={12} className="text-slate-600" />
+          <div>
+            <div className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+              <Plus size={10} /> Advantages
+            </div>
+            <ul className="space-y-1.5">
+              {["Bidirectional traversal", "O(1) delete with node ref", "Easier to reverse"].map((pro, j) => (
+                <li key={j} className="text-[9px] text-slate-400 font-bold flex items-start gap-2">
+                  <div className="w-1 h-1 rounded-full bg-blue-500 mt-1 shrink-0" /> {pro}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="pt-2 border-t border-white/5">
+            <div className="text-[9px] font-black text-rose-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+              <Minus size={10} /> Disadvantages
+            </div>
+            <ul className="space-y-1.5">
+              {["Extra memory for pointers", "More complex logic", "Slightly more writes"].map((con, j) => (
+                <li key={j} className="text-[9px] text-slate-500 font-bold flex items-start gap-2">
+                  <div className="w-1 h-1 rounded-full bg-rose-500 mt-1 shrink-0" /> {con}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      ),
-      pros: ["Bidirectional traversal", "O(1) delete with node ref", "Easier to reverse"],
-      cons: ["Extra memory for pointers", "More complex logic", "Slightly more writes"]
+      )
     },
     {
       title: "Circular Linked List",
-      icon: <Repeat size={20} />,
+      icon: Repeat,
       color: "purple",
-      visual: (
-        <div className="flex items-center gap-2 py-4 relative">
-          <div className="flex border border-purple-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
-            <div className="px-2 py-1 text-[10px] font-bold border-r border-purple-500/30">Data</div>
-            <div className="px-2 py-1 text-[10px] font-bold text-purple-400">Next</div>
+      footer: (
+        <div className="space-y-4">
+          <div className="bg-black/20 rounded-xl flex items-center justify-center border border-white/5 h-20 overflow-hidden">
+            <div className="flex items-center gap-2 py-4 relative">
+              <div className="flex border border-purple-500/30 rounded-lg overflow-hidden bg-slate-900 shadow-lg">
+                <div className="px-2 py-1 text-[10px] font-bold border-r border-purple-500/30">Data</div>
+                <div className="px-2 py-1 text-[10px] font-bold text-purple-400">Next</div>
+              </div>
+              <div className="absolute -bottom-2 right-0 w-16 h-4 border-b border-r border-purple-500/20 rounded-br-lg" />
+              <div className="absolute -bottom-2 left-0 w-4 h-4 border-l border-purple-500/20 rounded-bl-lg" />
+            </div>
           </div>
-          <div className="absolute -bottom-2 right-0 w-16 h-4 border-b border-r border-purple-500/20 rounded-br-lg" />
-          <div className="absolute -bottom-2 left-0 w-4 h-4 border-l border-purple-500/20 rounded-bl-lg" />
+          <div>
+            <div className="text-[9px] font-black text-purple-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+              <Plus size={10} /> Advantages
+            </div>
+            <ul className="space-y-1.5">
+              {["No NULL at end", "Back to start instantly", "Ideal for buffers"].map((pro, j) => (
+                <li key={j} className="text-[9px] text-slate-400 font-bold flex items-start gap-2">
+                  <div className="w-1 h-1 rounded-full bg-purple-500 mt-1 shrink-0" /> {pro}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="pt-2 border-t border-white/5">
+            <div className="text-[9px] font-black text-rose-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+              <Minus size={10} /> Disadvantages
+            </div>
+            <ul className="space-y-1.5">
+              {["Infinite loop risk", "Null check complexity", "Harder to debug"].map((con, j) => (
+                <li key={j} className="text-[9px] text-slate-500 font-bold flex items-start gap-2">
+                  <div className="w-1 h-1 rounded-full bg-rose-500 mt-1 shrink-0" /> {con}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      ),
-      pros: ["No NULL at end", "Back to start instantly", "Ideal for buffers"],
-      cons: ["Infinite loop risk", "Null check complexity", "Harder to debug"]
+      )
     }
   ];
 
@@ -125,49 +204,7 @@ export default function LinkedListMemoryLayout() {
         </div>
 
         {/* Comparison Cards with Visuals, Pros, and Cons */}
-        <div className="grid lg:grid-cols-3 gap-6">
-          {types.map((type, i) => (
-            <div key={i} className={`bg-slate-900/50 p-6 rounded-[2.5rem] border border-${type.color}-500/20 flex flex-col group relative overflow-hidden`}>
-              <div className={`w-10 h-10 rounded-xl bg-${type.color}-500/10 flex items-center justify-center text-${type.color}-400 mb-4 group-hover:scale-110 transition-transform`}>
-                {type.icon}
-              </div>
-              <h4 className="text-sm font-black text-white uppercase mb-2 tracking-tight">{type.title}</h4>
-              
-              {/* Mini Visualizer */}
-              <div className="mb-6 bg-black/20 rounded-xl flex items-center justify-center border border-white/5 h-20 overflow-hidden">
-                {type.visual}
-              </div>
-
-              <div className="space-y-4 flex-1">
-                <div>
-                  <div className={`text-[9px] font-black text-${type.color}-400 uppercase tracking-widest mb-2 flex items-center gap-1.5`}>
-                    <Plus size={10} /> Advantages
-                  </div>
-                  <ul className="space-y-1.5">
-                    {type.pros.map((pro, j) => (
-                      <li key={j} className="text-[9px] text-slate-400 font-bold flex items-start gap-2">
-                        <div className={`w-1 h-1 rounded-full bg-${type.color}-500 mt-1 shrink-0`} /> {pro}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div className="pt-2 border-t border-white/5">
-                  <div className="text-[9px] font-black text-rose-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                    <Minus size={10} /> Disadvantages
-                  </div>
-                  <ul className="space-y-1.5">
-                    {type.cons.map((con, j) => (
-                      <li key={j} className="text-[9px] text-slate-500 font-bold flex items-start gap-2">
-                        <div className="w-1 h-1 rounded-full bg-rose-500 mt-1 shrink-0" /> {con}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ConceptGrid items={listTypes} columns={3} />
 
         {/* Step-by-Step Implementation logic */}
         <div className="bg-slate-900 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">

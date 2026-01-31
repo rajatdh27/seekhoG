@@ -3,9 +3,17 @@
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { Cpu, Zap, ArrowRight, Layers, Table, Grid3X3, FastForward, TrendingUp } from "lucide-react";
 
 export default function ArrayMemoryLayout() {
+  const growthSteps = [
+    { title: "Full Capacity", description: "Current static block is filled.", icon: () => <div className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-black flex items-center justify-center border border-orange-500/30">1</div>, color: "orange" },
+    { title: "Allocation", description: "Request new block (usually 2x size) - O(n).", icon: () => <div className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-black flex items-center justify-center border border-orange-500/30">2</div>, color: "orange" },
+    { title: "Copy & Free", description: "Move old elements to new block and free old memory.", icon: () => <div className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-black flex items-center justify-center border border-orange-500/30">3</div>, color: "orange" },
+    { title: "Amortized O(1)", description: "Average time over n appends remains constant.", icon: () => <div className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-black flex items-center justify-center border border-orange-500/30">4</div>, color: "orange" }
+  ];
+
   return (
     <PerspectiveCard color="indigo">
       <SectionHeader 
@@ -98,24 +106,7 @@ export default function ArrayMemoryLayout() {
             <h3 className="text-xl font-black text-white mb-6 flex items-center gap-3">
               <TrendingUp size={20} className="text-orange-400" /> Dynamic Growth
             </h3>
-            <div className="space-y-4">
-              {[
-                { step: "1", title: "Full Capacity", desc: "Current static block is filled." },
-                { step: "2", title: "Allocation", desc: "Request new block (usually 2x size) - O(n)." },
-                { step: "3", title: "Copy & Free", desc: "Move old elements to new block and free old memory." },
-                { step: "4", title: "Amortized O(1)", desc: "Average time over n appends remains constant." }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4 items-center p-3 bg-white/5 rounded-xl border border-white/5 group hover:bg-white/10 transition-colors">
-                  <div className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-black flex items-center justify-center border border-orange-500/30">
-                    {item.step}
-                  </div>
-                  <div>
-                    <div className="text-xs font-black text-white uppercase tracking-tight">{item.title}</div>
-                    <p className="text-[10px] text-slate-500 font-medium">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ConceptGrid items={growthSteps} columns={1} variant="horizontal" />
           </div>
         </div>
       </div>

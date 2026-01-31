@@ -2,61 +2,113 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   ArrowDownAZ, 
   Layers, 
   ArrowRightLeft, 
   Calendar, 
   ChevronsRightLeft, 
-  ArrowRight
+  ArrowRight,
+  ChevronRight
 } from "lucide-react";
 
 export default function GreedyPatterns() {
   const patterns = [
     {
       title: "Sorting + Greedy",
-      difficulty: "Easy",
-      desc: "Sort data first to make optimal local choices.",
-      useWhen: ["Intervals", "Deadlines", "Weights"],
-      problems: ["Activity Selection", "Meeting Rooms"],
-      icon: <ArrowDownAZ size={24} />,
-      color: "blue"
+      description: "Sort data first to make optimal local choices.",
+      icon: ArrowDownAZ,
+      color: "blue",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-black uppercase text-blue-400 mb-2">Easy</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Intervals", "Deadlines", "Weights"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase`}>
+            <ChevronRight size={10} /> Activity Selection
+          </div>
+        </div>
+      )
     },
     {
       title: "Priority Queue",
-      difficulty: "Medium",
-      desc: "Dynamically select min/max element.",
-      useWhen: ["Dynamic updates", "Merge K items"],
-      problems: ["Huffman Coding", "Merge K Lists"],
-      icon: <Layers size={24} />,
-      color: "emerald"
+      description: "Dynamically select min/max element.",
+      icon: Layers,
+      color: "emerald",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[8px] font-black uppercase text-emerald-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Dynamic updates", "Merge K items"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-emerald-400 uppercase`}>
+            <ChevronRight size={10} /> Huffman Coding
+          </div>
+        </div>
+      )
     },
     {
       title: "Two Pointers",
-      difficulty: "Medium",
-      desc: "Greedy choices from ends of an array.",
-      useWhen: ["Pairs", "Water Container"],
-      problems: ["Container With Most Water", "Boats to Save People"],
-      icon: <ArrowRightLeft size={24} />,
-      color: "purple"
+      description: "Greedy choices from ends of an array.",
+      icon: ArrowRightLeft,
+      color: "purple",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-purple-500/10 border border-purple-500/20 text-[8px] font-black uppercase text-purple-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Pairs", "Water Container"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-purple-400 uppercase`}>
+            <ChevronRight size={10} /> Container With Most Water
+          </div>
+        </div>
+      )
     },
     {
       title: "Interval Scheduling",
-      difficulty: "Medium",
-      desc: "Handling overlapping time slots.",
-      useWhen: ["Scheduling", "Resource allocation"],
-      problems: ["Non-overlapping Intervals", "Minimum Platforms"],
-      icon: <Calendar size={24} />,
-      color: "amber"
+      description: "Handling overlapping time slots.",
+      icon: Calendar,
+      color: "amber",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-amber-500/10 border border-amber-500/20 text-[8px] font-black uppercase text-amber-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Scheduling", "Resource allocation"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-amber-400 uppercase`}>
+            <ChevronRight size={10} /> Non-overlapping Intervals
+          </div>
+        </div>
+      )
     },
     {
       title: "Prefix/Suffix",
-      difficulty: "Medium",
-      desc: "Greedy decisions based on running totals.",
-      useWhen: ["Subarrays", "Balances"],
-      problems: ["Gas Station", "Partition Labels"],
-      icon: <ChevronsRightLeft size={24} />,
-      color: "rose"
+      description: "Greedy decisions based on running totals.",
+      icon: ChevronsRightLeft,
+      color: "rose",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-rose-500/10 border border-rose-500/20 text-[8px] font-black uppercase text-rose-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Subarrays", "Balances"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-rose-400 uppercase`}>
+            <ChevronRight size={10} /> Gas Station
+          </div>
+        </div>
+      )
     }
   ];
 
@@ -69,39 +121,7 @@ export default function GreedyPatterns() {
         color="violet" 
       />
 
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        {patterns.map((pattern, i) => (
-          <div key={i} className={`bg-slate-900/60 p-6 rounded-[2rem] border border-${pattern.color}-500/20 hover:border-${pattern.color}-500/40 transition-all group relative overflow-hidden flex flex-col`}>
-            <div className={`absolute top-0 right-0 p-4 text-${pattern.color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}>
-              {pattern.icon}
-            </div>
-            
-            <div className="flex items-center justify-between mb-4">
-              <div className={`px-2 py-1 rounded-md bg-${pattern.color}-500/10 border border-${pattern.color}-500/20 text-[8px] font-black uppercase text-${pattern.color}-400`}>
-                {pattern.difficulty}
-              </div>
-            </div>
-
-            <h3 className="text-lg font-black text-white mb-2">{pattern.title}</h3>
-            <p className="text-slate-500 text-[10px] font-bold leading-relaxed mb-4 flex-1">
-              {pattern.desc}
-            </p>
-
-            <div className="space-y-3">
-              <div className="flex flex-wrap gap-1.5">
-                {pattern.useWhen.map((tag, j) => (
-                  <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className={`flex items-center gap-2 text-[9px] font-black text-${pattern.color}-400 uppercase`}>
-                <ArrowRight size={10} /> {pattern.problems[0]}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConceptGrid items={patterns} columns={3} />
     </PerspectiveCard>
   );
 }

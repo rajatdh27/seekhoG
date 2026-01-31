@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Layers, 
   ArrowUp, 
@@ -20,6 +21,22 @@ export default function HeapIntro() {
   const [heapType, setHeapType] = useState("max");
   const [heapDemo, setHeapDemo] = useState([90, 70, 80, 30, 50, 60, 40]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  const properties = [
+    { title: "Complete Tree", description: "All levels filled except last, left-to-right.", icon: Layers, color: "blue" },
+    { title: "Heap Order", description: "Parent vs Child relationship maintained.", icon: ListOrdered, color: "purple" },
+    { title: "Fast Access", description: "Get Min/Max in O(1) time.", icon: Zap, color: "yellow" },
+    { title: "Efficient", description: "Insert/Delete in O(log n).", icon: Database, color: "cyan" }
+  ];
+
+  const applications = [
+    { title: "Priority Queues", description: "Job scheduling in OS.", icon: ListOrdered, color: "blue" },
+    { title: "Graph Algorithms", description: "Dijkstra's & Prim's algo.", icon: GitGraph, color: "emerald" },
+    { title: "Heap Sort", description: "O(n log n) in-place sort.", icon: Layers, color: "rose" },
+    { title: "Order Statistics", description: "Finding k-th largest element.", icon: Target, color: "purple" },
+    { title: "Load Balancing", description: "Managing server loads.", icon: Zap, color: "amber" },
+    { title: "Memory Mgmt", description: "Allocation in some runtimes.", icon: Database, color: "indigo" }
+  ];
 
   // Calculate tree positions
   const getPosition = (index, level, posInLevel, nodesInLevel) => {
@@ -302,22 +319,7 @@ export default function HeapIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <Target size={24} className="text-rose-400" /> Key Properties
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-             {[
-               { title: "Complete Tree", desc: "All levels filled except last, left-to-right.", icon: <Layers size={18} />, color: "blue" },
-               { title: "Heap Order", desc: "Parent vs Child relationship maintained.", icon: <ListOrdered size={18} />, color: "purple" },
-               { title: "Fast Access", desc: "Get Min/Max in O(1) time.", icon: <Zap size={18} />, color: "yellow" },
-               { title: "Efficient", desc: "Insert/Delete in O(log n).", icon: <Database size={18} />, color: "cyan" },
-             ].map((prop, i) => (
-               <div key={i} className="p-5 bg-slate-900 border border-white/5 rounded-2xl group hover:border-rose-500/20 transition-all">
-                  <div className={`w-10 h-10 rounded-xl bg-${prop.color}-500/10 text-${prop.color}-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    {prop.icon}
-                  </div>
-                  <h4 className="text-sm font-black text-white mb-1 uppercase tracking-tighter">{prop.title}</h4>
-                  <p className="text-[10px] text-slate-500 font-bold">{prop.desc}</p>
-               </div>
-             ))}
-          </div>
+          <ConceptGrid items={properties} columns={4} />
         </div>
 
         {/* Applications */}
@@ -325,24 +327,7 @@ export default function HeapIntro() {
            <h3 className="text-xl font-black text-indigo-400 mb-6 flex items-center gap-2">
              <Gamepad2 size={24} /> Real-World Applications
            </h3>
-           <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { title: "Priority Queues", desc: "Job scheduling in OS." },
-                { title: "Graph Algorithms", desc: "Dijkstra's & Prim's algo." },
-                { title: "Heap Sort", desc: "O(n log n) in-place sort." },
-                { title: "Order Statistics", desc: "Finding k-th largest element." },
-                { title: "Load Balancing", desc: "Managing server loads." },
-                { title: "Memory Mgmt", desc: "Allocation in some runtimes." }
-              ].map((app, i) => (
-                <div key={i} className="flex gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
-                  <div>
-                    <div className="text-sm font-bold text-slate-200">{app.title}</div>
-                    <div className="text-xs text-slate-500 font-medium">{app.desc}</div>
-                  </div>
-                </div>
-              ))}
-           </div>
+           <ConceptGrid items={applications} columns={3} variant="horizontal" />
         </div>
 
       </div>

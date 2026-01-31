@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Grid3X3, 
@@ -19,6 +20,13 @@ export default function SudokuSolver() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentCell, setCurrentCell] = useState({ row: -1, col: -1 });
   const [animationSpeed, setAnimationSpeed] = useState(50);
+
+  const sudokuSteps = [
+    { title: "Find empty", description: "Search for 0", icon: Search, color: "fuchsia" },
+    { title: "Try 1-9", description: "Test each digit", icon: ArrowRight, color: "fuchsia" },
+    { title: "Validate", description: "Row, col, box", icon: Check, color: "fuchsia" },
+    { title: "Backtrack", description: "Undo if stuck", icon: RotateCcw, color: "fuchsia" }
+  ];
 
   const initialPuzzle = [
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
@@ -314,16 +322,7 @@ func isValid(board [][]byte, row, col int, c byte) bool {
 
               <div className="bg-slate-950 p-6 rounded-2xl border border-white/5 space-y-4">
                 <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Algorithm Steps</h4>
-                {[
-                  { icon: Search, text: "Find empty cell (0)" },
-                  { icon: ArrowRight, text: "Try digits 1-9" },
-                  { icon: Check, text: "Validate row, col, box" },
-                  { icon: RotateCcw, text: "Backtrack if stuck" }
-                ].map((step, i) => (
-                  <div key={i} className="flex items-center gap-3 text-slate-300 text-sm">
-                    <step.icon size={16} className="text-fuchsia-500" /> {step.text}
-                  </div>
-                ))}
+                <ConceptGrid items={sudokuSteps} columns={1} variant="horizontal" />
               </div>
             </div>
           </div>

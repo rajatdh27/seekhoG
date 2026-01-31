@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   RotateCcw, 
@@ -26,6 +27,12 @@ export default function BacktrackingIntro() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentStep, setCurrentStep] = useState(-1);
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
+
+  const concepts = [
+    { title: "State Space Tree", description: "Visualizing all possible states as a tree where each branch is a choice.", icon: GitBranch, color: "emerald" },
+    { title: "Pruning", description: "Cutting off branches early when we know they won't lead to a solution.", icon: XCircle, color: "rose" },
+    { title: "Backtracking", description: "The act of undoing a choice to return to a previous valid state.", icon: RotateCcw, color: "blue" }
+  ];
 
   const solveMaze = async () => {
     setIsAnimating(true);
@@ -277,31 +284,7 @@ export default function BacktrackingIntro() {
         </div>
 
         {/* Key Concepts Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl group hover:border-fuchsia-500/30 transition-colors">
-            <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center text-emerald-400 mb-4">
-              <GitBranch size={20} />
-            </div>
-            <h4 className="text-lg font-bold text-white mb-2">State Space Tree</h4>
-            <p className="text-xs text-slate-400">Visualizing all possible states as a tree where each branch is a choice.</p>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl group hover:border-fuchsia-500/30 transition-colors">
-            <div className="w-10 h-10 bg-rose-500/10 rounded-lg flex items-center justify-center text-rose-400 mb-4">
-              <XCircle size={20} />
-            </div>
-            <h4 className="text-lg font-bold text-white mb-2">Pruning</h4>
-            <p className="text-xs text-slate-400">Cutting off branches early when we know they won't lead to a solution.</p>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl group hover:border-fuchsia-500/30 transition-colors">
-            <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center text-blue-400 mb-4">
-              <RotateCcw size={20} />
-            </div>
-            <h4 className="text-lg font-bold text-white mb-2">Backtracking</h4>
-            <p className="text-xs text-slate-400">The act of undoing a choice to return to a previous valid state.</p>
-          </div>
-        </div>
+        <ConceptGrid items={concepts} columns={3} />
 
       </div>
     </PerspectiveCard>

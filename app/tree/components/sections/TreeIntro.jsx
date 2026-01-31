@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   GitMerge,
   CheckCircle2, 
@@ -28,10 +29,16 @@ import {
 
 export default function TreeIntro() {
   const operations = [
-    { title: "Search", icon: <Search size={18} />, color: "teal", items: ["O(log n) in BST"] },
-    { title: "Insert", icon: <Plus size={18} />, color: "cyan", items: ["O(log n) in BST"] },
-    { title: "Delete", icon: <Minus size={18} />, color: "sky", items: ["O(log n) in BST"] },
-    { title: "Traversal", icon: <RotateCcw size={18} />, color: "blue", items: ["O(n)"] }
+    { title: "Search", icon: Search, color: "teal", description: "O(log n) in BST" },
+    { title: "Insert", icon: Plus, color: "cyan", description: "O(log n) in BST" },
+    { title: "Delete", icon: Minus, color: "sky", description: "O(log n) in BST" },
+    { title: "Traversal", icon: RotateCcw, color: "blue", description: "O(n)" }
+  ];
+
+  const analogies = [
+    { title: "File System", description: "Directories and files form a tree structure.", icon: BookCopy, color: "emerald" },
+    { title: "DOM in HTML", description: "Web page elements are structured as a tree.", icon: Globe, color: "teal" },
+    { title: "Company Hierarchy", description: "CEO at the root, with employees as nodes.", icon: Users, color: "blue" },
   ];
 
   return (
@@ -70,23 +77,7 @@ export default function TreeIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <Target size={24} className="text-rose-400" /> Core Operations
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {operations.map((op, i) => (
-              <div key={i} className={`p-6 bg-slate-900 border border-${op.color}-500/20 rounded-2xl`}>
-                <div className={`w-10 h-10 rounded-xl bg-${op.color}-500/10 text-${op.color}-400 flex items-center justify-center mb-4`}>
-                  {op.icon}
-                </div>
-                <h4 className="text-sm font-black text-white uppercase mb-4">{op.title}</h4>
-                <ul className="space-y-2">
-                  {op.items.map((item, j) => (
-                    <li key={j} className="text-xs text-slate-400 font-bold flex items-center gap-2">
-                      <div className={`w-1 h-1 rounded-full bg-${op.color}-500`} /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={operations} columns={4} />
         </div>
         
         {/* Real-World Analogies */}
@@ -94,21 +85,7 @@ export default function TreeIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <HelpCircle size={24} className="text-teal-400" /> Real-World Analogies
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { title: "File System", desc: "Directories and files form a tree structure.", icon: <BookCopy className="text-emerald-400" /> },
-              { title: "DOM in HTML", desc: "Web page elements are structured as a tree.", icon: <Globe className="text-teal-400" /> },
-              { title: "Company Hierarchy", desc: "CEO at the root, with employees as nodes.", icon: <Users className="text-blue-400" /> },
-            ].map((item, i) => (
-              <div key={i} className="p-6 bg-slate-900 border border-white/5 rounded-2xl flex gap-4 group hover:border-white/10 transition-colors">
-                <div className="shrink-0 group-hover:scale-110 transition-transform">{item.icon}</div>
-                <div>
-                  <div className="text-sm font-black text-white uppercase tracking-tight mb-1">{item.title}</div>
-                  <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={analogies} columns={3} />
         </div>
 
         {/* When to Use */}

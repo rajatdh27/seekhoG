@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Hash, 
   Search, 
@@ -33,10 +34,10 @@ export default function HashingIntro() {
   const hashResult = simpleHash(inputValue);
 
   const terminology = [
-    { name: "Hash Function", desc: "Maps data to fixed-size values.", icon: <Hash size={20} />, color: "blue" },
-    { name: "Collision", desc: "Two keys map to the same index.", icon: <AlertTriangle size={20} />, color: "rose" },
-    { name: "Load Factor", desc: "Ratio of items to capacity (n/k).", icon: <Scale size={20} />, color: "amber" },
-    { name: "Buckets", desc: "Slots in the hash table array.", icon: <Database size={20} />, color: "emerald" },
+    { title: "Hash Function", description: "Maps data to fixed-size values.", icon: Hash, color: "blue" },
+    { title: "Collision", description: "Two keys map to the same index.", icon: AlertTriangle, color: "rose" },
+    { title: "Load Factor", description: "Ratio of items to capacity (n/k).", icon: Scale, color: "amber" },
+    { title: "Buckets", description: "Slots in the hash table array.", icon: Database, color: "emerald" },
   ];
 
   return (
@@ -124,17 +125,7 @@ export default function HashingIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <Layers size={24} className="text-purple-400" /> Key Terminology
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {terminology.map((term, i) => (
-              <div key={i} className="p-5 bg-slate-900 border border-white/5 rounded-2xl group hover:border-white/10 transition-colors">
-                <div className={`w-10 h-10 rounded-xl bg-${term.color}-500/10 text-${term.color}-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  {term.icon}
-                </div>
-                <h4 className="text-sm font-black text-white mb-1 uppercase tracking-tighter">{term.name}</h4>
-                <p className="text-[10px] text-slate-500 font-bold mb-3">{term.desc}</p>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={terminology} columns={4} />
         </div>
 
         {/* Pros & Cons */}

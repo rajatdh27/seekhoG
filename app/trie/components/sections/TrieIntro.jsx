@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Library, 
   Search, 
@@ -19,6 +20,11 @@ export default function TrieIntro() {
   const [inputWord, setInputWord] = useState("");
   const [trieWords, setTrieWords] = useState(["cat", "car", "dog"]);
   const [activeNode, setActiveNode] = useState(null);
+
+  const blueprintSteps = [
+    { title: "Children Map", description: "Stores links to next characters. Usually an array of size 26 or a HashMap.", icon: () => <div className="w-6 h-6 rounded bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs font-bold">1</div>, color: "orange" },
+    { title: "isEndOfWord", description: "Boolean flag. True if the path from root to here forms a valid word.", icon: () => <div className="w-6 h-6 rounded bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs font-bold">2</div>, color: "orange" }
+  ];
 
   // Simplified Trie structure for visualization
   const buildVisualTree = (words) => {
@@ -196,22 +202,7 @@ export default function TrieIntro() {
         <div className="bg-slate-900 border border-white/5 rounded-[2rem] p-8">
           <h3 className="text-xl font-black text-white mb-6">The Blueprint</h3>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs font-bold mt-0.5">1</div>
-                <div>
-                  <h4 className="text-sm font-bold text-white">Children Map</h4>
-                  <p className="text-xs text-slate-400">Stores links to next characters. Usually an array of size 26 or a HashMap.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs font-bold mt-0.5">2</div>
-                <div>
-                  <h4 className="text-sm font-bold text-white">isEndOfWord</h4>
-                  <p className="text-xs text-slate-400">Boolean flag. True if the path from root to here forms a valid word.</p>
-                </div>
-              </div>
-            </div>
+            <ConceptGrid items={blueprintSteps} columns={1} variant="horizontal" />
 
             <div className="bg-slate-950 rounded-xl p-4 border border-white/5 font-mono text-xs text-slate-300 overflow-x-auto">
 {`class TrieNode {

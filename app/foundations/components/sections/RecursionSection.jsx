@@ -1,189 +1,131 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { useState } from "react";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
+import CodeBlock from "@/app/components/common/CodeBlock";
+import KeyTakeaways from "@/app/components/common/KeyTakeaways";
+import { 
+  RotateCw, 
+  Target, 
+  RefreshCw, 
+  Layers, 
+  AlertTriangle, 
+  CheckCircle2,
+  Cpu
+} from "lucide-react";
 
 export default function RecursionSection() {
   const [activeLang, setActiveLang] = useState("python");
 
+  const recursionConcepts = [
+    { 
+      title: "Base Case", 
+      description: "The condition that stops recursion. Without it, you get infinite recursion and stack overflow!", 
+      icon: Target, 
+      color: "blue",
+      footer: <div className="mt-3 p-3 bg-slate-950 rounded font-mono text-[10px] text-blue-400 border border-blue-500/20">if (n &lt;= 1) return 1;</div>
+    },
+    { 
+      title: "Recursive Case", 
+      description: "The part where function calls itself with a smaller input, moving towards the base case.", 
+      icon: RefreshCw, 
+      color: "purple",
+      footer: <div className="mt-3 p-3 bg-slate-950 rounded font-mono text-[10px] text-purple-400 border border-purple-500/20">return n * factorial(n - 1);</div>
+    }
+  ];
+
   const recursionExamples = {
-    python: `# Recursion Examples in Python
-
-# 1. Factorial - Classic recursion
-def factorial(n):
-    # Base case
-    if n <= 1:
-        return 1
-    # Recursive case
-    return n * factorial(n - 1)
-
-# 2. Fibonacci
-def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n - 1) + fibonacci(n - 2)
-
-# 3. Sum of array
-def sum_array(arr, n):
-    if n <= 0:
-        return 0
-    return arr[n-1] + sum_array(arr, n-1)
-
-# 4. Tail recursion (optimized)
-def factorial_tail(n, accumulator=1):
-    if n <= 1:
-        return accumulator
-    return factorial_tail(n - 1, n * accumulator)
-
-print(factorial(5))  # 120
-print(fibonacci(6))  # 8`,
-    c: `// Recursion Examples in C
-#include <stdio.h>
-
-// 1. Factorial
-int factorial(int n) {
-    if (n <= 1) return 1;  // Base case
-    return n * factorial(n - 1);  // Recursive case
-}
-
-// 2. Fibonacci
-int fibonacci(int n) {
-    if (n <= 1) return n;
-    return fibonacci(n-1) + fibonacci(n-2);
-}
-
-// 3. Sum of array
-int sumArray(int arr[], int n) {
-    if (n <= 0) return 0;
-    return arr[n-1] + sumArray(arr, n-1);
-}
-
-// 4. Power function
-int power(int base, int exp) {
-    if (exp == 0) return 1;
-    return base * power(base, exp - 1);
-}
-
-int main() {
-    printf("5! = %d\\n", factorial(5));
-    printf("fib(6) = %d\\n", fibonacci(6));
-    return 0;
-}`,
+    python: `# Recursion Examples in Python\n\ndef factorial(n):\n    if n <= 1: return 1\n    return n * factorial(n - 1)\n\ndef fibonacci(n):\n    if n <= 1: return n\n    return fibonacci(n - 1) + fibonacci(n - 2)`,
+    javascript: `// Recursion Examples in JS\n\nfunction factorial(n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}\n\nfunction fibonacci(n) {\n    if (n <= 1) return n;\n    return fibonacci(n-1) + fibonacci(n-2);\n}`
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
-      <h2 className="text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100">
-        🟩 6. Recursion Fundamentals
-      </h2>
+    <PerspectiveCard color="emerald">
+      <SectionHeader 
+        title="Recursion Fundamentals" 
+        description="Functions that call themselves to solve complex problems."
+        icon={RotateCw} 
+        color="emerald" 
+      />
 
-      <p className="text-lg text-slate-700 dark:text-slate-300 mb-6">
-        Recursion is when a function calls itself to solve smaller instances of the same problem.
-      </p>
+      <div className="space-y-12">
+        <p className="text-xl text-slate-400 font-medium leading-relaxed">
+          <strong className="text-white">Recursion</strong> is a problem-solving technique where a function solves a problem by breaking it down into smaller subproblems of the same type.
+        </p>
 
-      <div className="grid md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-          <h3 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-3">🎯 Base Case</h3>
-          <p className="text-slate-700 dark:text-slate-300">
-            The condition that stops recursion. Without it, you get infinite recursion and stack overflow!
-          </p>
-          <div className="mt-3 p-3 bg-white dark:bg-slate-800 rounded font-mono text-sm">
-            if (n &lt;= 1) return 1;
+        <ConceptGrid items={recursionConcepts} columns={2} />
+
+        {/* How it Works - Call Stack Visual */}
+        <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-5"><Cpu size={120} className="text-emerald-500" /></div>
+          <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <Layers size={24} className="text-emerald-400" /> The Call Stack
+          </h3>
+          
+          <div className="space-y-3 font-mono text-sm max-w-md mx-auto">
+            {[
+              { text: "factorial(3)", ml: "ml-0", bg: "bg-slate-900" },
+              { text: "→ 3 * factorial(2)", ml: "ml-4", bg: "bg-slate-900" },
+              { text: "→ 2 * factorial(1)", ml: "ml-8", bg: "bg-slate-900" },
+              { text: "→ 1 (base case)", ml: "ml-12", bg: "bg-emerald-500/20 text-emerald-400" },
+              { text: "← returns 2 * 1 = 2", ml: "ml-8", bg: "bg-slate-800" },
+              { text: "← returns 3 * 2 = 6", ml: "ml-4", bg: "bg-slate-800" },
+              { text: "Result: 6", ml: "ml-0", bg: "bg-emerald-600 text-white font-black" }
+            ].map((step, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className={`p-3 rounded-xl border border-white/5 ${step.ml} ${step.bg}`}
+              >
+                {step.text}
+              </motion.div>
+            ))}
           </div>
         </div>
 
-        <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
-          <h3 className="text-xl font-bold text-purple-900 dark:text-purple-100 mb-3">🔄 Recursive Case</h3>
-          <p className="text-slate-700 dark:text-slate-300">
-            The part where function calls itself with a smaller/simpler input, moving towards the base case.
-          </p>
-          <div className="mt-3 p-3 bg-white dark:bg-slate-800 rounded font-mono text-sm">
-            return n * factorial(n - 1);
+        <CodeBlock 
+          code={recursionExamples[activeLang]} 
+          language={activeLang} 
+          title="Recursive Logic"
+        />
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-8 bg-rose-500/5 border border-rose-500/20 rounded-[2.5rem]">
+            <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-2">
+              <AlertTriangle size={20} /> Pitfalls
+            </h3>
+            <ul className="space-y-4">
+              {[
+                "Infinite recursion (missing base case)",
+                "Stack Overflow (too many calls)",
+                "Redundant work (exponential time)",
+                "Harder to debug than loops"
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm font-medium text-slate-300">
+                  <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
+                  {text}
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <KeyTakeaways 
+            items={[
+              "Identify the simplest possible input (Base Case)",
+              "Break the main problem into a subproblem",
+              "Each call must move towards the Base Case",
+              "Recursion uses O(N) space on the Call Stack"
+            ]}
+            gradientFrom="emerald-500"
+            gradientTo="teal-500"
+          />
         </div>
       </div>
-
-      <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 p-6 rounded-xl mb-6">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          📚 How Recursion Works (Call Stack)
-        </h3>
-        <div className="space-y-2 font-mono text-sm text-slate-700 dark:text-slate-300">
-          <div className="p-3 bg-white dark:bg-slate-800 rounded">factorial(3)</div>
-          <div className="p-3 bg-white dark:bg-slate-800 rounded ml-4">→ 3 * factorial(2)</div>
-          <div className="p-3 bg-white dark:bg-slate-800 rounded ml-8">→ 2 * factorial(1)</div>
-          <div className="p-3 bg-white dark:bg-slate-800 rounded ml-12">→ 1 (base case)</div>
-          <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded ml-8">← returns 2 * 1 = 2</div>
-          <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded ml-4">← returns 3 * 2 = 6</div>
-          <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded font-bold">Result: 6</div>
-        </div>
-      </div>
-
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">💻 Code Examples</h3>
-        
-        <div className="flex gap-2 mb-4">
-          <button
-            onClick={() => setActiveLang("python")}
-            className={`px-4 py-2 rounded font-semibold ${
-              activeLang === "python" ? "bg-green-600 text-white" : "bg-slate-200 dark:bg-slate-700"
-            }`}
-          >
-            Python
-          </button>
-          <button
-            onClick={() => setActiveLang("c")}
-            className={`px-4 py-2 rounded font-semibold ${
-              activeLang === "c" ? "bg-green-600 text-white" : "bg-slate-200 dark:bg-slate-700"
-            }`}
-          >
-            C
-          </button>
-        </div>
-
-        <div className="bg-slate-900 rounded-lg p-4 overflow-x-auto">
-          <pre className="text-sm text-slate-100">
-            <code>{recursionExamples[activeLang]}</code>
-          </pre>
-        </div>
-      </div>
-
-      <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border-l-4 border-red-600 mb-6">
-        <h3 className="text-xl font-bold text-red-900 dark:text-red-100 mb-3">⚠️ Common Pitfalls</h3>
-        <ul className="space-y-2 text-slate-700 dark:text-slate-300">
-          <li className="flex items-start gap-2">
-            <span className="text-red-600">✗</span>
-            <span><strong>Stack Overflow:</strong> Forgetting base case or never reaching it</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-red-600">✗</span>
-            <span><strong>Inefficiency:</strong> Redundant calculations (fib without memoization)</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-red-600">✗</span>
-            <span><strong>Deep recursion:</strong> Too many nested calls exhaust stack memory</span>
-          </li>
-        </ul>
-      </div>
-
-      <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-600">
-        <h3 className="text-xl font-bold text-green-900 dark:text-green-100 mb-3">✅ Key Takeaways</h3>
-        <ul className="space-y-2 text-slate-700 dark:text-slate-300">
-          <li className="flex items-start gap-2">
-            <span className="text-green-600">✓</span>
-            <span>Recursion breaks problems into smaller subproblems</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-green-600">✓</span>
-            <span>Always have a base case to stop recursion</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-green-600">✓</span>
-            <span>Each recursive call uses stack space</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-green-600">✓</span>
-            <span>Tail recursion can be optimized by compilers</span>
-          </li>
-        </ul>
-      </div>
-    </div>
+    </PerspectiveCard>
   );
 }

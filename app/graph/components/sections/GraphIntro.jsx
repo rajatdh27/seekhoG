@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Network, 
   Share2, 
@@ -36,6 +37,22 @@ export default function GraphIntro() {
     { from: "C", to: "D" },
     { from: "C", to: "E" },
     { from: "D", to: "E" },
+  ];
+
+  const terminology = [
+    { title: "Vertex (Node)", description: "An entity in the network (e.g., a User, City, or Webpage).", icon: GitCommit, color: "cyan" },
+    { title: "Edge (Link)", description: "The connection between two vertices (e.g., Friendship, Road, Hyperlink).", icon: GitMerge, color: "cyan" },
+    { title: "Directed vs Undirected", description: "One-way (Twitter follow) vs Two-way (Facebook friend) connections.", icon: ArrowRight, color: "cyan" },
+    { title: "Weighted Graph", description: "Edges have a cost or value (e.g., Distance between cities).", icon: Network, color: "cyan" }
+  ];
+
+  const applications = [
+    { title: "Social Networks", description: "Modeling relationships", icon: Users, color: "cyan" },
+    { title: "GPS Navigation", description: "Shortest path finding", icon: Map, color: "cyan" },
+    { title: "Network Routing", description: "Data packet flow", icon: Server, color: "cyan" },
+    { title: "Web Crawling", description: "PageRank algorithm", icon: Globe, color: "cyan" },
+    { title: "Recommendation", description: "Graph filtering", icon: Share2, color: "cyan" },
+    { title: "Circuit Design", description: "Component wiring", icon: Cpu, color: "cyan" }
   ];
 
   return (
@@ -102,59 +119,21 @@ export default function GraphIntro() {
         </div>
 
         {/* Terminology */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl group hover:border-cyan-500/30 transition-colors">
-            <h4 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-              <GitCommit size={18} className="text-cyan-400" /> Vertex (Node)
-            </h4>
-            <p className="text-sm text-slate-400">An entity in the network (e.g., a User, City, or Webpage).</p>
-          </div>
-          
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl group hover:border-cyan-500/30 transition-colors">
-            <h4 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-              <GitMerge size={18} className="text-cyan-400" /> Edge (Link)
-            </h4>
-            <p className="text-sm text-slate-400">The connection between two vertices (e.g., Friendship, Road, Hyperlink).</p>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl group hover:border-cyan-500/30 transition-colors">
-            <h4 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-              <ArrowRight size={18} className="text-cyan-400" /> Directed vs Undirected
-            </h4>
-            <p className="text-sm text-slate-400">One-way (Twitter follow) vs Two-way (Facebook friend) connections.</p>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl group hover:border-cyan-500/30 transition-colors">
-            <h4 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-              <Network size={18} className="text-cyan-400" /> Weighted Graph
-            </h4>
-            <p className="text-sm text-slate-400">Edges have a cost or value (e.g., Distance between cities).</p>
-          </div>
-        </div>
+        <ConceptGrid 
+          items={terminology} 
+          columns={2} 
+          variant="horizontal"
+        />
 
         {/* Real World Applications */}
         <div>
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <Globe size={24} className="text-blue-400" /> Applications
           </h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              { icon: <Users size={20} />, title: "Social Networks", desc: "Modeling relationships" },
-              { icon: <Map size={20} />, title: "GPS Navigation", desc: "Shortest path finding" },
-              { icon: <Server size={20} />, title: "Network Routing", desc: "Data packet flow" },
-              { icon: <Globe size={20} />, title: "Web Crawling", desc: "PageRank algorithm" },
-              { icon: <Share2 size={20} />, title: "Recommendation", desc: "Graph filtering" },
-              { icon: <Cpu size={20} />, title: "Circuit Design", desc: "Component wiring" }
-            ].map((app, i) => (
-              <div key={i} className="flex flex-col items-center text-center p-4 bg-slate-950 rounded-xl border border-white/5">
-                <div className="w-10 h-10 bg-cyan-500/10 rounded-lg flex items-center justify-center text-cyan-400 mb-3">
-                  {app.icon}
-                </div>
-                <h4 className="text-sm font-bold text-white">{app.title}</h4>
-                <p className="text-xs text-slate-500 mt-1">{app.desc}</p>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid 
+            items={applications} 
+            columns={3} 
+          />
         </div>
 
       </div>

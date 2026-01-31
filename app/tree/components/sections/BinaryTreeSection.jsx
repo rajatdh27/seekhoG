@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { Binary, GitMerge } from "lucide-react";
 
@@ -64,6 +65,13 @@ export default function BinaryTreeSection() {
 
   return (
     <PerspectiveCard color="teal">
+      <SectionHeader 
+        title="Binary Tree" 
+        description="Node declaration and basic structure."
+        icon={Binary} 
+        color="teal" 
+      />
+
       <div className="flex flex-col lg:flex-row gap-8">
         <aside className="lg:w-1/3 xl:w-1/4">
           <div className="sticky top-24 space-y-6">

@@ -1,11 +1,50 @@
 "use client";
 
-import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { ShieldAlert, ShieldCheck, Shield, ChevronRight, CheckCircle2 } from "lucide-react";
 
 export default function BigONotation() {
+  const bounds = [
+    { 
+      title: "Big-O (O)", 
+      description: "Worst-case complexity. Maximum time/space required.", 
+      icon: ShieldAlert, 
+      color: "rose",
+      footer: (
+        <>
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-500 mb-4">Upper Bound</div>
+          <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-[10px] font-mono text-slate-300 text-center">f(n) ≤ c × g(n)</div>
+        </>
+      )
+    },
+    { 
+      title: "Big-Omega (Ω)", 
+      description: "Best-case complexity. Minimum time required.", 
+      icon: ShieldCheck, 
+      color: "emerald",
+      footer: (
+        <>
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-500 mb-4">Lower Bound</div>
+          <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-[10px] font-mono text-slate-300 text-center">f(n) ≥ c × g(n)</div>
+        </>
+      )
+    },
+    { 
+      title: "Big-Theta (Θ)", 
+      description: "Precise growth rate. Exact complexity match.", 
+      icon: Shield, 
+      color: "blue",
+      footer: (
+        <>
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 mb-4">Tight Bound</div>
+          <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-[10px] font-mono text-slate-300 text-center">c₁g(n) ≤ f(n) ≤ c₂g(n)</div>
+        </>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="purple">
       <SectionHeader 
@@ -19,28 +58,7 @@ export default function BigONotation() {
       </p>
 
       {/* Three Bound Cards */}
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        {[
-          { title: "Big-O (O)", sub: "Upper Bound", desc: "Worst-case complexity. Maximum time/space required.", formula: "f(n) ≤ c × g(n)", icon: <ShieldAlert className="text-rose-400" />, color: "rose" },
-          { title: "Big-Omega (Ω)", sub: "Lower Bound", desc: "Best-case complexity. Minimum time required.", formula: "f(n) ≥ c × g(n)", icon: <ShieldCheck className="text-emerald-400" />, color: "emerald" },
-          { title: "Big-Theta (Θ)", sub: "Tight Bound", desc: "Precise growth rate. Exact complexity match.", formula: "c₁g(n) ≤ f(n) ≤ c₂g(n)", icon: <Shield className="text-blue-400" />, color: "blue" }
-        ].map((item, i) => (
-          <motion.div 
-            key={i}
-            whileHover={{ y: -5 }}
-            className={`p-8 rounded-[2.5rem] bg-slate-950 border border-white/5 relative overflow-hidden group`}
-          >
-            <div className={`absolute -top-10 -right-10 w-32 h-32 bg-${item.color}-500 opacity-0 group-hover:opacity-10 blur-3xl transition-opacity`} />
-            <div className="mb-6 group-hover:scale-110 transition-transform">{item.icon}</div>
-            <h3 className={`text-xl font-black text-white mb-1`}>{item.title}</h3>
-            <div className={`text-[10px] font-black uppercase tracking-[0.2em] text-${item.color}-500 mb-4`}>{item.sub}</div>
-            <p className="text-slate-400 text-xs font-bold leading-relaxed mb-6">{item.desc}</p>
-            <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-[10px] font-mono text-slate-300 text-center">
-              {item.formula}
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      <ConceptGrid items={bounds} columns={3} className="mb-12" />
 
       {/* Real-World Case Study - Visual Card */}
       <div className="bg-slate-900 border border-white/5 rounded-[2.5rem] p-10 mb-12 relative overflow-hidden">

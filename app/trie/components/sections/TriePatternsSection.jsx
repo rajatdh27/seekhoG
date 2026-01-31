@@ -2,6 +2,7 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Grid, 
   Search, 
@@ -15,48 +16,98 @@ export default function TriePatternsSection() {
   const patterns = [
     {
       title: "Prefix Matching",
-      difficulty: "Easy",
-      desc: "Navigate to the node representing the prefix.",
-      useWhen: ["Autocomplete", "Starts With", "Counting prefixes"],
-      problems: ["Implement Trie", "Search Suggestions System"],
-      icon: <Search size={24} />,
-      color: "blue"
+      description: "Navigate to the node representing the prefix.",
+      icon: Search,
+      color: "blue",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-black uppercase text-blue-400 mb-2">Easy</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Autocomplete", "Starts With", "Counting prefixes"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase`}>
+            <ArrowRight size={10} /> Implement Trie
+          </div>
+        </div>
+      )
     },
     {
       title: "DFS on Trie",
-      difficulty: "Medium",
-      desc: "Traverse the trie to collect or count words.",
-      useWhen: ["Get all words", "Lexicographical order", "Wildcard search"],
-      problems: ["Word Dictionary", "Design Add and Search Words"],
-      icon: <ListTree size={24} />,
-      color: "emerald"
+      description: "Traverse the trie to collect or count words.",
+      icon: ListTree,
+      color: "emerald",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[8px] font-black uppercase text-emerald-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Get all words", "Lexicographical order", "Wildcard search"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-emerald-400 uppercase`}>
+            <ArrowRight size={10} /> Word Dictionary
+          </div>
+        </div>
+      )
     },
     {
       title: "Backtracking + Trie",
-      difficulty: "Hard",
-      desc: "Use Trie to prune search space in backtracking.",
-      useWhen: ["Grid search", "Boggle", "Word Search II"],
-      problems: ["Word Search II", "Concatenated Words"],
-      icon: <Grid size={24} />,
-      color: "purple"
+      description: "Use Trie to prune search space in backtracking.",
+      icon: Grid,
+      color: "purple",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-purple-500/10 border border-purple-500/20 text-[8px] font-black uppercase text-purple-400 mb-2">Hard</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Grid search", "Boggle", "Word Search II"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-purple-400 uppercase`}>
+            <ArrowRight size={10} /> Word Search II
+          </div>
+        </div>
+      )
     },
     {
       title: "Bitwise Trie",
-      difficulty: "Hard",
-      desc: "Store binary representation of numbers.",
-      useWhen: ["XOR problems", "Maximum XOR pair"],
-      problems: ["Maximum XOR of Two Numbers"],
-      icon: <Binary size={24} />,
-      color: "amber"
+      description: "Store binary representation of numbers.",
+      icon: Binary,
+      color: "amber",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-amber-500/10 border border-amber-500/20 text-[8px] font-black uppercase text-amber-400 mb-2">Hard</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["XOR problems", "Maximum XOR pair"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-amber-400 uppercase`}>
+            <ArrowRight size={10} /> Maximum XOR of Two Numbers
+          </div>
+        </div>
+      )
     },
     {
       title: "Palindrome Pairs",
-      difficulty: "Hard",
-      desc: "Store words and their reverses to find pairs.",
-      useWhen: ["Palindrome problems", "Concatenation checks"],
-      problems: ["Palindrome Pairs"],
-      icon: <Repeat size={24} />,
-      color: "rose"
+      description: "Store words and their reverses to find pairs.",
+      icon: Repeat,
+      color: "rose",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-rose-500/10 border border-rose-500/20 text-[8px] font-black uppercase text-rose-400 mb-2">Hard</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Palindrome problems", "Concatenation checks"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-rose-400 uppercase`}>
+            <ArrowRight size={10} /> Palindrome Pairs
+          </div>
+        </div>
+      )
     }
   ];
 
@@ -69,39 +120,7 @@ export default function TriePatternsSection() {
         color="orange" 
       />
 
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        {patterns.map((pattern, i) => (
-          <div key={i} className={`bg-slate-900/60 p-6 rounded-[2rem] border border-${pattern.color}-500/20 hover:border-${pattern.color}-500/40 transition-all group relative overflow-hidden flex flex-col`}>
-            <div className={`absolute top-0 right-0 p-4 text-${pattern.color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}>
-              {pattern.icon}
-            </div>
-            
-            <div className="flex items-center justify-between mb-4">
-              <div className={`px-2 py-1 rounded-md bg-${pattern.color}-500/10 border border-${pattern.color}-500/20 text-[8px] font-black uppercase text-${pattern.color}-400`}>
-                {pattern.difficulty}
-              </div>
-            </div>
-
-            <h3 className="text-lg font-black text-white mb-2">{pattern.title}</h3>
-            <p className="text-slate-500 text-[10px] font-bold leading-relaxed mb-4 flex-1">
-              {pattern.desc}
-            </p>
-
-            <div className="space-y-3">
-              <div className="flex flex-wrap gap-1.5">
-                {pattern.useWhen.map((tag, j) => (
-                  <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className={`flex items-center gap-2 text-[9px] font-black text-${pattern.color}-400 uppercase`}>
-                <ArrowRight size={10} /> {pattern.problems[0]}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConceptGrid items={patterns} columns={3} />
 
       {/* Decision Logic Card */}
       <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">

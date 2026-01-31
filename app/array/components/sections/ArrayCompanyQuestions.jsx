@@ -2,38 +2,101 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
-import { Briefcase, Building2, TrendingUp, Search, Star, Globe, ShieldCheck, Layers, RefreshCw } from "lucide-react";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
+import { Briefcase, Building2, TrendingUp, Search, Star, Globe, ShieldCheck, Layers, RefreshCw, ChevronRight } from "lucide-react";
 
 export default function ArrayCompanyQuestions() {
   const companies = [
     {
-      name: "Google",
-      problems: 156,
-      questions: ["Next Permutation", "3Sum", "Median of Two Sorted Arrays", "Longest Increasing Path"],
+      title: "Google",
+      description: "156 Problems",
+      icon: Search,
       color: "blue",
-      icon: <Search size={20} />
+      footer: (
+        <div className="space-y-4">
+          <ul className="space-y-3">
+            {["Next Permutation", "3Sum", "Median of Two Sorted Arrays", "Longest Increasing Path"].map((q, j) => (
+              <li key={j} className="flex items-center gap-3 text-[11px] text-slate-400 font-bold">
+                <Star size={10} className="text-blue-500 fill-blue-500 opacity-20" />
+                <span>{q}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="pt-4 border-t border-white/5 flex items-center gap-2 text-[9px] font-black uppercase text-slate-500 tracking-widest hover:text-blue-400 transition-colors cursor-pointer">
+            View All <ChevronRight size={10} />
+          </div>
+        </div>
+      )
     },
     {
-      name: "Amazon",
-      problems: 203,
-      questions: ["Trapping Rain Water", "Product Except Self", "Meeting Rooms II", "Subarray Sum K"],
+      title: "Amazon",
+      description: "203 Problems",
+      icon: Briefcase,
       color: "amber",
-      icon: <Briefcase size={20} />
+      footer: (
+        <div className="space-y-4">
+          <ul className="space-y-3">
+            {["Trapping Rain Water", "Product Except Self", "Meeting Rooms II", "Subarray Sum K"].map((q, j) => (
+              <li key={j} className="flex items-center gap-3 text-[11px] text-slate-400 font-bold">
+                <Star size={10} className="text-amber-500 fill-amber-500 opacity-20" />
+                <span>{q}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="pt-4 border-t border-white/5 flex items-center gap-2 text-[9px] font-black uppercase text-slate-500 tracking-widest hover:text-amber-400 transition-colors cursor-pointer">
+            View All <ChevronRight size={10} />
+          </div>
+        </div>
+      )
     },
     {
-      name: "Microsoft",
-      problems: 142,
-      questions: ["Spiral Matrix", "Rotate Image", "Set Matrix Zeroes", "Valid Sudoku"],
+      title: "Microsoft",
+      description: "142 Problems",
+      icon: Building2,
       color: "cyan",
-      icon: <Building2 size={20} />
+      footer: (
+        <div className="space-y-4">
+          <ul className="space-y-3">
+            {["Spiral Matrix", "Rotate Image", "Set Matrix Zeroes", "Valid Sudoku"].map((q, j) => (
+              <li key={j} className="flex items-center gap-3 text-[11px] text-slate-400 font-bold">
+                <Star size={10} className="text-cyan-500 fill-cyan-500 opacity-20" />
+                <span>{q}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="pt-4 border-t border-white/5 flex items-center gap-2 text-[9px] font-black uppercase text-slate-500 tracking-widest hover:text-cyan-400 transition-colors cursor-pointer">
+            View All <ChevronRight size={10} />
+          </div>
+        </div>
+      )
     },
     {
-      name: "Meta",
-      problems: 98,
-      questions: ["Merge Intervals", "Valid Palindrome", "Remove Duplicates", "Best Time to Buy Stock"],
+      title: "Meta",
+      description: "98 Problems",
+      icon: Globe,
       color: "indigo",
-      icon: <Globe size={20} />
+      footer: (
+        <div className="space-y-4">
+          <ul className="space-y-3">
+            {["Merge Intervals", "Valid Palindrome", "Remove Duplicates", "Best Time to Buy Stock"].map((q, j) => (
+              <li key={j} className="flex items-center gap-3 text-[11px] text-slate-400 font-bold">
+                <Star size={10} className="text-indigo-500 fill-indigo-500 opacity-20" />
+                <span>{q}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="pt-4 border-t border-white/5 flex items-center gap-2 text-[9px] font-black uppercase text-slate-500 tracking-widest hover:text-indigo-400 transition-colors cursor-pointer">
+            View All <ChevronRight size={10} />
+          </div>
+        </div>
+      )
     }
+  ];
+
+  const stats = [
+    { title: "850+", description: "Total Questions", icon: Layers, color: "blue" },
+    { title: "94%", description: "Hiring Success", icon: ShieldCheck, color: "emerald" },
+    { title: "2026", description: "Updated Daily", icon: RefreshCw, color: "purple" }
   ];
 
   return (
@@ -46,54 +109,10 @@ export default function ArrayCompanyQuestions() {
         className="mb-10"
       />
 
-      <div className="grid md:grid-cols-2 gap-6">
-        {companies.map((company, i) => (
-          <div key={i} className={`bg-slate-900/60 p-8 rounded-[2rem] border border-${company.color}-500/20 hover:border-${company.color}-500/40 transition-all group relative overflow-hidden`}>
-            <div className={`absolute -top-10 -right-10 w-32 h-32 bg-${company.color}-500/5 blur-3xl`} />
-            
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-lg bg-${company.color}-500/10 text-${company.color}-400`}>
-                  {company.icon}
-                </div>
-                <h3 className="text-xl font-black text-white uppercase tracking-tight">{company.name}</h3>
-              </div>
-              <div className={`text-[10px] font-black uppercase tracking-widest text-${company.color}-500 bg-${company.color}-500/10 px-2 py-1 rounded-md border border-${company.color}-500/20`}>
-                {company.problems} Problems
-              </div>
-            </div>
-
-            <ul className="space-y-4 relative z-10">
-              {company.questions.map((q, j) => (
-                <li key={j} className="flex items-center gap-3 text-sm text-slate-400 group-hover:text-slate-200 transition-colors">
-                  <Star size={12} className={`text-${company.color}-500 fill-${company.color}-500 opacity-20 group-hover:opacity-100 transition-opacity`} />
-                  <span className="font-medium">{q}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-8 pt-6 border-t border-white/5 flex items-center gap-2 text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] group-hover:text-white transition-colors cursor-pointer">
-              <span>View All {company.name} Questions</span>
-              <TrendingUp size={12} className="ml-1" />
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConceptGrid items={companies} columns={2} className="mb-10" />
 
       {/* Bonus Stats */}
-      <div className="mt-10 grid grid-cols-3 gap-4">
-        {[
-          { label: "Total Questions", val: "850+", icon: <Layers size={14} /> },
-          { label: "Hiring Success", val: "94%", icon: <ShieldCheck size={14} /> },
-          { label: "Updated Daily", val: "2026", icon: <RefreshCw size={14} /> }
-        ].map((stat, i) => (
-          <div key={i} className="bg-slate-950/50 p-4 rounded-2xl border border-white/5 flex flex-col items-center gap-1">
-            <div className="text-slate-600 mb-1">{stat.icon}</div>
-            <div className="text-lg font-black text-white tracking-tighter">{stat.val}</div>
-            <div className="text-[8px] font-black text-slate-500 uppercase tracking-widest">{stat.label}</div>
-          </div>
-        ))}
-      </div>
+      <ConceptGrid items={stats} columns={3} variant="horizontal" />
     </PerspectiveCard>
   );
 }

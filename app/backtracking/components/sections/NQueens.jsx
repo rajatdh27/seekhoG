@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   LayoutGrid, 
@@ -19,6 +20,12 @@ export default function NQueens() {
   const [boardSize, setBoardSize] = useState(4);
   const [solutions, setSolutions] = useState([]);
   const [currentSolution, setCurrentSolution] = useState(0);
+
+  const queenRules = [
+    { title: "No shared row", description: "One queen per row", icon: AlertTriangle, color: "rose" },
+    { title: "No shared column", description: "One queen per column", icon: AlertTriangle, color: "rose" },
+    { title: "No shared diagonal", description: "No diagonal attacks", icon: AlertTriangle, color: "rose" }
+  ];
 
   const solveNQueens = () => {
     const n = boardSize;
@@ -283,12 +290,8 @@ func abs(x int) int {
               <p className="text-slate-400 leading-relaxed mb-4">
                 Place <code className="text-fuchsia-400">N</code> chess queens on an <code className="text-fuchsia-400">N×N</code> board so that no two queens attack each other.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {["No shared row", "No shared column", "No shared diagonal"].map((rule, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs font-bold text-slate-300 bg-white/5 px-3 py-2 rounded-lg border border-white/5">
-                    <AlertTriangle size={14} className="text-rose-400" /> {rule}
-                  </div>
-                ))}
+              <div className="mt-6">
+                <ConceptGrid items={queenRules} columns={3} variant="horizontal" />
               </div>
             </div>
           </div>

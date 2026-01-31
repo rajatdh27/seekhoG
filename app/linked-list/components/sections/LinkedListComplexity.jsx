@@ -3,11 +3,17 @@
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { ComplexityAnalysis } from "@/app/components/common/algorithm";
 import { Zap, Clock, MousePointer2, Trash2, List, Share2, ArrowRightLeft, Repeat, Lightbulb, AlertTriangle, BarChart3, CheckCircle2 } from "lucide-react";
 
 export default function LinkedListComplexity() {
   const [activeType, setActiveType] = useState("singly");
+
+  const spaceOverheads = [
+    { title: "Singly List Overhead", description: "Data + 1 Pointer per node. Approx 12-16 bytes/node.", icon: Share2, color: "emerald" },
+    { title: "Doubly List Overhead", description: "Data + 2 Pointers per node. Approx 20-24 bytes/node.", icon: ArrowRightLeft, color: "blue" }
+  ];
 
   const opsData = {
     singly: [
@@ -216,16 +222,7 @@ export default function LinkedListComplexity() {
             <Share2 size={24} className="text-blue-400" /> Space Complexity Analysis
           </h3>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="p-4 bg-white/5 rounded-xl border border-white/5 group hover:border-emerald-500/30 transition-colors">
-                <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Singly List Overhead</div>
-                <p className="text-slate-300 text-xs font-medium">Data + 1 Pointer per node. Approx 12-16 bytes/node.</p>
-              </div>
-              <div className="p-4 bg-white/5 rounded-xl border border-white/5 group hover:border-blue-500/30 transition-colors">
-                <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Doubly List Overhead</div>
-                <p className="text-slate-300 text-xs font-medium">Data + 2 Pointers per node. Approx 20-24 bytes/node.</p>
-              </div>
-            </div>
+            <ConceptGrid items={spaceOverheads} columns={1} variant="horizontal" />
             <div className="flex flex-col justify-center gap-4">
               <div className="flex items-center gap-3">
                 <CheckCircle2 size={16} className="text-emerald-500" />

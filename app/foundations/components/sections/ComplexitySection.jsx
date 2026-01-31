@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { Clock, Zap, Cpu, Code2, AlertTriangle, CheckCircle2, TrendingUp } from "lucide-react";
 
 export default function ComplexitySection() {
@@ -344,6 +345,12 @@ func bubbleSort(arr []int) {
     { id: "go", name: "Go", color: "cyan" },
   ];
 
+  const whyItMatters = [
+    { title: "Small Data", description: "Everything seems fast at 100 items", icon: () => <span className="text-2xl">🌱</span>, color: "emerald" },
+    { title: "Real World", description: "Millions of users, billions of records", icon: () => <span className="text-2xl">🌎</span>, color: "blue" },
+    { title: "Scale Gap", description: "Hours vs seconds on large datasets", icon: () => <span className="text-2xl">📈</span>, color: "rose" }
+  ];
+
   return (
     <PerspectiveCard color="amber" className="overflow-hidden">
       <SectionHeader 
@@ -372,21 +379,7 @@ func bubbleSort(arr []int) {
               <h3 className="text-2xl font-black text-white flex items-center gap-3">
                 <Zap className="text-yellow-400" /> Why It Matters
               </h3>
-              <div className="space-y-4">
-                {[
-                  { title: "Small Data", text: "Everything seems fast at 100 items", icon: "🌱" },
-                  { title: "Real World", text: "Millions of users, billions of records", icon: "🌎" },
-                  { title: "Scale Gap", text: "Hours vs seconds on large datasets", icon: "📈" }
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors group">
-                    <span className="text-2xl group-hover:scale-125 transition-transform">{item.icon}</span>
-                    <div>
-                      <div className="font-black text-white text-sm uppercase tracking-tighter">{item.title}</div>
-                      <p className="text-slate-400 text-xs font-medium">{item.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <ConceptGrid items={whyItMatters} columns={1} variant="horizontal" />
             </div>
             
             <div className="bg-slate-900 rounded-2xl p-6 border border-white/5 flex flex-col justify-center">

@@ -2,6 +2,7 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Grid, 
   Hash, 
@@ -18,57 +19,117 @@ export default function HashingPatternsSection() {
   const patterns = [
     {
       title: "Frequency Counter",
-      difficulty: "Easy",
-      desc: "Count occurrences of each element.",
-      useWhen: ["Anagrams", "Majority Element", "Character counts"],
-      problems: ["Valid Anagram", "Top K Frequent"],
-      icon: <Hash size={24} />,
-      color: "blue"
+      description: "Count occurrences of each element.",
+      icon: Hash,
+      color: "blue",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-black uppercase text-blue-400 mb-2">Easy</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Anagrams", "Majority Element", "Character counts"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase`}>
+            <ChevronRight size={10} /> Valid Anagram
+          </div>
+        </div>
+      )
     },
     {
       title: "Two Sum (Complement)",
-      difficulty: "Easy-Medium",
-      desc: "Check if (target - current) exists in Map.",
-      useWhen: ["Find pair with sum", "Find difference"],
-      problems: ["Two Sum", "Pairs with Diff K"],
-      icon: <Plus size={24} />,
-      color: "emerald"
+      description: "Check if (target - current) exists in Map.",
+      icon: Plus,
+      color: "emerald",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[8px] font-black uppercase text-emerald-400 mb-2">Easy-Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Find pair with sum", "Find difference"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-emerald-400 uppercase`}>
+            <ChevronRight size={10} /> Two Sum
+          </div>
+        </div>
+      )
     },
     {
       title: "Seen / Visited Set",
-      difficulty: "Easy",
-      desc: "Track processed elements using a Set.",
-      useWhen: ["Detect duplicates", "Cycle detection", "Intersection"],
-      problems: ["Contains Duplicate", "Linked List Cycle"],
-      icon: <Eye size={24} />,
-      color: "purple"
+      description: "Track processed elements using a Set.",
+      icon: Eye,
+      color: "purple",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-purple-500/10 border border-purple-500/20 text-[8px] font-black uppercase text-purple-400 mb-2">Easy</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Detect duplicates", "Cycle detection", "Intersection"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-purple-400 uppercase`}>
+            <ChevronRight size={10} /> Contains Duplicate
+          </div>
+        </div>
+      )
     },
     {
       title: "Prefix Sum + Hash",
-      difficulty: "Medium",
-      desc: "Store cumulative sums to find subarrays.",
-      useWhen: ["Subarray sum = K", "Longest subarray with sum"],
-      problems: ["Subarray Sum Equals K", "Contiguous Array"],
-      icon: <Maximize2 size={24} />,
-      color: "amber"
+      description: "Store cumulative sums to find subarrays.",
+      icon: Maximize2,
+      color: "amber",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-amber-500/10 border border-amber-500/20 text-[8px] font-black uppercase text-amber-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Subarray sum = K", "Longest subarray with sum"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-amber-400 uppercase`}>
+            <ChevronRight size={10} /> Subarray Sum Equals K
+          </div>
+        </div>
+      )
     },
     {
       title: "Group by Key",
-      difficulty: "Medium",
-      desc: "Map a derived key to a list of items.",
-      useWhen: ["Grouping anagrams", "Categorizing data"],
-      problems: ["Group Anagrams", "Group Shifted Strings"],
-      icon: <List size={24} />,
-      color: "rose"
+      description: "Map a derived key to a list of items.",
+      icon: List,
+      color: "rose",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-rose-500/10 border border-rose-500/20 text-[8px] font-black uppercase text-rose-400 mb-2">Medium</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Grouping anagrams", "Categorizing data"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-rose-400 uppercase`}>
+            <ChevronRight size={10} /> Group Anagrams
+          </div>
+        </div>
+      )
     },
     {
       title: "Sliding Window + Hash",
-      difficulty: "Medium-Hard",
-      desc: "Track counts within a moving window.",
-      useWhen: ["Longest substring", "Window constraints"],
-      problems: ["Longest Substring No Repeat", "Min Window Substring"],
-      icon: <Repeat size={24} />,
-      color: "cyan"
+      description: "Track counts within a moving window.",
+      icon: Repeat,
+      color: "cyan",
+      footer: (
+        <div className="space-y-3">
+          <div className="px-2 py-1 w-fit rounded-md bg-cyan-500/10 border border-cyan-500/20 text-[8px] font-black uppercase text-cyan-400 mb-2">Medium-Hard</div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Longest substring", "Window constraints"].map((tag, j) => (
+              <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">{tag}</span>
+            ))}
+          </div>
+          <div className={`flex items-center gap-2 text-[9px] font-black text-cyan-400 uppercase`}>
+            <ChevronRight size={10} /> Longest Substring No Repeat
+          </div>
+        </div>
+      )
     }
   ];
 
@@ -81,39 +142,7 @@ export default function HashingPatternsSection() {
         color="emerald" 
       />
 
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        {patterns.map((pattern, i) => (
-          <div key={i} className={`bg-slate-900/60 p-6 rounded-[2rem] border border-${pattern.color}-500/20 hover:border-${pattern.color}-500/40 transition-all group relative overflow-hidden flex flex-col`}>
-            <div className={`absolute top-0 right-0 p-4 text-${pattern.color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}>
-              {pattern.icon}
-            </div>
-            
-            <div className="flex items-center justify-between mb-4">
-              <div className={`px-2 py-1 rounded-md bg-${pattern.color}-500/10 border border-${pattern.color}-500/20 text-[8px] font-black uppercase text-${pattern.color}-400`}>
-                {pattern.difficulty}
-              </div>
-            </div>
-
-            <h3 className="text-lg font-black text-white mb-2">{pattern.title}</h3>
-            <p className="text-slate-500 text-[10px] font-bold leading-relaxed mb-4 flex-1">
-              {pattern.desc}
-            </p>
-
-            <div className="space-y-3">
-              <div className="flex flex-wrap gap-1.5">
-                {pattern.useWhen.map((tag, j) => (
-                  <span key={j} className="text-[8px] font-black text-slate-400 uppercase tracking-tighter bg-white/5 px-1.5 py-0.5 rounded border border-white/5">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className={`flex items-center gap-2 text-[9px] font-black text-${pattern.color}-400 uppercase`}>
-                <ChevronRight size={10} /> {pattern.problems[0]}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConceptGrid items={patterns} columns={3} />
 
       {/* Decision Logic Card */}
       <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">

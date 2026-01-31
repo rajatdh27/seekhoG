@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Gem, 
@@ -23,6 +24,11 @@ export default function GreedyIntro() {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
 
   const coins = [25, 10, 5, 1];
+
+  const philosophy = [
+    { title: "Locally Optimal", description: "Pick best option at current step", icon: Zap, color: "violet" },
+    { title: "Globally Optimal?", description: "Hopefully! (Not guaranteed)", icon: Target, color: "purple" }
+  ];
 
   const simulateGreedy = async () => {
     setIsAnimating(true);
@@ -142,16 +148,7 @@ func greedyAlgorithm(items []Item) []Item {
           <p className="text-slate-400 text-sm leading-relaxed mb-6">
             A greedy algorithm builds a solution piece by piece, always choosing the next piece that offers the most immediate benefit. It never looks back and never changes its mind.
           </p>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="p-4 bg-slate-950 rounded-xl border border-white/5">
-              <div className="text-violet-400 font-bold mb-1">Locally Optimal</div>
-              <div className="text-slate-500 text-xs">Pick best option at current step</div>
-            </div>
-            <div className="p-4 bg-slate-950 rounded-xl border border-white/5">
-              <div className="text-purple-400 font-bold mb-1">Globally Optimal?</div>
-              <div className="text-slate-500 text-xs">Hopefully! (Not guaranteed)</div>
-            </div>
-          </div>
+          <ConceptGrid items={philosophy} columns={2} variant="horizontal" />
         </div>
 
         {/* Interactive Visualizer */}

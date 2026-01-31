@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   ChevronsRight,
   CheckCircle2, 
@@ -45,10 +46,73 @@ export default function QueueIntro() {
   };
 
   const operations = [
-    { title: "Enqueue", icon: <Plus size={18} />, color: "green", items: ["Adds to rear - O(1)"] },
-    { title: "Dequeue", icon: <Minus size={18} />, color: "emerald", items: ["Removes from front - O(1)"] },
-    { title: "Peek / Front", icon: <Search size={18} />, color: "teal", items: ["Views front - O(1)"] },
-    { title: "isEmpty", icon: <RotateCcw size={18} />, color: "cyan", items: ["Checks if empty - O(1)"] }
+    { title: "Enqueue", icon: Plus, color: "green", description: "Adds to rear - O(1)" },
+    { title: "Dequeue", icon: Minus, color: "emerald", description: "Removes from front - O(1)" },
+    { title: "Peek / Front", icon: Search, color: "teal", description: "Views front - O(1)" },
+    { title: "isEmpty", icon: RotateCcw, color: "cyan", description: "Checks if empty - O(1)" }
+  ];
+
+  const analogies = [
+    { title: "Ticket Counter Line", description: "The first person to join the line is the first person to get a ticket.", icon: Users, color: "blue" },
+    { title: "Print Queue", description: "Print jobs are processed in the order they are received.", icon: BookCopy, color: "emerald" },
+    { title: "Messaging Apps", description: "Messages are typically displayed in the order they were sent.", icon: Undo, color: "rose" },
+    { title: "Web Server Requests", description: "Incoming HTTP requests are handled in a FIFO manner.", icon: Globe, color: "green" },
+    { title: "CPU Scheduling", description: "First-come, first-served scheduling algorithm.", icon: Zap, color: "amber" }
+  ];
+
+  const queueTypes = [
+    {
+      title: "Simple Queue",
+      description: "Basic FIFO queue with enqueue at rear, dequeue at front.",
+      icon: Layers,
+      color: "emerald",
+      footer: (
+        <ul className="space-y-2 relative z-10 text-xs font-bold">
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Simple to implement.</li>
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Clear FIFO behavior.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Wasted space in array implementation.</li>
+        </ul>
+      )
+    },
+    {
+      title: "Circular Queue",
+      description: "Rear connects back to front, efficient space usage.",
+      icon: RotateCcw,
+      color: "rose",
+      footer: (
+        <ul className="space-y-2 relative z-10 text-xs font-bold">
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Efficient space usage.</li>
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Reuses freed space.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Slightly complex logic.</li>
+        </ul>
+      )
+    },
+    {
+      title: "Priority Queue",
+      description: "Elements have priority, highest priority served first.",
+      icon: Target,
+      color: "cyan",
+      footer: (
+        <ul className="space-y-2 relative z-10 text-xs font-bold">
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Priority-based processing.</li>
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Flexible ordering.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> O(log n) operations.</li>
+        </ul>
+      )
+    },
+    {
+      title: "Deque",
+      description: "Insert and remove from both ends.",
+      icon: BookCopy,
+      color: "amber",
+      footer: (
+        <ul className="space-y-2 relative z-10 text-xs font-bold">
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Flexible operations.</li>
+          <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Can work as stack or queue.</li>
+          <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> More methods to implement.</li>
+        </ul>
+      )
+    }
   ];
 
   return (
@@ -71,7 +135,7 @@ export default function QueueIntro() {
               <Zap size={24} className="text-yellow-400" /> Interactive FIFO Principle
             </h3>
             <div className="flex gap-2">
-              <button onClick={enqueue} className="px-3 py-1.5 bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-green-500/20 hover:bg-green-500 hover:text-white transition-all disabled:opacity-50" disabled={queueDemo.length >= 8}>Enqueue</button>
+              <button onClick={enqueue} className="px-3 py-1.5 bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-emerald-500/20 hover:bg-green-500 hover:text-white transition-all disabled:opacity-50" disabled={queueDemo.length >= 8}>Enqueue</button>
               <button onClick={dequeue} className="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-emerald-500/20 hover:bg-emerald-500 hover:text-white transition-all disabled:opacity-50" disabled={queueDemo.length === 0}>Dequeue</button>
             </div>
           </div>
@@ -128,23 +192,7 @@ export default function QueueIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <Target size={24} className="text-rose-400" /> Core Operations
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {operations.map((op, i) => (
-              <div key={i} className={`p-6 bg-slate-900 border border-${op.color}-500/20 rounded-2xl`}>
-                <div className={`w-10 h-10 rounded-xl bg-${op.color}-500/10 text-${op.color}-400 flex items-center justify-center mb-4`}>
-                  {op.icon}
-                </div>
-                <h4 className="text-sm font-black text-white uppercase mb-4">{op.title}</h4>
-                <ul className="space-y-2">
-                  {op.items.map((item, j) => (
-                    <li key={j} className="text-xs text-slate-400 font-bold flex items-center gap-2">
-                      <div className={`w-1 h-1 rounded-full bg-${op.color}-500`} /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={operations} columns={4} />
         </div>
         
         {/* Real-World Analogies */}
@@ -152,23 +200,7 @@ export default function QueueIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <HelpCircle size={24} className="text-green-400" /> Real-World Analogies
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { title: "Ticket Counter Line", desc: "The first person to join the line is the first person to get a ticket.", icon: <Users className="text-blue-400" /> },
-              { title: "Print Queue", desc: "Print jobs are processed in the order they are received.", icon: <BookCopy className="text-emerald-400" /> },
-              { title: "Messaging Apps", desc: "Messages are typically displayed in the order they were sent.", icon: <Undo className="text-rose-400" /> },
-              { title: "Web Server Requests", desc: "Incoming HTTP requests are handled in a FIFO manner.", icon: <Globe className="text-green-400" /> },
-              { title: "CPU Scheduling", desc: "First-come, first-served scheduling algorithm.", icon: <Zap className="text-amber-400" /> }
-            ].map((item, i) => (
-              <div key={i} className="p-6 bg-slate-900 border border-white/5 rounded-2xl flex gap-4 group hover:border-white/10 transition-colors">
-                <div className="shrink-0 group-hover:scale-110 transition-transform">{item.icon}</div>
-                <div>
-                  <div className="text-sm font-black text-white uppercase tracking-tight mb-1">{item.title}</div>
-                  <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ConceptGrid items={analogies} columns={3} />
         </div>
 
         {/* When to Use */}
@@ -220,56 +252,7 @@ export default function QueueIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <BarChart3 size={24} className="text-blue-400" /> Types of Queues
           </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-emerald-500" /></div>
-              <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-2">
-                Simple Queue
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">Basic FIFO queue with enqueue at rear, dequeue at front.</p>
-              <ul className="space-y-2 relative z-10 text-xs font-bold">
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Simple to implement.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Clear FIFO behavior.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Wasted space in array implementation.</li>
-              </ul>
-            </div>
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-rose-500"/></div>
-              <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-2">
-                Circular Queue
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">Rear connects back to front, efficient space usage.</p>
-              <ul className="space-y-2 relative z-10 text-xs font-bold">
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Efficient space usage.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Reuses freed space.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> Slightly complex logic.</li>
-              </ul>
-            </div>
-             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-cyan-500"/></div>
-              <h3 className="text-xl font-black text-cyan-400 mb-6 flex items-center gap-2">
-                Priority Queue
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">Elements have priority, highest priority served first.</p>
-              <ul className="space-y-2 relative z-10 text-xs font-bold">
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Priority-based processing.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Flexible ordering.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> O(log n) operations.</li>
-              </ul>
-            </div>
-             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-amber-500"/></div>
-              <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-2">
-                Deque
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">Insert and remove from both ends.</p>
-              <ul className="space-y-2 relative z-10 text-xs font-bold">
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Flexible operations.</li>
-                <li className="flex items-center gap-2"><Plus size={12} className="text-green-500"/> Can work as stack or queue.</li>
-                <li className="flex items-center gap-2"><Minus size={12} className="text-red-500"/> More methods to implement.</li>
-              </ul>
-            </div>
-          </div>
+          <ConceptGrid items={queueTypes} columns={2} />
         </div>
       </div>
     </PerspectiveCard>

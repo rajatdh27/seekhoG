@@ -4,11 +4,19 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { Calculator, BarChart3, Zap, Hash, Sigma, CheckCircle2, Code2 } from "lucide-react";
 
 export default function MathematicsSection() {
   const [activeTab, setActiveTab] = useState("logarithms");
+
+  const mathConcepts = [
+    { title: "Logarithms", description: "log_b(x) = y means b^y = x. Common in divide & conquer. Example: log2(1024) = 10", icon: BarChart3, color: "blue" },
+    { title: "Exponents", description: "a^n = a multiplied n times. Properties: a^m * a^n = a^(m+n). O(log n) fast exponentiation", icon: Zap, color: "purple" },
+    { title: "Combinatorics", description: "P(n,r) = n!/(n-r)!. C(n,r) = n!/[r!(n-r)!]. Choice and probability logic", icon: Hash, color: "emerald" },
+    { title: "Sets & Logic", description: "Distinct element collections. Union, Intersect, Difference. Basis for Graph & Hashing", icon: Sigma, color: "orange" }
+  ];
 
   const codeExamples = {
     logarithms: {
@@ -385,32 +393,8 @@ func main() {
         Essential mathematical concepts that form the foundation of algorithm analysis and complex problem-solving strategies.
       </p>
 
-      {/* Key Concepts Grid - Glassmorphism style */}
-      <div className="grid md:grid-cols-2 gap-6 mb-12">
-        {[ 
-          { title: "Logarithms", icon: <BarChart3 className="text-blue-400" />, items: ["log_b(x) = y means b^y = x", "Common in divide & conquer", "Example: log2(1024) = 10"], color: "blue" },
-          { title: "Exponents", icon: <Zap className="text-purple-400" />, items: ["a^n = a multiplied n times", "Properties: a^m * a^n = a^(m+n)", "O(log n) fast exponentiation"], color: "purple" },
-          { title: "Combinatorics", icon: <Hash className="text-emerald-400" />, items: ["P(n,r) = n!/(n-r)!", "C(n,r) = n!/[r!(n-r)!]", "Choice and probability logic"], color: "emerald" },
-          { title: "Sets & Logic", icon: <Sigma className="text-orange-400" />, items: ["Distinct element collections", "Union, Intersect, Difference", "Basis for Graph & Hashing"], color: "orange" }
-        ].map((concept, i) => (
-          <div key={i} className="bg-slate-900 border border-white/5 p-6 rounded-[2rem] hover:border-white/10 transition-all group">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-white/5 rounded-xl group-hover:scale-110 transition-transform">
-                {concept.icon}
-              </div>
-              <h3 className="text-xl font-black text-white">{concept.title}</h3>
-            </div>
-            <ul className="space-y-2">
-              {concept.items.map((item, j) => (
-                <li key={j} className="flex items-start gap-2 text-xs font-bold text-slate-400">
-                  <div className={`w-1.5 h-1.5 rounded-full bg-${concept.color}-500 mt-1`} />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+      {/* Key Concepts Grid */}
+      <ConceptGrid items={mathConcepts} columns={2} className="mb-12" />
 
       {/* Interactive Code Lab */}
       <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner">
