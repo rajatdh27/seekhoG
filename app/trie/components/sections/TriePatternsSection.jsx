@@ -1,6 +1,7 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   Grid, 
   Search, 
@@ -61,15 +62,12 @@ export default function TriePatternsSection() {
 
   return (
     <PerspectiveCard color="orange">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20">
-          <Grid size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Common Patterns</h2>
-          <p className="text-slate-400 font-medium">Standard templates for solving Trie problems.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Common Patterns" 
+        description="Standard templates for solving Trie problems."
+        icon={Grid} 
+        color="orange" 
+      />
 
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {patterns.map((pattern, i) => (

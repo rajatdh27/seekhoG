@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Search, 
@@ -275,15 +276,12 @@ func findWords(board [][]byte, words []string) []string {
 
   return (
     <PerspectiveCard color="orange">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20">
-          <Search size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Real-World Applications</h2>
-          <p className="text-slate-400 font-medium">From search engines to spell checkers.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Real-World Applications" 
+        description="From search engines to spell checkers."
+        icon={Search} 
+        color="orange" 
+      />
 
       <div className="space-y-12">
         {/* Application 1: Autocomplete */}

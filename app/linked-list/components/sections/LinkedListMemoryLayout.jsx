@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Cpu, Share2, MousePointer2, Zap, ArrowRightLeft, Repeat, Link as LinkIcon, Code2, Plus, Minus } from "lucide-react";
 
 export default function LinkedListMemoryLayout() {
@@ -69,15 +70,12 @@ export default function LinkedListMemoryLayout() {
 
   return (
     <PerspectiveCard color="indigo">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
-          <Cpu size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Memory & Implementation</h2>
-          <p className="text-slate-400 font-medium">Visualizing structural differences and performance trade-offs.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Memory & Implementation" 
+        description="Visualizing structural differences and performance trade-offs."
+        icon={Cpu} 
+        color="indigo" 
+      />
 
       <div className="space-y-12">
         {/* Distributed Memory Visualization */}

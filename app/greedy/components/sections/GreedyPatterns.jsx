@@ -1,6 +1,7 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   ArrowDownAZ, 
   Layers, 
@@ -61,15 +62,12 @@ export default function GreedyPatterns() {
 
   return (
     <PerspectiveCard color="violet">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 border border-violet-500/20">
-          <Layers size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Greedy Patterns</h2>
-          <p className="text-slate-400 font-medium">Standard templates for solving greedy problems.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Greedy Patterns" 
+        description="Standard templates for solving greedy problems."
+        icon={Layers} 
+        color="violet" 
+      />
 
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {patterns.map((pattern, i) => (

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Grid, 
@@ -206,15 +207,12 @@ for curr != nil && curr.Next != nil {
 
   return (
     <PerspectiveCard color="purple">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
-          <Grid size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Interview Patterns</h2>
-          <p className="text-slate-400 font-medium">8 essential techniques to solve 95% of problems.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Interview Patterns" 
+        description="8 essential techniques to solve 95% of problems."
+        icon={Grid} 
+        color="purple" 
+      />
 
       {/* Grid of Patterns */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">

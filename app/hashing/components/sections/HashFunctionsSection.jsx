@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Settings, 
@@ -149,17 +150,13 @@ func multiplicationHash(key int, tableSize int) int {
 
   return (
     <PerspectiveCard color="purple">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
-          <Settings size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Hash Functions</h2>
-          <p className="text-slate-400 font-medium">The magic that converts keys into indexes.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Hash Functions" 
+        description="The magic that converts keys into indexes."
+        icon={Settings} 
+        color="purple" 
+      />
 
-      {/* Properties of Good Hash Functions */}
       <div className="mb-12">
         <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
           <ShieldCheck size={24} className="text-purple-400" /> Good Hash Function Properties

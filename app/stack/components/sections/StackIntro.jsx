@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   Layers, 
   CheckCircle2, 
@@ -58,12 +59,11 @@ export default function StackIntro() {
 
   return (
     <PerspectiveCard color="purple">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/20">
-          <Layers size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">What is a Stack?</h2>
-      </div>
+      <SectionHeader 
+        title="What is a Stack?" 
+        icon={Layers} 
+        color="purple" 
+      />
 
       <div className="space-y-12">
         <p className="text-xl text-slate-400 font-medium leading-relaxed">

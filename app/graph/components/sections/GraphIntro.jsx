@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   Network, 
   Share2, 
@@ -39,15 +40,12 @@ export default function GraphIntro() {
 
   return (
     <PerspectiveCard color="cyan">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
-          <Network size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Introduction</h2>
-          <p className="text-slate-400 font-medium">The universal language of relationships.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Introduction" 
+        description="The universal language of relationships."
+        icon={Network} 
+        color="cyan" 
+      />
 
       <div className="space-y-12">
         <p className="text-xl text-slate-400 font-medium leading-relaxed">

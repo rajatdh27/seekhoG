@@ -1,5 +1,6 @@
 "use client";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Settings, Zap, ArrowUp, ArrowDown, Trash2, PlusCircle } from "lucide-react";
 
 export default function HeapOperations() {
@@ -32,12 +33,11 @@ export default function HeapOperations() {
 
   return (
     <PerspectiveCard color="rose">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
-          <Settings size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Core Operations</h2>
-      </div>
+      <SectionHeader 
+        title="Core Operations" 
+        icon={Settings} 
+        color="rose" 
+      />
 
       <div className="space-y-12">
         <div className="grid lg:grid-cols-2 gap-8">

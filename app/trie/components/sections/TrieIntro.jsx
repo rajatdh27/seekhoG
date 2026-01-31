@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   Library, 
   Search, 
@@ -105,15 +106,12 @@ export default function TrieIntro() {
 
   return (
     <PerspectiveCard color="orange">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20">
-          <Library size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">What is a Trie?</h2>
-          <p className="text-slate-400 font-medium">The ultimate data structure for string operations.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="What is a Trie?" 
+        description="The ultimate data structure for string operations."
+        icon={Library} 
+        color="orange" 
+      />
 
       <div className="space-y-12">
         {/* Definition & Concept */}

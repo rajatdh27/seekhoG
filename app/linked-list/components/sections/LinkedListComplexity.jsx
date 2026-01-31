@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { ComplexityAnalysis } from "@/app/components/common/algorithm";
 import { Zap, Clock, MousePointer2, Trash2, List, Share2, ArrowRightLeft, Repeat, Lightbulb, AlertTriangle, BarChart3, CheckCircle2 } from "lucide-react";
 
@@ -66,15 +67,12 @@ export default function LinkedListComplexity() {
 
   return (
     <PerspectiveCard color="amber">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 border border-amber-500/20 shadow-lg shadow-amber-500/10">
-          <Zap size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Complexity Analysis</h2>
-          <p className="text-slate-400 font-medium">Efficiency patterns across all list variations.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Complexity Analysis" 
+        description="Efficiency patterns across all list variations."
+        icon={Zap} 
+        color="amber" 
+      />
 
       <div className="space-y-12">
         {/* Type Selector */}

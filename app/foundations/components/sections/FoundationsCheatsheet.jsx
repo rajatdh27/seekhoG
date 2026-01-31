@@ -2,18 +2,18 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { ListChecks, ArrowRight, BookOpen, Calculator, Clock, Zap } from "lucide-react";
 import Link from "next/link";
 
 export default function FoundationsCheatsheet() {
   return (
     <PerspectiveCard color="indigo">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
-          <ListChecks size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Foundations Cheatsheet</h2>
-      </div>
+      <SectionHeader 
+        title="Foundations Cheatsheet" 
+        icon={ListChecks} 
+        color="indigo" 
+      />
 
       <div className="grid md:grid-cols-2 gap-6 mb-12">
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">

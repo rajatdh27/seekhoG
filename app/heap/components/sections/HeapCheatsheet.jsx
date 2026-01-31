@@ -1,16 +1,16 @@
 "use client";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { FileText, Zap, Terminal } from "lucide-react";
 
 export default function HeapCheatsheet() {
   return (
     <PerspectiveCard color="rose">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
-          <FileText size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Heap Cheatsheet</h2>
-      </div>
+      <SectionHeader 
+        title="Heap Cheatsheet" 
+        icon={FileText} 
+        color="rose" 
+      />
 
       <div className="grid md:grid-cols-2 gap-6 mb-12">
         {/* Basic Operations */}

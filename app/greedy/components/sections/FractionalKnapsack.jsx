@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   ShoppingBag, 
@@ -206,15 +207,12 @@ func fractionalKnapsack(weights, values []int, capacity int) float64 {
 
   return (
     <PerspectiveCard color="purple">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
-          <ShoppingBag size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Fractional Knapsack</h2>
-          <p className="text-slate-400 font-medium">Maximize value by taking fractions of items.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Fractional Knapsack" 
+        description="Maximize value by taking fractions of items."
+        icon={ShoppingBag} 
+        color="purple" 
+      />
 
       <div className="space-y-12">
         {/* Concept */}

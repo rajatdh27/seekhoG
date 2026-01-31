@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { Code2 } from "lucide-react";
 
@@ -106,15 +107,12 @@ fmt.Println(len(arr))`,
 
   return (
     <PerspectiveCard color="cyan">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
-          <Code2 size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Syntax Guide</h2>
-          <p className="text-slate-400 font-medium">Common operations across different languages.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Syntax Guide" 
+        description="Common operations across different languages."
+        icon={Code2} 
+        color="cyan" 
+      />
 
       <CodeImplementation 
         languages={languages} 

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Code2, Terminal, Zap } from "lucide-react";
 
 export default function HeapImplementation() {
@@ -282,12 +283,11 @@ func (h *MaxHeap) heapifyDown(i int) {
 
   return (
     <PerspectiveCard color="rose">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
-          <Code2 size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Heap Implementation</h2>
-      </div>
+      <SectionHeader 
+        title="Heap Implementation" 
+        icon={Code2} 
+        color="rose" 
+      />
 
       <div className="space-y-12">
         {/* Controls */}

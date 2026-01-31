@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Gem, 
@@ -126,15 +127,12 @@ func greedyAlgorithm(items []Item) []Item {
 
   return (
     <PerspectiveCard color="violet">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 border border-violet-500/20">
-          <Gem size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Introduction</h2>
-          <p className="text-slate-400 font-medium">Make the best choice right now.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Introduction" 
+        description="Make the best choice right now."
+        icon={Gem} 
+        color="violet" 
+      />
 
       <div className="space-y-12">
         <div className="bg-slate-900/50 border border-white/5 rounded-[2.5rem] p-8">

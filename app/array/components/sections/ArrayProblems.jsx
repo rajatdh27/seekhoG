@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Trophy, Code2, CheckCircle2, ChevronDown, ChevronUp, Star } from "lucide-react";
 
 export default function ArrayProblems() {
@@ -39,15 +40,13 @@ export default function ArrayProblems() {
   return (
     <PerspectiveCard color="orange">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20 shadow-lg shadow-orange-500/10">
-            <Trophy size={28} />
-          </div>
-          <div>
-            <h2 className="text-4xl font-black text-white tracking-tight">Must-Know Problems</h2>
-            <p className="text-slate-400 font-medium">118+ curated problems to build intuition.</p>
-          </div>
-        </div>
+        <SectionHeader 
+          title="Must-Know Problems" 
+          description="118+ curated problems to build intuition."
+          icon={Trophy} 
+          color="orange" 
+          className="mb-0"
+        />
 
         <div className="flex bg-slate-950 p-1 rounded-xl border border-white/5 h-fit">
           {["all", "easy", "medium", "hard"].map(d => (

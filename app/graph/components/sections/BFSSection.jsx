@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Workflow, 
@@ -144,15 +145,12 @@ func bfs(graph map[int][]int, start int) {
 
   return (
     <PerspectiveCard color="cyan">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
-          <Workflow size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Breadth First Search</h2>
-          <p className="text-slate-400 font-medium">Explore level by level.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Breadth First Search" 
+        description="Explore level by level."
+        icon={Workflow} 
+        color="cyan" 
+      />
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
         {/* Concept Card */}

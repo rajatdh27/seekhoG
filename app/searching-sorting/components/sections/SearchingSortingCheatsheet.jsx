@@ -2,20 +2,18 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { FileText, Search, BarChart3, HelpCircle, Zap, BookOpen } from "lucide-react";
 
 export default function SearchingSortingCheatsheet() {
   return (
     <PerspectiveCard color="orange">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
-          <FileText size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Algorithm Cheatsheet</h2>
-          <p className="text-slate-400 font-medium">Quick reference for complexity and use cases.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Algorithm Cheatsheet" 
+        description="Quick reference for complexity and use cases."
+        icon={FileText} 
+        color="indigo" 
+      />
 
       {/* ... keeping existing content tables ... */}
       <div className="mb-12">

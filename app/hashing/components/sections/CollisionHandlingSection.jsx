@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Unlock, 
@@ -321,15 +322,12 @@ func (h *HashTableLinearProbing) Insert(key string, value int) {
 
   return (
     <PerspectiveCard color="rose">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
-          <Unlock size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Collision Handling</h2>
-          <p className="text-slate-400 font-medium">Strategies to resolve hash conflicts.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Collision Handling" 
+        description="Strategies to resolve hash conflicts."
+        icon={Unlock} 
+        color="rose" 
+      />
 
       {/* What is a Collision? */}
       <div className="mb-12 p-8 bg-rose-950/20 border border-rose-500/20 rounded-[2rem] relative overflow-hidden">

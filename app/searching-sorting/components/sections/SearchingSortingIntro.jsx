@@ -2,17 +2,17 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Search, ArrowUpDown, Zap, CheckCircle2, Layout, GitMerge, MousePointerClick } from "lucide-react";
 
 export default function SearchingSortingIntro() {
   return (
     <PerspectiveCard color="orange">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20">
-          <Search size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Searching & Sorting</h2>
-      </div>
+      <SectionHeader 
+        title="Searching & Sorting" 
+        icon={Search} 
+        color="orange" 
+      />
 
       <div className="space-y-10">
         <p className="text-xl text-slate-400 font-medium leading-relaxed">

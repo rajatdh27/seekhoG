@@ -1,6 +1,7 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Database, CheckCircle2, Layout, Zap, Target, HelpCircle, Box, Layers, Grid3X3, Infinity, RotateCcw, SortAsc } from "lucide-react";
 
 export default function ArrayIntro() {
@@ -17,12 +18,11 @@ export default function ArrayIntro() {
 
   return (
     <PerspectiveCard color="blue">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20">
-          <Database size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">What is an Array?</h2>
-      </div>
+      <SectionHeader 
+        title="What is an Array?" 
+        icon={Database} 
+        color="blue" 
+      />
 
       <div className="space-y-12">
         <p className="text-xl text-slate-400 font-medium leading-relaxed">

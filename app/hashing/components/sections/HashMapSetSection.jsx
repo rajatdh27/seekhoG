@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { Layers, Database, Globe, Search, ArrowRightLeft, CheckCircle2 } from "lucide-react";
 
@@ -230,15 +231,12 @@ fmt.Println(len(set))`
 
   return (
     <PerspectiveCard color="blue">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20">
-          <Layers size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">HashMap & HashSet</h2>
-          <p className="text-slate-400 font-medium">Standard library implementations.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="HashMap & HashSet" 
+        description="Standard library implementations."
+        icon={Layers} 
+        color="blue" 
+      />
 
       {/* Comparison Table */}
       <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50 mb-12">

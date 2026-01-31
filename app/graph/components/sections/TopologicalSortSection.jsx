@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   ListOrdered, 
@@ -258,15 +259,12 @@ func kahnSort(V int, graph map[int][]int) []int {
 
   return (
     <PerspectiveCard color="violet">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 border border-violet-500/20">
-          <ListOrdered size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Topological Sort</h2>
-          <p className="text-slate-400 font-medium">Linear ordering of dependencies.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Topological Sort" 
+        description="Linear ordering of dependencies."
+        icon={ListOrdered} 
+        color="violet" 
+      />
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
         {/* DFS Card */}

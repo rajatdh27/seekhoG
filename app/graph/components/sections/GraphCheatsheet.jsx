@@ -1,20 +1,18 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { FileText, Zap, HelpCircle, CheckCircle2 } from "lucide-react";
 
 export default function GraphCheatsheet() {
   return (
     <PerspectiveCard color="cyan">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
-          <FileText size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Cheatsheet</h2>
-          <p className="text-slate-400 font-medium">Quick reference for algorithms and complexity.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Cheatsheet" 
+        description="Quick reference for algorithms and complexity."
+        icon={FileText} 
+        color="cyan" 
+      />
 
       {/* Time & Space Complexity */}
       <div className="mb-12">

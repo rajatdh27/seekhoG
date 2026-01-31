@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   Layout, 
   Globe, 
@@ -190,15 +191,13 @@ export default function LinkedListApplications() {
 
   return (
     <PerspectiveCard color="blue">
-      <div className="flex items-center gap-4 mb-10">
-        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/20 shadow-lg">
-          <Layout size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Real-World Usage</h2>
-          <p className="text-slate-400 font-medium">Where dynamic pointer structures power modern software.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Real-World Usage" 
+        description="Where dynamic pointer structures power modern software."
+        icon={Layout} 
+        color="blue" 
+        className="mb-10"
+      />
 
       <div className="grid lg:grid-cols-12 gap-8">
         {/* Navigation Sidebar */}

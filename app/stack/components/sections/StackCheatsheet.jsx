@@ -2,16 +2,20 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { FileText, Plus, Minus, Check, X, RefreshCcwDot, Lightbulb, TrendingUp, Code2, HelpCircle } from "lucide-react";
 
 export default function StackCheatsheet() {
   return (
     <PerspectiveCard color="purple">
-       <div className="mb-10 text-center">
-        <h3 className="text-sm font-black text-purple-400 uppercase tracking-widest mb-3">Quick Reference</h3>
-        <p className="text-3xl md:text-4xl font-black text-white">Stack Cheatsheet</p>
-      </div>
+      <SectionHeader 
+        title="Stack Cheatsheet" 
+        description="Quick Reference"
+        icon={FileText} 
+        color="purple" 
+        className="mb-10"
+      />
       
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <CheatCard

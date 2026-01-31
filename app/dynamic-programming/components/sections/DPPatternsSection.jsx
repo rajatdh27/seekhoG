@@ -1,6 +1,7 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   Layers, 
   Repeat, 
@@ -72,15 +73,12 @@ export default function DPPatternsSection() {
 
   return (
     <PerspectiveCard color="emerald">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-          <Layers size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Common Patterns</h2>
-          <p className="text-slate-400 font-medium">Recognize these structures to solve 90% of DP problems.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Common Patterns" 
+        description="Recognize these structures to solve 90% of DP problems."
+        icon={Layers} 
+        color="emerald" 
+      />
 
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {patterns.map((pattern, i) => (

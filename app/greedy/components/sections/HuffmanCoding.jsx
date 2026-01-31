@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   TreeDeciduous, 
@@ -251,15 +252,12 @@ func generateCodes(node *Node, code string, codes map[rune]string) {
 
   return (
     <PerspectiveCard color="violet">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 border border-violet-500/20">
-          <TreeDeciduous size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Huffman Coding</h2>
-          <p className="text-slate-400 font-medium">Lossless data compression using greedy trees.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Huffman Coding" 
+        description="Lossless data compression using greedy trees."
+        icon={TreeDeciduous} 
+        color="violet" 
+      />
 
       <div className="space-y-12">
         {/* Concept */}

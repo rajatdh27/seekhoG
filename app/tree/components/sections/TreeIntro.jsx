@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   GitMerge,
   CheckCircle2, 
@@ -35,12 +36,11 @@ export default function TreeIntro() {
 
   return (
     <PerspectiveCard color="teal">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-teal-500/10 rounded-2xl flex items-center justify-center text-teal-400 border border-teal-500/20">
-          <GitMerge size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">What is a Tree?</h2>
-      </div>
+      <SectionHeader 
+        title="What is a Tree?" 
+        icon={GitMerge} 
+        color="teal" 
+      />
 
       <div className="space-y-12">
         <p className="text-xl text-slate-400 font-medium leading-relaxed">

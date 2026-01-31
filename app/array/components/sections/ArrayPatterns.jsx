@@ -1,6 +1,7 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Grid, ArrowRightLeft, Maximize2, Hash, Zap, Search, Layers, Briefcase, RefreshCw, ChevronRight } from "lucide-react";
 
 export default function ArrayPatterns() {
@@ -90,15 +91,12 @@ export default function ArrayPatterns() {
 
   return (
     <PerspectiveCard color="purple">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
-          <Grid size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Interview Patterns</h2>
-          <p className="text-slate-400 font-medium">9 essential techniques to solve 90% of array problems.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Interview Patterns" 
+        description="9 essential techniques to solve 90% of array problems."
+        icon={Grid} 
+        color="purple" 
+      />
 
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {patterns.map((pattern, i) => (

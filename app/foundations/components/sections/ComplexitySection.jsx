@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Clock, Zap, Cpu, Code2, AlertTriangle, CheckCircle2, TrendingUp } from "lucide-react";
 
 export default function ComplexitySection() {
@@ -345,12 +346,11 @@ func bubbleSort(arr []int) {
 
   return (
     <PerspectiveCard color="amber" className="overflow-hidden">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center text-yellow-500 border border-yellow-500/20">
-          <TrendingUp size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Time & Space Complexity</h2>
-      </div>
+      <SectionHeader 
+        title="Time & Space Complexity" 
+        icon={TrendingUp} 
+        color="amber" 
+      />
 
       <p className="text-xl text-slate-400 font-medium leading-relaxed mb-10">
         Complexity analysis helps us understand how an algorithm&apos;s performance changes as input size grows. It is the language of algorithm efficiency.

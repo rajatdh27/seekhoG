@@ -2,17 +2,17 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { ShieldAlert, ShieldCheck, Shield, ChevronRight, CheckCircle2 } from "lucide-react";
 
 export default function BigONotation() {
   return (
     <PerspectiveCard color="purple">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
-          <Shield size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Complexity Bounds</h2>
-      </div>
+      <SectionHeader 
+        title="Complexity Bounds" 
+        icon={Shield} 
+        color="purple" 
+      />
       
       <p className="text-xl text-slate-400 font-medium leading-relaxed mb-10">
         Mathematical notations to describe algorithm complexity boundaries. Understanding these is crucial for precise communication between engineers.

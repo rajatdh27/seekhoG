@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   TreePine, 
@@ -313,15 +314,12 @@ func prims(n int, adj map[int][]Edge) int {
 
   return (
     <PerspectiveCard color="emerald">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-          <TreePine size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Minimum Spanning Tree</h2>
-          <p className="text-slate-400 font-medium">Connect all nodes with minimal cost.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Minimum Spanning Tree" 
+        description="Connect all nodes with minimal cost."
+        icon={TreePine} 
+        color="emerald" 
+      />
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
         {/* Kruskal's Card */}

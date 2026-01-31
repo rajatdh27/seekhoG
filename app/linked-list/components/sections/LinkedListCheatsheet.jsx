@@ -1,6 +1,7 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   FileText, 
   Zap, 
@@ -39,15 +40,13 @@ export default function LinkedListCheatsheet() {
 
   return (
     <PerspectiveCard color="emerald">
-      <div className="flex items-center gap-4 mb-10">
-        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20 shadow-lg">
-          <FileText size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Quick Reference</h2>
-          <p className="text-slate-400 font-medium">Core pointer mechanics and complexity shortcuts.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Quick Reference" 
+        description="Core pointer mechanics and complexity shortcuts."
+        icon={FileText} 
+        color="emerald" 
+        className="mb-10"
+      />
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
         <div className="bg-slate-950 border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group">

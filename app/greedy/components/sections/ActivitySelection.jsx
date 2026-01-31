@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   CalendarClock, 
@@ -174,15 +175,12 @@ func activitySelection(start, finish []int) []int {
 
   return (
     <PerspectiveCard color="violet">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 border border-violet-500/20">
-          <CalendarClock size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Activity Selection</h2>
-          <p className="text-slate-400 font-medium">Maximize the number of non-overlapping activities.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Activity Selection" 
+        description="Maximize the number of non-overlapping activities."
+        icon={CalendarClock} 
+        color="violet" 
+      />
 
       <div className="space-y-12">
         {/* Concept */}

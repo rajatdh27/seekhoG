@@ -1,21 +1,19 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { ComplexityAnalysis } from "@/app/components/common/algorithm";
 import { Zap } from "lucide-react";
 
 export default function ArrayComplexity() {
   return (
     <PerspectiveCard color="amber">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 border border-amber-500/20">
-          <Zap size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Complexity Analysis</h2>
-          <p className="text-slate-400 font-medium">Performance characteristics of common array operations.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Complexity Analysis" 
+        description="Performance characteristics of common array operations."
+        icon={Zap} 
+        color="amber" 
+      />
 
       <div className="space-y-8">
         <ComplexityAnalysis 

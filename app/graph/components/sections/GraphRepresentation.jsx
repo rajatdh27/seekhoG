@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Share2, 
@@ -151,15 +152,12 @@ matrix := [][]int{
 
   return (
     <PerspectiveCard color="cyan">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
-          <Share2 size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Graph Representation</h2>
-          <p className="text-slate-400 font-medium">How to store graphs in memory.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Graph Representation" 
+        description="How to store graphs in memory."
+        icon={Share2} 
+        color="cyan" 
+      />
 
       <div className="grid md:grid-cols-2 gap-8 mb-12">
         {/* Adjacency List */}

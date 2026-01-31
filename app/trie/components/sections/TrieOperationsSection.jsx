@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   GitBranch, 
@@ -184,15 +185,12 @@ func (t *Trie) StartsWith(prefix string) bool {
 
   return (
     <PerspectiveCard color="orange">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/20">
-          <GitBranch size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Core Operations</h2>
-          <p className="text-slate-400 font-medium">The building blocks of Trie interaction.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Core Operations" 
+        description="The building blocks of Trie interaction."
+        icon={GitBranch} 
+        color="orange" 
+      />
 
       <div className="space-y-12">
         {/* Operations Grid */}

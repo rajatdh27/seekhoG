@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   Puzzle, 
   Zap, 
@@ -51,15 +52,12 @@ export default function DPIntro() {
 
   return (
     <PerspectiveCard color="pink">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-pink-500/10 rounded-2xl flex items-center justify-center text-pink-500 border border-pink-500/20">
-          <Puzzle size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Introduction</h2>
-          <p className="text-slate-400 font-medium">Optimize recursive solutions by remembering the past.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Introduction" 
+        description="Optimize recursive solutions by remembering the past."
+        icon={Puzzle} 
+        color="pink" 
+      />
 
       <div className="space-y-12">
         <p className="text-xl text-slate-400 font-medium leading-relaxed">

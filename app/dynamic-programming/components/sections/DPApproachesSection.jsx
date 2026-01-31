@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   ArrowDownUp, 
@@ -171,15 +172,12 @@ func fib(n int) int {
 
   return (
     <PerspectiveCard color="purple">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/20">
-          <ArrowDownUp size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Memoization vs Tabulation</h2>
-          <p className="text-slate-400 font-medium">Top-down vs Bottom-up: Two ways to conquer complexity.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Memoization vs Tabulation" 
+        description="Top-down vs Bottom-up: Two ways to conquer complexity."
+        icon={ArrowDownUp} 
+        color="purple" 
+      />
 
       {/* Memoization */}
       <div className="mb-12">

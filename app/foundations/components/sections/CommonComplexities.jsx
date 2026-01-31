@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { BarChart3, TrendingUp, TrendingDown, Layers, Zap, CheckCircle2 } from "lucide-react";
 
 export default function CommonComplexities() {
@@ -16,12 +17,11 @@ export default function CommonComplexities() {
 
   return (
     <PerspectiveCard color="blue">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-          <BarChart3 size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Complexity Atlas</h2>
-      </div>
+      <SectionHeader 
+        title="Complexity Atlas" 
+        icon={BarChart3} 
+        color="emerald" 
+      />
 
       <p className="text-xl text-slate-400 font-medium leading-relaxed mb-12">
         A map of the most frequent time complexities you will encounter in real-world engineering and competitive coding.

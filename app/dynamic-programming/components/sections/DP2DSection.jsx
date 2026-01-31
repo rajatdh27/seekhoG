@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Grid, 
@@ -280,15 +281,12 @@ func knapsack(weights, values []int, capacity int) int {
 
   return (
     <PerspectiveCard color="cyan">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-500 border border-cyan-500/20">
-          <Grid size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">2D DP Problems</h2>
-          <p className="text-slate-400 font-medium">Matrix problems and multi-variable states.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="2D DP Problems" 
+        description="Matrix problems and multi-variable states."
+        icon={Grid} 
+        color="cyan" 
+      />
 
       {/* Intro to 2D DP */}
       <div className="mb-12 p-8 bg-slate-900/50 border border-white/5 rounded-[2rem]">

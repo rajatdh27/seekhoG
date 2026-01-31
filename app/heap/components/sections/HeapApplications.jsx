@@ -1,5 +1,6 @@
 "use client";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { Grid, Star, Navigation, BarChart3, Cpu, Server, Activity } from "lucide-react";
 
 export default function HeapApplications() {
@@ -44,12 +45,11 @@ export default function HeapApplications() {
 
   return (
     <PerspectiveCard color="rose">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
-          <Grid size={28} />
-        </div>
-        <h2 className="text-4xl font-black text-white tracking-tight">Real-World Applications</h2>
-      </div>
+      <SectionHeader 
+        title="Real-World Applications" 
+        icon={Grid} 
+        color="rose" 
+      />
 
       <div className="space-y-8">
         <p className="text-xl text-slate-400 font-medium leading-relaxed">

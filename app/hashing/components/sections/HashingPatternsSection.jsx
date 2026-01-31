@@ -1,6 +1,7 @@
 "use client";
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import { 
   Grid, 
   Hash, 
@@ -73,15 +74,12 @@ export default function HashingPatternsSection() {
 
   return (
     <PerspectiveCard color="emerald">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-          <Grid size={28} />
-        </div>
-        <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Interview Patterns</h2>
-          <p className="text-slate-400 font-medium">Common strategies to solve hashing problems.</p>
-        </div>
-      </div>
+      <SectionHeader 
+        title="Interview Patterns" 
+        description="Common strategies to solve hashing problems."
+        icon={Grid} 
+        color="emerald" 
+      />
 
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {patterns.map((pattern, i) => (
