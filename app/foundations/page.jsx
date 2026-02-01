@@ -192,9 +192,9 @@ export default function FoundationsPage() {
             {/* Next Section Pointer */}
             <NextModuleCard 
               title="Foundations Mastered"
-              description="You've built a solid base. Now it's time to dive into the most fundamental data structure: Arrays."
-              nextModuleText="Start Arrays"
-              nextModuleLink="/array"
+              description="You've built a solid base. Now it's time to learn how to organize and retrieve data efficiently."
+              nextModuleText="Start Searching & Sorting"
+              nextModuleLink="/searching-sorting"
               color="emerald"
             />
           </main>

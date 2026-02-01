@@ -212,9 +212,9 @@ export default function SearchingSortingPage() {
             {/* Next Section Pointer */}
             <NextModuleCard 
               title="Searching & Sorting Mastered"
-              description="You've mastered the core algorithms! Now let's explore hierarchical data with Trees."
-              nextModuleText="Start Trees"
-              nextModuleLink="/tree"
+              description="You've mastered the core algorithms! Now let's explore the most fundamental data structure: Arrays."
+              nextModuleText="Start Arrays"
+              nextModuleLink="/array"
               color="orange"
             />
           </main>

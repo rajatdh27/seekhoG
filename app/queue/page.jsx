@@ -199,9 +199,9 @@ export default function QueuePage() {
             {/* Next Section Pointer */}
             <NextModuleCard 
               title="Queue Mastered"
-              description="You've mastered FIFO! Now let's explore fundamental algorithms for Searching & Sorting."
-              nextModuleText="Start Searching & Sorting"
-              nextModuleLink="/searching-sorting"
+              description="You've mastered FIFO! Now let's explore hierarchical data structures and branching logic with Trees."
+              nextModuleText="Start Trees"
+              nextModuleLink="/tree"
               color="green"
             />
           </main>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import { ArrowRightLeft, GitMerge, Binary, GitBranch, Settings } from "lucide-react";
+import { ArrowRightLeft, GitMerge, Binary, GitBranch, Settings, Share2 } from "lucide-react";
 
 const languages = [
   { id: "c", name: "C" },

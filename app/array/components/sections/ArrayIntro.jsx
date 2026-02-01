@@ -3,7 +3,7 @@
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
 import ConceptGrid from "@/app/components/common/ConceptGrid";
-import { Database, CheckCircle2, Layout, Zap, Target, HelpCircle, Box, Layers, Grid3X3, Infinity, RotateCcw, SortAsc } from "lucide-react";
+import { Database, CheckCircle2, Layout, Zap, Target, HelpCircle, Box, Layers, Grid3X3, Infinity, RotateCcw, SortAsc, Building2, TrainFront, LayoutGrid, Globe } from "lucide-react";
 
 export default function ArrayIntro() {
   const characteristics = [
@@ -25,9 +25,9 @@ export default function ArrayIntro() {
   ];
 
   const realWorldAnalogies = [
-    { title: "Apartment Building", description: "Each apartment has a unique number (index).", icon: () => <span className="text-2xl">🏘️</span>, color: "blue" },
-    { title: "Train Compartments", description: "Sequential and connected in a line.", icon: () => <span className="text-2xl">🚂</span>, color: "blue" },
-    { title: "Egg Carton", description: "Fixed number of slots for items.", icon: () => <span className="text-2xl">🥚</span>, color: "blue" }
+    { title: "Apartment Building", description: "Each apartment has a unique number (index).", icon: Building2, color: "indigo" },
+    { title: "Train Compartments", description: "Sequential and connected in a line.", icon: TrainFront, color: "blue" },
+    { title: "Egg Carton", description: "Fixed number of slots for items.", icon: LayoutGrid, color: "cyan" }
   ];
 
   return (
@@ -43,20 +43,18 @@ export default function ArrayIntro() {
           An <strong className="text-white">Array</strong> is a fundamental data structure that stores a fixed-size collection of elements of the same type in <strong className="text-blue-400">contiguous memory locations</strong>. Each element can be accessed directly using an index.
         </p>
 
-        {/* Analogy & Core Grid */}
-        <div className="grid lg:grid-cols-3 gap-6">
-          <ConceptGrid 
-            items={characteristics} 
-            columns={2} 
-            className="lg:col-span-2"
-          />
+        {/* Characteristics */}
+        <ConceptGrid 
+          items={characteristics} 
+          columns={2} 
+        />
           
-          <div className="bg-gradient-to-br from-indigo-600/20 to-blue-600/20 border border-blue-500/30 rounded-[2.5rem] p-8">
-            <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2">
-              <HelpCircle size={20} className="text-blue-400" /> Real-World
+        {/* Real-World Analogies */}
+        <div className="bg-gradient-to-br from-indigo-900/50 to-blue-900/50 border border-blue-500/30 rounded-[2.5rem] p-8">
+            <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+              <Globe size={24} className="text-blue-400" /> Real-World Analogies
             </h3>
-            <ConceptGrid items={realWorldAnalogies} columns={1} variant="horizontal" />
-          </div>
+            <ConceptGrid items={realWorldAnalogies} columns={3} />
         </div>
 
         {/* Types of Arrays */}
