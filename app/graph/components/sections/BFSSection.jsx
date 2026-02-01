@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Workflow, 
@@ -143,6 +144,31 @@ func bfs(graph map[int][]int, start int) {
 }`
   };
 
+  const strategy = [
+    {
+      title: "The Strategy",
+      description: "Explore neighbors level by level, like ripples in a pond. Visit all immediate neighbors before moving to the next level.",
+      icon: Layers,
+      color: "cyan",
+      footer: (
+        <div className="grid grid-cols-3 gap-2 font-mono text-[9px] text-slate-300">
+          <div className="bg-slate-950 p-2 rounded border border-white/5 flex flex-col items-center">
+            <span className="text-slate-500 uppercase">Queue</span>
+            <span className="text-cyan-400 font-bold uppercase">FIFO</span>
+          </div>
+          <div className="bg-slate-950 p-2 rounded border border-white/5 flex flex-col items-center text-center">
+            <span className="text-slate-500 uppercase">Time</span>
+            <span className="text-emerald-400 font-bold">O(V+E)</span>
+          </div>
+          <div className="bg-slate-950 p-2 rounded border border-white/5 flex flex-col items-center text-center">
+            <span className="text-slate-500 uppercase">Space</span>
+            <span className="text-emerald-400 font-bold">O(V)</span>
+          </div>
+        </div>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="cyan">
       <SectionHeader 
@@ -153,29 +179,7 @@ func bfs(graph map[int][]int, start int) {
       />
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* Concept Card */}
-        <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] p-8 flex flex-col justify-center">
-          <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-            <Layers size={24} className="text-cyan-400" /> The Strategy
-          </h3>
-          <p className="text-slate-400 text-sm leading-relaxed mb-6">
-            BFS explores neighbors level by level, like ripples in a pond. It visits all immediate neighbors before moving to the next level. Useful for finding the shortest path in unweighted graphs.
-          </p>
-          <div className="bg-slate-950 p-4 rounded-xl border border-white/5 font-mono text-xs text-slate-300 space-y-2">
-            <div className="flex justify-between">
-              <span>Data Structure:</span>
-              <span className="text-cyan-400 font-bold">Queue (FIFO)</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Time Complexity:</span>
-              <span className="text-emerald-400 font-bold">O(V + E)</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Space Complexity:</span>
-              <span className="text-emerald-400 font-bold">O(V)</span>
-            </div>
-          </div>
-        </div>
+        <ConceptGrid items={strategy} columns={1} variant="horizontal" />
 
         {/* Animation */}
         <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] p-8 relative overflow-hidden flex flex-col items-center">

@@ -2,9 +2,19 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
-import { FileText, Zap, HelpCircle, CheckCircle2 } from "lucide-react";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
+import { FileText, Zap, HelpCircle, CheckCircle2, Search, Type, Globe, ListOrdered, Box, Hash } from "lucide-react";
 
 export default function TrieCheatsheet() {
+  const trieUseCases = [
+    { title: "Autocomplete?", description: "Yes - Fast prefix lookup.", icon: Search, color: "emerald" },
+    { title: "Spell Checker?", description: "Yes - Dictionary validation.", icon: Type, color: "blue" },
+    { title: "IP Routing?", description: "Yes - Longest prefix match.", icon: Globe, color: "purple" },
+    { title: "Sort Strings?", description: "Yes - DFS gives sorted order.", icon: ListOrdered, color: "pink" },
+    { title: "Small Alphabet?", description: "Yes - Array[26] is fast.", icon: Box, color: "amber" },
+    { title: "Large Alphabet?", description: "Maybe - Use HashMap node.", icon: Hash, color: "cyan" }
+  ];
+
   return (
     <PerspectiveCard color="orange">
       <SectionHeader 
@@ -53,21 +63,7 @@ export default function TrieCheatsheet() {
         <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
           <HelpCircle size={24} className="text-blue-400" /> When to Use?
         </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          {[
-            { q: "Autocomplete?", a: "Yes - Fast prefix lookup", color: "emerald" },
-            { q: "Spell Checker?", a: "Yes - Dictionary validation", color: "blue" },
-            { q: "IP Routing?", a: "Yes - Longest prefix match", color: "purple" },
-            { q: "Sort Strings?", a: "Yes - DFS gives sorted order", color: "pink" },
-            { q: "Small Alphabet?", a: "Yes - Array[26] is fast", color: "amber" },
-            { q: "Large Alphabet?", a: "Maybe - Use HashMap node", color: "cyan" }
-          ].map((item, i) => (
-            <div key={i} className={`bg-${item.color}-500/5 border border-${item.color}-500/20 p-4 rounded-xl flex flex-col`}>
-               <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{item.q}</span>
-               <span className={`text-sm font-bold text-${item.color}-400`}>{item.a}</span>
-            </div>
-          ))}
-        </div>
+        <ConceptGrid items={trieUseCases} columns={2} variant="horizontal" />
       </div>
 
       {/* Comparison: Trie vs HashMap */}

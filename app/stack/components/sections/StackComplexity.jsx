@@ -1,25 +1,44 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Zap, AlertTriangle, Check, X } from "lucide-react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
-
-const complexityData = [
-  { op: "Push", best: "O(1)", avg: "O(1)", worst: "O(1)*", space: "O(1)" },
-  { op: "Pop", best: "O(1)", avg: "O(1)", worst: "O(1)", space: "O(1)" },
-  { op: "Peek/Top", best: "O(1)", avg: "O(1)", worst: "O(1)", space: "O(1)" },
-  { op: "isEmpty", best: "O(1)", avg: "O(1)", worst: "O(1)", space: "O(1)" },
-  { op: "Size", best: "O(1)", avg: "O(1)", worst: "O(1)", space: "O(1)" },
-  { op: "Search", best: "O(1)", avg: "O(n)", worst: "O(n)", space: "O(1)" },
-];
+import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
+import { Zap, AlertTriangle, Check, X, Clock, Database } from "lucide-react";
 
 export default function StackComplexity() {
+  const complexityData = [
+    { op: "Push", best: "O(1)", avg: "O(1)", worst: "O(1)*", space: "O(1)" },
+    { op: "Pop", best: "O(1)", avg: "O(1)", worst: "O(1)", space: "O(1)" },
+    { op: "Peek/Top", best: "O(1)", avg: "O(1)", worst: "O(1)", space: "O(1)" },
+    { op: "isEmpty", best: "O(1)", avg: "O(1)", worst: "O(1)", space: "O(1)" },
+    { op: "Size", best: "O(1)", avg: "O(1)", worst: "O(1)", space: "O(1)" },
+    { op: "Search", best: "O(1)", avg: "O(n)", worst: "O(n)", space: "O(1)" },
+  ];
+
+  const logicCards = [
+    {
+      title: "Why O(1)?",
+      description: "Interactions only occur at the top pointer. No shifting or traversal is needed.",
+      icon: Clock,
+      color: "purple"
+    },
+    {
+      title: "Space: O(n)",
+      description: "Total memory grows with the number of elements. Operations are O(1) auxiliary space.",
+      icon: Database,
+      color: "purple"
+    }
+  ];
+
   return (
     <PerspectiveCard color="purple">
-      <p className="text-xl text-slate-400 font-medium leading-relaxed mb-10">
-        Stack operations are extremely efficient. All core operations run in constant time O(1).
-      </p>
-      
+      <SectionHeader 
+        title="Complexity Analysis" 
+        description="Stack operations are extremely efficient."
+        icon={Zap} 
+        color="purple" 
+      />
+
       <div className="overflow-x-auto mb-12">
         <table className="w-full text-sm text-left border-collapse">
             <thead className="text-[10px] font-black uppercase tracking-widest text-slate-500">
@@ -51,29 +70,12 @@ export default function StackComplexity() {
                 ))}
             </tbody>
         </table>
-        <p className="mt-2 text-center text-xs text-slate-500">*O(n) if dynamic array needs resizing (amortized O(1))</p>
+        <p className="mt-2 text-center text-[10px] font-bold text-slate-500 uppercase tracking-widest">*O(n) if dynamic array needs resizing (amortized O(1))</p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 mb-12">
-        <div className="p-8 bg-slate-900/70 border border-white/5 rounded-[2.5rem]">
-            <h3 className="text-xl font-black text-purple-400 mb-6 flex items-center gap-3">
-                Why O(1)?
-            </h3>
-            <p className="text-sm font-bold text-slate-300 leading-relaxed">
-            Stack operations don't need to shift elements or iterate. They only ever interact with the <strong className="text-white">top</strong> of the stack. A simple pointer or index is updated, which is a single, constant-time operation.
-            </p>
-        </div>
-        <div className="p-8 bg-slate-900/70 border border-white/5 rounded-[2.5rem]">
-            <h3 className="text-xl font-black text-purple-400 mb-6 flex items-center gap-3">
-                Space Complexity: O(n)
-            </h3>
-            <p className="text-sm font-bold text-slate-300 leading-relaxed">
-            The space required is proportional to the number of elements (<strong className="text-white">n</strong>). An array may allocate extra space, and a linked list uses extra space for pointers. All individual operations use O(1) auxiliary space.
-            </p>
-        </div>
-      </div>
+      <ConceptGrid items={logicCards} columns={2} className="mb-12" />
       
-      <div className="mt-12">
+      <div className="mt-12 pt-8 border-t border-white/5">
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <AlertTriangle size={24} className="text-amber-400" /> Performance Tips
           </h3>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   GitBranch, 
@@ -10,11 +11,44 @@ import {
   Search, 
   MousePointer2, 
   Trash2, 
-  ArrowRight
+  ArrowRight,
+  Clock,
+  Layers
 } from "lucide-react";
 
 export default function TrieOperationsSection() {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
+
+  const trieOps = [
+    {
+      title: "Insert",
+      description: "Walk down following characters. Create nodes as needed. Mark end.",
+      icon: Plus,
+      color: "emerald",
+      footer: <div className="text-[10px] font-mono text-slate-500 font-bold uppercase">Time: O(m) | Space: O(m)</div>
+    },
+    {
+      title: "Search",
+      description: "Follow path. Return false if broken. Check end flag if path finished.",
+      icon: Search,
+      color: "blue",
+      footer: <div className="text-[10px] font-mono text-slate-500 font-bold uppercase">Time: O(m) | Space: O(1)</div>
+    },
+    {
+      title: "StartsWith",
+      description: "Identical to Search, but returns true as long as the path exists.",
+      icon: MousePointer2,
+      color: "purple",
+      footer: <div className="text-[10px] font-mono text-slate-500 font-bold uppercase">Time: O(m) | Space: O(1)</div>
+    },
+    {
+      title: "Delete",
+      description: "Recursively remove nodes. Only delete if no other children exist.",
+      icon: Trash2,
+      color: "rose",
+      footer: <div className="text-[10px] font-mono text-slate-500 font-bold uppercase">Time: O(m) | Space: O(m)</div>
+    }
+  ];
 
   const operationsCode = {
     javascript: `class Trie {
@@ -194,64 +228,22 @@ func (t *Trie) StartsWith(prefix string) bool {
 
       <div className="space-y-12">
         {/* Operations Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-[2rem] hover:border-orange-500/30 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400"><Plus size={20} /></div>
-              <h3 className="text-xl font-bold text-white">Insert</h3>
-            </div>
-            <p className="text-slate-400 text-sm mb-4">
-              Walk down the tree following characters. Create new nodes if path doesn't exist. Mark last node as <code className="text-emerald-400">end</code>.
-            </p>
-            <div className="text-xs font-mono text-slate-500">Time: O(m) | Space: O(m)</div>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-[2rem] hover:border-orange-500/30 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-blue-500/10 rounded-lg text-blue-400"><Search size={20} /></div>
-              <h3 className="text-xl font-bold text-white">Search</h3>
-            </div>
-            <p className="text-slate-400 text-sm mb-4">
-              Follow characters. If path breaks, return <code className="text-red-400">false</code>. If path ends, check <code className="text-blue-400">isEndOfWord</code> flag.
-            </p>
-            <div className="text-xs font-mono text-slate-500">Time: O(m) | Space: O(1)</div>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-[2rem] hover:border-orange-500/30 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-purple-500/10 rounded-lg text-purple-400"><MousePointer2 size={20} /></div>
-              <h3 className="text-xl font-bold text-white">StartsWith</h3>
-            </div>
-            <p className="text-slate-400 text-sm mb-4">
-              Identical to Search, but returns <code className="text-purple-400">true</code> as long as the path exists, regardless of the end flag.
-            </p>
-            <div className="text-xs font-mono text-slate-500">Time: O(m) | Space: O(1)</div>
-          </div>
-
-          <div className="p-6 bg-slate-900 border border-white/5 rounded-[2rem] hover:border-orange-500/30 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-red-500/10 rounded-lg text-red-400"><Trash2 size={20} /></div>
-              <h3 className="text-xl font-bold text-white">Delete</h3>
-            </div>
-            <p className="text-slate-400 text-sm mb-4">
-              Recursively remove nodes from bottom-up. Only delete a node if it has no other children.
-            </p>
-            <div className="text-xs font-mono text-slate-500">Time: O(m) | Space: O(m)</div>
-          </div>
-        </div>
+        <ConceptGrid items={trieOps} columns={2} />
 
         {/* Implementation */}
         <div>
-          <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-2">
-            <GitBranch size={24} className="text-orange-400" /> Full Implementation
-          </h3>
+          <SectionHeader 
+            title="Full Implementation" 
+            icon={GitBranch} 
+            color="orange" 
+            className="mb-6"
+          />
           <CodeImplementation 
             languages={operationsCode}
             color="orange"
             initialLanguage={currentLanguage}
           />
         </div>
-
       </div>
     </PerspectiveCard>
   );

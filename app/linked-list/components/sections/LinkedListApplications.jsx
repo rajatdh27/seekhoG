@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import { 
   Layout, 
   Globe, 
@@ -21,6 +22,13 @@ import {
 
 export default function LinkedListApplications() {
   const [activeApp, setActiveApp] = useState(0);
+
+  const industryImpact = [
+    { title: "Dynamic Memory", description: "No need to pre-allocate size. Grow and shrink as needed.", icon: Database, color: "blue" },
+    { title: "Efficient UI", description: "Powers browser history, Undo/Redo, and image galleries.", icon: Layout, color: "emerald" },
+    { title: "System Logic", description: "Core of OS scheduling, memory allocation, and file systems.", icon: Cpu, color: "purple" },
+    { title: "Data Core", description: "Foundation for stacks, queues, and hash table chaining.", icon: Share2, color: "orange" }
+  ];
 
   const apps = [
     {
@@ -290,20 +298,7 @@ export default function LinkedListApplications() {
       {/* Industry Impact Summary */}
       <div className="mt-12 p-8 bg-slate-900 border border-white/5 rounded-[2.5rem]">
         <h3 className="text-2xl font-black text-white mb-8 text-center uppercase tracking-tighter">Why Industry Prefers Linked Lists</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { title: "Dynamic Memory", desc: "No need to pre-allocate size. Grow and shrink as needed.", icon: <Database className="text-blue-400" /> },
-            { title: "Efficient UI", desc: "Powers browser history, Undo/Redo, and image galleries.", icon: <Layout className="text-emerald-400" /> },
-            { title: "System Logic", desc: "Core of OS scheduling, memory allocation, and file systems.", icon: <Cpu className="text-purple-400" /> },
-            { title: "Data Core", desc: "Foundation for stacks, queues, and hash table chaining.", icon: <Share2 className="text-orange-400" /> }
-          ].map((item, i) => (
-            <div key={i} className="text-center space-y-3 p-4">
-              <div className="inline-flex w-12 h-12 rounded-xl bg-white/5 items-center justify-center mb-2">{item.icon}</div>
-              <h4 className="text-xs font-black text-white uppercase tracking-tight">{item.title}</h4>
-              <p className="text-[10px] text-slate-500 font-bold leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
+        <ConceptGrid items={industryImpact} columns={4} />
       </div>
     </PerspectiveCard>
   );

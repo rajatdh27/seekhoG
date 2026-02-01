@@ -3,16 +3,58 @@
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Code2, 
   Box, 
   ListTree, 
-  ArrowRight
+  ArrowRight,
+  Database,
+  Hash
 } from "lucide-react";
 
 export default function TrieImplementationSection() {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
+
+  const structureItems = [
+    {
+      title: "The Node",
+      description: "The basic building block containing links and a completion flag.",
+      icon: Box,
+      color: "orange",
+      footer: (
+        <div className="space-y-2">
+          <div className="flex justify-between items-center bg-slate-950 p-2 rounded border border-white/5">
+            <span className="text-orange-500 font-mono text-[10px]">children</span>
+            <span className="text-slate-500 text-[10px]">Map&lt;Char, Node&gt;</span>
+          </div>
+          <div className="flex justify-between items-center bg-slate-950 p-2 rounded border border-white/5">
+            <span className="text-orange-500 font-mono text-[10px]">isEndOfWord</span>
+            <span className="text-slate-500 text-[10px]">Boolean</span>
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Storage Choice",
+      description: "Trade-off between speed and memory efficiency.",
+      icon: ListTree,
+      color: "amber",
+      footer: (
+        <div className="space-y-3">
+          <div>
+            <h5 className="text-white text-[10px] font-bold uppercase mb-1">Array (26)</h5>
+            <p className="text-slate-500 text-[10px]">Fastest access, sparse waste.</p>
+          </div>
+          <div className="pt-2 border-t border-white/5">
+            <h5 className="text-white text-[10px] font-bold uppercase mb-1">HashMap</h5>
+            <p className="text-slate-500 text-[10px]">Flexible, saves space.</p>
+          </div>
+        </div>
+      )
+    }
+  ];
 
   const fullImplementationCode = {
     javascript: `// Complete Trie Implementation
@@ -228,48 +270,16 @@ func (this *Trie) StartsWith(prefix string) bool {
 
       <div className="space-y-12">
         {/* Structure Breakdown */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-slate-900 border border-white/5 rounded-[2rem] p-8">
-            <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">
-              <Box size={20} className="text-orange-400" /> The Node
-            </h3>
-            <p className="text-slate-400 text-sm mb-4">
-              The basic building block. Contains links to children and a flag.
-            </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-white/5">
-                <span className="text-orange-500 font-mono text-xs">children</span>
-                <span className="text-slate-500 text-xs">Map&lt;Char, Node&gt;</span>
-              </div>
-              <div className="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-white/5">
-                <span className="text-orange-500 font-mono text-xs">isEndOfWord</span>
-                <span className="text-slate-500 text-xs">Boolean</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-slate-900 border border-white/5 rounded-[2rem] p-8">
-            <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">
-              <ListTree size={20} className="text-amber-400" /> Storage Choice
-            </h3>
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-white text-sm font-bold mb-1">Array (Size 26)</h4>
-                <p className="text-slate-500 text-xs">Fastest access, but wastes space if sparse. Only for 'a'-'z'.</p>
-              </div>
-              <div>
-                <h4 className="text-white text-sm font-bold mb-1">HashMap / Dict</h4>
-                <p className="text-slate-500 text-xs">Flexible (any char), saves space for sparse data. Slightly slower.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ConceptGrid items={structureItems} columns={2} />
 
         {/* Full Code */}
         <div>
-          <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2">
-            <ArrowRight size={20} className="text-orange-400" /> Complete Class
-          </h3>
+          <SectionHeader 
+            title="Complete Class" 
+            icon={ArrowRight} 
+            color="orange" 
+            className="mb-6"
+          />
           <CodeImplementation 
             languages={fullImplementationCode}
             color="orange"

@@ -131,23 +131,53 @@ func greedyAlgorithm(items []Item) []Item {
 }`
   };
 
+  const conditions = [
+    {
+      title: "When it Works",
+      description: "Problem has optimal substructure and greedy choice property.",
+      icon: CheckCircle2,
+      color: "emerald",
+      footer: (
+        <ul className="space-y-1.5 text-[10px] font-bold text-emerald-400/80">
+          <li>• Optimal Substructure</li>
+          <li>• Greedy Choice Property</li>
+          <li>• E.g. Fractional Knapsack</li>
+        </ul>
+      )
+    },
+    {
+      title: "When it Fails",
+      description: "Requires considering future consequences or leads to a dead end.",
+      icon: XCircle,
+      color: "rose",
+      footer: (
+        <ul className="space-y-1.5 text-[10px] font-bold text-rose-400/80">
+          <li>• Future dependency exists</li>
+          <li>• Local choice != Global</li>
+          <li>• E.g. 0/1 Knapsack</li>
+        </ul>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="violet">
       <SectionHeader 
-        title="Introduction" 
+        title="What is Greedy?" 
         description="Make the best choice right now."
         icon={Gem} 
         color="violet" 
       />
 
       <div className="space-y-12">
+        <p className="text-xl text-slate-400 font-medium leading-relaxed">
+          A <strong className="text-white">Greedy Algorithm</strong> builds a solution piece by piece, always choosing the next piece that offers the most immediate benefit. It never looks back and never changes its mind.
+        </p>
+
         <div className="bg-slate-900/50 border border-white/5 rounded-[2.5rem] p-8">
-          <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">
+          <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2">
             <Zap size={20} className="text-violet-400" /> The Greedy Philosophy
           </h3>
-          <p className="text-slate-400 text-sm leading-relaxed mb-6">
-            A greedy algorithm builds a solution piece by piece, always choosing the next piece that offers the most immediate benefit. It never looks back and never changes its mind.
-          </p>
           <ConceptGrid items={philosophy} columns={2} variant="horizontal" />
         </div>
 
@@ -157,8 +187,8 @@ func greedyAlgorithm(items []Item) []Item {
             <Coins size={120} />
           </div>
           
-          <h3 className="text-xl font-black text-white mb-6 relative z-10">
-            Greedy in Action: Coin Change
+          <h3 className="text-xl font-black text-white mb-6 relative z-10 flex items-center gap-2">
+            <Zap size={20} className="text-yellow-400" /> Interactive: Coin Change
           </h3>
 
           <div className="flex flex-col md:flex-row gap-8 relative z-10">
@@ -215,7 +245,7 @@ func greedyAlgorithm(items []Item) []Item {
 
         {/* Code Template */}
         <div>
-          <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">
+          <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2">
             <Target size={20} className="text-purple-400" /> The Blueprint
           </h3>
           <CodeImplementation 
@@ -225,30 +255,7 @@ func greedyAlgorithm(items []Item) []Item {
           />
         </div>
 
-        {/* When to Use */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl">
-            <h4 className="font-bold text-emerald-400 mb-3 flex items-center gap-2">
-              <CheckCircle2 size={18} /> When it Works
-            </h4>
-            <ul className="space-y-2 text-xs text-slate-300">
-              <li>• Problem has <strong>optimal substructure</strong></li>
-              <li>• Has <strong>greedy choice property</strong></li>
-              <li>• E.g., Activity Selection, Fractional Knapsack</li>
-            </ul>
-          </div>
-          
-          <div className="p-6 bg-rose-500/5 border border-rose-500/20 rounded-2xl">
-            <h4 className="font-bold text-rose-400 mb-3 flex items-center gap-2">
-              <XCircle size={18} /> When it Fails
-            </h4>
-            <ul className="space-y-2 text-xs text-slate-300">
-              <li>• Requires considering future consequences</li>
-              <li>• Greedy choice leads to dead end</li>
-              <li>• E.g., 0/1 Knapsack, Longest Path</li>
-            </ul>
-          </div>
-        </div>
+        <ConceptGrid items={conditions} columns={2} />
 
       </div>
     </PerspectiveCard>

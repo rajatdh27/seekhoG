@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Settings, 
@@ -19,6 +19,37 @@ import {
 
 export default function HashFunctionsSection() {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
+
+  const hashProperties = [
+    { 
+      title: "Deterministic", 
+      description: "Same input always produces same hash.", 
+      icon: CheckCircle2, 
+      color: "emerald",
+      footer: <span className="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">hash('apple') → 42</span>
+    },
+    { 
+      title: "Uniform", 
+      description: "Evenly distributes keys across table.", 
+      icon: Hash, 
+      color: "blue",
+      footer: <span className="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20">Minimizes clustering</span>
+    },
+    { 
+      title: "Efficient", 
+      description: "Should compute quickly (O(1) or O(k)).", 
+      icon: Zap, 
+      color: "amber",
+      footer: <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-1 rounded border border-amber-500/20">Simple arithmetic</span>
+    },
+    { 
+      title: "Minimize Collisions", 
+      description: "Different keys produce different hashes.", 
+      icon: X, 
+      color: "rose",
+      footer: <span className="text-[10px] font-mono text-rose-400 bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Reduces conflicts</span>
+    }
+  ];
 
   const divisionCode = {
     javascript: `function divisionHash(key, tableSize) {
@@ -161,58 +192,7 @@ func multiplicationHash(key int, tableSize int) int {
         <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
           <ShieldCheck size={24} className="text-purple-400" /> Good Hash Function Properties
         </h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          {[
-            {
-              property: "Deterministic",
-              desc: "Same input always produces same hash.",
-              example: "hash('apple') always = 42",
-              icon: <CheckCircle2 className="text-emerald-400" />
-            },
-            {
-              property: "Uniform Distribution",
-              desc: "Evenly distributes keys across table.",
-              example: "Minimizes clustering",
-              icon: <Hash className="text-blue-400" />
-            },
-            {
-              property: "Fast Computation",
-              desc: "Should compute quickly (O(1) or O(k)).",
-              example: "Simple arithmetic operations",
-              icon: <Zap className="text-amber-400" />
-            },
-            {
-              property: "Minimize Collisions",
-              desc: "Different keys should produce different hashes.",
-              example: "Reduces conflict",
-              icon: <X className="text-rose-400" />
-            },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="p-6 bg-slate-900/50 border border-white/5 rounded-2xl flex flex-col gap-3 group hover:border-purple-500/30 transition-colors"
-            >
-              <div className="flex items-center gap-3 mb-1">
-                <div className="p-2 rounded-lg bg-white/5">{item.icon}</div>
-                <h4 className="font-black text-white text-lg tracking-tight">
-                  {item.property}
-                </h4>
-              </div>
-              <p className="text-slate-400 text-sm font-medium leading-relaxed pl-12">
-                {item.desc}
-              </p>
-              <div className="pl-12">
-                <span className="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">
-                  {item.example}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <ConceptGrid items={hashProperties} columns={2} />
       </div>
 
       {/* Common Hash Functions */}

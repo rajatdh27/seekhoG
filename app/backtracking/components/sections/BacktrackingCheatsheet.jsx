@@ -2,13 +2,31 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
-import { FileText, Zap, AlertTriangle, CheckCircle2 } from "lucide-react";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
+import { FileText, Zap, AlertTriangle, CheckCircle2, RotateCcw, Copy, Target, ShieldAlert, ListChecks, Plus, ArrowRight } from "lucide-react";
 
 export default function BacktrackingCheatsheet() {
+  const pitfalls = [
+    { title: "Forgot to Backtrack?", description: "Undo changes (pop/remove) after recursion.", icon: RotateCcw, color: "rose" },
+    { title: "Reference Issues?", description: "Pass copies of arrays/objects (e.g. [...path]).", icon: Copy, color: "orange" },
+    { title: "Base Case Missing?", description: "Infinite recursion. Check termination.", icon: ShieldAlert, color: "red" },
+    { title: "Inefficient?", description: "Add pruning (return early if invalid).", icon: Target, color: "amber" },
+    { title: "Wrong State?", description: "Ensure state is consistent before/after calls.", icon: AlertTriangle, color: "purple" },
+    { title: "Duplicates?", description: "Sort input or use Set for unique results.", icon: Copy, color: "blue" }
+  ];
+
+  const checklist = [
+    { title: "Base Case", description: "Is the goal reached? Add to solution.", icon: Target, color: "fuchsia" },
+    { title: "Constraint Check", description: "Is the current state valid? Prune early.", icon: ShieldAlert, color: "fuchsia" },
+    { title: "Make Choice", description: "Add element or mark as visited.", icon: Plus, color: "fuchsia" },
+    { title: "Recursive Call", description: "Move to the next step (e.g. index + 1).", icon: ArrowRight, color: "fuchsia" },
+    { title: "Undo Choice", description: "Remove element (Backtrack).", icon: RotateCcw, color: "fuchsia" }
+  ];
+
   return (
     <PerspectiveCard color="purple">
       <SectionHeader 
-        title="Cheatsheet" 
+        title="Backtracking Cheatsheet" 
         description="Quick reference for complexity and implementation."
         icon={FileText} 
         color="purple" 
@@ -55,21 +73,7 @@ export default function BacktrackingCheatsheet() {
         <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
           <AlertTriangle size={24} className="text-rose-400" /> Common Pitfalls
         </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          {[
-            { q: "Forgot to Backtrack?", a: "Undo changes (pop/remove) after recursion.", color: "rose" },
-            { q: "Reference Issues?", a: "Pass copies of arrays/objects (e.g. [...path]).", color: "orange" },
-            { q: "Base Case Missing?", a: "Infinite recursion. Check termination.", color: "red" },
-            { q: "Inefficient?", a: "Add pruning (return early if invalid).", color: "amber" },
-            { q: "Wrong State?", a: "Ensure state is consistent before/after calls.", color: "purple" },
-            { q: "Duplicates?", a: "Sort input or use Set for unique results.", color: "blue" }
-          ].map((item, i) => (
-            <div key={i} className={`bg-${item.color}-500/5 border border-${item.color}-500/20 p-4 rounded-xl flex flex-col`}>
-               <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{item.q}</span>
-               <span className={`text-sm font-bold text-${item.color}-400`}>{item.a}</span>
-            </div>
-          ))}
-        </div>
+        <ConceptGrid items={pitfalls} columns={2} variant="horizontal" />
       </div>
 
       {/* Template Checklist */}
@@ -77,30 +81,7 @@ export default function BacktrackingCheatsheet() {
         <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
           <CheckCircle2 size={24} className="text-emerald-400" /> Implementation Checklist
         </h3>
-        <div className="bg-slate-900/50 border border-white/5 p-6 rounded-2xl">
-           <ul className="space-y-3">
-             <li className="flex items-center gap-3 text-slate-300 text-sm">
-               <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" />
-               <strong>Base Case:</strong> Is the goal reached? (Add to solution)
-             </li>
-             <li className="flex items-center gap-3 text-slate-300 text-sm">
-               <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" />
-               <strong>Constraint Check:</strong> Is the current state valid? (Pruning)
-             </li>
-             <li className="flex items-center gap-3 text-slate-300 text-sm">
-               <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" />
-               <strong>Make Choice:</strong> Add element / mark visited.
-             </li>
-             <li className="flex items-center gap-3 text-slate-300 text-sm">
-               <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" />
-               <strong>Recursive Call:</strong> Move to next step (index + 1).
-             </li>
-             <li className="flex items-center gap-3 text-slate-300 text-sm">
-               <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" />
-               <strong>Undo Choice:</strong> Remove element / unmark visited (Backtrack).
-             </li>
-           </ul>
-        </div>
+        <ConceptGrid items={checklist} columns={1} variant="horizontal" />
       </div>
     </PerspectiveCard>
   );

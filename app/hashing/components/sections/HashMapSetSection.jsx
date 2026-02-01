@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { Layers, Database, Globe, Search, ArrowRightLeft, CheckCircle2 } from "lucide-react";
 
@@ -229,6 +230,35 @@ delete(set, 1)
 fmt.Println(len(set))`
   };
 
+  const dsComparison = [
+    {
+      title: "HashMap (Dictionary)",
+      description: "Optimized for retrieving values associated with unique keys.",
+      icon: Database,
+      color: "blue",
+      footer: (
+        <ul className="space-y-2 text-[10px] font-bold text-slate-400">
+          <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-blue-500" /> Key-Value Pairs</li>
+          <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-blue-500" /> Unique Keys, Duplicate Values</li>
+          <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-blue-500" /> Caching, Frequency Counting</li>
+        </ul>
+      )
+    },
+    {
+      title: "HashSet (Set)",
+      description: "Optimized for checking uniqueness and existence.",
+      icon: CheckCircle2,
+      color: "emerald",
+      footer: (
+        <ul className="space-y-2 text-[10px] font-bold text-slate-400">
+          <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-emerald-500" /> Unique Keys Only</li>
+          <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-emerald-500" /> No Duplicates Allowed</li>
+          <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-emerald-500" /> Deduplication, Visited Tracker</li>
+        </ul>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="blue">
       <SectionHeader 
@@ -238,45 +268,16 @@ fmt.Println(len(set))`
         color="blue" 
       />
 
-      {/* Comparison Table */}
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50 mb-12">
-        <div className="p-6 border-b border-white/10 flex items-center gap-3">
-          <ArrowRightLeft size={24} className="text-blue-400" />
-          <h3 className="text-lg font-black text-white">Data Structure Comparison</h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-400">
-            <thead className="bg-white/5 text-slate-200 uppercase font-bold tracking-wider text-xs">
-              <tr>
-                <th className="px-6 py-4">Feature</th>
-                <th className="px-6 py-4">HashMap (Dictionary)</th>
-                <th className="px-6 py-4">HashSet (Set)</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {[
-                { feature: "Storage", map: "Key-Value Pairs", set: "Unique Keys Only" },
-                { feature: "Duplicates", map: "Unique Keys, Duplicate Values", set: "No Duplicates Allowed" },
-                { feature: "Access", map: "Get Value by Key", set: "Check Existence Only" },
-                { feature: "Use Case", map: "Caching, Frequency Counting", set: "Deduplication, Visited Tracker" }
-              ].map((row, idx) => (
-                <tr key={idx} className="hover:bg-white/5 transition-colors">
-                  <td className="px-6 py-4 font-bold text-slate-200">{row.feature}</td>
-                  <td className="px-6 py-4 text-blue-300">{row.map}</td>
-                  <td className="px-6 py-4 text-emerald-300">{row.set}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <ConceptGrid items={dsComparison} columns={2} className="mb-12" />
 
       {/* HashMap Section */}
       <div className="space-y-6 mb-12">
-        <div className="flex items-center gap-3">
-          <Database size={24} className="text-blue-400" />
-          <h3 className="text-2xl font-black text-white">HashMap Implementation</h3>
-        </div>
+        <SectionHeader 
+          title="HashMap Implementation" 
+          icon={Database} 
+          color="blue" 
+          className="mb-6"
+        />
         <CodeImplementation 
           languages={hashMapCode} 
           color="blue"
@@ -286,10 +287,12 @@ fmt.Println(len(set))`
 
       {/* HashSet Section */}
       <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <CheckCircle2 size={24} className="text-emerald-400" />
-          <h3 className="text-2xl font-black text-white">HashSet Implementation</h3>
-        </div>
+        <SectionHeader 
+          title="HashSet Implementation" 
+          icon={CheckCircle2} 
+          color="emerald" 
+          className="mb-6"
+        />
         <CodeImplementation 
           languages={hashSetCode} 
           color="emerald"

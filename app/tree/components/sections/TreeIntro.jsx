@@ -41,6 +41,13 @@ export default function TreeIntro() {
     { title: "Company Hierarchy", description: "CEO at the root, with employees as nodes.", icon: Users, color: "blue" },
   ];
 
+  const treeTypes = [
+    { title: "Binary Tree", description: "Each node has at most two children.", icon: Layers, color: "emerald" },
+    { title: "BST", description: "Left child < Parent < Right child.", icon: Layers, color: "rose" },
+    { title: "AVL Tree", description: "Self-balancing binary search tree.", icon: Layers, color: "cyan" },
+    { title: "Heap", description: "Complete binary tree with heap property.", icon: Layers, color: "amber" }
+  ];
+
   return (
     <PerspectiveCard color="teal">
       <SectionHeader 
@@ -134,36 +141,7 @@ export default function TreeIntro() {
           <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
             <BarChart3 size={24} className="text-blue-400" /> Types of Trees
           </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-emerald-500" /></div>
-              <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-2">
-                Binary Tree
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">Each node has at most two children.</p>
-            </div>
-            <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-rose-500"/></div>
-              <h3 className="text-xl font-black text-rose-400 mb-6 flex items-center gap-2">
-                Binary Search Tree (BST)
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">A binary tree where the left child is smaller and the right child is larger than the parent.</p>
-            </div>
-             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-cyan-500"/></div>
-              <h3 className="text-xl font-black text-cyan-400 mb-6 flex items-center gap-2">
-                AVL Tree
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">A self-balancing binary search tree.</p>
-            </div>
-             <div className="p-8 bg-slate-900 border border-white/5 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Layers size={100} className="text-amber-500"/></div>
-              <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-2">
-                Heap
-              </h3>
-              <p className="text-xs text-slate-400 mb-4">A complete binary tree that satisfies the heap property.</p>
-            </div>
-          </div>
+          <ConceptGrid items={treeTypes} columns={2} />
         </div>
       </div>
     </PerspectiveCard>

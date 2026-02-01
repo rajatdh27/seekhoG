@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { SectionHeader, AlgorithmSteps, ComplexityAnalysis, WhenToUse } from "@/app/components/common/algorithm";
 import { ArrowRightLeft, Play, RefreshCw, Zap, CheckCircle2, AlertCircle, Code2, Gauge, Layers, Database } from "lucide-react";
@@ -15,6 +16,12 @@ export default function InsertionSortSection() {
   const [comparing, setComparing] = useState(-1);
   const [sorted, setSorted] = useState([0]); // First element is always sorted
   const [inserting, setInserting] = useState(false);
+
+  const specialFeatures = [
+    { title: "Adaptive", description: "Runs faster on nearly sorted data - best case O(n)!", icon: Zap, color: "emerald" },
+    { title: "Stable", description: "Maintains relative order of equal elements.", icon: Layers, color: "blue" },
+    { title: "Online", description: "Can sort data as it arrives - great for streaming!", icon: Database, color: "orange" }
+  ];
 
   const languages = {
     c: `#include <stdio.h>
@@ -338,149 +345,41 @@ func insertionSort(arr []int) {
         />
 
         {/* Complexity Analysis */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
-            <h4 className="flex items-center gap-2 text-emerald-400 font-black mb-4">
-              <Gauge size={20} /> Time Complexity
-            </h4>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Best Case</span>
-                <span className="text-emerald-400 font-black">O(n)</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Average</span>
-                <span className="text-rose-400 font-black">O(n²)</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-slate-900 rounded-xl border border-white/5">
-                <span className="text-slate-400 font-medium text-sm">Worst Case</span>
-                <span className="text-rose-400 font-black">O(n²)</span>
-              </div>
-            </div>
-            <p className="text-center text-emerald-400 text-[10px] mt-3 font-bold uppercase tracking-widest">Great for nearly sorted data!</p>
-          </div>
-
-          <div className="bg-slate-950 rounded-2xl p-6 border border-white/5">
-            <h4 className="flex items-center gap-2 text-cyan-400 font-black mb-4">
-              <Layers size={20} /> Space Complexity
-            </h4>
-            <div className="flex items-center justify-center h-32">
-              <div className="text-center">
-                <div className="text-4xl font-black text-white mb-2">O(1)</div>
-                <div className="text-cyan-400 text-sm font-bold uppercase tracking-widest">In-Place</div>
-              </div>
-            </div>
-            <p className="text-center text-slate-500 text-xs mt-2">Only uses one variable (key) for temporary storage!</p>
-          </div>
-        </div>
+        <ComplexityAnalysis 
+          timeBest="O(n)"
+          timeAverage="O(n²)"
+          timeWorst="O(n²)"
+          space="O(1)"
+          spaceNote="In-Place"
+          color="teal"
+        />
 
         {/* Why Insertion Sort is Special */}
         <div className="bg-purple-500/10 border border-purple-500/20 p-6 rounded-[2rem]">
-          <h3 className="text-lg font-black text-purple-400 mb-4 flex items-center gap-2">
+          <h3 className="text-lg font-black text-purple-400 mb-6 flex items-center gap-2">
             <Zap size={20} /> Why Insertion Sort is Special
           </h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm mb-1"><Zap size={14} /> Adaptive</div>
-              <p className="text-slate-400 text-xs">Runs faster on nearly sorted data - best case O(n)!</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <div className="flex items-center gap-2 text-blue-400 font-bold text-sm mb-1"><Layers size={14} /> Stable</div>
-              <p className="text-slate-400 text-xs">Maintains relative order of equal elements.</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <div className="flex items-center gap-2 text-orange-400 font-bold text-sm mb-1"><Database size={14} /> Online</div>
-              <p className="text-slate-400 text-xs">Can sort data as it arrives - great for streaming!</p>
-            </div>
-          </div>
+          <ConceptGrid items={specialFeatures} columns={3} />
         </div>
 
-              {/* Code Implementation */}
-              <div className="bg-slate-950 rounded-[2.5rem] p-8 border border-white/5 shadow-inner mb-8">
-                <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-                  <h3 className="text-2xl font-black text-white flex items-center gap-3">
-                    <Code2 className="text-blue-400" /> Implementation
-                  </h3>
-                </div>
-        
-                <div className="space-y-6">
-                  <div className="flex flex-wrap gap-2">
-                    {Object.keys(languages).map((lang) => (
-                      <button
-                        key={lang}
-                        onClick={() => setCurrentLanguage(lang)}
-                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                          currentLanguage === lang
-                            ? "bg-teal-500 text-white"
-                            : "bg-slate-900 text-slate-500 hover:text-slate-300 border border-white/5"
-                        }`}
-                      >
-                        {lang.toUpperCase()}
-                      </button>
-                    ))}
-                  </div>
-        
-                  <div className="relative group/terminal">
-                    <div className="absolute -inset-1 bg-teal-500/10 rounded-[2rem] blur opacity-0 group-hover/terminal:opacity-100 transition-opacity" />
-                    <div className="relative bg-[#0d1117] rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden">
-                      <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/5">
-                        <div className="flex gap-1.5">
-                          <div className="w-3 h-3 rounded-full bg-rose-500/50" />
-                          <div className="w-3 h-3 rounded-full bg-amber-500/50" />
-                          <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
-                        </div>
-                        <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
-                          insertion_sort.{currentLanguage === 'javascript' ? 'js' : currentLanguage === 'python' ? 'py' : currentLanguage}
-                        </div>
-                      </div>
-                      <div className="p-6 overflow-x-auto">
-                        <pre className="text-sm leading-relaxed text-teal-300 font-mono">
-                          <code>{languages[currentLanguage]}</code>
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        {/* Code Implementation */}
+        <CodeImplementation languages={languages} color="teal" initialLanguage={currentLanguage} />
+
         {/* When to Use */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-[2rem] p-8">
-             <h3 className="text-lg font-black text-emerald-400 mb-4 flex items-center gap-2">
-               <CheckCircle2 size={20} /> When to Use
-             </h3>
-             <ul className="space-y-3">
-               {[
-                 "Small datasets (n < 50)",
-                 "Array is nearly sorted",
-                 "Need stable sorting",
-                 "Data arrives in real-time (online)"
-               ].map((item, i) => (
-                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
-                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
-                   {item}
-                 </li>
-               ))}
-             </ul>
-          </div>
-          <div className="bg-rose-500/5 border border-rose-500/10 rounded-[2rem] p-8">
-             <h3 className="text-lg font-black text-rose-400 mb-4 flex items-center gap-2">
-               <AlertCircle size={20} /> Avoid When
-             </h3>
-             <ul className="space-y-3">
-               {[
-                 "Large datasets with random order",
-                 "Array is reverse sorted",
-                 "Performance is critical",
-                 "Better alternatives available"
-               ].map((item, i) => (
-                 <li key={i} className="flex items-start gap-3 text-sm text-slate-300 font-medium">
-                   <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5" />
-                   {item}
-                 </li>
-               ))}
-             </ul>
-          </div>
-        </div>
+        <WhenToUse 
+          useCases={[
+            "Small datasets (n < 50)",
+            "Array is nearly sorted",
+            "Need stable sorting",
+            "Data arrives in real-time (online)"
+          ]}
+          avoidCases={[
+            "Large datasets with random order",
+            "Array is reverse sorted",
+            "Performance is critical",
+            "Better alternatives available"
+          ]}
+        />
 
       </div>
     </PerspectiveCard>

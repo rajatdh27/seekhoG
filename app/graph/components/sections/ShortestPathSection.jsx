@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   Route, 
@@ -245,6 +246,61 @@ func bellmanFord(edges [][]int, V int, start int) []int {
 }`
   };
 
+  const algorithms = [
+    {
+      title: "Dijkstra's Algorithm",
+      description: "Greedy approach using a Min-Priority Queue. Best for non-negative weights.",
+      icon: Map,
+      color: "amber",
+      footer: (
+        <div className="space-y-6">
+          <div className="space-y-2 text-xs font-bold">
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Fast: O((V+E) log V)
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Optimal for maps
+            </div>
+            <div className="flex items-center gap-2 text-rose-400">
+              <AlertTriangle size={14} /> Fails with negative weights
+            </div>
+          </div>
+          <CodeImplementation 
+            languages={dijkstraCode}
+            color="amber"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+      )
+    },
+    {
+      title: "Bellman-Ford",
+      description: "Relax all edges V-1 times. Can handle negative weights and detect cycles.",
+      icon: ArrowRightLeft,
+      color: "blue",
+      footer: (
+        <div className="space-y-6">
+          <div className="space-y-2 text-xs font-bold">
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Handles negative weights
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Detects negative cycles
+            </div>
+            <div className="flex items-center gap-2 text-rose-400">
+              <AlertTriangle size={14} /> Slow: O(V × E)
+            </div>
+          </div>
+          <CodeImplementation 
+            languages={bellmanFordCode}
+            color="blue"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="amber">
       <SectionHeader 
@@ -254,65 +310,7 @@ func bellmanFord(edges [][]int, V int, start int) []int {
         color="amber" 
       />
 
-      <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* Dijkstra Card */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <Map size={24} className="text-amber-400" />
-            <h3 className="text-2xl font-black text-white">1. Dijkstra's Algorithm</h3>
-          </div>
-          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
-            <p className="text-slate-300 text-sm mb-4">
-              Greedy approach using a Min-Priority Queue. Best for non-negative weights.
-            </p>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Fast: O((V+E) log V)
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Optimal for maps
-              </div>
-              <div className="flex items-center gap-2 text-rose-400">
-                <AlertTriangle size={14} /> Fails with negative weights
-              </div>
-            </div>
-          </div>
-          <CodeImplementation 
-            languages={dijkstraCode}
-            color="amber"
-            initialLanguage={currentLanguage}
-          />
-        </div>
-
-        {/* Bellman-Ford Card */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <ArrowRightLeft size={24} className="text-blue-400" />
-            <h3 className="text-2xl font-black text-white">2. Bellman-Ford</h3>
-          </div>
-          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
-            <p className="text-slate-300 text-sm mb-4">
-              Relax all edges V-1 times. Can handle negative weights and detect negative cycles.
-            </p>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Handles negative weights
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Detects negative cycles
-              </div>
-              <div className="flex items-center gap-2 text-rose-400">
-                <AlertTriangle size={14} /> Slow: O(V × E)
-              </div>
-            </div>
-          </div>
-          <CodeImplementation 
-            languages={bellmanFordCode}
-            color="blue"
-            initialLanguage={currentLanguage}
-          />
-        </div>
-      </div>
+      <ConceptGrid items={algorithms} columns={2} className="mb-12" />
     </PerspectiveCard>
   );
 }

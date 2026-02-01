@@ -1,12 +1,76 @@
 "use client";
 
-import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { FileText, Plus, Minus, Check, X, RefreshCcwDot, Lightbulb, TrendingUp, Code2, HelpCircle } from "lucide-react";
 
 export default function QueueCheatsheet() {
+  const cheatItems = [
+    {
+      title: "Pattern Recognition",
+      description: "Quickly identify queue-based problems.",
+      icon: Lightbulb,
+      color: "green",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
+            "Level Order Traversal → BFS with Queue",
+            "Shortest Path (Unweighted) → BFS with Queue",
+            "Task Scheduling → Simple or Priority Queue",
+            "Sliding Window Min/Max → Deque",
+            "Rate Limiter → Queue with Timestamps",
+            "Producer-Consumer → Blocking Queue",
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    },
+    {
+      title: "Time Complexities",
+      description: "Standard performance metrics.",
+      icon: TrendingUp,
+      color: "emerald",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
+            "Enqueue: O(1)", "Dequeue: O(1)", "Peek/Front: O(1)",
+            "isEmpty: O(1)", "Size: O(1)", "Search: O(n) - avoid",
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    },
+    {
+      title: "Edge Cases",
+      description: "Scenarios to test your code.",
+      icon: RefreshCcwDot,
+      color: "teal",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
+            "Empty queue", "Full queue (circular array)", "Single element queue",
+            "Concurrent access (threading)", "Null/undefined values", "Priority inversion (Priority Queue)",
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-teal-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="green">
       <SectionHeader 
@@ -17,39 +81,7 @@ export default function QueueCheatsheet() {
         className="mb-10"
       />
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <CheatCard
-          title="Pattern Recognition"
-          items={[
-            "Level Order Traversal → BFS with Queue",
-            "Shortest Path (Unweighted) → BFS with Queue",
-            "Task Scheduling → Simple Queue or Priority Queue",
-            "Sliding Window Min/Max → Deque",
-            "Rate Limiter / Throttling → Queue with Timestamps",
-            "Producer-Consumer → Blocking Queue",
-          ]}
-          color="green"
-          icon={<Lightbulb />}
-        />
-        <CheatCard
-          title="Time Complexities (Standard)"
-          items={[
-            "Enqueue: O(1)", "Dequeue: O(1)", "Peek/Front: O(1)",
-            "isEmpty: O(1)", "Size: O(1)", "Search: O(n) - avoid",
-          ]}
-          color="emerald"
-          icon={<TrendingUp />}
-        />
-        <CheatCard
-          title="Edge Cases"
-          items={[
-            "Empty queue", "Full queue (circular array)", "Single element queue",
-            "Concurrent access (threading)", "Null/undefined values", "Priority inversion (Priority Queue)",
-          ]}
-          color="teal"
-          icon={<RefreshCcwDot />}
-        />
-      </div>
+      <ConceptGrid items={cheatItems} columns={3} className="mb-12" />
 
       <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
         <Code2 size={24} className="text-green-400" /> Essential Snippets
@@ -158,40 +190,5 @@ export default function QueueCheatsheet() {
         </table>
       </div>
     </PerspectiveCard>
-  );
-}
-
-function CheatCard({ title, items, color, icon }) {
-  const colors = {
-    green: "from-green-500/10 to-green-500/10 border-green-500/20",
-    emerald: "from-emerald-500/10 to-emerald-500/10 border-emerald-500/20",
-    teal: "from-teal-500/10 to-teal-500/10 border-teal-500/20",
-  };
-  const iconColors = {
-    green: "text-green-400",
-    emerald: "text-emerald-400",
-    teal: "text-teal-400",
-  }
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5 }}
-      className={`p-6 bg-slate-900/70 border ${colors[color]} rounded-2xl shadow-lg group relative overflow-hidden`}
-    >
-      <div className={`absolute -top-4 -right-4 text-7xl opacity-5 group-hover:opacity-10 transition-opacity ${iconColors[color]}`}>
-        {icon}
-      </div>
-      <h3 className="font-black text-lg text-white mb-4 relative z-10">{title}</h3>
-      <ul className="space-y-2 relative z-10">
-        {items.map((item) => (
-          <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </motion.div>
   );
 }

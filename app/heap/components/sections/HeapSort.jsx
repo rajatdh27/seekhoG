@@ -1,30 +1,22 @@
 "use client";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
-import { ArrowUpDown, Timer, Database, Repeat, ChevronRight } from "lucide-react";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
+import { ArrowUpDown, Timer, Database, Repeat, ChevronRight, Zap } from "lucide-react";
 
 export default function HeapSort() {
-  const sortingSteps = [
-    {
-      title: "1. Build a Max Heap",
-      desc: "Transform the unsorted input array into a Max Heap. This ensures the largest element is at the root (index 0).",
-      complexity: "O(n)"
-    },
-    {
-      title: "2. Swap and Extract",
-      desc: "Swap the root (largest element) with the last element of the array. Reduce the heap size by one.",
-      complexity: "O(1)"
-    },
-    {
-      title: "3. Restore Heap Property",
-      desc: "Heapify the new root to restore the Max Heap property for the remaining elements.",
-      complexity: "O(log n)"
-    },
-    {
-      title: "4. Repeat",
-      desc: "Continue swapping and heapifying until the heap is empty. The array is now sorted.",
-      complexity: "Repeat n times"
-    }
+  const heapSortSteps = [
+    { title: "Build Max Heap", description: "Transform input into a heap. Root becomes largest element.", badge: "O(n)", icon: Database, color: "blue" },
+    { title: "Swap & Extract", description: "Swap root with last element. Reduce heap size.", badge: "O(1)", icon: Repeat, color: "purple" },
+    { title: "Restore Property", description: "Heapify new root to fix violations.", badge: "O(log n)", icon: Timer, color: "rose" },
+    { title: "Repeat", description: "Extract n times until heap is empty.", badge: "n times", icon: ArrowUpDown, color: "orange" }
+  ];
+
+  const whyHeapSort = [
+    { title: "Guaranteed Performance", description: "Always O(n log n), no bad worst-case scenarios.", icon: Zap, color: "indigo" },
+    { title: "In-Place", description: "Requires only O(1) auxiliary space.", icon: Database, color: "indigo" },
+    { title: "Memory Efficient", description: "Perfect for systems with strict RAM constraints.", icon: Zap, color: "indigo" },
+    { title: "Reliable", description: "Better worst-case performance than Quick Sort.", icon: Zap, color: "indigo" }
   ];
 
   return (
@@ -37,23 +29,10 @@ export default function HeapSort() {
 
       <div className="space-y-12">
         <p className="text-xl text-slate-400 font-medium leading-relaxed">
-          <strong className="text-white">Heap Sort</strong> is a comparison-based sorting technique based on the Binary Heap data structure. It is similar to selection sort where we first find the maximum element and place it at the end.
+          <strong className="text-white">Heap Sort</strong> is a comparison-based sorting technique based on the Binary Heap data structure. It behaves like Selection Sort by finding the maximum element and moving it to the end.
         </p>
 
-        {/* Steps Grid */}
-        <div className="grid md:grid-cols-2 gap-4">
-          {sortingSteps.map((step, i) => (
-            <div key={i} className="p-6 bg-slate-900 border border-white/5 rounded-2xl group hover:border-rose-500/20 transition-all">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-black text-white uppercase tracking-tighter">{step.title}</h3>
-                <span className="text-[10px] font-bold text-rose-400 font-mono bg-rose-500/5 px-2 py-1 rounded-lg">
-                  {step.complexity}
-                </span>
-              </div>
-              <p className="text-xs text-slate-500 font-medium leading-relaxed">{step.desc}</p>
-            </div>
-          ))}
-        </div>
+        <ConceptGrid items={heapSortSteps} columns={2} />
 
         {/* Complexity Card */}
         <div className="bg-slate-900/50 border border-white/5 rounded-[2.5rem] p-8">
@@ -93,20 +72,10 @@ export default function HeapSort() {
 
         {/* Why Use Heap Sort? */}
         <div className="p-8 bg-gradient-to-br from-indigo-900/10 to-blue-900/10 border border-indigo-500/20 rounded-[2.5rem]">
-           <h3 className="text-xl font-black text-indigo-400 mb-6">Why Use Heap Sort?</h3>
-           <ul className="grid sm:grid-cols-2 gap-4">
-              {[
-                "Guaranteed O(n log n) performance.",
-                "In-place sorting (O(1) extra space).",
-                "Great for systems with strict memory limits.",
-                "Better worst-case than Quick Sort."
-              ].map((reason, i) => (
-                <li key={i} className="flex items-center gap-3 text-sm font-medium text-slate-300">
-                  <ChevronRight size={14} className="text-indigo-500" />
-                  {reason}
-                </li>
-              ))}
-           </ul>
+           <h3 className="text-xl font-black text-indigo-400 mb-8 flex items-center gap-2">
+             <Zap size={20} /> Why Use Heap Sort?
+           </h3>
+           <ConceptGrid items={whyHeapSort} columns={2} variant="horizontal" />
         </div>
       </div>
     </PerspectiveCard>

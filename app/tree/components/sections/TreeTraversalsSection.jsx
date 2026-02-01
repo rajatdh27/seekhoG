@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { ArrowRightLeft, GitMerge, Binary, GitBranch, Settings } from "lucide-react";
 
@@ -220,7 +221,15 @@ export default function TreeTraversalsSection() {
 
   return (
     <PerspectiveCard color="teal">
-        <div className="grid lg:grid-cols-12 gap-8">
+      <SectionHeader 
+        title="Tree Traversals" 
+        description="Techniques for visiting all nodes in a specific order."
+        icon={Share2} 
+        color="teal" 
+        className="mb-10"
+      />
+
+      <div className="grid lg:grid-cols-12 gap-8">
             <aside className="lg:col-span-4 xl:col-span-3">
                 <div className="sticky top-24 space-y-6">
                     <div>

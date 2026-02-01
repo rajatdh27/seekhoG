@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   ListOrdered, 
@@ -257,6 +258,61 @@ func kahnSort(V int, graph map[int][]int) []int {
 }`
   };
 
+  const topoAlgorithms = [
+    {
+      title: "DFS Approach",
+      description: "Add node to stack after visiting all neighbors. Reverse stack for result.",
+      icon: GitCommit,
+      color: "violet",
+      footer: (
+        <div className="space-y-6">
+          <div className="space-y-2 text-xs font-bold">
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Simple recursion
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Time: O(V + E)
+            </div>
+            <div className="flex items-center gap-2 text-rose-400">
+              <AlertTriangle size={14} /> Fails to detect cycles easily
+            </div>
+          </div>
+          <CodeImplementation 
+            languages={dfsSortCode}
+            color="violet"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+      )
+    },
+    {
+      title: "Kahn's Algorithm",
+      description: "Repeatedly remove nodes with in-degree 0. If nodes remain, graph has a cycle.",
+      icon: Workflow,
+      color: "purple",
+      footer: (
+        <div className="space-y-6">
+          <div className="space-y-2 text-xs font-bold">
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Detects Cycles
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> BFS-based (Queue)
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Time: O(V + E)
+            </div>
+          </div>
+          <CodeImplementation 
+            languages={kahnCode}
+            color="purple"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="violet">
       <SectionHeader 
@@ -266,65 +322,7 @@ func kahnSort(V int, graph map[int][]int) []int {
         color="violet" 
       />
 
-      <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* DFS Card */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <GitCommit size={24} className="text-violet-400" />
-            <h3 className="text-2xl font-black text-white">1. DFS Approach</h3>
-          </div>
-          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
-            <p className="text-slate-300 text-sm mb-4">
-              Add node to stack <strong>after</strong> visiting all its neighbors. Reverse stack for result.
-            </p>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Simple recursion
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Time: O(V + E)
-              </div>
-              <div className="flex items-center gap-2 text-rose-400">
-                <AlertTriangle size={14} /> Can't detect cycles easily
-              </div>
-            </div>
-          </div>
-          <CodeImplementation 
-            languages={dfsSortCode}
-            color="violet"
-            initialLanguage={currentLanguage}
-          />
-        </div>
-
-        {/* Kahn's Card */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <Workflow size={24} className="text-purple-400" />
-            <h3 className="text-2xl font-black text-white">2. Kahn's Algorithm</h3>
-          </div>
-          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
-            <p className="text-slate-300 text-sm mb-4">
-              Repeatedly remove nodes with <strong>in-degree 0</strong>. If nodes remain, graph has a cycle.
-            </p>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Detects Cycles
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> BFS-based (Queue)
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Time: O(V + E)
-              </div>
-            </div>
-          </div>
-          <CodeImplementation 
-            languages={kahnCode}
-            color="purple"
-            initialLanguage={currentLanguage}
-          />
-        </div>
-      </div>
+      <ConceptGrid items={topoAlgorithms} columns={2} className="mb-12" />
     </PerspectiveCard>
   );
 }

@@ -3,8 +3,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import { Cpu, Box, Layers, Plus, Minus } from "lucide-react";
+import { Cpu, Box, Layers, Plus, Minus, ArrowRightLeft } from "lucide-react";
 
 const arrayImplCode = `class Stack {
 private:
@@ -78,16 +80,29 @@ public:
     }
 };`;
 
-
 export default function StackMemoryLayout() {
   const [impl, setImpl] = useState("array");
 
+  const comparisonItems = [
+    { title: "Memory per Element", description: "Array uses just data. Linked List needs data + pointer.", icon: Cpu, color: "purple" },
+    { title: "Cache Performance", description: "Array is excellent due to contiguous memory. Linked List is poor.", icon: Box, color: "blue" },
+    { title: "Max Size", description: "Array is typically fixed. Linked List is limited only by total RAM.", icon: Layers, color: "emerald" },
+    { title: "Push/Pop Time", description: "Both implementations achieve guaranteed O(1) performance.", icon: ArrowRightLeft, color: "rose" }
+  ];
+
   return (
     <PerspectiveCard color="purple">
+      <SectionHeader 
+        title="Memory & Implementation" 
+        description="Two ways to build a stack in memory."
+        icon={Cpu} 
+        color="purple" 
+      />
+
       <div className="flex items-center justify-center mb-10">
-        <div className="flex p-1.5 bg-slate-800/80 rounded-2xl border border-slate-700">
-          <button onClick={() => setImpl("array")} className={`px-6 py-2.5 text-sm font-black uppercase tracking-widest rounded-xl transition-colors ${impl === 'array' ? 'bg-purple-500 text-white' : 'text-slate-400 hover:bg-slate-700/50'}`}>Array-Based</button>
-          <button onClick={() => setImpl("linked")} className={`px-6 py-2.5 text-sm font-black uppercase tracking-widest rounded-xl transition-colors ${impl === 'linked' ? 'bg-pink-500 text-white' : 'text-slate-400 hover:bg-slate-700/50'}`}>Linked-List</button>
+        <div className="flex p-1.5 bg-slate-800/80 rounded-2xl border border-slate-700 shadow-xl">
+          <button onClick={() => setImpl("array")} className={`px-6 py-2.5 text-xs font-black uppercase tracking-widest rounded-xl transition-all ${impl === 'array' ? 'bg-purple-500 text-white shadow-lg' : 'text-slate-400 hover:text-slate-300'}`}>Array-Based</button>
+          <button onClick={() => setImpl("linked")} className={`px-6 py-2.5 text-xs font-black uppercase tracking-widest rounded-xl transition-all ${impl === 'linked' ? 'bg-pink-500 text-white shadow-lg' : 'text-slate-400 hover:text-slate-300'}`}>Linked-List</button>
         </div>
       </div>
       
@@ -95,41 +110,13 @@ export default function StackMemoryLayout() {
         {impl === 'array' ? <ArrayImpl /> : <LinkedImpl />}
       </AnimatePresence>
 
-      {/* Comparison Table */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="overflow-x-auto mt-12"
-      >
+      {/* Comparison Grid */}
+      <div className="mt-12 pt-8 border-t border-white/5">
         <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
-          <Layers size={24} className="text-blue-400" /> Array vs Linked-List
+          <ArrowRightLeft size={24} className="text-blue-400" /> Comparison
         </h3>
-        <table className="w-full text-sm text-left border-collapse">
-          <thead className="text-[10px] font-black uppercase tracking-widest text-slate-500">
-            <tr className="border-b border-white/10">
-              <th className="py-4 px-4">Feature</th>
-              <th className="py-4 px-4 text-purple-400">Array-Based</th>
-              <th className="py-4 px-4 text-pink-400">Linked List</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {[
-              { f: "Push/Pop Time", a: "O(1)", l: "O(1)" },
-              { f: "Memory per Element", a: "Just data", l: "Data + pointer" },
-              { f: "Cache Performance", a: "Excellent", l: "Poor" },
-              { f: "Max Size", a: "Fixed", l: "Unlimited" },
-              { f: "Best Use Case", a: "Known max size", l: "Unknown size" },
-            ].map((row) => (
-              <tr key={row.f} className="group hover:bg-white/[0.02] transition-colors">
-                <td className="py-4 px-4 font-black text-slate-500 uppercase text-[10px] tracking-tighter">{row.f}</td>
-                <td className="py-4 px-4 font-bold text-slate-300 group-hover:text-purple-400 transition-colors">{row.a}</td>
-                <td className="py-4 px-4 font-bold text-slate-300 group-hover:text-pink-400 transition-colors">{row.l}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </motion.div>
+        <ConceptGrid items={comparisonItems} columns={2} />
+      </div>
     </PerspectiveCard>
   );
 }

@@ -3,8 +3,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import { Grid, RefreshCw, Award, Star, HelpCircle, Check } from "lucide-react";
+import { Grid, RefreshCw, Award, Star, HelpCircle, Check, Target } from "lucide-react";
 
 const patterns = [
   {
@@ -116,7 +117,15 @@ export default function QueuePatterns() {
 
   return (
     <PerspectiveCard color="green">
-        <div className="grid lg:grid-cols-12 gap-8">
+      <SectionHeader 
+        title="Must-Know Patterns" 
+        description="Techniques to solve 90% of queue problems."
+        icon={Grid} 
+        color="green" 
+        className="mb-10"
+      />
+
+      <div className="grid lg:grid-cols-12 gap-8">
             <aside className="lg:col-span-4 xl:col-span-3">
                 <div className="sticky top-24 space-y-2">
                     {patterns.map(p => (

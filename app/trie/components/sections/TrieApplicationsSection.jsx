@@ -274,6 +274,21 @@ func findWords(board [][]byte, words []string) []string {
 }`
   };
 
+  const moreUseCases = [
+    { 
+      title: "Longest Prefix Matching", 
+      description: "Used in IP routing to forward packets to the most specific network prefix.", 
+      icon: Maximize2, 
+      color: "orange" 
+    },
+    { 
+      title: "Spell Checker", 
+      description: "Store valid dictionary words. Suggest words with small edit distance if exact match fails.", 
+      icon: Replace, 
+      color: "amber" 
+    }
+  ];
+
   return (
     <PerspectiveCard color="orange">
       <SectionHeader 
@@ -286,10 +301,12 @@ func findWords(board [][]byte, words []string) []string {
       <div className="space-y-12">
         {/* Application 1: Autocomplete */}
         <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Type size={24} className="text-orange-400" />
-            <h3 className="text-2xl font-black text-white">1. Autocomplete System</h3>
-          </div>
+          <SectionHeader 
+            title="Autocomplete System" 
+            icon={Type} 
+            color="orange" 
+            className="mb-6"
+          />
           <p className="text-slate-400 text-sm leading-relaxed mb-6">
             The most common use of Trie. When a user types a prefix, we traverse to that node and perform a DFS to find all complete words in that subtree.
           </p>
@@ -302,10 +319,12 @@ func findWords(board [][]byte, words []string) []string {
 
         {/* Application 2: Word Search II */}
         <div className="bg-slate-900/50 border border-white/5 rounded-[2rem] p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Grid size={24} className="text-amber-400" />
-            <h3 className="text-2xl font-black text-white">2. Boggle / Word Search II</h3>
-          </div>
+          <SectionHeader 
+            title="Boggle / Word Search II" 
+            icon={Grid} 
+            color="amber" 
+            className="mb-6"
+          />
           <p className="text-slate-400 text-sm leading-relaxed mb-6">
             Finding valid dictionary words in a grid of characters. We use a Trie to prune the DFS search space—if a prefix doesn't exist in the Trie, we stop searching that path immediately.
           </p>
@@ -318,26 +337,13 @@ func findWords(board [][]byte, words []string) []string {
 
         {/* Other Applications Grid */}
         <div>
-          <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2">
-            <ArrowRight size={20} className="text-orange-400" /> More Use Cases
-          </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl hover:border-orange-500/30 transition-colors">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-yellow-500/10 rounded-lg text-yellow-400"><Maximize2 size={18} /></div>
-                <h4 className="font-bold text-white">Longest Prefix Matching</h4>
-              </div>
-              <p className="text-xs text-slate-400">Used in IP routing (routers) to forward packets to the most specific network prefix.</p>
-            </div>
-
-            <div className="p-6 bg-slate-900 border border-white/5 rounded-2xl hover:border-orange-500/30 transition-colors">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-red-500/10 rounded-lg text-red-400"><Replace size={18} /></div>
-                <h4 className="font-bold text-white">Spell Checker</h4>
-              </div>
-              <p className="text-xs text-slate-400">Store valid dictionary words. If a word isn't in the Trie, search for words with small edit distance (1-2 chars diff).</p>
-            </div>
-          </div>
+          <SectionHeader 
+            title="More Use Cases" 
+            icon={ArrowRight} 
+            color="orange" 
+            className="mb-6"
+          />
+          <ConceptGrid items={moreUseCases} columns={2} />
         </div>
       </div>
     </PerspectiveCard>

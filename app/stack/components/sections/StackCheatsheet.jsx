@@ -1,12 +1,76 @@
 "use client";
 
-import { motion } from "framer-motion";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { FileText, Plus, Minus, Check, X, RefreshCcwDot, Lightbulb, TrendingUp, Code2, HelpCircle } from "lucide-react";
 
 export default function StackCheatsheet() {
+  const cheatItems = [
+    {
+      title: "Pattern Recognition",
+      description: "Quickly identify stack-based problems.",
+      icon: Lightbulb,
+      color: "purple",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
+            "Next Greater/Smaller → Monotonic Stack",
+            "Valid Parentheses → Stack Matching",
+            "Expression Parsing → Stack Evaluation",
+            "Histogram Problems → Monotonic Stack",
+            "DFS/Backtracking → Stack for State",
+            "Undo/Redo → Two Stacks",
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    },
+    {
+      title: "Time Complexities",
+      description: "Core operations performance.",
+      icon: TrendingUp,
+      color: "pink",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
+            "Push: O(1)", "Pop: O(1)", "Peek/Top: O(1)",
+            "isEmpty: O(1)", "Size: O(1)", "Search: O(n) - avoid",
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-pink-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    },
+    {
+      title: "Edge Cases",
+      description: "Scenarios to test your code.",
+      icon: RefreshCcwDot,
+      color: "blue",
+      footer: (
+        <ul className="space-y-2 relative z-10">
+          {[
+            "Empty stack", "Full stack (array-based)", "Single element stack",
+            "Duplicate elements", "Null/undefined values", "Invalid input",
+          ].map((item) => (
+            <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="purple">
       <SectionHeader 
@@ -17,39 +81,7 @@ export default function StackCheatsheet() {
         className="mb-10"
       />
       
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <CheatCard
-          title="Pattern Recognition"
-          items={[
-            "Next Greater/Smaller → Monotonic Stack",
-            "Valid Parentheses → Stack Matching",
-            "Expression Parsing → Stack Evaluation",
-            "Histogram Problems → Monotonic Stack",
-            "DFS/Backtracking → Stack for State",
-            "Undo/Redo → Two Stacks",
-          ]}
-          color="purple"
-          icon={<Lightbulb />}
-        />
-        <CheatCard
-          title="Time Complexities"
-          items={[
-            "Push: O(1)", "Pop: O(1)", "Peek/Top: O(1)",
-            "isEmpty: O(1)", "Size: O(1)", "Search: O(n) - avoid",
-          ]}
-          color="pink"
-          icon={<TrendingUp />}
-        />
-        <CheatCard
-          title="Edge Cases"
-          items={[
-            "Empty stack", "Full stack (array-based)", "Single element stack",
-            "Duplicate elements", "Null/undefined values", "Invalid input",
-          ]}
-          color="blue"
-          icon={<RefreshCcwDot />}
-        />
-      </div>
+      <ConceptGrid items={cheatItems} columns={3} className="mb-12" />
 
       <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
         <Code2 size={24} className="text-purple-400" /> Essential Snippets
@@ -147,40 +179,5 @@ export default function StackCheatsheet() {
         </table>
       </div>
     </PerspectiveCard>
-  );
-}
-
-function CheatCard({ title, items, color, icon }) {
-  const colors = {
-    purple: "from-purple-500/10 to-purple-500/10 border-purple-500/20",
-    pink: "from-pink-500/10 to-pink-500/10 border-pink-500/20",
-    blue: "from-blue-500/10 to-blue-500/10 border-blue-500/20",
-  };
-  const iconColors = {
-    purple: "text-purple-400",
-    pink: "text-pink-400",
-    blue: "text-blue-400",
-  }
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5 }}
-      className={`p-6 bg-slate-900/70 border ${colors[color]} rounded-2xl shadow-lg group relative overflow-hidden`}
-    >
-      <div className={`absolute -top-4 -right-4 text-7xl opacity-5 group-hover:opacity-10 transition-opacity ${iconColors[color]}`}>
-        {icon}
-      </div>
-      <h3 className="font-black text-lg text-white mb-4 relative z-10">{title}</h3>
-      <ul className="space-y-2 relative z-10">
-        {items.map((item) => (
-          <li key={item} className="text-xs text-slate-300 flex items-start gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </motion.div>
   );
 }

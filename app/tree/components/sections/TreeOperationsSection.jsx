@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { Settings, BarChart3, Calculator, Search, Trash2 } from "lucide-react";
 
@@ -244,7 +245,15 @@ export default function TreeOperationsSection() {
 
   return (
     <PerspectiveCard color="teal">
-        <div className="grid lg:grid-cols-12 gap-8">
+      <SectionHeader 
+        title="Common Operations" 
+        description="Core logic for manipulating and querying trees."
+        icon={Settings} 
+        color="teal" 
+        className="mb-10"
+      />
+
+      <div className="grid lg:grid-cols-12 gap-8">
             <aside className="lg:col-span-4 xl:col-span-3">
                 <div className="sticky top-24 space-y-6">
                     <div>

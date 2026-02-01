@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { Grid, BarChart2, Calculator, Brackets, Orbit, ArrowLeftRight, HelpCircle, Check } from "lucide-react";
 
@@ -172,7 +173,15 @@ export default function StackPatterns() {
 
   return (
     <PerspectiveCard color="purple">
-        <div className="grid lg:grid-cols-12 gap-8">
+      <SectionHeader 
+        title="Must-Know Patterns" 
+        description="Techniques to solve 90% of stack problems."
+        icon={Grid} 
+        color="purple" 
+        className="mb-10"
+      />
+
+      <div className="grid lg:grid-cols-12 gap-8">
             <aside className="lg:col-span-4 xl:col-span-3">
                 <div className="sticky top-24 space-y-2">
                     {patterns.map(p => (

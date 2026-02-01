@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
 import CodeBlock from "@/app/components/common/CodeBlock";
 import { Code2 } from "lucide-react";
 
@@ -227,6 +228,14 @@ export default function StackSyntax() {
 
   return (
     <PerspectiveCard color="purple">
+      <SectionHeader 
+        title="Syntax Guide" 
+        description="Common operations across different languages."
+        icon={Code2} 
+        color="purple" 
+        className="mb-10"
+      />
+
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Sidebar for Controls */}
         <aside className="lg:w-1/3 xl:w-1/4">

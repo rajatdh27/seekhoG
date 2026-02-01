@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { 
   TreePine, 
@@ -312,6 +313,61 @@ func prims(n int, adj map[int][]Edge) int {
 }`
   };
 
+  const mstAlgorithms = [
+    {
+      title: "Kruskal's Algorithm",
+      description: "Greedy approach processing edges by weight. Uses Union-Find to detect cycles.",
+      icon: GitMerge,
+      color: "emerald",
+      footer: (
+        <div className="space-y-6">
+          <div className="space-y-2 text-xs font-bold">
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Good for Sparse Graphs
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Easy with Union-Find
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Time: O(E log E)
+            </div>
+          </div>
+          <CodeImplementation 
+            languages={kruskalCode}
+            color="emerald"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+      )
+    },
+    {
+      title: "Prim's Algorithm",
+      description: "Greedy approach growing from a vertex. Uses Min-Heap to find nearest unvisited node.",
+      icon: GitCommit,
+      color: "green",
+      footer: (
+        <div className="space-y-6">
+          <div className="space-y-2 text-xs font-bold">
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Good for Dense Graphs
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Grows single component
+            </div>
+            <div className="flex items-center gap-2 text-emerald-400">
+              <CheckCircle2 size={14} /> Time: O(E log V)
+            </div>
+          </div>
+          <CodeImplementation 
+            languages={primsCode}
+            color="green"
+            initialLanguage={currentLanguage}
+          />
+        </div>
+      )
+    }
+  ];
+
   return (
     <PerspectiveCard color="emerald">
       <SectionHeader 
@@ -321,65 +377,7 @@ func prims(n int, adj map[int][]Edge) int {
         color="emerald" 
       />
 
-      <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* Kruskal's Card */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <GitMerge size={24} className="text-emerald-400" />
-            <h3 className="text-2xl font-black text-white">1. Kruskal's Algorithm</h3>
-          </div>
-          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
-            <p className="text-slate-300 text-sm mb-4">
-              Greedy approach processing <strong>edges</strong> by weight. Uses Union-Find to detect cycles.
-            </p>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Good for Sparse Graphs
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Easy to implement with Union-Find
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Time: O(E log E)
-              </div>
-            </div>
-          </div>
-          <CodeImplementation 
-            languages={kruskalCode}
-            color="emerald"
-            initialLanguage={currentLanguage}
-          />
-        </div>
-
-        {/* Prim's Card */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <GitCommit size={24} className="text-green-400" />
-            <h3 className="text-2xl font-black text-white">2. Prim's Algorithm</h3>
-          </div>
-          <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-6">
-            <p className="text-slate-300 text-sm mb-4">
-              Greedy approach growing from a <strong>vertex</strong>. Uses Min-Heap to find nearest unvisited node.
-            </p>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Good for Dense Graphs
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Grows single component
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle2 size={14} /> Time: O(E log V)
-              </div>
-            </div>
-          </div>
-          <CodeImplementation 
-            languages={primsCode}
-            color="green"
-            initialLanguage={currentLanguage}
-          />
-        </div>
-      </div>
+      <ConceptGrid items={mstAlgorithms} columns={2} className="mb-12" />
     </PerspectiveCard>
   );
 }

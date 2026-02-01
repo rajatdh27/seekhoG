@@ -2,9 +2,19 @@
 
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
 import SectionHeader from "@/app/components/common/SectionHeader";
-import { FileText, Zap, HelpCircle, CheckCircle2 } from "lucide-react";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
+import { FileText, Zap, HelpCircle, CheckCircle2, Search, Trash2, Layers, BarChart3 } from "lucide-react";
 
 export default function HashingCheatsheet() {
+  const hashingUseCases = [
+    { title: "Need fast lookups?", description: "HashMap (O(1) avg)", icon: Search, color: "emerald" },
+    { title: "Remove duplicates?", description: "HashSet", icon: Trash2, color: "blue" },
+    { title: "Count frequencies?", description: "HashMap <Item, Count>", icon: BarChart3, color: "purple" },
+    { title: "Find pair sum?", description: "HashMap (Complements)", icon: Search, color: "pink" },
+    { title: "Group items?", description: "HashMap <Key, List>", icon: Layers, color: "amber" },
+    { title: "Sliding Window?", description: "Map for window counts", icon: Zap, color: "cyan" }
+  ];
+
   return (
     <PerspectiveCard color="indigo">
       <SectionHeader 
@@ -53,21 +63,7 @@ export default function HashingCheatsheet() {
         <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
           <HelpCircle size={24} className="text-blue-400" /> When to Use?
         </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          {[
-            { q: "Need fast lookups?", a: "HashMap (O(1) avg)", color: "emerald" },
-            { q: "Remove duplicates?", a: "HashSet", color: "blue" },
-            { q: "Count frequencies?", a: "HashMap <Item, Count>", color: "purple" },
-            { q: "Find pair sum?", a: "HashMap (Complements)", color: "pink" },
-            { q: "Group items?", a: "HashMap <Key, List>", color: "amber" },
-            { q: "Sliding Window?", a: "Map for window counts", color: "cyan" }
-          ].map((item, i) => (
-            <div key={i} className={`bg-${item.color}-500/5 border border-${item.color}-500/20 p-4 rounded-xl flex flex-col`}>
-               <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{item.q}</span>
-               <span className={`text-sm font-bold text-${item.color}-400`}>{item.a}</span>
-            </div>
-          ))}
-        </div>
+        <ConceptGrid items={hashingUseCases} columns={2} variant="horizontal" />
       </div>
 
       {/* Comparison: Map vs BST */}

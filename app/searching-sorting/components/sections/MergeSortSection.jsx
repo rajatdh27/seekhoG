@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { SectionHeader, AlgorithmSteps, ComplexityAnalysis, WhenToUse } from "@/app/components/common/algorithm";
 import { GitMerge, Play, RefreshCw, Zap, CheckCircle2, AlertCircle, Code2, Gauge, Layers, Split } from "lucide-react";
@@ -14,6 +15,19 @@ export default function MergeSortSection() {
   const [comparing, setComparing] = useState([]);
   const [sorted, setSorted] = useState([]);
   const [dividing, setDividing] = useState([]);
+
+  const strategySteps = [
+    { title: "Divide", description: "Split array recursively until size is 1.", icon: () => <div className="w-6 h-6 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-black">1</div>, color: "emerald" },
+    { title: "Conquer", description: "Single elements are already sorted.", icon: () => <div className="w-6 h-6 rounded bg-teal-500/20 text-teal-400 flex items-center justify-center text-[10px] font-black">2</div>, color: "teal" },
+    { title: "Combine", description: "Merge sorted halves into one.", icon: () => <div className="w-6 h-6 rounded bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-[10px] font-black">3</div>, color: "cyan" }
+  ];
+
+  const awesomeFeatures = [
+    { title: "Guaranteed Speed", description: "Worst case is still O(n log n).", icon: Zap, color: "emerald" },
+    { title: "Stable", description: "Maintains relative order of equal elements.", icon: Layers, color: "blue" },
+    { title: "Linked Lists", description: "Efficient O(1) space for linked lists.", icon: Code2, color: "orange" },
+    { title: "Parallelizable", description: "Sort parts on different processors.", icon: Split, color: "purple" }
+  ];
 
   const languages = {
     c: `#include <stdio.h>
@@ -359,26 +373,13 @@ func mergeSort(arr []int, left, right int) {
       <div className="space-y-8">
         {/* Key Concept */}
         <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-[2rem] relative overflow-hidden">
-          <h3 className="text-xl font-black text-emerald-400 mb-3 flex items-center gap-2">
+          <h3 className="text-xl font-black text-emerald-400 mb-6 flex items-center gap-3">
             <Split size={24} /> Divide and Conquer Strategy
           </h3>
-          <p className="text-slate-300 text-sm font-medium leading-relaxed relative z-10 mb-4">
+          <p className="text-slate-300 text-sm font-medium leading-relaxed relative z-10 mb-6">
             Merge Sort breaks the problem into smaller subproblems, solves them, and combines the results.
           </p>
-          <div className="grid md:grid-cols-3 gap-4 text-xs font-bold relative z-10">
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-emerald-500/20">
-              <p className="text-emerald-400 mb-1">1️⃣ Divide</p>
-              <p className="text-slate-400 font-medium">Split array recursively until size is 1</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <p className="text-teal-400 mb-1">2️⃣ Conquer</p>
-              <p className="text-slate-400 font-medium">Single elements are already sorted</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <p className="text-cyan-400 mb-1">3️⃣ Combine</p>
-              <p className="text-slate-400 font-medium">Merge sorted halves into one</p>
-            </div>
-          </div>
+          <ConceptGrid items={strategySteps} columns={3} variant="horizontal" />
         </div>
 
         {/* Visual Animation */}
@@ -476,27 +477,10 @@ func mergeSort(arr []int, left, right int) {
 
         {/* Advantages */}
         <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-[2rem]">
-          <h3 className="text-lg font-black text-emerald-400 mb-4 flex items-center gap-2">
+          <h3 className="text-lg font-black text-emerald-400 mb-6 flex items-center gap-2">
             <Zap size={20} /> Why Merge Sort is Awesome
           </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm mb-1"><Zap size={14} /> Guaranteed Speed</div>
-              <p className="text-slate-400 text-xs">Unlike Quick Sort, worst case is still O(n log n).</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <div className="flex items-center gap-2 text-blue-400 font-bold text-sm mb-1"><Layers size={14} /> Stable</div>
-              <p className="text-slate-400 text-xs">Maintains relative order of equal elements.</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <div className="flex items-center gap-2 text-orange-400 font-bold text-sm mb-1"><Code2 size={14} /> Linked Lists</div>
-              <p className="text-slate-400 text-xs">Can be done in O(1) space for linked lists!</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <div className="flex items-center gap-2 text-purple-400 font-bold text-sm mb-1"><Split size={14} /> Parallelizable</div>
-              <p className="text-slate-400 text-xs">Can sort parts on different processors.</p>
-            </div>
-          </div>
+          <ConceptGrid items={awesomeFeatures} columns={2} variant="horizontal" />
         </div>
 
         {/* Code Implementation */}

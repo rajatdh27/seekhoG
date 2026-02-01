@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeImplementation from "@/app/components/common/CodeImplementation";
 import { SectionHeader, AlgorithmSteps, ComplexityAnalysis, WhenToUse } from "@/app/components/common/algorithm";
 import { Zap, Play, RefreshCw, Layers, CheckCircle2, AlertCircle, Code2, Gauge, Split, Dice5 } from "lucide-react";
@@ -15,6 +16,25 @@ export default function QuickSortSection() {
   const [comparing, setComparing] = useState([]);
   const [sorted, setSorted] = useState([]);
   const [partitioned, setPartitioned] = useState([]);
+
+  const partitioningStrategy = [
+    { title: "Choose Pivot", description: "Select an element (e.g., last).", icon: () => <div className="w-6 h-6 rounded bg-amber-500/20 text-amber-400 flex items-center justify-center text-[10px] font-black">1</div>, color: "amber" },
+    { title: "Partition", description: "Small left, large right.", icon: () => <div className="w-6 h-6 rounded bg-orange-500/20 text-orange-400 flex items-center justify-center text-[10px] font-black">2</div>, color: "orange" },
+    { title: "Recursively Sort", description: "Repeat for sub-arrays.", icon: () => <div className="w-6 h-6 rounded bg-rose-500/20 text-rose-400 flex items-center justify-center text-[10px] font-black">3</div>, color: "rose" }
+  ];
+
+  const pivotStrategies = [
+    { title: "Last Element", description: "Simple, but O(n²) if sorted.", icon: Dice5, color: "purple" },
+    { title: "Random", description: "Avoids worst case on sorted data.", icon: Dice5, color: "purple" },
+    { title: "Median-of-3", description: "Best balance of performance.", icon: Dice5, color: "purple" }
+  ];
+
+  const fastFactors = [
+    { title: "Cache Friendly", description: "Good locality of reference.", icon: CheckCircle2, color: "emerald" },
+    { title: "In-Place", description: "No extra memory allocation.", icon: CheckCircle2, color: "emerald" },
+    { title: "Small Constants", description: "Very fast inner loop.", icon: CheckCircle2, color: "emerald" },
+    { title: "Tail Recursion", description: "Optimizable by compilers.", icon: CheckCircle2, color: "emerald" }
+  ];
 
   const languages = {
     c: `#include <stdio.h>
@@ -256,23 +276,10 @@ func quickSort(arr []int, low, high int) {
           <h3 className="text-xl font-black text-amber-400 mb-3 flex items-center gap-2">
             <Split size={24} /> The Partitioning Strategy
           </h3>
-          <p className="text-slate-300 text-sm font-medium leading-relaxed relative z-10 mb-4">
+          <p className="text-slate-300 text-sm font-medium leading-relaxed relative z-10 mb-6">
             Quick Sort picks a <strong className="text-white">"pivot"</strong> element and partitions the array so that all smaller elements are on the left and all larger elements are on the right.
           </p>
-          <div className="grid md:grid-cols-3 gap-4 text-xs font-bold relative z-10">
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-amber-500/20">
-              <p className="text-amber-400 mb-1">1️⃣ Choose Pivot</p>
-              <p className="text-slate-400 font-medium">Select an element (e.g., last)</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <p className="text-orange-400 mb-1">2️⃣ Partition</p>
-              <p className="text-slate-400 font-medium">Small left, large right</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <p className="text-red-400 mb-1">3️⃣ Recursively Sort</p>
-              <p className="text-slate-400 font-medium">Repeat for sub-arrays</p>
-            </div>
-          </div>
+          <ConceptGrid items={partitioningStrategy} columns={3} variant="horizontal" />
         </div>
 
         {/* Visual Animation */}
@@ -367,23 +374,10 @@ func quickSort(arr []int, low, high int) {
 
         {/* Pivot Selection */}
         <div className="bg-purple-500/10 border border-purple-500/20 p-6 rounded-[2rem]">
-          <h3 className="text-lg font-black text-purple-400 mb-4 flex items-center gap-2">
+          <h3 className="text-lg font-black text-purple-400 mb-6 flex items-center gap-3">
             <Dice5 size={20} /> Pivot Selection Strategies
           </h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <p className="text-purple-400 font-bold text-sm mb-1">Last Element</p>
-              <p className="text-slate-400 text-xs">Simple, but O(n²) if sorted.</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <p className="text-purple-400 font-bold text-sm mb-1">Random</p>
-              <p className="text-slate-400 text-xs">Avoids worst case on sorted data.</p>
-            </div>
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5">
-              <p className="text-purple-400 font-bold text-sm mb-1">Median-of-3</p>
-              <p className="text-slate-400 text-xs">Best balance of performance.</p>
-            </div>
-          </div>
+          <ConceptGrid items={pivotStrategies} columns={3} />
         </div>
 
         {/* Complexity Analysis */}
@@ -398,39 +392,10 @@ func quickSort(arr []int, low, high int) {
 
         {/* Why Quick Sort is Fast */}
         <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-6 rounded-[2rem]">
-          <h3 className="text-lg font-black text-amber-400 mb-4 flex items-center gap-2">
+          <h3 className="text-lg font-black text-amber-400 mb-6 flex items-center gap-3">
             <Zap size={20} /> Why "Quick" Sort?
           </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle2 size={16} className="text-emerald-500 mt-1 shrink-0" />
-              <div>
-                <p className="text-white font-bold text-sm">Cache Friendly</p>
-                <p className="text-slate-400 text-xs">Good locality of reference.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle2 size={16} className="text-emerald-500 mt-1 shrink-0" />
-              <div>
-                <p className="text-white font-bold text-sm">In-Place</p>
-                <p className="text-slate-400 text-xs">No extra memory allocation.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle2 size={16} className="text-emerald-500 mt-1 shrink-0" />
-              <div>
-                <p className="text-white font-bold text-sm">Small Constants</p>
-                <p className="text-slate-400 text-xs">Very fast inner loop.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle2 size={16} className="text-emerald-500 mt-1 shrink-0" />
-              <div>
-                <p className="text-white font-bold text-sm">Tail Recursion</p>
-                <p className="text-slate-400 text-xs">optimizable by compilers.</p>
-              </div>
-            </div>
-          </div>
+          <ConceptGrid items={fastFactors} columns={2} variant="horizontal" />
         </div>
 
         {/* Code Implementation */}
