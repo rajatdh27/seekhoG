@@ -1,287 +1,288 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Section from "@/app/components/common/Section";
+import PerspectiveCard from "@/app/components/common/PerspectiveCard";
+import SectionHeader from "@/app/components/common/SectionHeader";
+import ConceptGrid from "@/app/components/common/ConceptGrid";
 import CodeBlock from "@/app/components/common/CodeBlock";
-import InfoBox from "@/app/components/common/InfoBox";
+import VariableVisualizer3D from "./VariableVisualizer3D";
+import { 
+  BookOpen, 
+  FileText, 
+  Database, 
+  HardDrive, 
+  AlertTriangle, 
+  Library, 
+  Rocket, 
+  Globe, 
+  History, 
+  Sparkles,
+  CheckCircle2,
+  Box,
+  Layers,
+  Code2
+} from "lucide-react";
 
 export default function VariablesLanguageTemplate({ data }) {
   if (!data) return null;
 
-  return (
-    <div className="space-y-12">
-      {/* Intro Section */}
-      <Section id="intro">
-        <h2 className={`text-4xl font-bold mb-6 bg-gradient-to-r ${data.gradient} bg-clip-text text-transparent`}>
-          {data.name} Variables & Types
-        </h2>
+  const color = data.themeColor.split("-")[0]; // e.g., "blue-400" -> "blue"
 
-        <div className="mb-8">
-          <h3 className="text-3xl font-bold mb-4 text-white">What is a Variable?</h3>
-          <p className="text-slate-300 text-lg mb-6 leading-relaxed">
-            {data.intro.description}
-          </p>
+  // Map highlights to ConceptGrid format
+  const highlights = data.intro.highlights.map(h => ({
+    title: h.title,
+    description: h.text,
+    icon: h.icon, // Emoji works with FeatureCard
+    color: color
+  }));
+
+  // Map primitive types to ConceptGrid format
+  const primitives = data.types?.primitive.map(t => ({
+    title: t.name,
+    description: t.range,
+    badge: t.size,
+    icon: Box,
+    color: color
+  })) || [];
+
+  // Map limitations
+  const limitations = data.limitations?.warnings.map(w => ({
+    title: "Limitation",
+    description: w,
+    icon: AlertTriangle,
+    color: "rose"
+  })) || [];
+
+  // Map applications
+  const applications = data.usage?.applications.map(app => ({
+    title: app.title,
+    description: app.text,
+    icon: app.icon,
+    color: color
+  })) || [];
+
+  return (
+    <PerspectiveCard color={color}>
+      {/* Intro Section */}
+      <div id="intro" className="scroll-mt-32">
+        <SectionHeader 
+          title={`${data.name} Variables`} 
+          icon={BookOpen} 
+          color={color} 
+        />
+        
+        <div className="flex flex-col lg:flex-row items-center gap-12 mt-8 mb-12">
+          <div className="flex-1 space-y-6">
+            <p className="text-xl text-slate-300 font-medium leading-relaxed">
+              {data.intro.description}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <span className={`px-4 py-2 rounded-full bg-${color}-500/10 border border-${color}-500/20 text-${color}-400 text-xs font-black uppercase tracking-widest`}>
+                Type: {data.id === 'python' || data.id === 'javascript' ? 'Dynamic' : 'Static'}
+              </span>
+              <span className="px-4 py-2 rounded-full bg-slate-800 border border-white/5 text-slate-400 text-xs font-black uppercase tracking-widest">
+                Storage: Stack/Heap
+              </span>
+            </div>
+          </div>
           
-          <div className="grid md:grid-cols-2 gap-4 mt-8">
-            {data.intro.highlights.map((item, index) => (
-              <motion.div 
-                key={index}
-                whileHover={{ scale: 1.02, backgroundColor: "rgba(51, 65, 85, 0.5)" }}
-                className="bg-slate-800/40 p-5 rounded-2xl border border-slate-700/50 transition-all shadow-lg"
-              >
-                <div className="text-xl font-bold mb-2 flex items-center gap-2" style={{ color: `var(--theme-${data.themeColor})` || data.themeColor }}>
-                  <span className="text-2xl">{item.icon}</span>
-                  <span className={`text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>{item.title}</span>
-                </div>
-                <p className="text-slate-400 text-sm leading-relaxed">{item.text}</p>
-              </motion.div>
-            ))}
+          <div className="flex-1 flex justify-center py-8 bg-slate-900/50 rounded-[2.5rem] border border-white/5 shadow-inner relative overflow-hidden group">
+            <div className={`absolute inset-0 bg-gradient-to-br from-${color}-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity`} />
+            <VariableVisualizer3D 
+              name="score" 
+              value="100" 
+              type={data.id === 'javascript' ? 'number' : 'int'} 
+              color={color} 
+            />
           </div>
         </div>
-      </Section>
 
-      {/* Declarations Section */}
-      <Section id="declarations">
-        <h3 className={`text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>
-          How to Create Variables
-        </h3>
-        
-        <p className="text-slate-300 text-lg mb-6 leading-relaxed">
-          {data.declarations.description}
-        </p>
+        <ConceptGrid items={highlights} columns={2} />
+      </div>
 
-        <CodeBlock title={`${data.name} Declarations`}>
-          {data.declarations.code}
-        </CodeBlock>
-
-        {data.declarations.constants && (
-          <div className="mt-8">
-            <h4 className="text-2xl font-bold mb-4 text-white flex items-center gap-2">
-              🔒 Constants with <code className="bg-slate-800 px-3 py-1 rounded-lg text-purple-400">{data.declarations.constants.keyword}</code>
-            </h4>
-            <p className="text-slate-300 mb-6 italic">
-              {data.declarations.constants.description}
+      <div className="space-y-16 mt-16">
+        {/* Declarations Section */}
+        <section id="declarations" className="scroll-mt-32">
+          <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+            <FileText size={24} className={`text-${color}-400`} /> Declarations
+          </h3>
+          
+          <div className={`p-6 bg-${color}-500/5 border border-${color}-500/20 rounded-[2rem] space-y-6`}>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              {data.declarations.description}
             </p>
-            <CodeBlock title="Constants Example">
-              {data.declarations.constants.code}
-            </CodeBlock>
-          </div>
-        )}
-      </Section>
+            <CodeBlock 
+              code={data.declarations.code} 
+              language={data.id} 
+              title="Declaration Syntax"
+            />
 
-      {/* Data Types Section */}
-      {data.types && (
-        <Section id="types">
-          <h3 className={`text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>
-            🔢 Fundamental Data Types
-          </h3>
-          
-          <div className="grid md:grid-cols-2 gap-4">
-            {data.types.primitive.map((type, i) => (
-              <div key={i} className="bg-slate-800/30 border border-slate-700/50 p-4 rounded-xl flex justify-between items-center">
-                <div>
-                  <code className="text-green-400 font-bold">{type.name}</code>
-                  <div className="text-xs text-slate-500 mt-1">{type.range}</div>
+            {data.declarations.constants && (
+              <div className="mt-8 pt-8 border-t border-white/5">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`px-3 py-1 rounded-lg bg-${color}-500/20 text-${color}-400 font-mono text-xs font-bold`}>
+                    {data.declarations.constants.keyword}
+                  </div>
+                  <h4 className="text-lg font-bold text-white">Constants</h4>
                 </div>
-                <div className="text-xs font-black text-slate-400 bg-slate-900 px-2 py-1 rounded uppercase tracking-tighter">
-                  {type.size}
-                </div>
+                <p className="text-slate-400 text-xs mb-4">
+                  {data.declarations.constants.description}
+                </p>
+                <CodeBlock 
+                  code={data.declarations.constants.code} 
+                  language={data.id}
+                  title="Constants" 
+                />
               </div>
-            ))}
+            )}
           </div>
-        </Section>
-      )}
+        </section>
 
-      {/* Limits Section */}
-      {data.limits && (
-        <Section id="limits">
-          <h3 className={`text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>
-            💾 Memory Limits & Storage
-          </h3>
-          
-          <p className="text-slate-300 text-lg mb-8 leading-relaxed italic">
-            {data.limits.description}
-          </p>
+        {/* Data Types Section */}
+        {data.types && (
+          <section id="types" className="scroll-mt-32">
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <Database size={24} className={`text-${color}-400`} /> Data Types
+            </h3>
+            <ConceptGrid items={primitives} columns={3} />
+          </section>
+        )}
 
-          <div className="bg-slate-900/80 rounded-3xl border border-slate-700/50 overflow-hidden shadow-2xl backdrop-blur-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-slate-800/50 border-b border-slate-700/50">
-                    {data.limits.table.headers.map((header, i) => (
-                      <th key={i} className="p-5 text-slate-400 font-black uppercase tracking-widest text-xs">{header}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-800/50">
-                  {data.limits.table.rows.map((row, i) => (
-                    <motion.tr 
-                      key={i} 
-                      whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.02)" }}
-                      className="transition-colors"
-                    >
-                      {row.map((cell, j) => (
-                        <td key={j} className={`p-5 text-sm ${j === 0 ? 'font-black text-white' : 'text-slate-400 font-medium'}`}>
-                          {j === 0 ? (
-                            <code className="bg-slate-800/50 px-2 py-1 rounded text-cyan-400">{cell}</code>
-                          ) : cell}
-                        </td>
+        {/* Limits Section */}
+        {data.limits && (
+          <section id="limits" className="scroll-mt-32">
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <HardDrive size={24} className={`text-${color}-400`} /> Memory Limits
+            </h3>
+            
+            <div className="bg-slate-950 border border-white/5 rounded-[2rem] p-8 overflow-hidden shadow-inner">
+              <p className="text-slate-400 text-sm mb-6 font-medium italic">
+                {data.limits.description}
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-white/10 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                      {data.limits.table.headers.map((h, i) => (
+                        <th key={i} className="py-4 px-4">{h}</th>
                       ))}
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {data.limits.table.rows.map((row, i) => (
+                      <tr key={i} className="group hover:bg-white/[0.02] transition-colors">
+                        {row.map((cell, j) => (
+                          <td key={j} className={`py-4 px-4 ${j === 0 ? `font-bold text-${color}-400` : "text-slate-300"}`}>
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        </Section>
-      )}
+          </section>
+        )}
 
-      {/* Limitations Section */}
-      {data.limitations && (
-        <Section id="limitations">
-          <h3 className="text-3xl font-bold mb-6 text-red-400 flex items-center gap-3">
-            ⚠️ Limitations & Pitfalls
-          </h3>
-          
-          <div className="space-y-4">
-            {data.limitations.warnings.map((warning, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-red-500/5 border border-red-500/20 p-4 rounded-xl flex items-start gap-4"
-              >
-                <div className="bg-red-500/20 p-2 rounded-lg text-red-400 font-black text-xs">ERR_{i+1}</div>
-                <p className="text-slate-300 font-medium">{warning}</p>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-      )}
+        {/* Limitations */}
+        {data.limitations && (
+          <section id="limitations" className="scroll-mt-32">
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <AlertTriangle size={24} className="text-rose-400" /> Limitations
+            </h3>
+            <ConceptGrid items={limitations} columns={2} />
+          </section>
+        )}
 
-      {/* Collections Section */}
-      {data.collections && (
-        <Section id="collections">
-          <h3 className={`text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>
-            📚 Built-in Collections
-          </h3>
-          <p className="text-slate-300 text-lg mb-6 leading-relaxed">
-            {data.collections.description}
-          </p>
-          <CodeBlock title="Collections Example">
-            {data.collections.code}
-          </CodeBlock>
-        </Section>
-      )}
+        {/* Collections */}
+        {data.collections && (
+          <section id="collections" className="scroll-mt-32">
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <Library size={24} className={`text-${color}-400`} /> Collections
+            </h3>
+            <div className={`p-6 bg-${color}-500/5 border border-${color}-500/20 rounded-[2rem]`}>
+              <p className="text-slate-300 text-sm mb-6">{data.collections.description}</p>
+              <CodeBlock code={data.collections.code} language={data.id} />
+            </div>
+          </section>
+        )}
 
-      {/* Advanced Section */}
-      {data.advanced && (
-        <Section id="advanced">
-          <h3 className={`text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>
-            🚀 Advanced Features
-          </h3>
-          <p className="text-slate-300 text-lg mb-6 leading-relaxed">
-            {data.advanced.description}
-          </p>
-          <CodeBlock title="Advanced Syntax">
-            {data.advanced.code}
-          </CodeBlock>
-        </Section>
-      )}
+        {/* Advanced */}
+        {data.advanced && (
+          <section id="advanced" className="scroll-mt-32">
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <Rocket size={24} className={`text-${color}-400`} /> Advanced Features
+            </h3>
+            <div className="bg-slate-900 border border-white/5 rounded-[2rem] p-6">
+              <p className="text-slate-300 text-sm mb-6">{data.advanced.description}</p>
+              <CodeBlock code={data.advanced.code} language={data.id} />
+            </div>
+          </section>
+        )}
 
-      {/* Usage Section */}
-      {data.usage && (
-        <Section id="usage">
-          <h3 className={`text-3xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>
-            🌍 Real-World Usage
-          </h3>
-          
-          <div className="grid md:grid-cols-2 gap-6 mb-10">
-            {data.usage.applications.map((app, i) => (
-              <motion.div 
-                key={i}
-                whileHover={{ y: -5, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)" }}
-                className="bg-slate-800/30 p-6 rounded-[2rem] border border-slate-700/50 flex flex-col"
-              >
-                <div className="text-4xl mb-4">{app.icon}</div>
-                <h4 className="text-xl font-black text-white mb-2">{app.title}</h4>
-                <p className="text-slate-400 text-sm leading-relaxed">{app.text}</p>
-              </motion.div>
-            ))}
-          </div>
+        {/* Usage */}
+        {data.usage && (
+          <section id="usage" className="scroll-mt-32">
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <Globe size={24} className={`text-${color}-400`} /> Usage
+            </h3>
+            <ConceptGrid items={applications} columns={2} />
+            
+            <div className="mt-8 p-6 bg-slate-900 border border-white/5 rounded-[2rem]">
+              <h4 className="text-sm font-black text-white uppercase tracking-widest mb-4">Used By</h4>
+              <div className="flex flex-wrap gap-3">
+                {data.usage.companies.map((company, i) => (
+                  <span key={i} className="px-4 py-2 bg-slate-800 rounded-xl text-xs font-bold text-slate-300 border border-white/5">
+                    {company}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
-          <div className="bg-slate-900/50 border border-slate-700/50 rounded-3xl p-8">
-            <h4 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-              🏢 Industry Adoption
-            </h4>
-            <div className="flex flex-wrap gap-3">
-              {data.usage.companies.map((company, i) => (
-                <span 
-                  key={i}
-                  className="px-5 py-2 bg-slate-800 rounded-full border border-slate-700 text-slate-300 font-bold text-sm hover:border-blue-500/50 transition-colors cursor-default"
-                >
-                  {company}
-                </span>
+        {/* Purpose */}
+        {data.purpose && (
+          <section id="purpose" className="scroll-mt-32">
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <History size={24} className={`text-${color}-400`} /> History
+            </h3>
+            <div className={`p-8 bg-${color}-500/10 border border-${color}-500/20 rounded-[2rem]`}>
+              <p className="text-slate-200 text-lg font-medium italic leading-relaxed">
+                &quot;{data.purpose.history}&quot;
+              </p>
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                {data.purpose.principles.map((principle, i) => (
+                  <div key={i} className="flex items-center gap-3 text-xs font-bold text-slate-300">
+                    <div className={`w-2 h-2 rounded-full bg-${color}-500`} />
+                    {principle}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Future */}
+        {data.future && (
+          <section id="future" className="scroll-mt-32">
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <Sparkles size={24} className={`text-${color}-400`} /> Future Outlook
+            </h3>
+            <div className="space-y-4">
+              {data.future.trends.map((trend, i) => (
+                <div key={i} className="p-4 bg-slate-900 border border-white/5 rounded-2xl flex items-center gap-4">
+                  <div className={`w-8 h-8 rounded-full bg-${color}-500/20 flex items-center justify-center text-${color}-400 font-bold text-xs`}>
+                    {i + 1}
+                  </div>
+                  <p className="text-slate-300 text-sm font-medium">{trend}</p>
+                </div>
               ))}
             </div>
-          </div>
-        </Section>
-      )}
-
-      {/* Purpose Section */}
-      {data.purpose && (
-        <Section id="purpose">
-          <h3 className={`text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>
-            📜 History & Design
-          </h3>
-          
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-3xl p-8 mb-8">
-            <h4 className="text-xl font-black text-white mb-4">Origins</h4>
-            <p className="text-slate-300 leading-relaxed text-lg italic">
-              &quot;{data.purpose.history}&quot;
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {data.purpose.principles.map((principle, i) => (
-              <div key={i} className="flex items-center gap-3 bg-slate-900/50 p-4 rounded-xl border border-slate-800">
-                <div className="w-2 h-2 rounded-full bg-blue-500" />
-                <span className="text-slate-300 font-bold">{principle}</span>
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* Future Section */}
-      {data.future && (
-        <Section id="future">
-          <h3 className={`text-3xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r ${data.gradient}`}>
-            🔮 Future Outlook
-          </h3>
-          
-          <div className="space-y-4">
-            {data.future.trends.map((trend, i) => (
-              <motion.div 
-                key={i}
-                whileHover={{ x: 10 }}
-                className="p-6 bg-gradient-to-r from-slate-800/50 to-transparent border-l-4 border-blue-500 rounded-r-2xl"
-              >
-                <p className="text-white font-bold text-lg">{trend}</p>
-              </motion.div>
-            ))}
-          </div>
-          
-          <InfoBox type="success" className="mt-10">
-            <h4 className="text-xl font-bold mb-2">💡 Why Learn {data.name}?</h4>
-            <p className="text-slate-300">
-              {data.name} remains one of the most in-demand languages in the world. Mastering its variables and type system 
-              builds a strong foundation for any software engineering career.
-            </p>
-          </InfoBox>
-        </Section>
-      )}
-    </div>
+          </section>
+        )}
+      </div>
+    </PerspectiveCard>
   );
 }
