@@ -20,7 +20,10 @@ import {
   CheckCircle2,
   Box,
   Layers,
-  Code2
+  Code2,
+  Scroll,
+  AlertOctagon,
+  Lightbulb
 } from "lucide-react";
 
 export default function VariablesLanguageTemplate({ data }) {
@@ -246,15 +249,50 @@ export default function VariablesLanguageTemplate({ data }) {
         {data.purpose && (
           <section id="purpose" className="scroll-mt-32">
             <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-              <History size={24} className={`text-${color}-400`} /> History
+              <History size={24} className={`text-${color}-400`} /> History & Origins
             </h3>
-            <div className={`p-8 bg-${color}-500/10 border border-${color}-500/20 rounded-[2rem]`}>
-              <p className="text-slate-200 text-lg font-medium italic leading-relaxed">
-                &quot;{data.purpose.history}&quot;
-              </p>
+            
+            <div className="space-y-6">
+              {/* Origin Story */}
+              <div className={`p-8 bg-${color}-500/10 border border-${color}-500/20 rounded-[2rem] relative overflow-hidden`}>
+                <div className={`absolute top-0 right-0 p-6 opacity-10 text-${color}-500 transform rotate-12`}>
+                  <Scroll size={120} />
+                </div>
+                <h4 className="text-xl font-black text-white mb-4 flex items-center gap-2">
+                  <Scroll size={20} className={`text-${color}-400`} /> The Origin Story
+                </h4>
+                <p className="text-slate-200 text-lg font-medium italic leading-relaxed relative z-10">
+                  &quot;{data.purpose.creationStory || data.purpose.history}&quot;
+                </p>
+              </div>
+
+              {/* Problem vs Innovation */}
+              {data.purpose.limitationsOfEra && (
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="p-6 bg-rose-500/5 border border-rose-500/20 rounded-[2rem]">
+                    <h4 className="text-sm font-black text-rose-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                      <AlertOctagon size={16} /> The Problem
+                    </h4>
+                    <p className="text-slate-400 text-sm leading-relaxed">
+                      {data.purpose.limitationsOfEra}
+                    </p>
+                  </div>
+                  
+                  <div className="p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-[2rem]">
+                    <h4 className="text-sm font-black text-emerald-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                      <Lightbulb size={16} /> The Innovation
+                    </h4>
+                    <p className="text-slate-400 text-sm leading-relaxed">
+                      {data.purpose.coreInnovation}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Principles */}
               <div className="mt-6 grid grid-cols-2 gap-4">
                 {data.purpose.principles.map((principle, i) => (
-                  <div key={i} className="flex items-center gap-3 text-xs font-bold text-slate-300">
+                  <div key={i} className="flex items-center gap-3 text-xs font-bold text-slate-300 bg-slate-900/50 p-3 rounded-xl border border-slate-800">
                     <div className={`w-2 h-2 rounded-full bg-${color}-500`} />
                     {principle}
                   </div>
@@ -282,6 +320,20 @@ export default function VariablesLanguageTemplate({ data }) {
             </div>
           </section>
         )}
+
+        {/* Why Learn Success Box */}
+        <div className="mt-16 p-8 bg-emerald-500/10 border border-emerald-500/20 rounded-[2rem] relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+            <CheckCircle2 size={120} />
+          </div>
+          <h4 className="text-2xl font-black text-emerald-400 mb-4 flex items-center gap-3">
+            <Sparkles size={24} /> Why Learn {data.name}?
+          </h4>
+          <p className="text-slate-300 text-lg leading-relaxed relative z-10">
+            {data.name} remains one of the most in-demand languages in the world. Mastering its variables and type system 
+            builds a strong foundation for any software engineering career.
+          </p>
+        </div>
       </div>
     </PerspectiveCard>
   );

@@ -27,7 +27,9 @@ import {
   History, 
   Sparkles,
   ChevronDown,
-  Code2
+  Code2,
+  Scale,
+  CheckCircle2
 } from "lucide-react";
 
 export default function VariablesPage() {
@@ -70,7 +72,7 @@ export default function VariablesPage() {
     { id: "swift", name: "Swift", icon: "🍎", color: "rose" },
   ];
 
-  const sections = [
+  const languageSections = [
     { id: "intro", title: "Introduction", icon: BookOpen },
     { id: "declarations", title: "Declarations", icon: FileText },
     { id: "types", title: "Data Types", icon: Database },
@@ -82,6 +84,14 @@ export default function VariablesPage() {
     { id: "purpose", title: "History", icon: History },
     { id: "future", title: "Future", icon: Sparkles },
   ];
+
+  const comparisonSections = [
+    { id: "intro", title: "Language Divide", icon: Scale },
+    { id: "syntax", title: "Syntax Comparison", icon: Code2 },
+    { id: "best-practices", title: "How to Choose?", icon: CheckCircle2 },
+  ];
+
+  const sections = activeLanguage === "comparison" ? comparisonSections : languageSections;
 
   return (
     <div className="min-h-screen bg-[#020617] text-slate-100 selection:bg-blue-500/30">

@@ -107,6 +107,9 @@ const theme = user.theme ?? "dark";`
     },
     purpose: {
       history: "Created in 1995 by Brendan Eich at Netscape in just 10 days! Originally designed to make static web pages interactive, it has evolved into a universal general-purpose language.",
+      creationStory: "In 1995, the web was static HTML. Netscape wanted a language for non-programmers to add interactivity (like form validation) directly in the browser. They considered Java, but it was too heavy. Brendan Eich was tasked to create a 'glue language'. He prototyped 'Mocha' (later JavaScript) in 10 days.",
+      limitationsOfEra: "Web pages were read-only documents. Server round-trips were slow. Java applets were too heavy and slow to load for simple tasks.",
+      coreInnovation: "The DOM (Document Object Model) API, allowing code to modify the web page in real-time. First-class functions and prototype-based objects provided flexibility.",
       principles: ["Dynamic Typing", "First-class Functions", "Prototypal Inheritance", "Event-driven architecture"]
     },
     future: {
@@ -224,6 +227,9 @@ def greet(name: str) -> str:
     },
     purpose: {
       history: "Released in 1991 by Guido van Rossum. Named after 'Monty Python's Flying Circus', it was created to be a language that prioritizes developer happiness and readability over raw performance.",
+      creationStory: "In the late 80s, Guido was working on the Amoeba distributed OS. He wanted a scripting language that was better than Shell but simpler than C for system administration utilities. He spent his Christmas break in 1989 implementing Python.",
+      limitationsOfEra: "C was too complex for simple scripts. Shell scripts (Bash) were hard to read and couldn't handle complex logic or data structures elegantly.",
+      coreInnovation: "Executable pseudocode. Enforced readability through indentation. A massive standard library ('Batteries Included') meant developers didn't have to reinvent the wheel for basic tasks.",
       principles: ["Readability counts", "Simple is better than complex", "One obvious way to do things", "Beautiful is better than ugly"]
     },
     future: {
@@ -338,6 +344,9 @@ T max(T a, T b) { return a > b ? a : b; }`
     },
     purpose: {
       history: "Created in 1985 by Bjarne Stroustrup as 'C with Classes'. The goal was to add high-level organization to C without losing the efficiency that made C great.",
+      creationStory: "In 1979, Bjarne Stroustrup began work on 'C with Classes'. He had experience with Simula (the first OOP language), which was good for organizing code but too slow. C was fast but disorganized. He combined them.",
+      limitationsOfEra: "C programs were becoming massive and unmanageable spaghetti code. Simula was elegant but impractically slow for systems programming.",
+      coreInnovation: "Zero-Overhead Abstraction. You could write high-level classes, inheritance, and templates, but the compiler would optimize it down to code as fast as hand-written C.",
       principles: ["Don't pay for what you don't use", "Leave no room for a lower-level language", "Trust the programmer"]
     },
     future: {
@@ -462,6 +471,9 @@ var message = "Hello";`
     },
     purpose: {
       history: "Created in 1995 by James Gosling at Sun Microsystems. Originally called 'Oak', it was designed for interactive television but became the language of the web and enterprise.",
+      creationStory: "In the early 90s, Sun Microsystems wanted a platform-independent language for consumer electronics (like cable boxes). The team found C++ too complicated and unsafe. They created 'Oak', which failed in TV sets but flourished when the World Wide Web exploded in 1995.",
+      limitationsOfEra: "C/C++ code had to be recompiled for every single computer architecture. Memory management bugs caused constant crashes.",
+      coreInnovation: "The Java Virtual Machine (JVM). Code compiles to 'Bytecode' which runs on any device with a JVM. 'Write Once, Run Anywhere'. Also popularized automatic Garbage Collection.",
       principles: ["Simple, Object-Oriented, and Familiar", "Robust and Secure", "Architecture-Neutral and Portable (WORA)", "High Performance", "Interpreted, Threaded, and Dynamic"]
     },
     future: {
@@ -585,6 +597,9 @@ int flags = 1 << 3; // Set 4th bit`
     },
     purpose: {
       history: "Developed in 1972 by Dennis Ritchie at Bell Labs for the Unix operating system. It was designed to be a system programming language that was both efficient and portable.",
+      creationStory: "In 1972, Ken Thompson and Dennis Ritchie were working on the UNIX operating system on a PDP-11. They tried to rewrite UNIX in high-level B language, but B was too slow. Ritchie added data types to B, creating 'C'.",
+      limitationsOfEra: "Operating Systems were written in Assembly, which was distinct for every machine. Porting UNIX to a new computer meant rewriting the whole OS.",
+      coreInnovation: "Portability. C was the first language that was high-level enough to structure code nicely, but low-level enough to write an OS kernel that could run on different hardware with minimal changes.",
       principles: ["Efficiency above all", "Small, simple core language", "Trust the programmer", "Close to hardware"]
     },
     future: {
@@ -705,6 +720,9 @@ function wrap<T>(item: T): T[] {
     },
     purpose: {
       history: "Released by Microsoft in 2012, created by Anders Hejlsberg (also created C#). It was designed to solve JavaScript's scalability problems for large applications.",
+      creationStory: "By 2010, massive JavaScript apps were becoming unmaintainable due to lack of types. Microsoft wanted a solution for large-scale web dev. Anders Hejlsberg (creator of C#) led the team to create a superset of JS that added static typing.",
+      limitationsOfEra: "JavaScript had no classes (at the time), no modules, and no type checking. Refactoring a 100k line JS app was a nightmare of 'undefined is not a function' errors.",
+      coreInnovation: "Gradual Typing. You could adopt it piece by piece. It wasn't a new language that replaced JS; it *was* JS with types, and it compiled down to clean JS that ran anywhere.",
       principles: ["Optional static typing", "Modern JavaScript features", "Zero runtime overhead", "Great tooling"]
     },
     future: {
@@ -825,6 +843,9 @@ type Shape interface {
     },
     purpose: {
       history: "Created at Google in 2007 by Robert Griesemer, Rob Pike, and Ken Thompson. Designed to improve programming productivity in an era of multicore, networked machines and large codebases.",
+      creationStory: "At Google, C++ builds were taking hours. The codebases were too complex. Rob Pike, Ken Thompson (Unix creator), and Robert Griesemer sketched a new language on a whiteboard while waiting for a C++ compile.",
+      limitationsOfEra: "C++ was powerful but slow to compile and overly complex. Java was verbose. Python was slow. There was no 'fast, simple, compiled' language for modern cloud servers.",
+      coreInnovation: "Concurrency as a first-class citizen (Goroutines). Blazing fast compilation. Radical simplicity (no inheritance, no exceptions, no circular dependencies).",
       principles: ["Simplicity", "Fast compilation", "Concurrency built-in", "Efficiency"]
     },
     future: {
@@ -945,6 +966,9 @@ enum Message {
     },
     purpose: {
       history: "Started at Mozilla in 2006 by Graydon Hoare. Developed to fix memory safety issues in the Firefox browser engine.",
+      creationStory: "Mozilla needed to fix critical memory safety bugs in Firefox (written in C++). A personal project by Graydon Hoare caught their eye. They sponsored it to build a new browser engine, Servo.",
+      limitationsOfEra: "C++ offered speed but was memory-unsafe, leading to 70% of all security vulnerabilities. Garbage collected languages (Java, Go) were safe but had runtime pauses unacceptable for browser engines.",
+      coreInnovation: "The Borrow Checker. It proves memory safety at compile-time without a Garbage Collector. It ensures you can't have data races or dangling pointers.",
       principles: ["Safety", "Speed", "Concurrency"]
     },
     future: {
@@ -1055,6 +1079,9 @@ if (x is String) print(x.length) // x cast to String automatically`
     },
     purpose: {
       history: "Developed by JetBrains in 2011. Designed to be more concise and safe than Java while being fully interoperable.",
+      creationStory: "JetBrains needed a language for their own IDE development. Java was too verbose and Scala was too slow to compile. They wanted something that could seamlessly mix with their massive Java codebase but offer modern features.",
+      limitationsOfEra: "Java was stagnant (stuck on Java 6 for Android). NullPointerExceptions were a billion-dollar mistake. Scala was too complex for average teams.",
+      coreInnovation: "Null Safety baked into the type system. 100% Java interoperability (you can call Java from Kotlin and vice versa). Pragmatic features like Extension Functions.",
       principles: ["Conciseness", "Safety", "Pragmatism", "Interoperability"]
     },
     future: {
@@ -1169,6 +1196,9 @@ let greet = { (name: String) in
     },
     purpose: {
       history: "Developed by Apple and released in 2014. Designed to replace Objective-C with a safer, faster, and more modern alternative.",
+      creationStory: "Apple's Objective-C (1984) was showing its age. It was unsafe and verbose. Chris Lattner started Swift in 2010 to create a language that was 'fast, safe, and expressive', incorporating best ideas from Rust, Haskell, and Python.",
+      limitationsOfEra: "Objective-C's manual memory management and C-based syntax were barriers to entry. Buffer overflows and null pointer crashes were common.",
+      coreInnovation: "Safety by default (Variables must be initialized, optionals for nulls). Performance comparable to C++. Playground interactive coding.",
       principles: ["Safe", "Fast", "Expressive"]
     },
     future: {
