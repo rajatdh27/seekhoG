@@ -6,119 +6,81 @@ export const variablesData = {
     themeColor: "yellow-400",
     gradient: "from-yellow-400 to-amber-400",
     intro: {
-      description: "Think of a variable as a labeled box where you can store information. Just like you might label a box 'Photos' to store your pictures, in programming you give variables names to store data. JavaScript is dynamically typed, meaning you don't need to specify the type of data you're storing - JavaScript figures it out automatically.",
+      description: "A variable is like a labeled box in the computer's memory. You give the box a name (the label) and put information inside. In JavaScript, these boxes are 'magic'—they can hold a number one minute and a word the next without any extra setup.",
       highlights: [
-        { title: "Store Information", text: "Remember user names, scores, settings, etc.", icon: "✅" },
-        { title: "Reuse Values", text: "Use the same value multiple times without repeating it", icon: "✅" },
-        { title: "Change Data", text: "Update values as your program runs (like a counter)", icon: "✅" },
-        { title: "Make Code Readable", text: "Names like 'userName' are clearer than random values", icon: "✅" }
+        { title: "The Label", text: "Choose a name like 'playerScore' so you know what's inside.", icon: "🏷️" },
+        { title: "The Box", text: "The computer sets aside a tiny bit of space to hold your data.", icon: "📦" },
+        { title: "The Content", text: "You can put numbers, text, or lists inside the box.", icon: "💾" },
+        { title: "Changing", text: "You can empty the box and put something new in it anytime.", icon: "🔄" }
       ]
     },
     declarations: {
-      description: "In JavaScript, you have 3 ways to create (declare) a variable. Modern code prefers const and let over the older var keyword.",
-      code: `// Modern declaration keywords
-let age = 25;              // ✅ Changeable variable
-const PI = 3.14;           // ✅ Fixed constant
-var name = "Old way";      // ⚠️ Avoid using var!
+      description: "To create a variable box in JavaScript, you use 'let' (if you'll change it later) or 'const' (if you want to lock it).",
+      code: `// 1. Create a box named 'age' and put 25 in it
+let age = 25;
 
-// Dynamic typing: same variable can hold different types
-let data = 42;             // Currently a number
-data = "hello";            // Now a string - No error!`,
+// 2. Change the content of the 'age' box
+age = 26; 
+
+// 3. Create a locked box named 'pi'
+const pi = 3.14;`,
       constants: {
         keyword: "const",
-        description: "Use const by default for values that won't change. It prevents accidental reassignments and makes code easier to optimize.",
-        code: `const API_KEY = "abc123";
-// API_KEY = "new"; // ❌ ERROR: Assignment to constant variable.`
+        description: "Use 'const' for boxes that should never be emptied or changed, like your name or a math rule.",
+        code: `const myName = "Rajat";`
       }
     },
     types: {
       primitive: [
-        { name: "Number", size: "8 bytes", range: "Integer & Float" },
-        { name: "String", size: "Dynamic", range: "Textual data" },
-        { name: "Boolean", size: "1 byte", range: "true / false" },
-        { name: "BigInt", size: "Dynamic", range: "Large integers" },
-        { name: "Undefined", size: "N/A", range: "Not assigned" },
-        { name: "Null", size: "N/A", range: "Intentionally empty" },
-        { name: "Symbol", size: "Unique", range: "Unique identifiers" }
+        { name: "Number", size: "8 bytes", range: "Any number (10, 3.14, -5)" },
+        { name: "String", size: "Dynamic", range: "Text inside quotes (\"Hello\")" },
+        { name: "Boolean", size: "1 bit", range: "True or False (Yes/No)" },
+        { name: "Undefined", size: "N/A", range: "A box that was never filled" }
       ]
     },
     limits: {
-      description: "Every data type in JavaScript has memory limits. Understanding these helps you write efficient code and avoid precision errors.",
+      description: "JavaScript boxes are very flexible, but they have limits on how much detail they can remember for extremely large numbers.",
       table: {
-        headers: ["Data Type", "Memory Size", "Typical Range", "Max Value"],
+        headers: ["Box Type", "What fits?", "Limit"],
         rows: [
-          ["Number", "8 bytes", "64-bit float", "1.79e+308"],
-          ["Safe Integer", "8 bytes", "±9 quadrillion", "9,007,199,254,740,991"],
-          ["BigInt", "Dynamic", "Memory limited", "No theoretical limit"],
-          ["String", "2 bytes/char", "UTF-16", "~2^53 characters"],
-          ["Array", "Dynamic", "0 to 2^32-1", "4,294,967,295 elements"]
+          ["Number", "Standard numbers", "Up to 15 digits precisely"],
+          ["BigInt", "Huge whole numbers", "Limited only by computer memory"],
+          ["String", "Text data", "Over 1 billion characters"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "Floating-point arithmetic is imprecise (0.1 + 0.2 ≠ 0.3)",
-        "Type coercion can cause unexpected results ('5' + 3 = '53')",
-        "No integer overflow errors - precision loss happens silently",
-        "undefined vs null - two different ways to represent 'nothing'",
-        "String immutability - operations create new strings in memory"
+        "Math with decimals can be slightly fuzzy (0.1 + 0.2 isn't exactly 0.3)",
+        "If you add text '5' to number 5, JS gets confused and makes '55'",
+        "JS is very loose; it won't stop you from doing silly things with boxes"
       ]
     },
     collections: {
-      description: "JavaScript provides powerful built-in structures for grouping data, from simple Arrays to specialized Maps and Sets.",
-      code: `// Array - Ordered list
-let fruits = ["apple", "banana"];
-fruits.push("orange");
+      description: "Sometimes you need a container that holds many smaller boxes at once.",
+      code: `// A List (Array) - One big box with slots
+let colors = ["Red", "Green", "Blue"];
 
-// Object - Key-Value pairs
-let user = { name: "Alice", age: 25 };
-
-// Map - Advanced Key-Value
-let scores = new Map();
-scores.set("Alice", 95);
-
-// Set - Unique values only
-let unique = new Set([1, 2, 2, 3]); // {1, 2, 3}`
+// A Group (Object) - A box with named folders
+let car = {
+  brand: "Tesla",
+  model: "Model 3"
+};
+`
     },
     advanced: {
-      description: "JavaScript features like closures, proxies, and symbols allow for complex logic and meta-programming.",
-      code: `// Destructuring
-const { name, age } = user;
-const [first, second] = fruits;
-
-// Spread & Rest
-const copy = [...fruits];
-const merged = { ...user, city: "NYC" };
-
-// Optional Chaining
-const street = user?.address?.street;
-
-// Nullish Coalescing
-const theme = user.theme ?? "dark";`
+      description: "Quick ways to move data between boxes.",
+      code: `// Pulling data out of a group box
+const { brand } = car; // 'brand' is now its own box!
+`
     },
     usage: {
       applications: [
-        { title: "Frontend Web", text: "The only language that runs natively in all browsers", icon: "🌐" },
-        { title: "Backend (Node.js)", text: "High-performance server-side APIs and microservices", icon: "🖥️" },
-        { title: "Mobile (React Native)", text: "Building iOS and Android apps with one codebase", icon: "📱" },
-        { title: "Desktop (Electron)", text: "Powering apps like VS Code, Slack, and Discord", icon: "💻" }
+        { title: "Websites", text: "Making buttons click and menus slide.", icon: "🌐" },
+        { title: "Apps", text: "Building mobile apps for iPhone and Android.", icon: "📱" },
+        { title: "Servers", text: "Handling data behind the scenes.", icon: "🖥️" }
       ],
-      companies: ["Facebook", "Google", "Netflix", "Uber", "Amazon", "PayPal"]
-    },
-    purpose: {
-      history: "Created in 1995 by Brendan Eich at Netscape in just 10 days! Originally designed to make static web pages interactive, it has evolved into a universal general-purpose language.",
-      creationStory: "In 1995, the web was static HTML. Netscape wanted a language for non-programmers to add interactivity (like form validation) directly in the browser. They considered Java, but it was too heavy. Brendan Eich was tasked to create a 'glue language'. He prototyped 'Mocha' (later JavaScript) in 10 days.",
-      limitationsOfEra: "Web pages were read-only documents. Server round-trips were slow. Java applets were too heavy and slow to load for simple tasks.",
-      coreInnovation: "The DOM (Document Object Model) API, allowing code to modify the web page in real-time. First-class functions and prototype-based objects provided flexibility.",
-      principles: ["Dynamic Typing", "First-class Functions", "Prototypal Inheritance", "Event-driven architecture"]
-    },
-    future: {
-      trends: [
-        "TypeScript becoming the professional standard",
-        "Server-side execution with Bun and Deno",
-        "Edge computing and serverless dominance",
-        "AI integration via libraries like TensorFlow.js"
-      ]
+      companies: ["Google", "Netflix", "Facebook"]
     }
   },
   python: {
@@ -128,117 +90,76 @@ const theme = user.theme ?? "dark";`
     themeColor: "green-400",
     gradient: "from-green-400 to-emerald-400",
     intro: {
-      description: "Think of a variable as a labeled container where you can store information. In Python, you don't need any complex setup - you just give a name to a value and Python handles the rest. Its syntax is designed to be as close to English as possible.",
+      description: "A variable is like a labeled box in the computer's memory. You give the box a name (the label) and put information inside. Python is the world's most popular beginner language because creating these boxes is as easy as writing a normal sentence. You don't need fancy keywords—just name it and fill it.",
       highlights: [
-        { title: "Simplicity", text: "No keywords like 'let' or 'int' needed - just name = value", icon: "✅" },
-        { title: "Dynamic Typing", text: "Python figures out the data type automatically", icon: "✅" },
-        { title: "Readability", text: "Code that looks like prose, making it easy to learn", icon: "✅" },
-        { title: "Batteries Included", text: "Massive standard library for almost any task", icon: "✅" }
+        { title: "Simple Labeling", text: "No special setup; just 'name = value'.", icon: "🏷️" },
+        { title: "Smart Storage", text: "Python automatically picks the right box size for you.", icon: "📦" },
+        { title: "Easy Access", text: "Call the name, and the computer instantly brings the content.", icon: "💾" },
+        { title: "Flexible", text: "Swap a number for text in the same box anytime.", icon: "🔄" }
       ]
     },
     declarations: {
-      description: "Python makes creating variables incredibly simple! No keywords required. Just write the variable name, an equals sign (=), and the value.",
-      code: `# Standard variable assignment
-age = 25                    # ✅ An integer
-name = "Alice"              # ✅ A string
-price = 19.99               # ✅ A float (decimal)
+      description: "In Python, you create a variable box just by typing the label name, an equals sign, and what you want to store.",
+      code: `# 1. Create a box named 'score' and put 100 in it
+score = 100
 
-# Multiple assignment
-x, y, z = 1, 2, 3           # ✅ Assign three at once
-a = b = c = 0               # ✅ All are now 0`,
+# 2. Change the content of the 'score' box
+score = 150
+
+# 3. Put text in a box
+name = "Alice"`,
       constants: {
-        keyword: "NAME_IN_CAPS",
-        description: "Python doesn't have true constants. By convention, we use UPPER_CASE names to tell other developers 'Please don't change this value'.",
-        code: `MAX_USERS = 100
-PI = 3.14159
-# We can still change them, but we shouldn't!
-# PI = 3.0 # Technically allowed, but bad practice`
+        keyword: "UPPER_CASE",
+        description: "Python doesn't physically lock boxes. We just use ALL CAPS to tell others 'Please don't change this'.",
+        code: `MAX_LIVES = 3`
       }
     },
     types: {
       primitive: [
-        { name: "int", size: "Unlimited", range: "All whole numbers" },
-        { name: "float", size: "8 bytes", range: "Decimal numbers" },
-        { name: "str", size: "Dynamic", range: "Unicode text" },
-        { name: "bool", size: "1 byte", range: "True / False" },
-        { name: "NoneType", size: "N/A", range: "Represent 'nothing'" },
-        { name: "complex", size: "16 bytes", range: "Imaginary numbers" }
+        { name: "int", size: "Flexible", range: "Whole numbers (1, 2, 3)" },
+        { name: "float", size: "8 bytes", range: "Decimal numbers (3.14)" },
+        { name: "str", size: "Dynamic", range: "Text (\"Hello\")" },
+        { name: "bool", size: "Tiny", range: "True or False" }
       ]
     },
     limits: {
-      description: "Python integers have arbitrary precision (they grow as large as your RAM allows), but other types have standard limits.",
+      description: "Python is incredibly powerful; its whole-number boxes can grow to be as big as your entire computer memory.",
       table: {
-        headers: ["Data Type", "Memory Size", "Precision", "Max Value"],
+        headers: ["Box Type", "Capacity", "Precision"],
         rows: [
-          ["int", "Unlimited", "Arbitrary precision", "Limited by RAM"],
-          ["float", "8 bytes", "15-17 digits", "1.8e+308"],
-          ["str", "Dynamic", "UTF-8/Unicode", "Memory limited"],
-          ["list", "Dynamic", "O(1) access", "2^63 - 1 elements"],
-          ["bool", "1 byte", "True/False", "N/A"]
+          ["int", "Infinite", "Perfect precision"],
+          ["float", "Standard", "Up to 15 decimal points"],
+          ["str", "Huge", "Depends on your RAM"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "Slower execution than compiled languages (C++/Java)",
-        "Global Interpreter Lock (GIL) limits true multi-threading",
-        "Significant memory overhead per object (28 bytes for a small int!)",
-        "Indentation-sensitive syntax (whitespace matters)",
-        "Mobile development is not a first-class citizen"
+        "Python is a bit slower at moving data than 'strict' languages.",
+        "It uses more memory per box than languages like C.",
+        "Spaces at the start of lines are critical; get them wrong and it breaks."
       ]
     },
     collections: {
-      description: "Python has rich, built-in collection types that are highly flexible and performant for data manipulation.",
-      code: `# List - Ordered, mutable
-nums = [1, 2, 3]
-nums.append(4)
+      description: "Special containers for when you have a lot of items to store.",
+      code: `# A List - An ordered row of items
+fruits = ["Apple", "Banana"]
 
-# Tuple - Ordered, immutable
-point = (10, 20)
-
-# Set - Unique, unordered
-unique = {1, 2, 2, 3} # {1, 2, 3}
-
-# Dictionary - Key-Value
-user = {"name": "Alice", "age": 25}`
+# A Dictionary - A box where every value has its own label
+user = {"id": 1, "name": "Rajat"}`
     },
     advanced: {
-      description: "Python supports advanced features like decorators, generators, and comprehensive type hinting.",
-      code: `# List Comprehension
-squares = [x**2 for x in range(10)]
-
-# Generators (Memory efficient)
-def count():
-    yield 1
-    yield 2
-
-# Type Hinting
-def greet(name: str) -> str:
-    return f"Hello {name}"`
+      description: "Smart ways to fill boxes.",
+      code: `# Create a list of 10 boxes in one line
+numbers = [x for x in range(10)]`
     },
     usage: {
       applications: [
-        { title: "AI & Machine Learning", text: "The undisputed king of artificial intelligence", icon: "🤖" },
-        { title: "Data Science", text: "Powering pandas, NumPy, and massive data analysis", icon: "📊" },
-        { title: "Backend Web", text: "Django and FastAPI are industry-standard frameworks", icon: "🌐" },
-        { title: "Automation", text: "Perfect for scripting, scraping, and DevOps tasks", icon: "⚙️" }
+        { title: "AI / Robots", text: "Teaching computers to think and see.", icon: "🤖" },
+        { title: "Data", text: "Analyzing massive amounts of science data.", icon: "📊" },
+        { title: "Scripts", text: "Writing small tools to automate your work.", icon: "⚙️" }
       ],
-      companies: ["Google", "Instagram", "Spotify", "Netflix", "Dropbox", "NASA"]
-    },
-    purpose: {
-      history: "Released in 1991 by Guido van Rossum. Named after 'Monty Python's Flying Circus', it was created to be a language that prioritizes developer happiness and readability over raw performance.",
-      creationStory: "In the late 80s, Guido was working on the Amoeba distributed OS. He wanted a scripting language that was better than Shell but simpler than C for system administration utilities. He spent his Christmas break in 1989 implementing Python.",
-      limitationsOfEra: "C was too complex for simple scripts. Shell scripts (Bash) were hard to read and couldn't handle complex logic or data structures elegantly.",
-      coreInnovation: "Executable pseudocode. Enforced readability through indentation. A massive standard library ('Batteries Included') meant developers didn't have to reinvent the wheel for basic tasks.",
-      principles: ["Readability counts", "Simple is better than complex", "One obvious way to do things", "Beautiful is better than ugly"]
-    },
-    future: {
-      trends: [
-        "Python 3.13+ JIT compiler bringing 2-3x speedup",
-        "Continued dominance in AI and LLM infrastructure",
-        "Better type checking with Mypy and static analysis",
-        "WebAssembly (PyScript) bringing Python to the browser"
-      ]
+      companies: ["NASA", "Instagram", "Spotify"]
     }
   },
   cpp: {
@@ -248,114 +169,77 @@ def greet(name: str) -> str:
     themeColor: "indigo-400",
     gradient: "from-indigo-400 to-blue-400",
     intro: {
-      description: "Think of a variable as a named memory location with a type. C++ gives you the power of low-level hardware control while providing high-level abstractions like classes and templates. It's the language of choice when every millisecond and every byte matters.",
+      description: "A variable is like a labeled box in the computer's memory. You give the box a name (the label) and put information inside. In C++, you must be very specific: you have to tell the computer exactly what *size* and *shape* the box should be before you use it. This makes your program incredibly fast because the computer doesn't have to guess.",
       highlights: [
-        { title: "Zero-Overhead", text: "You only pay for the features you actually use", icon: "✅" },
-        { title: "Hardware Control", text: "Directly manipulate memory addresses and CPU features", icon: "✅" },
-        { title: "Performance", text: "Compiled to highly optimized native machine code", icon: "✅" },
-        { title: "Multi-Paradigm", text: "Supports OOP, Generic, and Procedural styles", icon: "✅" }
+        { title: "Strict Labels", text: "You must say 'int' for numbers or 'string' for text.", icon: "🏷️" },
+        { title: "Manual Control", text: "You decide exactly how much memory each box uses.", icon: "🎛️" },
+        { title: "Extreme Speed", text: "Because you are so specific, the computer runs it instantly.", icon: "🚀" },
+        { title: "Fixed Purpose", text: "Once a box is for numbers, you can't put a word in it.", icon: "🔒" }
       ]
     },
     declarations: {
-      description: "C++ is statically typed. You must specify the type before the name, but modern C++11+ allows 'auto' for type deduction.",
-      code: `// Traditional explicit typing
-int age = 25;              
+      description: "To make a box in C++, you write the Type, then the Name, then the Value.",
+      code: `// 1. Create a 'whole number' box named 'lives'
+int lives = 3;
+
+// 2. Create a 'decimal' box named 'price'
 double price = 19.99;
 
-// Modern C++11+ type inference
-auto score = 100;          // Compiler figures out it's an int
-auto name = "Alice";       // Compiler figures out it's a string
+// 3. Create a 'text' box
+std::string name = "Rajat";
 
-// Pointer declaration (memory address)
-int* ptr = &age;           // Stores the address of 'age'`,
+// lives = "Empty"; // ❌ Error! Can't put text in an 'int' box.`,
       constants: {
-        keyword: "constexpr",
-        description: "Modern C++ uses constexpr for compile-time constants, which are even more powerful and optimized than standard const variables.",
-        code: `constexpr int MAX_LIMIT = 100; // Calculated at compile-time
-const int runtime_val = getUserInput(); // Known at runtime`
+        keyword: "const",
+        description: "Locks the box so the information inside can never be changed.",
+        code: `const int MAX_LEVEL = 100;`
       }
     },
     types: {
       primitive: [
-        { name: "int", size: "4 bytes*", range: "±2.1 billion" },
-        { name: "long long", size: "8 bytes", range: "±9 quintillion" },
-        { name: "float", size: "4 bytes", range: "7 decimal digits" },
-        { name: "double", size: "8 bytes", range: "15 decimal digits" },
-        { name: "bool", size: "1 byte", range: "true / false" },
-        { name: "char", size: "1 byte", range: "-128 to 127" },
-        { name: "void", size: "0 bytes", range: "No value" }
+        { name: "int", size: "4 bytes", range: "Whole numbers up to 2 billion" },
+        { name: "double", size: "8 bytes", range: "Very precise decimals" },
+        { name: "char", size: "1 byte", range: "A single character ('A')" },
+        { name: "bool", size: "Tiny", range: "True or False" }
       ]
     },
     limits: {
-      description: "C++ sizes depend on the compiler and architecture, but modern standards (C++11+) provide fixed-width types for reliability.",
+      description: "C++ is built for performance. Every bit of space is used efficiently, but you must choose the right size.",
       table: {
-        headers: ["Data Type", "Standard Size", "Typical Range", "Exact Type"],
+        headers: ["Box Type", "Size", "Max Value"],
         rows: [
-          ["int", "4 bytes", "±2.1 billion", "int32_t"],
-          ["long long", "8 bytes", "±9 quintillion", "int64_t"],
-          ["float", "4 bytes", "7 decimal prec.", "float"],
-          ["double", "8 bytes", "15 decimal prec.", "double"],
-          ["char", "1 byte", "-128 to 127", "int8_t"]
+          ["int", "4 bytes", "2,147,483,647"],
+          ["long long", "8 bytes", "9 quintillion (Huge!)"],
+          ["float", "4 bytes", "7 decimal digits"],
+          ["double", "8 bytes", "15 decimal digits"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "Manual memory management is error-prone (leaks, crashes)",
-        "Extremely complex language with a steep learning curve",
-        "Undefined behavior can lead to silent security bugs",
-        "Slow compilation times for large template-heavy projects",
-        "No standard build system or package manager (CMake used mostly)"
+        "If you put too big a number in a small box, it 'wraps around' to a negative one!",
+        "It won't clean up your old boxes automatically; you have to be careful.",
+        "C++ is very strict; a single missing semicolon breaks everything."
       ]
     },
     collections: {
-      description: "The Standard Template Library (STL) provides highly optimized containers for every use case.",
-      code: `// Vector - Dynamic array (Preferred)
-std::vector<int> vec = {1, 2, 3};
-vec.push_back(4);
-
-// Map - Ordered Key-Value
-std::map<std::string, int> ages;
-ages["Alice"] = 25;
-
-// Set - Unique ordered elements
-std::set<int> unique = {1, 2, 2, 3}; // {1, 2, 3}`
+      description: "Advanced containers provided by the C++ Standard Library (STL).",
+      code: `// A Vector - A box that can grow to hold more items
+std::vector<int> scores = {10, 20};
+scores.push_back(30); // Add a new item`
     },
     advanced: {
-      description: "C++ advanced features include move semantics, smart pointers, and template meta-programming.",
-      code: `// Smart Pointers (RAII)
-auto ptr = std::make_unique<int>(42);
-
-// Lambda Expressions
-auto sum = [](int a, int b) { return a + b; };
-
-// Templates (Generic Code)
-template<typename T>
-T max(T a, T b) { return a > b ? a : b; }`
+      description: "Talking directly to the computer's memory addresses.",
+      code: `int x = 10;
+int* address = &x; // 'address' stores WHERE the box 'x' is located.`
     },
     usage: {
       applications: [
-        { title: "Game Engines", text: "Unreal Engine and AAA games use C++ for raw speed", icon: "🎮" },
-        { title: "Operating Systems", text: "The core of Windows, macOS, and performance kernels", icon: "💻" },
-        { title: "High-Freq Trading", text: "Executing financial trades in microseconds", icon: "💹" },
-        { title: "Browsers", text: "Chrome and Firefox engines are written in C++", icon: "🌐" }
+        { title: "High-End Games", text: "Powering engines like Unreal Engine and Fortnite.", icon: "🎮" },
+        { title: "Browsers", text: "The foundation of Chrome and Safari.", icon: "🌐" },
+        { title: "Trading", text: "Systems that need to buy/sell stocks in microseconds.", icon: "💹" }
       ],
-      companies: ["Microsoft", "Google", "Apple", "Adobe", "Blizzard", "NASA"]
-    },
-    purpose: {
-      history: "Created in 1985 by Bjarne Stroustrup as 'C with Classes'. The goal was to add high-level organization to C without losing the efficiency that made C great.",
-      creationStory: "In 1979, Bjarne Stroustrup began work on 'C with Classes'. He had experience with Simula (the first OOP language), which was good for organizing code but too slow. C was fast but disorganized. He combined them.",
-      limitationsOfEra: "C programs were becoming massive and unmanageable spaghetti code. Simula was elegant but impractically slow for systems programming.",
-      coreInnovation: "Zero-Overhead Abstraction. You could write high-level classes, inheritance, and templates, but the compiler would optimize it down to code as fast as hand-written C.",
-      principles: ["Don't pay for what you don't use", "Leave no room for a lower-level language", "Trust the programmer"]
-    },
-    future: {
-      trends: [
-        "C++23/26 focusing on safety and better ergonomics",
-        "Competition from Rust forcing better safety defaults",
-        "Modules finally replacing old header-file system",
-        "Increasing use in high-performance AI inference"
-      ]
+      companies: ["Microsoft", "Apple", "Blizzard"]
     }
   },
   java: {
@@ -365,124 +249,76 @@ T max(T a, T b) { return a > b ? a : b; }`
     themeColor: "red-400",
     gradient: "from-orange-500 to-red-500",
     intro: {
-      description: "Think of a variable as a strictly labeled container. In Java, every container has a specific type that determines exactly what can fit inside. Java is famous for its 'Write Once, Run Anywhere' philosophy and its strict rules that help prevent mistakes.",
+      description: "A variable is like a labeled box in the computer's memory. You give the box a name (the label) and put information inside. Java is famous for its strict 'safety inspector'. Every box must have a clear type, and the inspector checks your boxes before the program starts to make sure no errors occur.",
       highlights: [
-        { title: "Reliability", text: "Strict rules catch many errors before the program even runs", icon: "✅" },
-        { title: "Explicit Code", text: "It's always clear what kind of data you're working with", icon: "✅" },
-        { title: "Memory Safety", text: "Java manages memory for you automatically (Garbage Collection)", icon: "✅" },
-        { title: "Scalability", text: "Perfect for large teams and massive codebases", icon: "✅" }
+        { title: "Safe Labels", text: "The computer confirms every box matches its content.", icon: "🛡️" },
+        { title: "Automatic Cleanup", text: "When you're done with a box, Java throws it away for you.", icon: "🧹" },
+        { title: "Universal", text: "Java boxes work the same on any computer in the world.", icon: "🌍" },
+        { title: "Organized", text: "Built for huge teams to work on the same project.", icon: "🏢" }
       ]
     },
     declarations: {
-      description: "In Java, every variable declaration follows this pattern: Type name = value;. You must tell Java the Type (like int, String, or double) first.",
-      code: `// Basic pattern: Type variableName = value;
-int age = 25;                // ✅ Integer (whole number)
-double price = 19.99;        // ✅ Double (decimal number)
-boolean isActive = true;     // ✅ Boolean (true or false)
-char grade = 'A';            // ✅ Character (single letter)
+      description: "Just like C++, you write the Type, then the Name, then the Value.",
+      code: `// 1. Create a number box
+int count = 10;
 
-// Multiple variables of the same type
-int x = 10, y = 20, z = 30;  // ✅ All are integers
+// 2. Create a text box
+String message = "Welcome";
 
-// Reassigning values (must match the type!)
-age = 26;                    // ✅ OK
-// age = "Alice";            // ❌ ERROR: Cannot put String in an int!`,
+// 3. Create a decimal box
+double weight = 70.5;
+
+// count = "Empty"; // ❌ Error! The inspector stops this.` ,
       constants: {
         keyword: "final",
-        description: "Use the final keyword to create a constant. A final variable cannot be changed once it is assigned a value.",
-        code: `final double PI = 3.14159;  // ✅ Value is locked!
-// PI = 3.14;                // ❌ ERROR: cannot assign a value to final variable
-
-final int MAX_ATTEMPTS = 3;
-// MAX_ATTEMPTS = 5;         // ❌ ERROR`
+        description: "The 'final' keyword locks the box so nobody can change it.",
+        code: `final int ID = 12345;`
       }
     },
     types: {
       primitive: [
-        { name: "byte", size: "8-bit", range: "-128 to 127" },
-        { name: "short", size: "16-bit", range: "-32,768 to 32,767" },
-        { name: "int", size: "32-bit", range: "±2.1 billion" },
-        { name: "long", size: "64-bit", range: "±9 quintillion" },
-        { name: "float", size: "32-bit", range: "±3.4e38" },
-        { name: "double", size: "64-bit", range: "±1.7e308" },
-        { name: "char", size: "16-bit", range: "Unicode characters" },
-        { name: "boolean", size: "1-bit*", range: "true / false" }
+        { name: "int", size: "4 bytes", range: "Whole numbers (±2 billion)" },
+        { name: "long", size: "8 bytes", range: "Huge whole numbers" },
+        { name: "double", size: "8 bytes", range: "Precise decimals" },
+        { name: "boolean", size: "Tiny", range: "True or False" }
       ]
     },
     limits: {
-      description: "Java types have strictly defined sizes, ensuring the same behavior across all platforms (JVM).",
+      description: "Java was designed to be predictable. An 'int' box is the exact same size whether you are on a phone or a supercomputer.",
       table: {
-        headers: ["Data Type", "Size", "Range", "Default"],
+        headers: ["Box Type", "Size", "Typical Limit"],
         rows: [
-          ["byte", "8-bit", "-128 to 127", "0"],
-          ["short", "16-bit", "-32,768 to 32,767", "0"],
-          ["int", "32-bit", "±2.1 billion", "0"],
-          ["long", "64-bit", "±9 quintillion", "0L"],
-          ["float", "32-bit", "±3.4e38", "0.0f"],
-          ["double", "64-bit", "±1.7e308", "0.0d"],
-          ["char", "16-bit", "Unicode", "'\u0000'"]
+          ["int", "32-bit", "±2.1 billion"],
+          ["long", "64-bit", "±9.2 quintillion"],
+          ["char", "16-bit", "Any single letter/symbol"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "NullPointerException is the most common runtime error",
-        "Verbose syntax compared to modern languages like Kotlin",
-        "Primitive types are not objects (requires Wrapper classes)",
-        "No unsigned integer types (except via Java 8+ methods)",
-        "Memory overhead of the JVM (Java Virtual Machine)"
+        "You have to write more code to do simple things (verbose).",
+        "If a box is 'null' (missing), the program might crash.",
+        "It uses more memory than C or C++ to stay safe."
       ]
     },
     collections: {
-      description: "Java has a robust Collections Framework for handling data structures like lists, sets, and maps.",
-      code: `// ArrayList - Dynamic array
-List<String> list = new ArrayList<>();
-list.add("Java");
-
-// HashMap - Key-Value pairs
-Map<String, Integer> map = new HashMap<>();
-map.put("Score", 100);
-
-// HashSet - Unique values only
-Set<Integer> set = new HashSet<>();
-set.add(1);`
+      description: "Powerful containers for managing groups of data.",
+      code: `// A flexible list
+List<String> names = new ArrayList<>();
+names.add("Rajat");`
     },
     advanced: {
-      description: "Java features like Streams, Lambdas, and Generics allow for functional and type-safe programming.",
-      code: `// Streams (Modern Java)
-list.stream()
-    .filter(s -> s.startsWith("J"))
-    .forEach(System.out::println);
-
-// Optional (Avoid Nulls)
-Optional<String> name = Optional.ofNullable(null);
-
-// var (Type Inference - Java 10+)
-var message = "Hello";`
+      description: "Modern Java features for data processing.",
+      code: `// Processing a list in one go
+names.stream().forEach(System.out::println);`
     },
     usage: {
       applications: [
-        { title: "Enterprise Software", text: "Backbone of large-scale banking and corporate systems", icon: "🏢" },
-        { title: "Android Apps", text: "Primary language for Android development for over a decade", icon: "📱" },
-        { title: "Big Data", text: "Powering Hadoop, Spark, and other massive data tools", icon: "📊" },
-        { title: "Server-Side", text: "Spring Boot is one of the most popular backend frameworks", icon: "🖥️" }
+        { title: "Android", text: "The primary language for millions of phone apps.", icon: "📱" },
+        { title: "Banks", text: "Safe and secure systems for handling money.", icon: "🏦" },
+        { title: "Big Data", text: "Processing massive amounts of corporate info.", icon: "📊" }
       ],
-      companies: ["Google", "Netflix", "Uber", "Amazon", "eBay", "LinkedIn"]
-    },
-    purpose: {
-      history: "Created in 1995 by James Gosling at Sun Microsystems. Originally called 'Oak', it was designed for interactive television but became the language of the web and enterprise.",
-      creationStory: "In the early 90s, Sun Microsystems wanted a platform-independent language for consumer electronics (like cable boxes). The team found C++ too complicated and unsafe. They created 'Oak', which failed in TV sets but flourished when the World Wide Web exploded in 1995.",
-      limitationsOfEra: "C/C++ code had to be recompiled for every single computer architecture. Memory management bugs caused constant crashes.",
-      coreInnovation: "The Java Virtual Machine (JVM). Code compiles to 'Bytecode' which runs on any device with a JVM. 'Write Once, Run Anywhere'. Also popularized automatic Garbage Collection.",
-      principles: ["Simple, Object-Oriented, and Familiar", "Robust and Secure", "Architecture-Neutral and Portable (WORA)", "High Performance", "Interpreted, Threaded, and Dynamic"]
-    },
-    future: {
-      trends: [
-        "Project Loom: Virtual threads for massive scalability",
-        "Project Valhalla: Value types for better performance",
-        "Project Panama: Better interoperability with native code",
-        "Regular 6-month release cycle keeping the language modern"
-      ]
+      companies: ["Amazon", "Uber", "Netflix"]
     }
   },
   c: {
@@ -492,122 +328,73 @@ var message = "Hello";`
     themeColor: "blue-400",
     gradient: "from-blue-500 to-cyan-500",
     intro: {
-      description: "Think of a variable as a direct name for a memory address. C is a low-level language, meaning it doesn't hide how the computer works. When you create a variable, you are literally telling the computer to set aside a specific number of bits in its RAM.",
+      description: "A variable is like a labeled box in the computer's memory. You give the box a name (the label) and put information inside. C is the 'grandfather' of programming. It doesn't have any safety nets—it trusts you to manage every box yourself. It's raw, fast, and the foundation of everything else.",
       highlights: [
-        { title: "Direct Memory Access", text: "Total control over how much RAM your program uses", icon: "✅" },
-        { title: "Blazing Speed", text: "No overhead - code runs as close to the hardware as possible", icon: "✅" },
-        { title: "Predictability", text: "You know exactly how every bit of data is stored", icon: "✅" },
-        { title: "Portability", text: "Foundational language for operating systems and embedded devices", icon: "✅" }
+        { title: "Direct Access", text: "You tell the computer exactly where to put the box.", icon: "🦾" },
+        { title: "No Overhead", text: "C doesn't waste even a single bit of space.", icon: "⚡" },
+        { title: "Small & Fast", text: "C programs are tiny and run at maximum speed.", icon: "💾" },
+        { title: "Low Level", text: "Great for talking to hardware like motors or sensors.", icon: "🏗️" }
       ]
     },
     declarations: {
-      description: "In C, declaration always follows a strict pattern: type name = value;. Unlike modern languages, C is very picky about where and how you declare them.",
-      code: `// Standard pattern: type variable_name = value;
-int score = 100;             // ✅ Integer (whole number)
-float price = 19.99f;        // ✅ Float (decimal number)
-double pi = 3.14159265;      // ✅ Double (precise decimal)
-char grade = 'A';            // ✅ Character (single letter)
+      description: "In C, you must specify the type. If you don't fill the box immediately, it will contain random 'junk' data from the memory!",
+      code: `// 1. Create a number box
+int age = 25;
 
-// Multiple variables of the same type
-int x = 10, y = 20, z = 30;  // ✅ All are integers
+// 2. Create a character box
+char grade = 'A';
 
-// Declaration without initialization (BE CAREFUL!)
-int count;                   // ⚠️ Contains random data!
-count = 0;                   // ✅ Now it's safe to use`,
+// 3. Declaration without filling (DANGEROUS)
+int score; // ⚠️ This box has random data in it!
+score = 0; // ✅ Now it's safe.`,
       constants: {
         keyword: "const",
-        description: "If you want to make a variable that cannot be changed after it's created, use the const keyword.",
-        code: `const float PI = 3.14159;  // ✅ Value is locked!
-// PI = 3.14;               // ❌ ERROR: Cannot change constant!
-
-const int MAX_USERS = 100;
-// MAX_USERS = 200;         // ❌ ERROR`
+        description: "Prevents anyone from changing the value in the box.",
+        code: `const float PI = 3.14;`
       }
     },
     types: {
       primitive: [
-        { name: "char", size: "1 byte", range: "-128 to 127" },
-        { name: "int", size: "4 bytes", range: "±2.1 billion" },
-        { name: "short", size: "2 bytes", range: "±32,768" },
-        { name: "long", size: "4 or 8 bytes", range: "Varies" },
-        { name: "float", size: "4 bytes", range: "7 decimal digits" },
-        { name: "double", size: "8 bytes", range: "15 decimal digits" },
-        { name: "void", size: "0 bytes", range: "N/A" }
+        { name: "int", size: "4 bytes", range: "Standard whole numbers" },
+        { name: "char", size: "1 byte", range: "Single letters" },
+        { name: "float", size: "4 bytes", range: "Decimal numbers" }
       ]
     },
     limits: {
-      description: "C gives you direct control over memory, but limits are platform-dependent. Standard sizes (C99+) are generally predictable.",
+      description: "Limits in C depend on your computer hardware. A box on your laptop might be bigger than a box on a tiny microwave chip.",
       table: {
-        headers: ["Data Type", "Typical Size", "Minimum Value", "Maximum Value"],
+        headers: ["Box Type", "Size", "Max Value"],
         rows: [
-          ["char", "1 byte", "-128", "127"],
-          ["unsigned char", "1 byte", "0", "255"],
-          ["short", "2 bytes", "-32,768", "32,767"],
-          ["int", "4 bytes", "-2,147,483,648", "2,147,483,647"],
-          ["long long", "8 bytes", "-9.22e18", "9.22e18"],
-          ["float", "4 bytes", "1.2e-38", "3.4e38"],
-          ["double", "8 bytes", "2.3e-308", "1.7e308"]
+          ["char", "1 byte", "127"],
+          ["int", "4 bytes", "2.1 billion"],
+          ["long", "8 bytes", "9.2 quintillion"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "No bounds checking for arrays (buffer overflows)",
-        "No automatic memory management (manual malloc/free)",
-        "Undefined behavior is easy to trigger",
-        "No built-in string type (char arrays only)",
-        "Integer overflow happens silently"
+        "No safety features; if you make a mistake, the whole computer might crash.",
+        "Handling text (strings) is notoriously difficult in C.",
+        "You have to manually create and destroy your boxes (memory management)."
       ]
     },
     collections: {
-      description: "C doesn't have a rich standard library for collections. You mostly work with raw arrays or build your own structures.",
-      code: `// Array - Fixed size, contiguous memory
-int nums[5] = {1, 2, 3, 4, 5};
-
-// Struct - Custom data type
-struct User {
-    char name[50];
-    int age;
-};
-
-// Pointer Array
-int* heap_array = malloc(5 * sizeof(int));`
+      description: "C only has simple Arrays—a row of boxes that cannot grow.",
+      code: `// A fixed row of 5 boxes
+int numbers[5] = {1, 2, 3, 4, 5};`
     },
     advanced: {
-      description: "C's most powerful (and dangerous) features are Pointers and Direct Memory Access.",
-      code: `// Pointers - Memory addresses
-int x = 42;
-int *ptr = &x; // ptr holds address of x
-*ptr = 100;    // x is now 100
-
-// Function Pointers
-void (*fn_ptr)(int) = &my_function;
-
-// Bit Manipulation
-int flags = 1 << 3; // Set 4th bit`
+      description: "The Power of Pointers.",
+      code: `int x = 10;
+int* ptr = &x; // 'ptr' stores the memory address of box 'x'.`
     },
     usage: {
       applications: [
-        { title: "Operating Systems", text: "Windows, Linux, and macOS kernels are mostly written in C", icon: "💻" },
-        { title: "Embedded Systems", text: "Powering everything from microwaves to spacecraft", icon: "🛰️" },
-        { title: "Compilers", text: "Most other languages' compilers are written in C", icon: "⚙️" },
-        { title: "Game Engines", text: "Performance-critical parts of engines like Doom or Quake", icon: "🎮" }
+        { title: "Operating Systems", text: "Windows, Linux, and MacOS are built with C.", icon: "💻" },
+        { title: "Smart Devices", text: "Cars, watches, and smart fridges.", icon: "📟" },
+        { title: "Compilers", text: "C is used to build other programming languages.", icon: "⚙️" }
       ],
-      companies: ["Microsoft", "Apple", "Linux Foundation", "NASA", "SpaceX", "Intel"]
-    },
-    purpose: {
-      history: "Developed in 1972 by Dennis Ritchie at Bell Labs for the Unix operating system. It was designed to be a system programming language that was both efficient and portable.",
-      creationStory: "In 1972, Ken Thompson and Dennis Ritchie were working on the UNIX operating system on a PDP-11. They tried to rewrite UNIX in high-level B language, but B was too slow. Ritchie added data types to B, creating 'C'.",
-      limitationsOfEra: "Operating Systems were written in Assembly, which was distinct for every machine. Porting UNIX to a new computer meant rewriting the whole OS.",
-      coreInnovation: "Portability. C was the first language that was high-level enough to structure code nicely, but low-level enough to write an OS kernel that could run on different hardware with minimal changes.",
-      principles: ["Efficiency above all", "Small, simple core language", "Trust the programmer", "Close to hardware"]
-    },
-    future: {
-      trends: [
-        "C23: The latest standard adding modern features like nullptr and static_assert",
-        "Continued dominance in OS and embedded development",
-        "Modern tooling (Clang, LLVM) making C development safer"
-      ]
+      companies: ["Intel", "NASA", "Microsoft"]
     }
   },
   typescript: {
@@ -617,120 +404,70 @@ int flags = 1 << 3; // Set 4th bit`
     themeColor: "blue-400",
     gradient: "from-blue-500 to-indigo-500",
     intro: {
-      description: "Think of a variable as a labeled box with a safety lock. TypeScript is JavaScript with syntax for types. It adds a layer of safety to your JavaScript variables, helping you catch errors before you even run your code.",
+      description: "JavaScript is flexible but can be messy. TypeScript is like JavaScript with a 'Safety Inspector'. It forces you to label every variable box clearly. If you try to put the wrong thing in a box, the inspector stops you while you're typing, not after you run the code.",
       highlights: [
-        { title: "Type Safety", text: "Catch bugs early before they reach users", icon: "✅" },
-        { title: "Better Tooling", text: "Amazing autocomplete and refactoring support", icon: "✅" },
-        { title: "Clear Intent", text: "Types document what your code is supposed to do", icon: "✅" },
-        { title: "Scalability", text: "Essential for teams and large codebases", icon: "✅" }
+        { title: "Type Labels", text: "Boxes are clearly labeled (e.g., :number).", icon: "🏷️" },
+        { title: "Bug Prevention", text: "Catches mistakes before users ever see them.", icon: "🛡️" },
+        { title: "Great Help", text: "Shows you exactly what fits in each box as you type.", icon: "💡" },
+        { title: "Professional", text: "Used by big teams to build massive websites.", icon: "📈" }
       ]
     },
     declarations: {
-      description: "TypeScript uses the same let and const keywords as JavaScript, but adds type annotations.",
-      code: `// Standard pattern: let name: type = value;
-let age: number = 25;            // ✅ Explicitly a number
-let name: string = "Alice";      // ✅ Explicitly text
-let isActive: boolean = true;    // ✅ Explicitly true/false
+      description: "You use 'let' or 'const' just like JS, but you add a colon and the type name.",
+      code: `// 1. A box that ONLY holds numbers
+let score: number = 100;
 
-// Type Inference (TS often figures it out for you!)
-let score = 100;                 // ✅ TS knows this is a number
-// score = "high";               // ❌ ERROR: Type 'string' is not assignable to type 'number'
+// 2. A box that ONLY holds text
+let name: string = "Rajat";
 
-// Constants
-const PI: number = 3.14159;      // ✅ Unchangeable number`,
+// score = "Ten"; // ❌ The inspector stops this error!` ,
       constants: {
         keyword: "const",
-        description: "Same as JavaScript, but with optional type safety.",
-        code: `const API_KEY: string = "secret-123";
-// API_KEY = "new-key"; // ❌ Error: Cannot assign to 'API_KEY' because it is a constant.`
+        description: "Standard JS constants with added type safety.",
+        code: `const PI: number = 3.14;`
       }
     },
     types: {
       primitive: [
-        { name: "number", size: "8 bytes", range: "Integer & Float" },
-        { name: "string", size: "Dynamic", range: "Textual data" },
-        { name: "boolean", size: "1 byte", range: "true / false" },
-        { name: "any", size: "Varies", range: "Bypass type checking" },
-        { name: "unknown", size: "Varies", range: "Safe 'any' alternative" },
-        { name: "void", size: "0 bytes", range: "No return value" }
+        { name: "number", size: "8 bytes", range: "All numbers" },
+        { name: "string", size: "Dynamic", range: "Text" },
+        { name: "boolean", size: "Tiny", range: "True/False" }
       ]
     },
     limits: {
-      description: "Since TypeScript compiles to JavaScript, it shares the same memory limits as JS.",
+      description: "TypeScript eventually turns into JavaScript, so it shares the same physical limits.",
       table: {
-        headers: ["Data Type", "TS Type", "JS Equivalent", "Limit"],
+        headers: ["Box Type", "Limit"],
         rows: [
-          ["Number", "number", "Number", "64-bit Float"],
-          ["Large Int", "bigint", "BigInt", "Limited by Memory"],
-          ["String", "string", "String", "Typically 1GB-2GB"],
-          ["Array", "T[]", "Array", "2^32 - 1 elements"],
-          ["Object", "object", "Object", "Limited by Heap"]
+          ["number", "±9 quadrillion"],
+          ["string", "Billions of characters"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "Type safety only exists at compile-time (removed at runtime)",
-        "The 'any' type can bypass all safety checks (use sparingly!)",
-        "Complexity increases with deep nested generics",
-        "Slow compilation for extremely large projects",
-        "Third-party libraries might lack proper type definitions"
+        "It takes a bit longer to set up than normal JavaScript.",
+        "You have to 'build' the code before the browser can read it."
       ]
     },
     collections: {
-      description: "TypeScript improves JavaScript's collections by adding type safety to arrays, maps, and sets.",
-      code: `// Type-safe Array
-let list: number[] = [1, 2, 3];
-list.push(4); // ✅ OK
-// list.push("5"); // ❌ Error
-
-// Tuple - Fixed length and types
-let person: [string, number] = ["Alice", 25];
-
-// Type-safe Map
-let map = new Map<string, number>();
-map.set("Alice", 100);`
+      description: "Strict lists where you decide the contents.",
+      code: `// A list of ONLY strings
+let fruits: string[] = ["Apple", "Banana"];`
     },
     advanced: {
-      description: "Interfaces, Aliases, and Union types are the heart of TypeScript's power.",
-      code: `// Interface - Define object structure
-interface User {
-    name: string;
-    id: number;
-}
-
-// Union Types
-let result: string | number;
-result = "Success";
-result = 200;
-
-// Generics
-function wrap<T>(item: T): T[] {
-    return [item];
+      description: "Defining custom shapes for your boxes.",
+      code: `interface User {
+  id: number;
+  name: string;
 }`
     },
     usage: {
       applications: [
-        { title: "Web Apps", text: "Industry standard for modern frontend frameworks like React", icon: "🌐" },
-        { title: "Backend", text: "Becoming the default choice for Node.js APIs", icon: "🖥️" },
-        { title: "Large Teams", text: "Essential for managing large codebases with many developers", icon: "👥" },
-        { title: "Desktop", text: "Powering apps like VS Code and Slack (via Electron)", icon: "💻" }
+        { title: "Web Apps", text: "Building complex sites like Slack or Discord.", icon: "💻" },
+        { title: "E-Commerce", text: "Safe systems for online shopping.", icon: "🛒" }
       ],
-      companies: ["Microsoft", "Airbnb", "Slack", "Discord", "Twitch", "Asana"]
-    },
-    purpose: {
-      history: "Released by Microsoft in 2012, created by Anders Hejlsberg (also created C#). It was designed to solve JavaScript's scalability problems for large applications.",
-      creationStory: "By 2010, massive JavaScript apps were becoming unmaintainable due to lack of types. Microsoft wanted a solution for large-scale web dev. Anders Hejlsberg (creator of C#) led the team to create a superset of JS that added static typing.",
-      limitationsOfEra: "JavaScript had no classes (at the time), no modules, and no type checking. Refactoring a 100k line JS app was a nightmare of 'undefined is not a function' errors.",
-      coreInnovation: "Gradual Typing. You could adopt it piece by piece. It wasn't a new language that replaced JS; it *was* JS with types, and it compiled down to clean JS that ran anywhere.",
-      principles: ["Optional static typing", "Modern JavaScript features", "Zero runtime overhead", "Great tooling"]
-    },
-    future: {
-      trends: [
-        "Near 100% adoption in new professional web projects",
-        "Better integration with browser APIs and Node.js",
-        "Faster type-checking with SWC and other native tools"
-      ]
+      companies: ["Microsoft", "Airbnb", "Slack"]
     }
   },
   go: {
@@ -740,120 +477,65 @@ function wrap<T>(item: T): T[] {
     themeColor: "cyan-400",
     gradient: "from-cyan-500 to-blue-500",
     intro: {
-      description: "Think of a variable as a simple, labeled storage space. Go believes in keeping things simple and straightforward - no fancy tricks, just clean, readable code.",
+      description: "Go (made by Google) is all about simplicity. It's built for the modern internet. It gives you fast, strong variable boxes like C++, but makes them as easy to use as Python. It's the language of the 'Cloud'.",
       highlights: [
-        { title: "Simple Syntax", text: "Easy to learn and read - no complexity", icon: "✅" },
-        { title: "Type Safety", text: "Catch errors at compile time", icon: "✅" },
-        { title: "Fast Performance", text: "Compiles to efficient machine code", icon: "✅" },
-        { title: "Clear Code", text: "One obvious way to do things", icon: "✅" }
+        { title: "Blazing Fast", text: "Go code builds and runs in the blink of an eye.", icon: "🏎️" },
+        { title: "Clean Syntax", text: "Very few rules to memorize.", icon: "✨" },
+        { title: "Modern", text: "Built specifically for internet servers.", icon: "☁️" }
       ]
     },
     declarations: {
-      description: "Go has two main ways to declare variables: var (formal) and := (short, most common).",
-      code: `// Short declaration (most common)
-name := "Alice"                  // ✅ Type inferred as string
-age := 25                        // ✅ Type inferred as int
+      description: "Go loves shortcuts. You often use ':=' to create and fill a box at the same time.",
+      code: `// 1. Shortcut: Create and fill box
+name := "Rajat" 
 
-// Formal var declaration
-var score int = 100              // ✅ Explicit type
-var count = 42                   // ✅ Inferred with var
-
-// Multiple assignment
-x, y := 10, 20
-a, b = b, a                      // ✅ Swap values easily!`,
+// 2. Formal: Specify the type
+var age int = 25`,
       constants: {
         keyword: "const",
-        description: "Constants must be compile-time values and cannot be modified.",
-        code: `const PI = 3.14159
-const MAX_USERS int = 100`
+        description: "Fixed values that never change.",
+        code: `const PI = 3.14`
       }
     },
     types: {
       primitive: [
-        { name: "int", size: "4 or 8 bytes", range: "±2.1B or ±9 quintillion" },
-        { name: "string", size: "Dynamic", range: "UTF-8 text" },
-        { name: "bool", size: "1 byte", range: "true / false" },
-        { name: "float64", size: "8 bytes", range: "Decimal numbers" },
-        { name: "uint32", size: "4 bytes", range: "0 to 4.2 billion" },
-        { name: "rune", size: "4 bytes", range: "Unicode code point" }
+        { name: "int", size: "4 or 8 bytes", range: "Whole numbers" },
+        { name: "string", size: "Dynamic", range: "Text" },
+        { name: "bool", size: "Tiny", range: "True/False" }
       ]
     },
     limits: {
-      description: "Go provides platform-independent types but also platform-specific ones like 'int'.",
+      description: "Predictable sizes for high-performance servers.",
       table: {
-        headers: ["Data Type", "Size", "Min", "Max"],
+        headers: ["Box Type", "Limit"],
         rows: [
-          ["int8", "1 byte", "-128", "127"],
-          ["int32 / rune", "4 bytes", "-2.14e9", "2.14e9"],
-          ["int64", "8 bytes", "-9.22e18", "9.22e18"],
-          ["float32", "4 bytes", "1.2e-38", "3.4e38"],
-          ["float64", "8 bytes", "2.3e-308", "1.7e308"],
-          ["string", "Varies", "0", "Memory Limited"]
+          ["int", "±2 billion"],
+          ["string", "Memory limited"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "No traditional inheritance (uses composition/interfaces)",
-        "Error handling can be repetitive (if err != nil)",
-        "Strict rules: unused variables cause compilation errors!",
-        "Nil pointers can still cause panics",
-        "Generics are relatively new and less powerful than C++"
+        "Go is very strict: if you make a variable and don't use it, it won't run!",
+        "It doesn't have some 'fancy' features other languages have (to keep it simple)."
       ]
     },
     collections: {
-      description: "Go uses Slices (dynamic arrays) and Maps as its primary collection types.",
-      code: `// Slice - Dynamic array
-nums := []int{1, 2, 3}
-nums = append(nums, 4)
-
-// Map - Key-Value pairs
-scores := make(map[string]int)
-scores["Alice"] = 95
-
-// Array - Fixed size
-var arr [5]int`
+      description: "Flexible lists called Slices.",
+      code: `// A list that can grow
+numbers := []int{1, 2, 3}`
     },
     advanced: {
-      description: "Pointers, Structs, and Interfaces define Go's approach to data organization.",
-      code: `// Pointers
-x := 42
-ptr := &x // Address of x
-fmt.Println(*ptr) // Value of x
-
-// Struct
-type User struct {
-    Name string
-    Age  int
-}
-
-// Interface
-type Shape interface {
-    Area() float64
-}`
+      description: "Fast communication between parts of your program.",
+      code: `// Channels - Passing boxes between tasks
+messages := make(chan string)`
     },
     usage: {
       applications: [
-        { title: "Cloud Native", text: "The language of Docker and Kubernetes", icon: "☁️" },
-        { title: "Microservices", text: "Perfect for high-concurrency backend services", icon: "⚙️" },
-        { title: "DevOps", text: "Powering modern infrastructure tools", icon: "🛠️" },
-        { title: "Networking", text: "Efficient handling of network protocols", icon: "🌐" }
+        { title: "Cloud Tools", text: "Powering Docker and Kubernetes.", icon: "🐳" },
+        { title: "Servers", text: "Handling millions of users at once.", icon: "🖥️" }
       ],
-      companies: ["Google", "Uber", "Dropbox", "Netflix", "Twitch", "Cloudflare"]
-    },
-    purpose: {
-      history: "Created at Google in 2007 by Robert Griesemer, Rob Pike, and Ken Thompson. Designed to improve programming productivity in an era of multicore, networked machines and large codebases.",
-      creationStory: "At Google, C++ builds were taking hours. The codebases were too complex. Rob Pike, Ken Thompson (Unix creator), and Robert Griesemer sketched a new language on a whiteboard while waiting for a C++ compile.",
-      limitationsOfEra: "C++ was powerful but slow to compile and overly complex. Java was verbose. Python was slow. There was no 'fast, simple, compiled' language for modern cloud servers.",
-      coreInnovation: "Concurrency as a first-class citizen (Goroutines). Blazing fast compilation. Radical simplicity (no inheritance, no exceptions, no circular dependencies).",
-      principles: ["Simplicity", "Fast compilation", "Concurrency built-in", "Efficiency"]
-    },
-    future: {
-      trends: [
-        "Expanding use in AI infrastructure and data processing",
-        "Continued evolution of Generics and tooling",
-        "Dominance in cloud-native and serverless architectures"
-      ]
+      companies: ["Google", "Uber", "Twitch"]
     }
   },
   rust: {
@@ -863,120 +545,66 @@ type Shape interface {
     themeColor: "orange-400",
     gradient: "from-orange-500 to-amber-500",
     intro: {
-      description: "Think of a variable as a safe, controlled storage location. Rust takes memory safety seriously - every variable has an owner, and Rust tracks who can read or modify it at all times.",
+      description: "Rust is the 'Safety First' language. It's as fast as C++, but it has a very strict 'Borrow Checker'—think of it as a librarian who makes sure only one person can write in a book (variable box) at a time. This makes it impossible for your program to crash due to memory mistakes.",
       highlights: [
-        { title: "Memory Safety", text: "Catch memory bugs at compile time, not runtime", icon: "✅" },
-        { title: "Zero-Cost Abstractions", text: "High-level features with no runtime overhead", icon: "✅" },
-        { title: "Fearless Concurrency", text: "Safe multi-threading guaranteed by compiler", icon: "✅" },
-        { title: "No Garbage Collection", text: "Predictable performance without GC pauses", icon: "✅" }
+        { title: "Unbreakable", text: "Prevents memory bugs while you're writing.", icon: "🛡️" },
+        { title: "Fast", text: "No speed penalty for being safe.", icon: "⚡" },
+        { title: "Helpful", text: "The compiler gives the best error messages in the world.", icon: "🔧" }
       ]
     },
     declarations: {
-      description: "Rust variables are immutable by default. This is intentional - it prevents accidental modifications and makes your code safer.",
-      code: `// Immutable by default
-let age = 25;                    // ✅ Cannot be changed
-// age = 26;                     // ❌ ERROR!
-
-// Mutable with 'mut'
-let mut count = 0;               // ✅ Can be modified
-count += 1;                      // ✅ OK
-
-// Shadowing
+      description: "By default, every box in Rust is LOCKED. You have to say 'mut' (mutable) if you want to change it later.",
+      code: `// 1. A locked box
 let x = 5;
-let x = x + 1;                   // ✅ Shadows old x with new value`,
+
+// 2. A changeable box
+let mut y = 10;
+
+y = 11; // ✅ OK`,
       constants: {
         keyword: "const",
-        description: "Constants must have explicit types and be known at compile-time.",
-        code: `const MAX_POINTS: u32 = 100_000;`
+        description: "Values that are fixed forever.",
+        code: `const MAX: u32 = 100;`
       }
     },
     types: {
       primitive: [
-        { name: "i32", size: "4 bytes", range: "±2.1 billion" },
-        { name: "u64", size: "8 bytes", range: "0 to 18 quintillion" },
-        { name: "f32", size: "4 bytes", range: "7 decimal digits" },
-        { name: "f64", size: "8 bytes", range: "15 decimal digits" },
-        { name: "bool", size: "1 byte", range: "true / false" },
-        { name: "char", size: "4 bytes", range: "Unicode code point" },
-        { name: "usize", size: "Arch", range: "Pointer-sized integer" }
+        { name: "i32", size: "4 bytes", range: "Standard whole numbers" },
+        { name: "bool", size: "1 byte", range: "True/False" },
+        { name: "char", size: "4 bytes", range: "Letters/Symbols" }
       ]
     },
     limits: {
-      description: "Rust has explicit integer types with fixed sizes.",
+      description: "Extreme control. You decide the exact bits for every box.",
       table: {
-        headers: ["Data Type", "Size", "Min", "Max"],
+        headers: ["Box Type", "Size", "Range"],
         rows: [
-          ["i8", "1 byte", "-128", "127"],
-          ["i32", "4 bytes", "±2.1 billion", "±2.1 billion"],
-          ["u64", "8 bytes", "0", "1.84e19"],
-          ["f32", "4 bytes", "±3.4e38", "7 digits prec."],
-          ["f64", "8 bytes", "±1.7e308", "15 digits prec."],
-          ["usize", "Arch", "0", "2^64-1 (on 64-bit)"]
+          ["u8", "8-bit", "0 to 255"],
+          ["i32", "32-bit", "±2.1 billion"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "Steep learning curve (Borrow Checker is tough!)",
-        "Slow compilation times compared to Go or C",
-        "Strict rules about reference lifetimes",
-        "No traditional class-based inheritance",
-        "Verbose error handling (Result/Option)"
+        "It's very difficult to learn at first.",
+        "The compiler is very picky and will stop you often to keep you safe."
       ]
     },
     collections: {
-      description: "Rust provides memory-safe collections like Vectors, Strings, and HashMaps.",
-      code: `// Vector - Dynamic array
-let mut v = vec![1, 2, 3];
-v.push(4);
-
-// String - UTF-8 encoded
-let mut s = String::from("Hello");
-s.push_str(" Rust");
-
-// HashMap - Key-Value pairs
-use std::collections::HashMap;
-let mut scores = HashMap::new();
-scores.insert("Blue", 10);`
+      description: "Growable lists called Vectors.",
+      code: `let mut vec = vec![1, 2, 3];`
     },
     advanced: {
-      description: "Rust's Ownership and Borrowing system is its most unique and powerful feature.",
-      code: `// Ownership Transfer
-let s1 = String::from("hello");
-let s2 = s1; // s1 is now invalid!
-
-// Borrowing (References)
-let len = calculate_length(&s2);
-
-// Enums with Data
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-}`
+      description: "The concept of Ownership.",
+      code: `let s1 = String::from("Hi");
+let s2 = s1; // Box s1 is now empty! s2 owns the data.`
     },
     usage: {
       applications: [
-        { title: "Systems Programming", text: "Modern alternative to C/C++ for OS and drivers", icon: "⚙️" },
-        { title: "WebAssembly", text: "Leading language for high-performance web code", icon: "🌐" },
-        { title: "Blockchain", text: "Safe code for smart contracts and cryptos", icon: "🔗" },
-        { title: "Performance Tools", text: "Rewriting bottlenecks in CLI tools and libraries", icon: "🚀" }
+        { title: "Systems", text: "Building operating systems and fast tools.", icon: "💻" },
+        { title: "Security", text: "Writing code that can't be hacked easily.", icon: "🔒" }
       ],
-      companies: ["AWS", "Discord", "Cloudflare", "Meta", "Google", "Microsoft"]
-    },
-    purpose: {
-      history: "Started at Mozilla in 2006 by Graydon Hoare. Developed to fix memory safety issues in the Firefox browser engine.",
-      creationStory: "Mozilla needed to fix critical memory safety bugs in Firefox (written in C++). A personal project by Graydon Hoare caught their eye. They sponsored it to build a new browser engine, Servo.",
-      limitationsOfEra: "C++ offered speed but was memory-unsafe, leading to 70% of all security vulnerabilities. Garbage collected languages (Java, Go) were safe but had runtime pauses unacceptable for browser engines.",
-      coreInnovation: "The Borrow Checker. It proves memory safety at compile-time without a Garbage Collector. It ensures you can't have data races or dangling pointers.",
-      principles: ["Safety", "Speed", "Concurrency"]
-    },
-    future: {
-      trends: [
-        "Rapidly growing in the Linux Kernel and Cloud infrastructure",
-        "Improving compile times and IDE support",
-        "Increasingly used for AI and ML infrastructure"
-      ]
+      companies: ["Discord", "AWS", "Cloudflare"]
     }
   },
   kotlin: {
@@ -986,110 +614,67 @@ enum Message {
     themeColor: "purple-400",
     gradient: "from-purple-500 to-pink-500",
     intro: {
-      description: "Think of a variable as a modern, safe container. Kotlin is designed to be 'better Java' - it takes everything good about Java and adds safety, conciseness, and modern features like immutability by default.",
+      description: "Kotlin is a modern, better version of Java. It removes the 'boring' parts of Java and adds safety nets to prevent common crashes. It's the #1 language for building Android apps today.",
       highlights: [
-        { title: "Null Safety", text: "Eliminate common crashes by design", icon: "✅" },
-        { title: "Less Boilerplate", text: "Clean syntax means more work with less code", icon: "✅" },
-        { title: "Interoperability", text: "Works 100% with Java code and libraries", icon: "✅" },
-        { title: "Modern Features", text: "Smart casts, string templates, and more", icon: "✅" }
+        { title: "Concise", text: "Do more with 50% less code than Java.", icon: "✍️" },
+        { title: "No Crashes", text: "Designed to stop the 'Null Pointer' crash.", icon: "🛡️" },
+        { title: "Android King", text: "The standard for modern mobile apps.", icon: "📱" }
       ]
     },
     declarations: {
-      description: "Kotlin has two main keywords: val (read-only) and var (mutable).",
-      code: `// Immutable (read-only)
-val name = "Alice"               // ✅ Cannot be changed
-// name = "Bob"                  // ❌ ERROR!
+      description: "Kotlin uses 'val' for boxes that stay the same, and 'var' for boxes that change.",
+      code: `// 1. A locked box
+val name = "Rajat"
 
-// Mutable
-var count = 0                    // ✅ Can be modified
-count++                          // ✅ OK
+// 2. A changeable box
+var age = 25
 
-// Null safety
-var nickname: String? = null     // ✅ Optional type`,
+age = 26`,
       constants: {
         keyword: "const val",
-        description: "Compile-time constants inside objects or at top-level.",
-        code: `const val PI = 3.14159`
+        description: "Fixed values used throughout the app.",
+        code: `const val PI = 3.14`
       }
     },
     types: {
       primitive: [
-        { name: "Int", size: "32-bit", range: "±2.1 billion" },
-        { name: "Long", size: "64-bit", range: "±9 quintillion" },
-        { name: "Float", size: "32-bit", range: "±3.4e38" },
-        { name: "Double", size: "64-bit", range: "±1.7e308" },
-        { name: "Boolean", size: "1-bit*", range: "true / false" },
-        { name: "Char", size: "16-bit", range: "Unicode" },
+        { name: "Int", size: "4 bytes", range: "Standard numbers" },
         { name: "String", size: "Dynamic", range: "Text" }
       ]
     },
     limits: {
-      description: "Shares the same JVM types as Java but with better syntax.",
+      description: "Same reliable limits as Java.",
       table: {
-        headers: ["Data Type", "Size", "Min", "Max"],
+        headers: ["Box Type", "Limit"],
         rows: [
-          ["Byte", "8-bit", "-128", "127"],
-          ["Int", "32-bit", "±2.1 billion", "±2.1 billion"],
-          ["Long", "64-bit", "±9 quintillion", "±9 quintillion"],
-          ["Float", "32-bit", "±3.4e38", "6-7 digits prec."],
-          ["Double", "64-bit", "±1.7e308", "15-16 digits prec."]
+          ["Int", "±2 billion"],
+          ["Long", "9 quintillion"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "Compilation is slightly slower than Java",
-        "JVM overhead (though Native/JS targets exist)",
-        "Learning modern idioms after Java can take time",
-        "Binary size increase for small Android apps",
-        "Strict null safety can feel verbose at first"
+        "It can be slightly slower to build (compile) than Java.",
+        "It's a large language with many features to learn."
       ]
     },
     collections: {
-      description: "Kotlin distinguishes between mutable and read-only collections for better safety.",
-      code: `// Read-only list
-val list = listOf("A", "B")
-
-// Mutable list
-val mutable = mutableListOf(1, 2)
-mutable.add(3)
-
-// Map
-val map = mapOf("key" to 42)`
+      description: "Safety-first lists.",
+      code: `// A list you CANNOT change
+val list = listOf("A", "B")`
     },
     advanced: {
-      description: "Extension functions and Data classes are Kotlin's secret weapons.",
-      code: `// Data Class (Auto equals/hashCode)
-data class User(val name: String, val id: Int)
-
-// Extension Function
-fun String.shout() = this.toUpperCase() + "!"
-
-// Smart Casts
-if (x is String) print(x.length) // x cast to String automatically`
+      description: "Smart Casting.",
+      code: `if (x is String) {
+  print(x.length) // Java knows it's a string!
+}`
     },
     usage: {
       applications: [
-        { title: "Android", text: "Google's preferred language for Android apps", icon: "📱" },
-        { title: "Backend", text: "Modern choice for Spring Boot and Ktor APIs", icon: "🖥️" },
-        { title: "Multiplatform", text: "Share code between Android, iOS, and Web", icon: "🌍" },
-        { title: "Data Science", text: "Gaining traction with Kotlin for Data Science", icon: "📊" }
+        { title: "Android", text: "Used for 90% of new Android apps.", icon: "📱" },
+        { title: "Servers", text: "Modern, safe backend systems.", icon: "🖥️" }
       ],
-      companies: ["Google", "JetBrains", "Netflix", "Uber", "Airbnb", "Pinterest"]
-    },
-    purpose: {
-      history: "Developed by JetBrains in 2011. Designed to be more concise and safe than Java while being fully interoperable.",
-      creationStory: "JetBrains needed a language for their own IDE development. Java was too verbose and Scala was too slow to compile. They wanted something that could seamlessly mix with their massive Java codebase but offer modern features.",
-      limitationsOfEra: "Java was stagnant (stuck on Java 6 for Android). NullPointerExceptions were a billion-dollar mistake. Scala was too complex for average teams.",
-      coreInnovation: "Null Safety baked into the type system. 100% Java interoperability (you can call Java from Kotlin and vice versa). Pragmatic features like Extension Functions.",
-      principles: ["Conciseness", "Safety", "Pragmatism", "Interoperability"]
-    },
-    future: {
-      trends: [
-        "Kotlin Multiplatform (KMP) taking over cross-platform dev",
-        "Expanding use in Serverless and Cloud Native",
-        "Deep integration with modern AI and data libraries"
-      ]
+      companies: ["Google", "Netflix", "Airbnb"]
     }
   },
   swift: {
@@ -1099,114 +684,67 @@ if (x is String) print(x.length) // x cast to String automatically`
     themeColor: "orange-400",
     gradient: "from-orange-500 to-red-500",
     intro: {
-      description: "Think of a variable as a safe, labeled storage spot. Swift is Apple's modern language designed to be safe, fast, and expressive - perfect for building iOS and macOS apps.",
+      description: "Swift is Apple's language for making apps. It's designed to be 'beginner-first' like Python, but 'pro-fast' like C++. It's safe, clean, and helps you avoid the most common coding mistakes.",
       highlights: [
-        { title: "Type Safety", text: "Catch errors at compile time before running", icon: "✅" },
-        { title: "Optional Safety", text: "Explicit handling of nil prevents crashes", icon: "✅" },
-        { title: "Performance", text: "Compiled code runs as fast as C/C++", icon: "✅" },
-        { title: "Modern Syntax", text: "Clean, readable code that's easy to maintain", icon: "✅" }
+        { title: "Apple First", text: "The best way to build for iPhone and Mac.", icon: "🍏" },
+        { title: "Modern", text: "Clean syntax that is easy to read.", icon: "✨" },
+        { title: "Safe", text: "Prevents crashes by handling empty data carefully.", icon: "🛡️" }
       ]
     },
     declarations: {
-      description: "Swift uses let for constants (immutable) and var for variables (mutable).",
-      code: `// Constant (preferred)
-let name = "Alice"               // ✅ Cannot be changed
-// name = "Bob"                  // ❌ ERROR!
+      description: "Swift uses 'let' for locked boxes and 'var' for changeable ones. Apple recommends using 'let' whenever possible.",
+      code: `// 1. Locked box (Apple's favorite)
+let pi = 3.14
 
-// Variable
-var count = 0                    // ✅ Can be modified
-count += 1                       // ✅ OK
+// 2. Changeable box
+var score = 0
 
-// Optionals
-var age: Int? = 25               // ✅ Can be nil
-age = nil                        // ✅ OK`,
+score += 10`,
       constants: {
         keyword: "let",
-        description: "Constants in Swift are declared with let and are highly optimized.",
-        code: `let PI = 3.14159`
+        description: "Every constant in Swift is made with 'let'.",
+        code: `let name = "Rajat"`
       }
     },
     types: {
       primitive: [
-        { name: "Int", size: "8 bytes", range: "±9 quintillion" },
-        { name: "Double", size: "8 bytes", range: "15 decimal digits" },
-        { name: "String", size: "Dynamic", range: "Unicode text" },
-        { name: "Bool", size: "1 byte", range: "true / false" },
-        { name: "Float", size: "4 bytes", range: "7 decimal digits" },
-        { name: "Character", size: "Varies", range: "Extended grapheme cluster" }
+        { name: "Int", size: "Standard", range: "Whole numbers" },
+        { name: "String", size: "Dynamic", range: "Text" },
+        { name: "Bool", size: "Tiny", range: "True/False" }
       ]
     },
     limits: {
-      description: "Swift uses architecture-dependent sizes for 'Int' but fixed for others.",
+      description: "Highly optimized for modern processors.",
       table: {
-        headers: ["Data Type", "Size", "Min", "Max"],
+        headers: ["Box Type", "Limit"],
         rows: [
-          ["Int8", "1 byte", "-128", "127"],
-          ["Int", "Word Size", "±2.1B or ±9Q", "±2.1B or ±9Q"],
-          ["Float", "4 bytes", "±3.4e38", "±3.4e38"],
-          ["Double", "8 bytes", "±1.7e308", "±1.7e308"],
-          ["String", "Varies", "0", "Memory Limited"]
+          ["Int", "Huge range (64-bit)"],
+          ["Double", "Very precise decimals"]
         ]
       }
     },
     limitations: {
       warnings: [
-        "Locked primarily to Apple's ecosystem (iOS/macOS)",
-        "ABI stability issues in early years (now fixed)",
-        "Complex generic system can be hard to learn",
-        "Swift Package Manager was late to the party",
-        "Large binary sizes for simple apps"
+        "Mainly only useful for Apple devices.",
+        "The language is updated often, so code can get outdated."
       ]
     },
     collections: {
-      description: "Swift's standard collections include Arrays, Dictionaries, and Sets.",
-      code: `// Array - Ordered
-var fruits = ["Apple", "Banana"]
-fruits.append("Orange")
-
-// Dictionary - Key-Value
-var scores = ["Alice": 95, "Bob": 87]
-
-// Set - Unique values
-var unique = Set([1, 2, 2, 3])`
+      description: "Simple lists and dictionaries.",
+      code: `var fruits = ["Apple", "Orange"]
+`
     },
     advanced: {
-      description: "Optionals and Closures make Swift both safe and highly flexible.",
-      code: `// Optional Binding
-if let val = optionalValue {
-    print(val)
-}
-
-// Nil Coalescing
-let name = optionalName ?? "Guest"
-
-// Closures
-let greet = { (name: String) in
-    print("Hello \(name)")
-}`
+      description: "Safe handling of missing data (Optionals).",
+      code: `var name: String? = nil // Box might be empty!
+`
     },
     usage: {
       applications: [
-        { title: "iOS / macOS", text: "The standard for building all iPhone, iPad, and Mac apps", icon: "📱" },
-        { title: "Server-Side", text: "Growing with frameworks like Vapor and Kitura", icon: "🖥️" },
-        { title: "Systems", text: "Highly efficient for performance-critical components", icon: "⚙️" },
-        { title: "Watch/TV", text: "Powering apps for Apple Watch and Apple TV", icon: "📺" }
+        { title: "iPhone Apps", text: "The primary language for the App Store.", icon: "📱" },
+        { title: "Mac Apps", text: "Desktop software for MacOS.", icon: "💻" }
       ],
-      companies: ["Apple", "Uber", "Lyft", "Airbnb", "LinkedIn", "Instagram"]
-    },
-    purpose: {
-      history: "Developed by Apple and released in 2014. Designed to replace Objective-C with a safer, faster, and more modern alternative.",
-      creationStory: "Apple's Objective-C (1984) was showing its age. It was unsafe and verbose. Chris Lattner started Swift in 2010 to create a language that was 'fast, safe, and expressive', incorporating best ideas from Rust, Haskell, and Python.",
-      limitationsOfEra: "Objective-C's manual memory management and C-based syntax were barriers to entry. Buffer overflows and null pointer crashes were common.",
-      coreInnovation: "Safety by default (Variables must be initialized, optionals for nulls). Performance comparable to C++. Playground interactive coding.",
-      principles: ["Safe", "Fast", "Expressive"]
-    },
-    future: {
-      trends: [
-        "SwiftUI becoming the default for all Apple UI dev",
-        "Expanding to Server-Side and Cloud Native via Swift on Linux",
-        "Integration with AI through Apple's Core ML"
-      ]
+      companies: ["Apple", "Uber", "Lyft"]
     }
   }
 };
