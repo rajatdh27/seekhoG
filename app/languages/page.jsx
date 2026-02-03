@@ -27,7 +27,7 @@ const programmingConcepts = [
     gradient: "from-purple-600 to-pink-600",
     languages: allLanguages,
     href: "/languages/operators",
-    status: "coming-soon"
+    status: "live"
   },
   {
     id: "control-flow",

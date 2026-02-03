@@ -4,35 +4,30 @@ import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { useState, useEffect } from "react";
 import SidebarTOC from "@/app/components/common/SidebarTOC";
 import NextModuleCard from "@/app/components/common/NextModuleCard";
-import JavaScriptContent from "./components/JavaScriptContent";
-import PythonContent from "./components/PythonContent";
-import JavaContent from "./components/JavaContent";
-import CContent from "./components/CContent";
-import CppContent from "./components/CppContent";
-import TypeScriptContent from "./components/TypeScriptContent";
-import GoContent from "./components/GoContent";
-import RustContent from "./components/RustContent";
-import KotlinContent from "./components/KotlinContent";
-import SwiftContent from "./components/SwiftContent";
+import JavaScriptOperators from "./components/JavaScriptOperators";
+import PythonOperators from "./components/PythonOperators";
+import JavaOperators from "./components/JavaOperators";
+import COperators from "./components/COperators";
+import CppOperators from "./components/CppOperators";
+import TypeScriptOperators from "./components/TypeScriptOperators";
+import GoOperators from "./components/GoOperators";
+import RustOperators from "./components/RustOperators";
+import KotlinOperators from "./components/KotlinOperators";
+import SwiftOperators from "./components/SwiftOperators";
 import ComparisonContent from "./components/ComparisonContent";
 import { 
-  BookOpen, 
-  FileText, 
-  Database, 
-  HardDrive, 
-  AlertTriangle, 
-  Library, 
-  Rocket, 
-  Globe, 
-  History, 
-  Sparkles,
+  Calculator, 
+  ArrowRightLeft, 
+  Scale, 
+  Binary, 
+  Zap, 
+  Sparkles, 
   ChevronDown,
   Code2,
-  Scale,
   CheckCircle2
 } from "lucide-react";
 
-export default function VariablesPage() {
+export default function OperatorsPage() {
   const [activeLanguage, setActiveLanguage] = useState("comparison");
   const [activeSection, setActiveSection] = useState("intro");
   const { scrollYProgress } = useScroll();
@@ -73,38 +68,31 @@ export default function VariablesPage() {
   ];
 
   const languageSections = [
-    { id: "intro", title: "Introduction", icon: BookOpen },
-    { id: "declarations", title: "Declarations", icon: FileText },
-    { id: "types", title: "Data Types", icon: Database },
-    { id: "limits", title: "Memory Limits", icon: HardDrive },
-    { id: "limitations", title: "Limitations", icon: AlertTriangle },
-    { id: "collections", title: "Collections", icon: Library },
-    { id: "advanced", title: "Advanced", icon: Rocket },
-    { id: "usage", title: "Usage", icon: Globe },
-    { id: "purpose", title: "History", icon: History },
-    { id: "future", title: "Future", icon: Sparkles },
+    { id: "intro", title: "Introduction", icon: Sparkles },
+    { id: "arithmetic", title: "Arithmetic", icon: Calculator },
+    { id: "comparison", title: "Comparison", icon: Scale },
+    { id: "logical", title: "Logical", icon: ArrowRightLeft },
+    { id: "advanced", title: "Advanced", icon: Zap },
   ];
 
   const comparisonSections = [
-    { id: "intro", title: "Language Divide", icon: Scale },
-    { id: "syntax", title: "Syntax Comparison", icon: Code2 },
-    { id: "best-practices", title: "How to Choose?", icon: CheckCircle2 },
+    { id: "intro", title: "The Logic Wars", icon: Scale },
   ];
 
   const sections = activeLanguage === "comparison" ? comparisonSections : languageSections;
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 selection:bg-blue-500/30">
+    <div className="min-h-screen bg-[#020617] text-slate-100 selection:bg-purple-500/30">
       {/* Scroll Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 z-[100] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-[100] origin-left"
         style={{ scaleX }}
       />
 
       {/* Futuristic Background Mesh */}
       <div className="fixed inset-0 z-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-blue-600/20 to-transparent blur-[120px]" />
+        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-purple-600/20 to-transparent blur-[120px]" />
       </div>
 
       {/* Hero Section */}
@@ -118,7 +106,7 @@ export default function VariablesPage() {
           {[...Array(5)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-white/5 backdrop-blur-sm rounded-xl"
+              className="absolute bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-white/5 backdrop-blur-sm rounded-xl"
               style={{
                 width: Math.random() * 60 + 40,
                 height: Math.random() * 60 + 40,
@@ -144,9 +132,9 @@ export default function VariablesPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-black uppercase tracking-widest mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-black uppercase tracking-widest mb-8"
           >
-            <Code2 size={14} className="fill-blue-400" /> Programming Core
+            <Code2 size={14} className="fill-purple-400" /> Programming Logic
           </motion.div>
 
           <motion.div
@@ -155,9 +143,9 @@ export default function VariablesPage() {
             transition={{ delay: 0.1 }}
             className="flex flex-col items-center gap-6 mb-8"
           >
-            <div className="text-8xl filter drop-shadow-[0_0_15px_rgba(59,130,246,0.3)] animate-bounce">📦</div>
+            <div className="text-8xl filter drop-shadow-[0_0_15px_rgba(168,85,247,0.3)] animate-bounce">➕</div>
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter bg-gradient-to-b from-white via-white to-slate-500 bg-clip-text text-transparent">
-              Variables & Types
+              Operators
             </h1>
           </motion.div>
 
@@ -167,7 +155,7 @@ export default function VariablesPage() {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed mb-12"
           >
-            Master how to store, manipulate, and type data across <strong className="text-white">10+ programming languages</strong>. Compare syntax, memory models, and best practices.
+            Master arithmetic, logical, and bitwise operations across <strong className="text-white">10+ programming languages</strong>.
           </motion.p>
 
           <motion.div 
@@ -191,14 +179,14 @@ export default function VariablesPage() {
                 onClick={() => setActiveLanguage(lang.id)}
                 className={`relative px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all ${
                   activeLanguage === lang.id
-                    ? "text-white shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+                    ? "text-white shadow-[0_0_20px_rgba(168,85,247,0.3)]"
                     : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
                 }`}
               >
                 {activeLanguage === lang.id && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-blue-600 rounded-xl"
+                    className="absolute inset-0 bg-purple-600 rounded-xl"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
@@ -223,7 +211,7 @@ export default function VariablesPage() {
                 sections={sections}
                 activeSection={activeSection}
                 onSectionClick={setActiveSection}
-                color="blue"
+                color="purple"
               />
             </div>
           </aside>
@@ -239,26 +227,26 @@ export default function VariablesPage() {
                 transition={{ duration: 0.2 }}
               >
                 {activeLanguage === "comparison" && <ComparisonContent />}
-                {activeLanguage === "javascript" && <JavaScriptContent />}
-                {activeLanguage === "python" && <PythonContent />}
-                {activeLanguage === "java" && <JavaContent />}
-                {activeLanguage === "c" && <CContent />}
-                {activeLanguage === "cpp" && <CppContent />}
-                {activeLanguage === "typescript" && <TypeScriptContent />}
-                {activeLanguage === "go" && <GoContent />}
-                {activeLanguage === "rust" && <RustContent />}
-                {activeLanguage === "kotlin" && <KotlinContent />}
-                {activeLanguage === "swift" && <SwiftContent />}
+                {activeLanguage === "javascript" && <JavaScriptOperators />}
+                {activeLanguage === "python" && <PythonOperators />}
+                {activeLanguage === "java" && <JavaOperators />}
+                {activeLanguage === "c" && <COperators />}
+                {activeLanguage === "cpp" && <CppOperators />}
+                {activeLanguage === "typescript" && <TypeScriptOperators />}
+                {activeLanguage === "go" && <GoOperators />}
+                {activeLanguage === "rust" && <RustOperators />}
+                {activeLanguage === "kotlin" && <KotlinOperators />}
+                {activeLanguage === "swift" && <SwiftOperators />}
               </motion.div>
             </AnimatePresence>
 
             {/* Next Module */}
             <div className="mt-24">
               <NextModuleCard 
-                title="Variables Mastered"
-                description="You've explored the building blocks of data. Ready to master the logic that manipulates them?"
-                nextModuleText="Start Operators"
-                nextModuleLink="/languages/operators"
+                title="Operators Mastered"
+                description="You've crunched the numbers and mastered the logic. Ready to explore Control Structures?"
+                nextModuleText="Control Flow (Coming Soon)"
+                nextModuleLink="/languages"
                 color="purple"
               />
             </div>
@@ -272,7 +260,7 @@ export default function VariablesPage() {
           --mouse-y: 0px;
         }
         .perspective-card {
-          --glow-rgb: 59, 130, 246;
+          --glow-rgb: 168, 85, 247;
         }
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
