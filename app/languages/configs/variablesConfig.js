@@ -16,14 +16,7 @@ export const variablesData = {
     },
     declarations: {
       description: "To create a variable box in JavaScript, you use 'let' (if you'll change it later) or 'const' (if you want to lock it).",
-      code: `// 1. Create a box named 'age' and put 25 in it
-let age = 25;
-
-// 2. Change the content of the 'age' box
-age = 26; 
-
-// 3. Create a locked box named 'pi'
-const pi = 3.14;`,
+      code: `// 1. Create a box named 'age' and put 25 in it\nlet age = 25;\n\n// 2. Change the content of the 'age' box\nage = 26; \n\n// 3. Create a locked box named 'pi'\nconst pi = 3.14;`,
       constants: {
         keyword: "const",
         description: "Use 'const' for boxes that should never be emptied or changed, like your name or a math rule.",
@@ -58,21 +51,11 @@ const pi = 3.14;`,
     },
     collections: {
       description: "Sometimes you need a container that holds many smaller boxes at once.",
-      code: `// A List (Array) - One big box with slots
-let colors = ["Red", "Green", "Blue"];
-
-// A Group (Object) - A box with named folders
-let car = {
-  brand: "Tesla",
-  model: "Model 3"
-};
-`
+      code: `// A List (Array) - One big box with slots\nlet colors = ["Red", "Green", "Blue"];\n\n// A Group (Object) - A box with named folders\nlet car = {\n  brand: "Tesla",\n  model: "Model 3"\n};\n`
     },
     advanced: {
       description: "Quick ways to move data between boxes.",
-      code: `// Pulling data out of a group box
-const { brand } = car; // 'brand' is now its own box!
-`
+      code: `// Pulling data out of a group box\nconst { brand } = car; // 'brand' is now its own box!\n`
     },
     usage: {
       applications: [
@@ -81,6 +64,20 @@ const { brand } = car; // 'brand' is now its own box!
         { title: "Servers", text: "Handling data behind the scenes.", icon: "🖥️" }
       ],
       companies: ["Google", "Netflix", "Facebook"]
+    },
+    purpose: {
+      history: "Created in just 10 days in 1995, originally named 'Mocha'. It was a rushed experiment that accidentally took over the world.",
+      why: "Netscape needed a lightweight scripting language to make static web pages interactive (like popping up alerts).",
+      creator: "Brendan Eich",
+      year: "1995"
+    },
+    future: {
+      scope: "JavaScript is becoming a full-stack powerhouse. With frameworks like Next.js, it now runs on servers, browsers, and even edges of the cloud.",
+      trends: [
+        "AI-Driven Development",
+        "Fine-grained Reactivity (Signals)",
+        "Edge Computing (Zero Latency)"
+      ]
     }
   },
   python: {
@@ -100,14 +97,7 @@ const { brand } = car; // 'brand' is now its own box!
     },
     declarations: {
       description: "In Python, you create a variable box just by typing the label name, an equals sign, and what you want to store.",
-      code: `# 1. Create a box named 'score' and put 100 in it
-score = 100
-
-# 2. Change the content of the 'score' box
-score = 150
-
-# 3. Put text in a box
-name = "Alice"`,
+      code: `# 1. Create a box named 'score' and put 100 in it\nscore = 100\n\n# 2. Change the content of the 'score' box\nscore = 150\n\n# 3. Put text in a box\nname = "Alice"`,
       constants: {
         keyword: "UPPER_CASE",
         description: "Python doesn't physically lock boxes. We just use ALL CAPS to tell others 'Please don't change this'.",
@@ -142,16 +132,11 @@ name = "Alice"`,
     },
     collections: {
       description: "Special containers for when you have a lot of items to store.",
-      code: `# A List - An ordered row of items
-fruits = ["Apple", "Banana"]
-
-# A Dictionary - A box where every value has its own label
-user = {"id": 1, "name": "Rajat"}`
+      code: `# A List - An ordered row of items\nfruits = ["Apple", "Banana"]\n\n# A Dictionary - A box where every value has its own label\nuser = {"id": 1, "name": "Rajat"}`
     },
     advanced: {
       description: "Smart ways to fill boxes.",
-      code: `# Create a list of 10 boxes in one line
-numbers = [x for x in range(10)]`
+      code: `# Create a list of 10 boxes in one line\nnumbers = [x for x in range(10)]`
     },
     usage: {
       applications: [
@@ -160,6 +145,20 @@ numbers = [x for x in range(10)]`
         { title: "Scripts", text: "Writing small tools to automate your work.", icon: "⚙️" }
       ],
       companies: ["NASA", "Instagram", "Spotify"]
+    },
+    purpose: {
+      history: "Started as a hobby project over Christmas break. Guido wanted a language that was as understandable as plain English.",
+      why: "To create a successor to the ABC language that could handle exceptions and interface with the Amoeba OS, prioritizing readability.",
+      creator: "Guido van Rossum",
+      year: "1991"
+    },
+    future: {
+      scope: "Python remains the undisputed king of AI and Data Science. The focus now is on speed—making Python run faster on modern hardware.",
+      trends: [
+        "AI & Generative Models",
+        "Performance Boosts (No-GIL)",
+        "Data Science dominance"
+      ]
     }
   },
   cpp: {
@@ -179,16 +178,7 @@ numbers = [x for x in range(10)]`
     },
     declarations: {
       description: "To make a box in C++, you write the Type, then the Name, then the Value.",
-      code: `// 1. Create a 'whole number' box named 'lives'
-int lives = 3;
-
-// 2. Create a 'decimal' box named 'price'
-double price = 19.99;
-
-// 3. Create a 'text' box
-std::string name = "Rajat";
-
-// lives = "Empty"; // ❌ Error! Can't put text in an 'int' box.`,
+      code: `// 1. Create a 'whole number' box named 'lives'\nint lives = 3;\n\n// 2. Create a 'decimal' box named 'price'\ndouble price = 19.99;\n\n// 3. Create a 'text' box\nstd::string name = "Rajat";\n\n// lives = \"Empty\"; // ❌ Error! Can't put text in an 'int' box.`,
       constants: {
         keyword: "const",
         description: "Locks the box so the information inside can never be changed.",
@@ -224,8 +214,7 @@ std::string name = "Rajat";
     },
     collections: {
       description: "Advanced containers provided by the C++ Standard Library (STL).",
-      code: `// A Vector - A box that can grow to hold more items
-std::vector<int> scores = {10, 20};
+      code: `// A Vector - A box that can grow to hold more items\nstd::vector<int> scores = {10, 20};
 scores.push_back(30); // Add a new item`
     },
     advanced: {
@@ -240,6 +229,20 @@ int* address = &x; // 'address' stores WHERE the box 'x' is located.`
         { title: "Trading", text: "Systems that need to buy/sell stocks in microseconds.", icon: "💹" }
       ],
       companies: ["Microsoft", "Apple", "Blizzard"]
+    },
+    purpose: {
+      history: "Originally named 'C with Classes', it was designed to extend the C language with object-oriented features.",
+      why: "Bjarne needed the speed of C but wanted the code organization tools (classes) found in Simula for complex systems.",
+      creator: "Bjarne Stroustrup",
+      year: "1985"
+    },
+    future: {
+      scope: "C++ remains the backbone of high-performance computing, from AAA gaming to AI inference engines.",
+      trends: [
+        "AI Inference Engines",
+        "Game Development (Unreal 5)",
+        "Safety Updates (C++26)"
+      ]
     }
   },
   java: {
@@ -259,16 +262,7 @@ int* address = &x; // 'address' stores WHERE the box 'x' is located.`
     },
     declarations: {
       description: "Just like C++, you write the Type, then the Name, then the Value.",
-      code: `// 1. Create a number box
-int count = 10;
-
-// 2. Create a text box
-String message = "Welcome";
-
-// 3. Create a decimal box
-double weight = 70.5;
-
-// count = "Empty"; // ❌ Error! The inspector stops this.` ,
+      code: `// 1. Create a number box\nint count = 10;\n\n// 2. Create a text box\nString message = "Welcome";\n\n// 3. Create a decimal box\ndouble weight = 70.5;\n\n// count = \"Empty\"; // ❌ Error! The inspector stops this. `,
       constants: {
         keyword: "final",
         description: "The 'final' keyword locks the box so nobody can change it.",
@@ -303,14 +297,12 @@ double weight = 70.5;
     },
     collections: {
       description: "Powerful containers for managing groups of data.",
-      code: `// A flexible list
-List<String> names = new ArrayList<>();
+      code: `// A flexible list\nList<String> names = new ArrayList<>();
 names.add("Rajat");`
     },
     advanced: {
       description: "Modern Java features for data processing.",
-      code: `// Processing a list in one go
-names.stream().forEach(System.out::println);`
+      code: `// Processing a list in one go\nnames.stream().forEach(System.out::println);`
     },
     usage: {
       applications: [
@@ -319,6 +311,20 @@ names.stream().forEach(System.out::println);`
         { title: "Big Data", text: "Processing massive amounts of corporate info.", icon: "📊" }
       ],
       companies: ["Amazon", "Uber", "Netflix"]
+    },
+    purpose: {
+      history: "Originally named 'Oak', it was intended for interactive television boxes. It found its true calling on the early internet.",
+      why: "To allow 'Write Once, Run Anywhere'—code that could run on any machine without needing to be rewritten.",
+      creator: "James Gosling",
+      year: "1995"
+    },
+    future: {
+      scope: "Java is evolving for the cloud age with lighter, faster applications. It remains the #1 choice for large company systems.",
+      trends: [
+        "Cloud Native (GraalVM)",
+        "Virtual Threads (Loom)",
+        "Enterprise AI Integrations"
+      ]
     }
   },
   c: {
@@ -338,15 +344,7 @@ names.stream().forEach(System.out::println);`
     },
     declarations: {
       description: "In C, you must specify the type. If you don't fill the box immediately, it will contain random 'junk' data from the memory!",
-      code: `// 1. Create a number box
-int age = 25;
-
-// 2. Create a character box
-char grade = 'A';
-
-// 3. Declaration without filling (DANGEROUS)
-int score; // ⚠️ This box has random data in it!
-score = 0; // ✅ Now it's safe.`,
+      code: `// 1. Create a number box\nint age = 25;\n\n// 2. Create a character box\nchar grade = 'A';\n\n// 3. Declaration without filling (DANGEROUS)\nint score; // ⚠️ This box has random data in it!\nscore = 0; // ✅ Now it's safe.`,
       constants: {
         keyword: "const",
         description: "Prevents anyone from changing the value in the box.",
@@ -380,8 +378,7 @@ score = 0; // ✅ Now it's safe.`,
     },
     collections: {
       description: "C only has simple Arrays—a row of boxes that cannot grow.",
-      code: `// A fixed row of 5 boxes
-int numbers[5] = {1, 2, 3, 4, 5};`
+      code: `// A fixed row of 5 boxes\nint numbers[5] = {1, 2, 3, 4, 5};`
     },
     advanced: {
       description: "The Power of Pointers.",
@@ -395,6 +392,20 @@ int* ptr = &x; // 'ptr' stores the memory address of box 'x'.`
         { title: "Compilers", text: "C is used to build other programming languages.", icon: "⚙️" }
       ],
       companies: ["Intel", "NASA", "Microsoft"]
+    },
+    purpose: {
+      history: "Developed at Bell Labs to build the Unix operating system. It replaced assembly language for system programming.",
+      why: "Dennis Ritchie needed a language that was powerful enough to write an OS but easier to read than machine code.",
+      creator: "Dennis Ritchie",
+      year: "1972"
+    },
+    future: {
+      scope: "C is immortal. It will continue to run the world's deep infrastructure—from kernels to toasters—forever.",
+      trends: [
+        "Embedded Systems / IoT",
+        "Operating System Kernels",
+        "Critical Infrastructure"
+      ]
     }
   },
   typescript: {
@@ -414,13 +425,7 @@ int* ptr = &x; // 'ptr' stores the memory address of box 'x'.`
     },
     declarations: {
       description: "You use 'let' or 'const' just like JS, but you add a colon and the type name.",
-      code: `// 1. A box that ONLY holds numbers
-let score: number = 100;
-
-// 2. A box that ONLY holds text
-let name: string = "Rajat";
-
-// score = "Ten"; // ❌ The inspector stops this error!` ,
+      code: `// 1. A box that ONLY holds numbers\nlet score: number = 100;\n\n// 2. A box that ONLY holds text\nlet name: string = "Rajat";\n\n// score = \"Ten\"; // ❌ The inspector stops this error!`,
       constants: {
         keyword: "const",
         description: "Standard JS constants with added type safety.",
@@ -452,14 +457,11 @@ let name: string = "Rajat";
     },
     collections: {
       description: "Strict lists where you decide the contents.",
-      code: `// A list of ONLY strings
-let fruits: string[] = ["Apple", "Banana"];`
+      code: `// A list of ONLY strings\nlet fruits: string[] = ["Apple", "Banana"];`
     },
     advanced: {
       description: "Defining custom shapes for your boxes.",
-      code: `interface User {
-  id: number;
-  name: string;
+      code: `interface User {\n  id: number;\n  name: string;
 }`
     },
     usage: {
@@ -468,6 +470,20 @@ let fruits: string[] = ["Apple", "Banana"];`
         { title: "E-Commerce", text: "Safe systems for online shopping.", icon: "🛒" }
       ],
       companies: ["Microsoft", "Airbnb", "Slack"]
+    },
+    purpose: {
+      history: "Created by Microsoft to handle the growing complexity of modern web apps, which were becoming too big for standard JavaScript.",
+      why: "To bring structure (types) to the chaos of JavaScript, making large-scale application development safe and maintainable.",
+      creator: "Anders Hejlsberg",
+      year: "2012"
+    },
+    future: {
+      scope: "TypeScript is fast becoming the industry standard for all web development, replacing raw JavaScript in professional projects.",
+      trends: [
+        "Universal Web Standard",
+        "Full-stack Type Safety",
+        "AI-Assisted Coding"
+      ]
     }
   },
   go: {
@@ -486,11 +502,8 @@ let fruits: string[] = ["Apple", "Banana"];`
     },
     declarations: {
       description: "Go loves shortcuts. You often use ':=' to create and fill a box at the same time.",
-      code: `// 1. Shortcut: Create and fill box
-name := "Rajat" 
-
-// 2. Formal: Specify the type
-var age int = 25`,
+      code: `// 1. Shortcut: Create and fill box\nname := "Rajat" 
+\n// 2. Formal: Specify the type\nvar age int = 25`,
       constants: {
         keyword: "const",
         description: "Fixed values that never change.",
@@ -522,13 +535,11 @@ var age int = 25`,
     },
     collections: {
       description: "Flexible lists called Slices.",
-      code: `// A list that can grow
-numbers := []int{1, 2, 3}`
+      code: `// A list that can grow\nnumbers := []int{1, 2, 3}`
     },
     advanced: {
       description: "Fast communication between parts of your program.",
-      code: `// Channels - Passing boxes between tasks
-messages := make(chan string)`
+      code: `// Channels - Passing boxes between tasks\nmessages := make(chan string)`
     },
     usage: {
       applications: [
@@ -536,6 +547,20 @@ messages := make(chan string)`
         { title: "Servers", text: "Handling millions of users at once.", icon: "🖥️" }
       ],
       companies: ["Google", "Uber", "Twitch"]
+    },
+    purpose: {
+      history: "Born at Google out of frustration with C++'s complexity. The creators wanted a simple, fast language for the cloud era.",
+      why: "To solve Google's massive scale problems—slow build times, messy dependency management, and difficult concurrency.",
+      creator: "Robert Griesemer, Rob Pike, Ken Thompson",
+      year: "2009"
+    },
+    future: {
+      scope: "Go has cemented itself as the language of the Cloud. It will continue to power the backend infrastructure of the internet.",
+      trends: [
+        "Cloud Native Standard",
+        "Microservices & APIs",
+        "Platform Engineering"
+      ]
     }
   },
   rust: {
@@ -554,13 +579,7 @@ messages := make(chan string)`
     },
     declarations: {
       description: "By default, every box in Rust is LOCKED. You have to say 'mut' (mutable) if you want to change it later.",
-      code: `// 1. A locked box
-let x = 5;
-
-// 2. A changeable box
-let mut y = 10;
-
-y = 11; // ✅ OK`,
+      code: `// 1. A locked box\nlet x = 5;\n\n// 2. A changeable box\nlet mut y = 10;\n\ny = 11; // ✅ OK`,
       constants: {
         keyword: "const",
         description: "Values that are fixed forever.",
@@ -605,6 +624,20 @@ let s2 = s1; // Box s1 is now empty! s2 owns the data.`
         { title: "Security", text: "Writing code that can't be hacked easily.", icon: "🔒" }
       ],
       companies: ["Discord", "AWS", "Cloudflare"]
+    },
+    purpose: {
+      history: "Started as a personal project by a Mozilla employee to fix memory leaks in the Firefox browser engine.",
+      why: "To provide the speed of C++ without the memory safety bugs that cause 70% of all security vulnerabilities.",
+      creator: "Graydon Hoare",
+      year: "2010"
+    },
+    future: {
+      scope: "Rust is entering the Linux Kernel and critical infrastructure. It is the future of secure systems programming.",
+      trends: [
+        "Linux Kernel Adoption",
+        "WebAssembly (Wasm)",
+        "Secure Systems"
+      ]
     }
   },
   kotlin: {
@@ -623,13 +656,7 @@ let s2 = s1; // Box s1 is now empty! s2 owns the data.`
     },
     declarations: {
       description: "Kotlin uses 'val' for boxes that stay the same, and 'var' for boxes that change.",
-      code: `// 1. A locked box
-val name = "Rajat"
-
-// 2. A changeable box
-var age = 25
-
-age = 26`,
+      code: `// 1. A locked box\nval name = "Rajat"\n\n// 2. A changeable box\nvar age = 25\n\nage = 26`,
       constants: {
         keyword: "const val",
         description: "Fixed values used throughout the app.",
@@ -660,13 +687,11 @@ age = 26`,
     },
     collections: {
       description: "Safety-first lists.",
-      code: `// A list you CANNOT change
-val list = listOf("A", "B")`
+      code: `// A list you CANNOT change\nval list = listOf("A", "B")`
     },
     advanced: {
       description: "Smart Casting.",
-      code: `if (x is String) {
-  print(x.length) // Java knows it's a string!
+      code: `if (x is String) {\n  print(x.length) // Java knows it's a string!
 }`
     },
     usage: {
@@ -675,6 +700,20 @@ val list = listOf("A", "B")`
         { title: "Servers", text: "Modern, safe backend systems.", icon: "🖥️" }
       ],
       companies: ["Google", "Netflix", "Airbnb"]
+    },
+    purpose: {
+      history: "Created by JetBrains (makers of IntelliJ) because they wanted a language as powerful as Java but less verbose and safer.",
+      why: "To boost developer happiness and productivity by fixing Java's design flaws while remaining 100% compatible with it.",
+      creator: "JetBrains",
+      year: "2011"
+    },
+    future: {
+      scope: "Kotlin is expanding beyond Android. 'Kotlin Multiplatform' allows you to write one code for Android, iOS, and Backend.",
+      trends: [
+        "Kotlin Multiplatform (KMP)",
+        "Server-Side Development",
+        "Android First"
+      ]
     }
   },
   swift: {
@@ -693,13 +732,7 @@ val list = listOf("A", "B")`
     },
     declarations: {
       description: "Swift uses 'let' for locked boxes and 'var' for changeable ones. Apple recommends using 'let' whenever possible.",
-      code: `// 1. Locked box (Apple's favorite)
-let pi = 3.14
-
-// 2. Changeable box
-var score = 0
-
-score += 10`,
+      code: `// 1. Locked box (Apple's favorite)\nlet pi = 3.14\n\n// 2. Changeable box\nvar score = 0\n\nscore += 10`,
       constants: {
         keyword: "let",
         description: "Every constant in Swift is made with 'let'.",
@@ -745,6 +778,20 @@ score += 10`,
         { title: "Mac Apps", text: "Desktop software for MacOS.", icon: "💻" }
       ],
       companies: ["Apple", "Uber", "Lyft"]
+    },
+    purpose: {
+      history: "Developed in secret at Apple as a modern replacement for the aging Objective-C language. It was released to a standing ovation.",
+      why: "To make writing software for Apple devices safer, faster, and more interactive than ever before.",
+      creator: "Chris Lattner (Apple)",
+      year: "2014"
+    },
+    future: {
+      scope: "Swift is moving into Spatial Computing (Vision Pro) and on-device AI. It remains the key to the Apple ecosystem.",
+      trends: [
+        "Spatial Computing (VisionOS)",
+        "On-Device AI (CoreML)",
+        "Server-Side Swift"
+      ]
     }
   }
 };

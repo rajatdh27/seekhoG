@@ -283,20 +283,53 @@ export default function ComparisonContent() {
                           <h4 className="text-4xl font-black text-white mb-6 tracking-tight">
                             {lang.name}
                           </h4>
-                          <div className={`p-6 rounded-2xl bg-slate-900 border border-white/5 relative overflow-hidden group/quote shadow-inner`}>
+                          
+                          {/* History Block */}
+                          <div className={`p-6 rounded-2xl bg-slate-900 border border-white/5 relative overflow-hidden group/quote shadow-inner mb-6`}>
                             <div className={`absolute top-0 left-0 w-1 h-full bg-${color}-500 opacity-50 group-hover:opacity-100 transition-opacity`} />
-                            <p className="text-slate-400 text-sm leading-relaxed italic relative z-10">
-                              &quot;{lang.purpose?.history || "A powerful language for modern development."}&quot;
-                            </p>
+                            <div className="relative z-10">
+                                <span className={`text-${color}-400 text-xs font-bold uppercase tracking-wider mb-2 block`}>Origin Story</span>
+                                <p className="text-slate-300 text-sm leading-relaxed italic">
+                                &quot;{lang.purpose?.history || "A powerful language for modern development."}&quot;
+                                </p>
+                            </div>
+                          </div>
+
+                          {/* Origin Grid */}
+                          <div className="grid grid-cols-2 gap-3 mb-8">
+                            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <div className={`w-1.5 h-1.5 rounded-full bg-${color}-500`} />
+                                    <span className="text-xs text-slate-500 uppercase font-bold">Creator</span>
+                                </div>
+                                <div className="text-white font-medium text-sm">{lang.purpose?.creator || "Unknown"}</div>
+                            </div>
+                            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <div className={`w-1.5 h-1.5 rounded-full bg-${color}-500`} />
+                                    <span className="text-xs text-slate-500 uppercase font-bold">Born</span>
+                                </div>
+                                <div className="text-white font-medium text-sm">{lang.purpose?.year || "Unknown"}</div>
+                            </div>
+                            <div className="col-span-2 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <div className={`w-1.5 h-1.5 rounded-full bg-${color}-500`} />
+                                    <span className="text-xs text-slate-500 uppercase font-bold">The Need</span>
+                                </div>
+                                <div className="text-slate-300 text-sm leading-relaxed">{lang.purpose?.why || "To solve complex problems."}</div>
+                            </div>
                           </div>
                         </motion.div>
 
                         <div className="space-y-4">
-                          <h5 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2 mb-6">
-                            <Sparkles size={14} className={`text-${color}-400`} /> Trajectory
+                          <h5 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2 mb-2">
+                            <Sparkles size={14} className={`text-${color}-400`} /> Future Scope
                           </h5>
+                          <p className="text-slate-400 text-sm mb-6 leading-relaxed">
+                            {lang.future?.scope || "Continues to evolve."}
+                          </p>
                           <div className="grid gap-3">
-                            {lang.future?.trends.slice(0, 3).map((trend, i) => (
+                            {lang.future?.trends?.slice(0, 3).map((trend, i) => (
                               <motion.div 
                                 key={i}
                                 initial={{ opacity: 0, y: 20 }}
